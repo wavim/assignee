@@ -1,0 +1,52 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "watch",
+			"path": "site/frontend",
+			"group": "test",
+			"problemMatcher": [],
+			"label": "watch frontend"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "site/frontend",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "build frontend"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "site/frontend",
+			"problemMatcher": [],
+			"label": "serve frontend"
+		},
+		{
+			"type": "npm",
+			"script": "watch",
+			"path": "site/backend",
+			"group": "test",
+			"problemMatcher": [],
+			"label": "watch backend"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "site/backend",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "build backend"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "site/backend",
+			"problemMatcher": [],
+			"label": "start backend"
+		}
+	]
+}
+

@@ -1,0 +1,24 @@
+{
+	"name": "assignee-backend",
+	"version": "0.0.0",
+	"author": "",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"watch": "nodemon",
+		"build": "etsc",
+		"start": "node dist/entry.js"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.21.1"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.1",
+		"esbuild": "^0.24.0",
+		"esbuild-node-tsc": "^2.0.5",
+		"nodemon": "^3.1.7",
+		"typescript": "^5.7.2"
+	}
+}
+
