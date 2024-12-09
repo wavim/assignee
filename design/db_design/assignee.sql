@@ -30,7 +30,7 @@ CREATE TABLE `assignment_attachments` (
   `created_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attachments_of_assignment` (`attach_assignmentid`),
-  CONSTRAINT `attachments_of_assignment` FOREIGN KEY (`attach_assignmentid`) REFERENCES `assignment_details` (`id`)
+  CONSTRAINT `attachments_of_assignment` FOREIGN KEY (`attach_assignmentid`) REFERENCES `assignment_details` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,7 +51,7 @@ CREATE TABLE `assignment_details` (
   `expires_at` bigint unsigned GENERATED ALWAYS AS ((`created_at` + ((365 * 24) * 3600))) VIRTUAL NOT NULL,
   PRIMARY KEY (`id`),
   KEY `assignment_of_team` (`assign_teamid`),
-  CONSTRAINT `assignment_of_team` FOREIGN KEY (`assign_teamid`) REFERENCES `teams` (`id`)
+  CONSTRAINT `assignment_of_team` FOREIGN KEY (`assign_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,10 +69,10 @@ CREATE TABLE `assignments` (
   `created_at` bigint unsigned NOT NULL,
   `updated_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`assign_userid`,`assign_assignmentid`),
-  KEY `assignment_with_details` (`assign_assignmentid`),
   KEY `assignment_assignee` (`assign_userid`),
-  CONSTRAINT `assignment_assignee` FOREIGN KEY (`assign_userid`) REFERENCES `users` (`id`),
-  CONSTRAINT `assignment_with_details` FOREIGN KEY (`assign_assignmentid`) REFERENCES `assignment_details` (`id`)
+  KEY `assignment_with_details` (`assign_assignmentid`),
+  CONSTRAINT `assignment_assignee` FOREIGN KEY (`assign_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `assignment_with_details` FOREIGN KEY (`assign_assignmentid`) REFERENCES `assignment_details` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -92,7 +92,7 @@ CREATE TABLE `email_authcodes` (
   `expires_at` bigint unsigned GENERATED ALWAYS AS ((`created_at` + (10 * 60))) VIRTUAL NOT NULL,
   PRIMARY KEY (`id`),
   KEY `email_authcode_for_user` (`auth_userid`),
-  CONSTRAINT `email_authcode_for_user` FOREIGN KEY (`auth_userid`) REFERENCES `users` (`id`)
+  CONSTRAINT `email_authcode_for_user` FOREIGN KEY (`auth_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,7 +111,7 @@ CREATE TABLE `submission_attachments` (
   `created_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attachments_of_submission` (`attach_submissionid`),
-  CONSTRAINT `attachments_of_submission` FOREIGN KEY (`attach_submissionid`) REFERENCES `submissions` (`id`)
+  CONSTRAINT `attachments_of_submission` FOREIGN KEY (`attach_submissionid`) REFERENCES `submissions` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -130,10 +130,10 @@ CREATE TABLE `submissions` (
   `comments` text,
   `created_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `submission_of_assignment` (`submit_assignmentid`),
   KEY `submission_of_user` (`submit_userid`),
-  CONSTRAINT `submission_of_assignment` FOREIGN KEY (`submit_assignmentid`) REFERENCES `assignment_details` (`id`),
-  CONSTRAINT `submission_of_user` FOREIGN KEY (`submit_userid`) REFERENCES `users` (`id`)
+  KEY `submission_of_assignment` (`submit_assignmentid`),
+  CONSTRAINT `submission_of_assignment` FOREIGN KEY (`submit_assignmentid`) REFERENCES `assignment_details` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `submission_of_user` FOREIGN KEY (`submit_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -151,7 +151,7 @@ CREATE TABLE `team_invite_codes` (
   `expires_at` bigint unsigned GENERATED ALWAYS AS ((`created_at` + ((7 * 24) * 3600))) VIRTUAL NOT NULL,
   PRIMARY KEY (`invite_code_bytes`),
   UNIQUE KEY `invite_code_of_team` (`invite_teamid`),
-  CONSTRAINT `invite_code_of_team` FOREIGN KEY (`invite_teamid`) REFERENCES `teams` (`id`)
+  CONSTRAINT `invite_code_of_team` FOREIGN KEY (`invite_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,10 +169,10 @@ CREATE TABLE `team_members` (
   `created_at` bigint unsigned NOT NULL,
   `updated_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`member_userid`,`member_teamid`),
-  KEY `member_of_team` (`member_teamid`),
   KEY `membership_of_user` (`member_userid`),
-  CONSTRAINT `member_of_team` FOREIGN KEY (`member_teamid`) REFERENCES `teams` (`id`),
-  CONSTRAINT `membership_of_user` FOREIGN KEY (`member_userid`) REFERENCES `users` (`id`)
+  KEY `member_of_team` (`member_teamid`),
+  CONSTRAINT `member_of_team` FOREIGN KEY (`member_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `membership_of_user` FOREIGN KEY (`member_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -188,10 +188,10 @@ CREATE TABLE `team_monitors` (
   `monitor_teamid` bigint unsigned NOT NULL,
   `created_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`monitor_userid`,`monitor_teamid`),
-  KEY `appoint_by_team` (`monitor_teamid`),
   KEY `user_be_appoint` (`monitor_userid`),
-  CONSTRAINT `appoint_by_team` FOREIGN KEY (`monitor_teamid`) REFERENCES `teams` (`id`),
-  CONSTRAINT `user_be_appoint` FOREIGN KEY (`monitor_userid`) REFERENCES `users` (`id`)
+  KEY `appoint_by_team` (`monitor_teamid`),
+  CONSTRAINT `appoint_by_team` FOREIGN KEY (`monitor_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_be_appoint` FOREIGN KEY (`monitor_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -207,7 +207,7 @@ CREATE TABLE `team_settings` (
   `team_override` json NOT NULL,
   `updated_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`owner_teamid`),
-  CONSTRAINT `team_own_settings` FOREIGN KEY (`owner_teamid`) REFERENCES `teams` (`id`)
+  CONSTRAINT `team_own_settings` FOREIGN KEY (`owner_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -227,7 +227,7 @@ CREATE TABLE `teams` (
   `updated_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_own_team` (`owner_userid`),
-  CONSTRAINT `user_own_team` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`)
+  CONSTRAINT `user_own_team` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -244,7 +244,7 @@ CREATE TABLE `user_passwords` (
   `password_salt` binary(32) NOT NULL,
   `updated_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`owner_userid`),
-  CONSTRAINT `user_own_password` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`)
+  CONSTRAINT `user_own_password` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -264,7 +264,7 @@ CREATE TABLE `user_sessions` (
   `expires_at` bigint unsigned GENERATED ALWAYS AS ((`created_at` + ((7 * 24) * 3600))) VIRTUAL NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_bear_session` (`bearer_userid`),
-  CONSTRAINT `user_bear_session` FOREIGN KEY (`bearer_userid`) REFERENCES `users` (`id`)
+  CONSTRAINT `user_bear_session` FOREIGN KEY (`bearer_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -280,7 +280,7 @@ CREATE TABLE `user_settings` (
   `user_override` json NOT NULL,
   `updated_at` bigint unsigned NOT NULL,
   PRIMARY KEY (`owner_userid`),
-  CONSTRAINT `user_own_settings` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`)
+  CONSTRAINT `user_own_settings` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -310,4 +310,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-08 20:52:06
+-- Dump completed on 2024-12-09 18:01:48
