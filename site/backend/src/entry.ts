@@ -1,12 +1,9 @@
-import { config } from "dotenv";
 import express from "express";
-
-config();
+import { configs } from "configs/configs";
 
 const app = express();
-app.set("port", process.env.SERVER_PORT);
-
-app.use(express.static("../frontend/dist"));
+// app.set("port", process.env.SERVER_PORT);
+app.use(express.static("../public"));
 
 app.listen(app.get("port"), () => {
 	console.log(

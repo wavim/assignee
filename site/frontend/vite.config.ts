@@ -7,6 +7,10 @@ export default defineConfig({
 		port: 5200,
 	},
 	build: {
+		outDir: "../backend/public",
+		emptyOutDir: true,
 		target: "esnext",
+		//MO DEV
+		// cssMinify: true,
 	},
 });
