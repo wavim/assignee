@@ -3,45 +3,40 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model assignment_attachments {
-    id                  BigInt             @id @default(autoincrement()) @db.UnsignedBigInt
-    attach_assignmentid BigInt             @db.UnsignedBigInt
-    file_name           String             @db.VarChar(255)
-    file_blob           Bytes              @db.MediumBlob
-    created_at          BigInt             @db.UnsignedBigInt
-    assignment_details  assignment_details @relation(fields: [attach_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attachments_of_assignment")
-
-    @@index([attach_assignmentid], map: "attachments_of_assignment")
+generator client {
+  provider = "prisma-client-js"
 }
 
-model assignment_details {
-    id                     BigInt                   @id @default(autoincrement()) @db.UnsignedBigInt
-    assign_teamid          BigInt                   @db.UnsignedBigInt
-    details                String                   @db.Text
-    deadline               BigInt                   @db.UnsignedBigInt
-    created_at             BigInt                   @db.UnsignedBigInt
-    updated_at             BigInt                   @db.UnsignedBigInt
-    expires_at             BigInt                   @db.UnsignedBigInt
-    assignment_attachments assignment_attachments[]
-    teams                  teams                    @relation(fields: [assign_teamid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "assignment_of_team")
-    assignments            assignments[]
-    submissions            submissions[]
-
-    @@index([assign_teamid], map: "assignment_of_team")
+model users {
+    id              String            @id @db.VarChar(30)
+    display_name    String            @db.VarChar(30)
+    email           String            @db.VarChar(254)
+    created_at      BigInt            @db.UnsignedBigInt
+    updated_at      BigInt            @db.UnsignedBigInt
+    assignments     assignments[]
+    email_authcodes email_authcodes[]
+    submissions     submissions[]
+    team_members    team_members[]
+    team_monitors   team_monitors[]
+    teams           teams[]
+    user_passwords  user_passwords?
+    user_sessions   user_sessions[]
+    user_settings   user_settings?
 }
 
-model assignments {
-    assign_userid       String             @db.VarChar(30)
-    assign_assignmentid BigInt             @db.UnsignedBigInt
-    status              assignments_status
-    created_at          BigInt             @db.UnsignedBigInt
-    updated_at          BigInt             @db.UnsignedBigInt
-    users               users              @relation(fields: [assign_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "assignment_assignee")
-    assignment_details  assignment_details @relation(fields: [assign_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "assignment_with_details")
+model user_passwords {
+    owner_userid  String @id @db.VarChar(30)
+    password_hash Bytes  @db.Binary(255)
+    password_salt Bytes  @db.Binary(32)
+    updated_at    BigInt @db.UnsignedBigInt
+    users         users  @relation(fields: [owner_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_own_password")
+}
 
-    @@id([assign_userid, assign_assignmentid])
-    @@index([assign_userid], map: "assignment_assignee")
-    @@index([assign_assignmentid], map: "assignment_with_details")
+model user_settings {
+    owner_userid  String @id @db.VarChar(30)
+    user_override Json
+    updated_at    BigInt @db.UnsignedBigInt
+    users         users  @relation(fields: [owner_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_own_settings")
 }
 
 model email_authcodes {
@@ -56,30 +51,40 @@ model email_authcodes {
     @@index([auth_userid], map: "email_authcode_for_user")
 }
 
-model submission_attachments {
-    id                  BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
-    attach_submissionid BigInt      @db.UnsignedBigInt
-    file_name           String      @db.VarChar(255)
-    file_blob           Bytes       @db.MediumBlob
-    created_at          BigInt      @db.UnsignedBigInt
-    submissions         submissions @relation(fields: [attach_submissionid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attachments_of_submission")
+model user_sessions {
+    id                BigInt @id @default(autoincrement()) @db.UnsignedBigInt
+    bearer_userid     String @db.VarChar(30)
+    bearer_token_hash Bytes  @db.Binary(255)
+    bearer_token_salt Bytes  @db.Binary(32)
+    created_at        BigInt @db.UnsignedBigInt
+    expires_at        BigInt @db.UnsignedBigInt
+    users             users  @relation(fields: [bearer_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_bear_session")
 
-    @@index([attach_submissionid], map: "attachments_of_submission")
+    @@index([bearer_userid], map: "user_bear_session")
 }
 
-model submissions {
-    id                     BigInt                   @id @default(autoincrement()) @db.UnsignedBigInt
-    submit_userid          String                   @db.VarChar(30)
-    submit_assignmentid    BigInt                   @db.UnsignedBigInt
-    grade                  submissions_grade?
-    comments               String?                  @db.Text
-    created_at             BigInt                   @db.UnsignedBigInt
-    submission_attachments submission_attachments[]
-    assignment_details     assignment_details       @relation(fields: [submit_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "submission_of_assignment")
-    users                  users                    @relation(fields: [submit_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "submission_of_user")
+model teams {
+    id                 BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+    display_name       String               @db.VarChar(30)
+    owner_userid       String               @db.VarChar(30)
+    description        String               @db.VarChar(80)
+    created_at         BigInt               @db.UnsignedBigInt
+    updated_at         BigInt               @db.UnsignedBigInt
+    assignment_details assignment_details[]
+    team_invite_codes  team_invite_codes?
+    team_members       team_members[]
+    team_monitors      team_monitors[]
+    team_settings      team_settings?
+    users              users                @relation(fields: [owner_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_own_team")
 
-    @@index([submit_assignmentid], map: "submission_of_assignment")
-    @@index([submit_userid], map: "submission_of_user")
+    @@index([owner_userid], map: "user_own_team")
+}
+
+model team_settings {
+    owner_teamid  BigInt @id @db.UnsignedBigInt
+    team_override Json
+    updated_at    BigInt @db.UnsignedBigInt
+    teams         teams  @relation(fields: [owner_teamid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "team_own_settings")
 }
 
 model team_invite_codes {
@@ -116,78 +121,77 @@ model team_monitors {
     @@index([monitor_userid], map: "user_be_appoint")
 }
 
-model team_settings {
-    owner_teamid  BigInt @id @db.UnsignedBigInt
-    team_override Json
-    updated_at    BigInt @db.UnsignedBigInt
-    teams         teams  @relation(fields: [owner_teamid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "team_own_settings")
+model assignment_details {
+    id                     BigInt                   @id @default(autoincrement()) @db.UnsignedBigInt
+    assign_teamid          BigInt                   @db.UnsignedBigInt
+    details                String                   @db.Text
+    deadline               BigInt                   @db.UnsignedBigInt
+    created_at             BigInt                   @db.UnsignedBigInt
+    updated_at             BigInt                   @db.UnsignedBigInt
+    expires_at             BigInt                   @db.UnsignedBigInt
+    assignment_attachments assignment_attachments[]
+    teams                  teams                    @relation(fields: [assign_teamid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "assignment_of_team")
+    assignments            assignments[]
+    submissions            submissions[]
+
+    @@index([assign_teamid], map: "assignment_of_team")
 }
 
-model teams {
-    id                 BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
-    display_name       String               @db.VarChar(30)
-    owner_userid       String               @db.VarChar(30)
-    description        String               @db.VarChar(80)
-    created_at         BigInt               @db.UnsignedBigInt
-    updated_at         BigInt               @db.UnsignedBigInt
-    assignment_details assignment_details[]
-    team_invite_codes  team_invite_codes?
-    team_members       team_members[]
-    team_monitors      team_monitors[]
-    team_settings      team_settings?
-    users              users                @relation(fields: [owner_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_own_team")
+model assignment_attachments {
+    id                  BigInt             @id @default(autoincrement()) @db.UnsignedBigInt
+    attach_assignmentid BigInt             @db.UnsignedBigInt
+    file_name           String             @db.VarChar(255)
+    file_blob           Bytes              @db.MediumBlob
+    created_at          BigInt             @db.UnsignedBigInt
+    assignment_details  assignment_details @relation(fields: [attach_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attachments_of_assignment")
 
-    @@index([owner_userid], map: "user_own_team")
+    @@index([attach_assignmentid], map: "attachments_of_assignment")
 }
 
-model user_passwords {
-    owner_userid  String @id @db.VarChar(30)
-    password_hash Bytes  @db.Binary(255)
-    password_salt Bytes  @db.Binary(32)
-    updated_at    BigInt @db.UnsignedBigInt
-    users         users  @relation(fields: [owner_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_own_password")
-}
+model assignments {
+    assign_userid       String             @db.VarChar(30)
+    assign_assignmentid BigInt             @db.UnsignedBigInt
+    status              assignments_status
+    created_at          BigInt             @db.UnsignedBigInt
+    updated_at          BigInt             @db.UnsignedBigInt
+    users               users              @relation(fields: [assign_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "assignment_assignee")
+    assignment_details  assignment_details @relation(fields: [assign_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "assignment_with_details")
 
-model user_sessions {
-    id                BigInt @id @default(autoincrement()) @db.UnsignedBigInt
-    bearer_userid     String @db.VarChar(30)
-    bearer_token_hash Bytes  @db.Binary(255)
-    bearer_token_salt Bytes  @db.Binary(32)
-    created_at        BigInt @db.UnsignedBigInt
-    expires_at        BigInt @db.UnsignedBigInt
-    users             users  @relation(fields: [bearer_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_bear_session")
-
-    @@index([bearer_userid], map: "user_bear_session")
-}
-
-model user_settings {
-    owner_userid  String @id @db.VarChar(30)
-    user_override Json
-    updated_at    BigInt @db.UnsignedBigInt
-    users         users  @relation(fields: [owner_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_own_settings")
-}
-
-model users {
-    id              String            @id @db.VarChar(30)
-    display_name    String            @db.VarChar(30)
-    email           String            @db.VarChar(254)
-    created_at      BigInt            @db.UnsignedBigInt
-    updated_at      BigInt            @db.UnsignedBigInt
-    assignments     assignments[]
-    email_authcodes email_authcodes[]
-    submissions     submissions[]
-    team_members    team_members[]
-    team_monitors   team_monitors[]
-    teams           teams[]
-    user_passwords  user_passwords?
-    user_sessions   user_sessions[]
-    user_settings   user_settings?
+    @@id([assign_userid, assign_assignmentid])
+    @@index([assign_userid], map: "assignment_assignee")
+    @@index([assign_assignmentid], map: "assignment_with_details")
 }
 
 enum assignments_status {
     assigned
     submitted
     returned
+}
+
+model submissions {
+    id                     BigInt                   @id @default(autoincrement()) @db.UnsignedBigInt
+    submit_userid          String                   @db.VarChar(30)
+    submit_assignmentid    BigInt                   @db.UnsignedBigInt
+    grade                  submissions_grade?
+    comments               String?                  @db.Text
+    created_at             BigInt                   @db.UnsignedBigInt
+    submission_attachments submission_attachments[]
+    assignment_details     assignment_details       @relation(fields: [submit_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "submission_of_assignment")
+    users                  users                    @relation(fields: [submit_userid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "submission_of_user")
+
+    @@index([submit_assignmentid], map: "submission_of_assignment")
+    @@index([submit_userid], map: "submission_of_user")
+}
+
+model submission_attachments {
+    id                  BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
+    attach_submissionid BigInt      @db.UnsignedBigInt
+    file_name           String      @db.VarChar(255)
+    file_blob           Bytes       @db.MediumBlob
+    created_at          BigInt      @db.UnsignedBigInt
+    submissions         submissions @relation(fields: [attach_submissionid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attachments_of_submission")
+
+    @@index([attach_submissionid], map: "attachments_of_submission")
 }
 
 enum submissions_grade {
