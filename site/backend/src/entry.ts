@@ -1,10 +1,10 @@
 import express from "express";
-import { config } from "./config/config.js";
+import { configs } from "./configs/configs.js";
 
 const app = express();
 
-app.set("port", config.app.port);
-app.use(express.static(`./${config.app.static}`));
+app.set("port", configs.app.port);
+app.use(express.static(`./${configs.app.static}`));
 
 app.listen(app.get("port"), () => {
 	console.log(

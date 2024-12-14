@@ -10,10 +10,14 @@
 		"start": "node dist/entry.js"
 	},
 	"license": "MIT",
+	"prisma": {
+		"schema": "src/prisma/schema.prisma"
+	},
 	"dependencies": {
 		"@prisma/client": "^6.0.1",
 		"@types/express": "^5.0.0",
 		"dotenv": "^16.4.7",
+		"dotenv-expand": "^12.0.1",
 		"express": "^4.21.2"
 	},
 	"devDependencies": {

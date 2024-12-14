@@ -5,4 +5,5 @@ export const config = {
 	host: process.env.DB_HOST ?? "localhost",
 	port: process.env.DB_PORT ?? "3306",
 	name: process.env.DB_NAME ?? "test",
+	url: process.env.DB_URL ?? "mysql://root:123@localhost:3306/test",
 };
