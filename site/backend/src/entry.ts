@@ -1,9 +1,10 @@
 import express from "express";
-import { configs } from "configs/configs";
+import { config } from "./config/config.js";
 
 const app = express();
-// app.set("port", process.env.SERVER_PORT);
-app.use(express.static("../public"));
+
+app.set("port", config.app.port);
+app.use(express.static(`./${config.app.static}`));
 
 app.listen(app.get("port"), () => {
 	console.log(
