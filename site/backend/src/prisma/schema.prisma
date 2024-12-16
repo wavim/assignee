@@ -146,6 +146,7 @@ model assignment_attachments {
   assignment_details  assignment_details @relation(fields: [attach_assignmentid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attachments_of_assignment")
 
   @@index([attach_assignmentid], map: "attachments_of_assignment")
+  @@index([attach_assignmentid, file_name], map: "attachment_assignment_filename")
 }
 
 model assignments {
@@ -186,6 +187,7 @@ model submission_attachments {
   submissions         submissions @relation(fields: [attach_submissionid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attachments_of_submission")
 
   @@index([attach_submissionid], map: "attachments_of_submission")
+  @@index([attach_submissionid, file_name], map: "attachment_submission_filename")
 }
 
 enum assignments_status {
