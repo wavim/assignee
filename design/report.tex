@@ -6,7 +6,6 @@
 \usepackage{graphicx}
 \usepackage{indentfirst}
 \usepackage{dirtree}
-\setlength{\DTbaselineskip}{20pt}
 
 \title{SBA Web Application Report}
 \author{David Y.C. Wu}
@@ -53,6 +52,7 @@ This report contains the following chapters of different aspects:
 \section{Project Objectives} \label{overview.project-objectives}
 
 The next few pages is a brief overview of what could be done by users of different roles.
+
 A few systems are decoupled to handle complicated application logic.
 As of now we have the 3 core systems: the User System, the Team System and the Assignment System.
 \vspace{1 em}
@@ -93,8 +93,8 @@ Roles: \{Site Visitors\}, \{Logged-in Users\}
 	      \end{itemize}
 \end{itemize}
 
-The User System is simply a casual user account system you will find in any web application.
-Visitors are allowed to create accounts and ones with an account could log-in and manipulate the account.
+The User System is simply a casual user account system you will find in any web application,
+where visitors are allowed to create accounts and ones with an account could log-in and manipulate the account.
 \vspace{1 em}
 
 Authentication techniques are implemented to assist this system, which details are given in later chapters.
@@ -139,13 +139,12 @@ Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}
 	      \end{itemize}
 \end{itemize}
 
-Slightly isomorphic to the well-known Google Classroom,
-users are allowed to create or join teams.
-Team owners could (de-)appoint team monitors to help manage the team.
+Slightly isomorphic to Google Classroom,
+users are allowed to create or join teams, and team owners could (de-)appoint team monitors to help manage the team.
 Roles of different hierarchies could manipulate the team to different degree and extent.
 \vspace{1 em}
 
-The *post and comment features are not implemented, at least in the initial version of the web app,
+The *post and comment features are not implemented in the initial version of the web app
 as it is deemed to be of lower priority. It will be decoupled from this system if implemented.
 \vspace{1 em}
 
@@ -173,14 +172,17 @@ Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}
 \end{itemize}
 
 The Assignment System is the core feature we are asked to complete.
-Works intuitively, team owners are allowed to assign assignments to some team members, with a deadline.
-The assignees are allowed to hand in their submission,
-after which the team owner could grade it, comment on it and return it to assignees.
+
+The system works intuitively, team owners are allowed to assign assignments to some team members with a deadline.
+And the assignees are allowed to hand in their submission,
+after which the team owner could grade it, give comments and return it.
+
 It is that straightforward.
 \vspace{1 em}
 
-An attachment system is designed to handle attachment files, to allow Team Owners/Assignees
+An attachment system is designed to handle attachment files, to allow team owners/assignees
 to attach more files to their assignments/submissions along the way.
+
 More details will be given in later chapters.
 
 \newpage
@@ -190,10 +192,14 @@ More details will be given in later chapters.
 
 To keep a clear separation of concern, the web app is separated into
 the Data Layer, the Application Layer and the Presentation Layer.
+\vspace{1 em}
+
 This could be seen in the project folder structure.
 The folder structure is subject of frequent change, but the overall shape will not differ vastly across revisions.
 \vspace{1 em}
 
+\setlength{\DTbaselineskip}{25pt}
+\renewcommand{\DTstyle}{\rmfamily\large}
 \dirtree{%
 	.1 /.
 	.2 design/.
@@ -208,16 +214,42 @@ The folder structure is subject of frequent change, but the overall shape will n
 	.3 frontend/.
 	.4 ....
 }
+\vspace{3 em}
+
+Brief explanations of the directories are given on the next page.
+
+\newpage
+
+The directory design/ contains files that would not be served as a part of the actual web application site.
+This includes this report, images used in this report etc.
 \vspace{1 em}
 
-The directory database/ is kept under design/ since the hosted database itself is independent of the project folder,
-so only the distribution .sql file that would be used to instantiate the database is kept.
+The directory database/ corresponds to the Data Layer. It is kept under design/ since the hosted database itself is independent of the project folder, so only the distribution .sql file that would be used to instantiate the database is kept.
+Details are given in the chapter \hyperref[data-layer]{Data Layer}.
+\vspace{1 em}
+
+The directory backend/ corresponds to the Application Layer.
+Details are given in the chapter \hyperref[application-layer]{Application Layer}.
+\vspace{1 em}
+
+The directory frontend/ corresponds to the Presentation Layer.
+Details are given in the chapter \hyperref[presentation-layer]{Presentation Layer}.
+\vspace{1 em}
 
 \subsection{Repository} \label{overview.project-structure.repository}
 
-The whole project folder has a repository and available at
-\href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee}.
-(If you cannot open the repo, I might have set visibility to private.)
+The whole project folder has a repository and is available at
+\href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee}
+(If you cannot open the repository, I might have set visibility to private).
+\vspace{1 em}
+
+With this we could review all past commits from the start of this project to the latest update or patch.
+This not only eases version control and debugging,
+but is also a great way to gather information about potential bugs and feature requests.
+Not mentioning we could utilize repository branches to work on back/front-end simultaneously without worrying about a mess.
+\vspace{1 em}
+
+And of course the productivity benefits of using Git(Hub) do not stop here.
 
 \chapter{Data Layer} \label{data-layer}
 
