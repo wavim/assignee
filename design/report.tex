@@ -1,11 +1,16 @@
 \documentclass[12pt]{report}
 \usepackage{times}
+\usepackage{xcolor}
 \usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=teal}
 \usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{dirtree}
+\setlength{\DTbaselineskip}{20pt}
 
 \title{SBA Web Application Report}
-\author{5218 David Y.C. Wu}
-\date{Last Revision \today}
+\author{David Y.C. Wu}
+\date{Last Revised \today}
 
 \begin{document}
 
@@ -14,56 +19,228 @@
 \textbf{Introduction}
 \vspace{1 em}
 
-This report focuses on Assignee, a web application born in response to the SBA task: Design a web application that implements an assignment system.
+This report focuses on Assignee, a web application born in response to the SBA task:
+Design a web application that implements an assignment system.
 \vspace{1 em}
 
 This report contains the following chapters of different aspects:
 \begin{itemize}
-	\item \hyperref[ch:overview]{Overview}:\\
-	      Project mission, objectives and structure;
-	\item \hyperref[ch:data-layer]{Data Layer}:\\
+	\item \hyperref[overview]{Overview}:\\
+	      Project objectives and structure;
+	\item \hyperref[data-layer]{Data Layer}:\\
 	      Relational database design and implementation;
-	\item \hyperref[ch:application-layer]{Application Layer}:\\
+	\item \hyperref[application-layer]{Application Layer}:\\
 	      Site back-end components design and implementation;
-	\item \hyperref[ch:presentation-layer]{Presentation Layer}:\\
+	\item \hyperref[presentation-layer]{Presentation Layer}:\\
 	      Site front-end components design and implementation;
-	\item \hyperref[ch:security]{Security}:\\
+	\item \hyperref[security]{Security}:\\
 	      User authentication and cross-layer interaction security;
-	\item \hyperref[ch:accessibility]{Accessibility}:\\
-	      Site accessibility considerations;
-	\item \hyperref[ch:performance]{Performance}:\\
+	\item \hyperref[accessibility]{Accessibility}:\\
+	      Site accessibility considerations and localization (l10n);
+	\item \hyperref[performance]{Performance}:\\
 	      Application performance optimizations;
-	\item \hyperref[ch:quality-assurance]{Quality Assurance}:\\
+	\item \hyperref[quality-assurance]{Quality Assurance}:\\
 	      Application unit tests and integration tests;
+	\item \hyperref[tools-used]{Tools Used}:\\
+	      Applications, extensions, packages and libraries used during development;
 \end{itemize}
 
 \tableofcontents
 \newpage
 
-\chapter{Overview} \label{ch:overview}
+\chapter{Overview} \label{overview}
 
-\section{Project Mission} \label{se:project-mission}
+\section{Project Objectives} \label{overview.project-objectives}
+
+The next few pages is a brief overview of what could be done by users of different roles.
+A few systems are decoupled to handle complicated application logic.
+As of now we have the 3 core systems: the User System, the Team System and the Assignment System.
+\vspace{1 em}
+
+Only workflow related points are listed, GUI related points are not.
+
+Only roughly describes each task (e.g. login),
+the rest of the details (e.g. via username? with auth? etc.) are given later in the report.
+\vspace{1 em}
+
+Symbolic notes:
+
+...... $\rightarrow$ \{A\} means the user who does the action now attains role A.
+
+\{B\} $\rightarrow$ \{C\} means the action will make a user with role B to attain role C.
+
+\{D\} $\in$ \{E\} means the role D inherits from role E,
+users with role D will be able to do anything role E is able to do.
+
+\newpage
+\subsection{User System} \label{overview.project-objectives.user-system}
+
+Roles: \{Site Visitors\}, \{Logged-in Users\}
+
+\begin{itemize}
+	\item \{Site Visitors\}
+	      \begin{itemize}
+		      \item Register for accounts;\null\hfill $\rightarrow$ \{Logged-in Users\}
+		      \item Log-in to existing accounts;\null\hfill $\rightarrow$ \{Logged-in Users\}
+	      \end{itemize}
+	\item \{Logged-in Users\}
+	      \begin{itemize}
+		      \item Alter password;
+		      \item Alter username or email;
+		      \item Alter other settings;
+		      \item Log-out of account;\null\hfill $\rightarrow$ \{Site Visitors\}
+		      \item Delete the account;\null\hfill $\rightarrow$ \{Site Visitors\}
+	      \end{itemize}
+\end{itemize}
+
+The User System is simply a casual user account system you will find in any web application.
+Visitors are allowed to create accounts and ones with an account could log-in and manipulate the account.
+\vspace{1 em}
+
+Authentication techniques are implemented to assist this system, which details are given in later chapters.
+\vspace{1 em}
+
+The User System is the core of all systems possibly involved in this application,
+including the \hyperref[overview.project-objectives.team-system]{Team System}
+and the \hyperref[overview.project-objectives.assignment-system]{Assignment System},
+and any systems that might be added in the future (e.g. Posts and Comments System, WebRTC Instant Messaging System).
+
+\newpage
+\subsection{Team System} \label{overview.project-objectives.team-system}
+
+Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}
+
+\begin{itemize}
+	\item \{Users\}
+	      \begin{itemize}
+		      \item Join teams;\null\hfill $\rightarrow$ \{Team Members\}
+		      \item Create teams;\null\hfill $\rightarrow$ \{Team Owners\}
+	      \end{itemize}
+	\item \{Team Members\} $\in$ \{Users\}
+	      \begin{itemize}
+		      \item Alter per-team settings;
+		      \item Leave the team;\null\hfill $\rightarrow$ \{Users\}
+		      \item Comment on messages*;
+	      \end{itemize}
+	\item \{Team Monitors\} $\in$ \{Team Members\}
+	      \begin{itemize}
+		      \item Invite team members;\null\hfill \{Users\} $\rightarrow$ \{Team Members\}
+		      \item Kick team members;\null\hfill \{Team Members\} $\rightarrow$ \{Users\}
+		      \item Post messages*;
+	      \end{itemize}
+	\item \{Team Owners\} $\in$ \{Team Monitors\}
+	      \begin{itemize}
+		      \item Alter team name;
+		      \item Alter team description;
+		      \item Alter other team settings;
+		      \item Appoint team monitors;\null\hfill \{Users\} $\rightarrow$ \{Team Monitors\}
+		      \item Remove team monitors;\null\hfill \{Team Monitors\} $\rightarrow$ \{Users\}
+		      \item Delete the team;\null\hfill $\rightarrow$ \{Users\}
+	      \end{itemize}
+\end{itemize}
+
+Slightly isomorphic to the well-known Google Classroom,
+users are allowed to create or join teams.
+Team owners could (de-)appoint team monitors to help manage the team.
+Roles of different hierarchies could manipulate the team to different degree and extent.
+\vspace{1 em}
+
+The *post and comment features are not implemented, at least in the initial version of the web app,
+as it is deemed to be of lower priority. It will be decoupled from this system if implemented.
+\vspace{1 em}
+
+The Team System is the core of the \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
+
+\newpage
+\subsection{Assignment System} \label{overview.project-objectives.assignment-system}
+
+Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}
+
+\begin{itemize}
+	\item \{Team Owners\}
+	      \begin{itemize}
+		      \item Author assignments;
+		      \item Add attachments to assignments;
+		      \item Assign assignments;\null\hfill \{Team Members\} $\rightarrow$ \{Assignees\}
+		      \item De-assign assignments;\null\hfill \{Assignees\} $\rightarrow$ \{Team Members\}
+		      \item Grade, comment and return submissions;
+	      \end{itemize}
+	\item \{Assignees\} $\in$ \{Team Members\}
+	      \begin{itemize}
+		      \item Submit assignments;
+		      \item Add attachments to submissions;
+	      \end{itemize}
+\end{itemize}
+
+The Assignment System is the core feature we are asked to complete.
+Works intuitively, team owners are allowed to assign assignments to some team members, with a deadline.
+The assignees are allowed to hand in their submission,
+after which the team owner could grade it, comment on it and return it to assignees.
+It is that straightforward.
+\vspace{1 em}
+
+An attachment system is designed to handle attachment files, to allow Team Owners/Assignees
+to attach more files to their assignments/submissions along the way.
+More details will be given in later chapters.
+
+\newpage
+\section{Project Structure} \label{overview.project-structure}
+
+\subsection{Folder Structure} \label{overview.project-structure.folder-structure}
+
+To keep a clear separation of concern, the web app is separated into
+the Data Layer, the Application Layer and the Presentation Layer.
+This could be seen in the project folder structure.
+The folder structure is subject of frequent change, but the overall shape will not differ vastly across revisions.
+\vspace{1 em}
+
+\dirtree{%
+	.1 /.
+	.2 design/.
+	.3 database/.
+	.4 assigneedb.sql.
+	.4 ....
+	.3 report.tex.
+	.3 ....
+	.2 site/.
+	.3 backend/.
+	.4 ....
+	.3 frontend/.
+	.4 ....
+}
+\vspace{1 em}
+
+The directory database/ is kept under design/ since the hosted database itself is independent of the project folder,
+so only the distribution .sql file that would be used to instantiate the database is kept.
+
+\subsection{Repository} \label{overview.project-structure.repository}
+
+The whole project folder has a repository and available at
+\href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee}.
+(If you cannot open the repo, I might have set visibility to private.)
+
+\chapter{Data Layer} \label{data-layer}
 
 
-\chapter{Data Layer} \label{ch:data-layer}
+\chapter{Application Layer} \label{application-layer}
 
 
-\chapter{Application Layer} \label{ch:application-layer}
+\chapter{Presentation Layer} \label{presentation-layer}
 
 
-\chapter{Presentation Layer} \label{ch:presentation-layer}
+\chapter{Security} \label{security}
 
 
-\chapter{Security} \label{ch:security}
+\chapter{Accessibility} \label{accessibility}
 
 
-\chapter{Accessibility} \label{ch:accessibility}
+\chapter{Performance} \label{performance}
 
 
-\chapter{Performance} \label{ch:performance}
+\chapter{Quality Assurance} \label{quality-assurance}
 
 
-\chapter{Quality Assurance} \label{ch:quality-assurance}
+\chapter{Tools Used} \label{tools-used}
 
 
 \end{document}
