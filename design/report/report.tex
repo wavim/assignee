@@ -2,10 +2,11 @@
 
 \usepackage{times}
 \usepackage{xcolor}
-\usepackage{graphicx}
 \usepackage{dirtree}
+\usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{indentfirst}
+\usepackage[margin=1in]{geometry}
 
 \hypersetup{colorlinks=true, linkcolor=teal}
 \setlength{\DTbaselineskip}{25pt}
@@ -15,7 +16,7 @@
 \newcommand{\br}{\vspace{1 em}\n}
 
 \title{SBA Web Application Report}
-\author{David Y.C. Wu}
+\author{David W.}
 \date{Last Revised \today}
 
 \begin{document}
@@ -32,6 +33,7 @@ This report contains the following chapters of different aspects:
 	      Project objectives and structure;
 	\item \hyperref[data-layer]{Data Layer}:\\
 	      Relational database design and implementation;
+	      %MO DEV unfinished
 	\item \hyperref[application-layer]{Application Layer}:\\
 	      Site back-end components design and implementation;
 	\item \hyperref[presentation-layer]{Presentation Layer}:\\
@@ -47,28 +49,24 @@ This report contains the following chapters of different aspects:
 	\item \hyperref[tools-used]{Tools Used}:\\
 	      Applications, extensions, packages and libraries used during development;
 \end{itemize}
-\newpage
-
 \tableofcontents
-\newpage
 
 \chapter{Overview} \label{overview}
-
 \section{Project Objectives} \label{overview.project-objectives}
 The next few pages is a brief overview of what could be done by users of different roles.\n
 A few systems are decoupled to handle complicated application logic.
-As of now we have the 3 core systems: the User System, the Team System and the Assignment System.
+As of now we have 3 core systems: the User System, the Team System and the Assignment System,
+as will be described below.
 \br
+Notes:\n
 Only workflow related points are listed, GUI related points are not.\n
 Only roughly describes each task (e.g. login),
-the rest of the details (e.g. via username? with auth? etc.) are given later in the report.
+the rest of the details (e.g. via username / with auth etc.) are given later in the report.
 \br
-Symbolic notes:\n
-...... $\rightarrow$ \{A\} means the user who does the action now attains role A.\n
-\{B\} $\rightarrow$ \{C\} means the action will make a user with role B to attain role C.\n
-\{D\} $\in$ \{E\} means the role D inherits from role E, users with role D will be able to do anything role E is able to do.
-\newpage
-
+Symbolic Notes:\n
+...... $\rightarrow$ \{A\}: the user who performs the action now attains role A.\n
+\{B\} $\rightarrow$ \{C\}: the action will make a user with role B to attain role C.\n
+\{D\} $\in$ \{E\}: the role D inherits from role E, users with role D will be able to do anything role E is able to do.
 \subsection{User System} \label{overview.project-objectives.user-system}
 Roles: \{Site Visitors\}, \{Logged-in Users\}\n
 \begin{itemize}
@@ -92,11 +90,10 @@ where visitors are allowed to create accounts and ones with an account could log
 Authentication techniques are implemented to assist this system, which details are given in later chapters.
 \br
 The User System is the core of all systems possibly involved in this application,
-including the \hyperref[overview.project-objectives.team-system]{Team System}
-and the \hyperref[overview.project-objectives.assignment-system]{Assignment System},
-and any systems that might be added in the future (e.g. Posts and Comments System, Instant Messaging System with P2P WebRTC or C/S WebSockets).
-\newpage
-
+including the \hyperref[overview.project-objectives.team-system]{Team System},
+the \hyperref[overview.project-objectives.assignment-system]{Assignment System},
+and any systems that might be added in the future (e.g. Posts and Comments System,
+Instant Messaging System with P2P WebRTC or C/S WebSockets).
 \subsection{Team System} \label{overview.project-objectives.team-system}
 Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}\n
 \begin{itemize}
@@ -129,14 +126,13 @@ Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}\n
 \end{itemize}\n
 Slightly isomorphic to Google Classroom,
 users are allowed to create or join teams, and team owners could (de-)appoint team monitors to help manage the team.
-Roles of different hierarchies could manipulate the team to different degree and extent.
+Besides that, roles of different hierarchies could manage members and perform team actions
+to different degrees and extents.
 \br
-The *post and comment features are not implemented in the initial version of the web app
-as it is deemed to be of lower priority. It will be decoupled from this system if implemented.
+The *post and comment features are not implemented, at least in the initial version of the web app,
+as it is deemed to be of lower priority. It will be decoupled from this system if later implemented.
 \br
 The Team System is the core of the \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
-\newpage
-
 \subsection{Assignment System} \label{overview.project-objectives.assignment-system}
 Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}\n
 \begin{itemize}
@@ -154,48 +150,44 @@ Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}\n
 		      \item Add attachments to submissions;
 	      \end{itemize}
 \end{itemize}\n
-The Assignment System is the core feature we are asked to complete.\n
+The Assignment System is the core feature we are asked to complete.
 The system works intuitively:\n
-Team owners are allowed to assign assignments to some team members with a deadline.\n
+Team owners are allowed to assign assignments to some team members with a deadline.
 The assignees are allowed to (draft and) hand in their submission,
 after which the team owner could grade it, give comments and return it.
 \br
 An attachment system is designed to handle attachment files, to allow team owners/assignees
-to attach more files to their assignments/submissions along the way.
-More details will be given in later chapters.
-\newpage
-
+to attach more files to their assignments/submissions along the way
+without the need to re-attach all prior files after quitting.
+More details will be provided in later chapters.
 \section{Project Structure} \label{overview.project-structure}
-
 \subsection{Folder Structure} \label{overview.project-structure.folder-structure}
-To keep a clear separation of concern, the web app is separated into
+To keep a clear separation of concern and promote modularity,
+the web application is separated into
 the Data Layer, the Application Layer and the Presentation Layer.
 \br
 This could be seen in the project folder structure.
-The folder structure is subject of frequent change, but the overall shape will not differ vastly across revisions.
+The folder structure is subject to frequent changes,
+but the main shape will not differ vastly across revisions.
+%MO REMINDER this dirtree shall be on a single page
 \br
 \dirtree{%
 	.1 /.
 	.2 design/.
 	.3 database/.
-	.4 assigneedb.sql.
-	.4 ....
-	.3 report.tex.
-	.3 ....
+	.3 report/.
 	.2 site/.
 	.3 backend/.
-	.4 ....
 	.3 frontend/.
-	.4 ....
 }
-\vspace{3 em}\n
-Brief explanations of the directories are given on the next page.
-\newpage
-
+\vspace{2 em}
 The directory design/ contains files that would not be served as a part of the actual web application site.
-This includes this report, images used in this report etc.
+This includes this report, media assets used in this report etc.
 \br
-The directory database/ corresponds to the Data Layer. It is kept under design/ since the hosted database itself is independent of the project folder, so only the distribution .sql file that would be used to instantiate the database is kept.
+Notes:\n
+The directory database/ corresponds to the Data Layer. It is kept under design/ since the hosted database
+itself is independent of the site/ folder (only linked via database url in .env, details later),
+so only the distribution .sql file that would be used to instantiate the database is kept.
 Details are given in the chapter \hyperref[data-layer]{Data Layer}.
 \br
 The directory backend/ corresponds to the Application Layer.
@@ -203,15 +195,13 @@ Details are given in the chapter \hyperref[application-layer]{Application Layer}
 \br
 The directory frontend/ corresponds to the Presentation Layer.
 Details are given in the chapter \hyperref[presentation-layer]{Presentation Layer}.
-
 \subsection{Repository} \label{overview.project-structure.repository}
 The whole project folder has a repository and is available at
 \href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee}
-(If you cannot open the repository, I might have set visibility to private).
 \br
 With Git(Hub) we could review all past commits from the start of this project to the latest update or patch.
-This eases version control and debugging,
-not mentioning we could utilize repository branches to work on back/front-end simultaneously without worrying about a mess.
+This not only eases version control and debugging,
+but also allows us to work on back/front-end etc. simultaneously with branches.
 \br
 And of course the productivity benefits of having a repository do not stop here.
 
@@ -219,18 +209,18 @@ And of course the productivity benefits of having a repository do not stop here.
 
 \section{Design}
 
-\chapter{Application Layer} \label{application-layer}
+% \chapter{Application Layer} \label{application-layer}
 
-\chapter{Presentation Layer} \label{presentation-layer}
+% \chapter{Presentation Layer} \label{presentation-layer}
 
-\chapter{Security} \label{security}
+% \chapter{Security} \label{security}
 
-\chapter{Accessibility} \label{accessibility}
+% \chapter{Accessibility} \label{accessibility}
 
-\chapter{Performance} \label{performance}
+% \chapter{Performance} \label{performance}
 
-\chapter{Quality Assurance} \label{quality-assurance}
+% \chapter{Quality Assurance} \label{quality-assurance}
 
-\chapter{Tools Used} \label{tools-used}
+% \chapter{Tools Used} \label{tools-used}
 
 \end{document}
