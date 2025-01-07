@@ -52,9 +52,9 @@ This report contains the following chapters of different aspects:
 \tableofcontents
 \newpage
 
-\chapter{Overview}\label{overview}
+\chapter{Overview} \label{overview}
 
-\section{Project Objectives}\label{overview.project-objectives}
+\section{Project Objectives} \label{overview.project-objectives}
 The next few pages is a brief overview of what could be done by users of different roles.\n
 A few systems are decoupled to handle complicated application logic.
 As of now we have the 3 core systems: the User System, the Team System and the Assignment System.
@@ -69,7 +69,7 @@ Symbolic notes:\n
 \{D\} $\in$ \{E\} means the role D inherits from role E, users with role D will be able to do anything role E is able to do.
 \newpage
 
-\subsection{User System}\label{overview.project-objectives.user-system}
+\subsection{User System} \label{overview.project-objectives.user-system}
 Roles: \{Site Visitors\}, \{Logged-in Users\}\n
 \begin{itemize}
 	\item \{Site Visitors\}
@@ -94,10 +94,10 @@ Authentication techniques are implemented to assist this system, which details a
 The User System is the core of all systems possibly involved in this application,
 including the \hyperref[overview.project-objectives.team-system]{Team System}
 and the \hyperref[overview.project-objectives.assignment-system]{Assignment System},
-and any systems that might be added in the future (e.g. Posts and Comments System, WebRTC Protocol Instant Messaging System).
+and any systems that might be added in the future (e.g. Posts and Comments System, Instant Messaging System with P2P WebRTC or C/S WebSockets).
 \newpage
 
-\subsection{Team System}\label{overview.project-objectives.team-system}
+\subsection{Team System} \label{overview.project-objectives.team-system}
 Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}\n
 \begin{itemize}
 	\item \{Users\}
@@ -137,7 +137,7 @@ as it is deemed to be of lower priority. It will be decoupled from this system i
 The Team System is the core of the \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
 \newpage
 
-\subsection{Assignment System}\label{overview.project-objectives.assignment-system}
+\subsection{Assignment System} \label{overview.project-objectives.assignment-system}
 Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}\n
 \begin{itemize}
 	\item \{Team Owners\}
@@ -165,9 +165,9 @@ to attach more files to their assignments/submissions along the way.
 More details will be given in later chapters.
 \newpage
 
-\section{Project Structure}\label{overview.project-structure}
+\section{Project Structure} \label{overview.project-structure}
 
-\subsection{Folder Structure}\label{overview.project-structure.folder-structure}
+\subsection{Folder Structure} \label{overview.project-structure.folder-structure}
 To keep a clear separation of concern, the web app is separated into
 the Data Layer, the Application Layer and the Presentation Layer.
 \br
@@ -204,7 +204,7 @@ Details are given in the chapter \hyperref[application-layer]{Application Layer}
 The directory frontend/ corresponds to the Presentation Layer.
 Details are given in the chapter \hyperref[presentation-layer]{Presentation Layer}.
 
-\subsection{Repository}\label{overview.project-structure.repository}
+\subsection{Repository} \label{overview.project-structure.repository}
 The whole project folder has a repository and is available at
 \href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee}
 (If you cannot open the repository, I might have set visibility to private).
@@ -215,23 +215,22 @@ not mentioning we could utilize repository branches to work on back/front-end si
 \br
 And of course the productivity benefits of having a repository do not stop here.
 
-\chapter{Data Layer}\label{data-layer}
+\chapter{Data Layer} \label{data-layer}
 
-\section{Design}\label{data-layer.design}
+\section{Design}
 
+\chapter{Application Layer} \label{application-layer}
 
-\chapter{Application Layer}\label{application-layer}
+\chapter{Presentation Layer} \label{presentation-layer}
 
-\chapter{Presentation Layer}\label{presentation-layer}
+\chapter{Security} \label{security}
 
-\chapter{Security}\label{security}
+\chapter{Accessibility} \label{accessibility}
 
-\chapter{Accessibility}\label{accessibility}
+\chapter{Performance} \label{performance}
 
-\chapter{Performance}\label{performance}
+\chapter{Quality Assurance} \label{quality-assurance}
 
-\chapter{Quality Assurance}\label{quality-assurance}
-
-\chapter{Tools Used}\label{tools-used}
+\chapter{Tools Used} \label{tools-used}
 
 \end{document}

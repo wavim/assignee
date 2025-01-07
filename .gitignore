@@ -2,4 +2,13 @@
 **/dist
 **/public
 **/.env
-indent.log
+
+# out pdf file too large, stacked in .git so also removed
+design/report/*.aux
+design/report/*.fdb_latexmk
+design/report/*.fls
+design/report/*.log
+design/report/*.out
+design/report/*.pdf
+design/report/*.synctex.gz
+design/report/*.toc
