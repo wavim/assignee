@@ -34,26 +34,26 @@ This report contains the following chapters of different aspects:
 	\item \hyperref[data-layer]{Data Layer}:\\
 	      Relational database design and implementation;
 	      %MO DEV unfinished
-	\item \hyperref[application-layer]{Application Layer}:\\
-	      Site back-end components design and implementation;
-	\item \hyperref[presentation-layer]{Presentation Layer}:\\
-	      Site front-end components design and implementation;
-	\item \hyperref[security]{Security}:\\
-	      User authentication and cross-layer interaction security;
-	\item \hyperref[accessibility]{Accessibility}:\\
-	      Site accessibility considerations and localization (l10n);
-	\item \hyperref[performance]{Performance}:\\
-	      Application performance optimizations;
-	\item \hyperref[quality-assurance]{Quality Assurance}:\\
-	      Application unit tests and integration tests;
-	\item \hyperref[tools-used]{Tools Used}:\\
-	      Applications, extensions, packages and libraries used during development;
+	      % \item \hyperref[application-layer]{Application Layer}:\\
+	      %       Site back-end components design and implementation;
+	      % \item \hyperref[presentation-layer]{Presentation Layer}:\\
+	      %       Site front-end components design and implementation;
+	      % \item \hyperref[security]{Security}:\\
+	      %       User authentication and cross-layer interaction security;
+	      % \item \hyperref[accessibility]{Accessibility}:\\
+	      %       Site accessibility considerations and localization (l10n);
+	      % \item \hyperref[performance]{Performance}:\\
+	      %       Application performance optimizations;
+	      % \item \hyperref[quality-assurance]{Quality Assurance}:\\
+	      %       Application unit tests and integration tests;
+	      % \item \hyperref[tools-used]{Tools Used}:\\
+	      %       Applications, extensions, packages and libraries used during development;
 \end{itemize}
 \tableofcontents
 
 \chapter{Overview} \label{overview}
 \section{Project Objectives} \label{overview.project-objectives}
-The next few pages is a brief overview of what could be done by users of different roles.\n
+The next few pages are a brief overview of what could be done by users of different roles.\n
 A few systems are decoupled to handle complicated application logic.
 As of now we have 3 core systems: the User System, the Team System and the Assignment System,
 as will be described below.
@@ -85,15 +85,14 @@ Roles: \{Site Visitors\}, \{Logged-in Users\}\n
 	      \end{itemize}
 \end{itemize}\n
 The User System is simply a casual user account system you will find in any web application,
-where visitors are allowed to create accounts and ones with an account could log-in and manipulate the account.
+where visitors are allowed to create accounts and ones with an account could log in and manipulate the account.
 \br
 Authentication techniques are implemented to assist this system, which details are given in later chapters.
 \br
 The User System is the core of all systems possibly involved in this application,
 including the \hyperref[overview.project-objectives.team-system]{Team System},
 the \hyperref[overview.project-objectives.assignment-system]{Assignment System},
-and any systems that might be added in the future (e.g. Posts and Comments System,
-Instant Messaging System with P2P WebRTC or C/S WebSockets).
+and any systems that might be added in the future (e.g. Posts and Comments System, Instant Messaging System with P2P WebRTC or C/S WebSockets).
 \subsection{Team System} \label{overview.project-objectives.team-system}
 Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}\n
 \begin{itemize}
@@ -141,7 +140,7 @@ Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}\n
 		      \item Author assignments;
 		      \item Add attachments to assignments;
 		      \item Assign assignments;\null\hfill \{Team Members\} $\rightarrow$ \{Assignees\}
-		      \item De-assign assignments;\null\hfill \{Assignees\} $\rightarrow$ \{Team Members\}
+		      \item Revoke assignments;\null\hfill \{Assignees\} $\rightarrow$ \{Team Members\}
 		      \item Grade, comment and return submissions;
 	      \end{itemize}
 	\item \{Assignees\} $\in$ \{Team Members\}
@@ -167,8 +166,7 @@ the web application is separated into
 the Data Layer, the Application Layer and the Presentation Layer.
 \br
 This could be seen in the project folder structure.
-The folder structure is subject to frequent changes,
-but the main shape will not differ vastly across revisions.
+The folder structure is subject to frequent changes, but the main shape will not differ vastly across revisions.
 %MO REMINDER this dirtree shall be on a single page
 \br
 \dirtree{%
@@ -185,8 +183,7 @@ The directory design/ contains files that would not be served as a part of the a
 This includes this report, media assets used in this report etc.
 \br
 Notes:\n
-The directory database/ corresponds to the Data Layer. It is kept under design/ since the hosted database
-itself is independent of the site/ folder (only linked via database url in .env, details later),
+The directory database/ corresponds to the Data Layer. It is kept under design/ since the hosted database itself is independent of the site/ folder (only linked via database URL in .env),
 so only the distribution .sql file that would be used to instantiate the database is kept.
 Details are given in the chapter \hyperref[data-layer]{Data Layer}.
 \br
@@ -206,8 +203,17 @@ but also allows us to work on back/front-end etc. simultaneously with branches.
 And of course the productivity benefits of having a repository do not stop here.
 
 \chapter{Data Layer} \label{data-layer}
-
-\section{Design}
+This chapter covers the design and implementation of the supporting relational database.
+\br
+In the section \hyperref[data-layer.design]{Design} we cover the design of tables, fields and their data types together with the rationales.
+We also discuss the relation mappings of tables and fields from a database theory point of view.
+Finally, we would discuss the adoption of normal forms in more detail.
+\br
+%MO DEV unfinished
+% In the section \hyperref[data-layer.implementation]{Implementation}
+\section{Design} \label{data-layer.design}
+The design of the relational database follows the blueprint provided by the section \hyperref[overview.project-objectives]{Project Objectives},
+the three core systems and related entities (roles) are used to structure and content the design.
 
 % \chapter{Application Layer} \label{application-layer}
 

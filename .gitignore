@@ -12,3 +12,6 @@ design/report/*.pdf
 design/report/*.synctex.gz
 design/report/*.toc
 **/indent.log
+
+.vscode/ltex.dictionary.en-US.txt
+.vscode/ltex.hiddenFalsePositives.en-US.txt
