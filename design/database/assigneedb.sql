@@ -3,426 +3,264 @@
 -- Host: localhost    Database: assigneedb
 -- ------------------------------------------------------
 -- Server version	8.0.11
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-
-SET
-	NAMES utf8mb4;
-
+ SET NAMES utf8mb4 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-
 /*!40103 SET TIME_ZONE='+00:00' */;
-
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `appointments` (
+  `tid` bigint(20) unsigned NOT NULL,
+  `uid` bigint(20) unsigned NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`tid`,`uid`),
+  KEY `appointment_of_user_idx` (`uid`),
+  CONSTRAINT `appointment_of_team` FOREIGN KEY (`tid`) REFERENCES `teams` (`tid`) ON DELETE CASCADE,
+  CONSTRAINT `appointment_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `assignment_attachments`
 --
+
 DROP TABLE IF EXISTS `assignment_attachments`;
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`assignment_attachments` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`attach_assignmentid` bigint (20) unsigned NOT NULL,
-		`file_name` varchar(255) NOT NULL,
-		`file_blob` mediumblob NOT NULL,
-		`created_at` bigint (20) unsigned NOT NULL,
-		PRIMARY KEY (`id`),
-		KEY `attachments_of_assignment` (`attach_assignmentid`),
-		CONSTRAINT `attachments_of_assignment` FOREIGN KEY (`attach_assignmentid`) REFERENCES `assignment_details` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `assignment_details`
---
-DROP TABLE IF EXISTS `assignment_details`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`assignment_details` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`assign_teamid` bigint (20) unsigned NOT NULL,
-		`details` text NOT NULL,
-		`deadline` bigint (20) unsigned NOT NULL,
-		`created_at` bigint (20) unsigned NOT NULL,
-		`updated_at` bigint (20) unsigned NOT NULL,
-		`expires_at` bigint (20) unsigned GENERATED ALWAYS AS ((`created_at` + ((365 * 24) * 3600))) VIRTUAL NOT NULL,
-		PRIMARY KEY (`id`),
-		KEY `assignment_of_team` (`assign_teamid`),
-		CONSTRAINT `assignment_of_team` FOREIGN KEY (`assign_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `assignment_attachments` (
+  `aid` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `blob` mediumblob NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`aid`,`name`),
+  CONSTRAINT `attachment_of_assignment` FOREIGN KEY (`aid`) REFERENCES `assignments` (`aid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `assignments`
 --
+
 DROP TABLE IF EXISTS `assignments`;
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`assignments` (
-		`assign_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`assign_assignmentid` bigint (20) unsigned NOT NULL,
-			`status` enum ('assigned', 'submitted', 'returned') NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			`updated_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`assign_userid`, `assign_assignmentid`),
-			KEY `assignment_assignee` (`assign_userid`),
-			KEY `assignment_with_details` (`assign_assignmentid`),
-			CONSTRAINT `assignment_assignee` FOREIGN KEY (`assign_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-			CONSTRAINT `assignment_with_details` FOREIGN KEY (`assign_assignmentid`) REFERENCES `assignment_details` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `assignments` (
+  `aid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tid` bigint(20) unsigned NOT NULL,
+  `details` text NOT NULL,
+  `deadline` bigint(20) unsigned NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  `updated` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`aid`),
+  KEY `assignment_of_team_idx` (`tid`),
+  CONSTRAINT `assignment_of_team` FOREIGN KEY (`tid`) REFERENCES `teams` (`tid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `email_authcodes`
+-- Table structure for table `authcodes`
 --
-DROP TABLE IF EXISTS `email_authcodes`;
 
+DROP TABLE IF EXISTS `authcodes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `authcodes` (
+  `uid` bigint(20) unsigned NOT NULL,
+  `hash` binary(255) NOT NULL,
+  `salt` binary(32) NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`uid`),
+  CONSTRAINT `authcode_for_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-SET
-	character_set_client = utf8mb4;
+--
+-- Table structure for table `invitations`
+--
 
-CREATE TABLE
-	`email_authcodes` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`auth_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`code_hash` binary(255) NOT NULL,
-			`code_salt` binary(32) NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			`expires_at` bigint (20) unsigned GENERATED ALWAYS AS ((`created_at` + (10 * 60))) VIRTUAL NOT NULL,
-			PRIMARY KEY (`id`),
-			KEY `email_authcode_for_user` (`auth_userid`),
-			CONSTRAINT `email_authcode_for_user` FOREIGN KEY (`auth_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+DROP TABLE IF EXISTS `invitations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `invitations` (
+  `tid` bigint(20) unsigned NOT NULL,
+  `code` binary(4) NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`tid`),
+  UNIQUE KEY `invite_code_bytes_UNIQUE` (`code`),
+  CONSTRAINT `code_for_team` FOREIGN KEY (`tid`) REFERENCES `teams` (`tid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `memberships`
+--
+
+DROP TABLE IF EXISTS `memberships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `memberships` (
+  `tid` bigint(20) unsigned NOT NULL,
+  `uid` bigint(20) unsigned NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`tid`,`uid`),
+  KEY `membership_of_user_idx` (`uid`),
+  CONSTRAINT `membership_of_team` FOREIGN KEY (`tid`) REFERENCES `teams` (`tid`) ON DELETE CASCADE,
+  CONSTRAINT `membership_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `passwords`
+--
+
+DROP TABLE IF EXISTS `passwords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `passwords` (
+  `uid` bigint(20) unsigned NOT NULL,
+  `hash` binary(255) NOT NULL,
+  `salt` binary(32) NOT NULL,
+  `updated` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`uid`),
+  CONSTRAINT `password_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `preferences`
+--
+
+DROP TABLE IF EXISTS `preferences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `preferences` (
+  `uid` bigint(20) unsigned NOT NULL,
+  `override` json NOT NULL,
+  `updated` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`uid`),
+  CONSTRAINT `preferences_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `sessions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) unsigned NOT NULL,
+  `hash` binary(255) NOT NULL,
+  `salt` binary(32) NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `session_of_user_idx` (`uid`),
+  CONSTRAINT `session_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `submission_attachments`
 --
+
 DROP TABLE IF EXISTS `submission_attachments`;
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`submission_attachments` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`attach_submissionid` bigint (20) unsigned NOT NULL,
-		`file_name` varchar(255) NOT NULL,
-		`file_blob` mediumblob NOT NULL,
-		`created_at` bigint (20) unsigned NOT NULL,
-		PRIMARY KEY (`id`),
-		KEY `attachments_of_submission` (`attach_submissionid`),
-		CONSTRAINT `attachments_of_submission` FOREIGN KEY (`attach_submissionid`) REFERENCES `submissions` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `submission_attachments` (
+  `sid` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `blob` mediumblob NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`sid`,`name`),
+  KEY `attachment_submission_filename` (`sid`,`name`),
+  CONSTRAINT `attachment_of_submission` FOREIGN KEY (`sid`) REFERENCES `submissions` (`sid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `submissions`
 --
+
 DROP TABLE IF EXISTS `submissions`;
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`submissions` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`submit_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`submit_assignmentid` bigint (20) unsigned NOT NULL,
-			`grade` enum ('A', 'B', 'C', 'D', 'F') CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci DEFAULT NULL,
-			`comments` text,
-			`created_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`id`),
-			KEY `submission_of_user` (`submit_userid`),
-			KEY `submission_of_assignment` (`submit_assignmentid`),
-			CONSTRAINT `submission_of_assignment` FOREIGN KEY (`submit_assignmentid`) REFERENCES `assignment_details` (`id`) ON DELETE CASCADE,
-			CONSTRAINT `submission_of_user` FOREIGN KEY (`submit_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `team_invite_codes`
---
-DROP TABLE IF EXISTS `team_invite_codes`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`team_invite_codes` (
-		`invite_code_bytes` binary(4) NOT NULL,
-		`invite_teamid` bigint (20) unsigned NOT NULL,
-		`created_at` bigint (20) unsigned NOT NULL,
-		`expires_at` bigint (20) unsigned GENERATED ALWAYS AS ((`created_at` + ((7 * 24) * 3600))) VIRTUAL NOT NULL,
-		PRIMARY KEY (`invite_code_bytes`),
-		UNIQUE KEY `invite_code_of_team` (`invite_teamid`),
-		CONSTRAINT `invite_code_of_team` FOREIGN KEY (`invite_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `team_members`
---
-DROP TABLE IF EXISTS `team_members`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`team_members` (
-		`member_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`member_teamid` bigint (20) unsigned NOT NULL,
-			`perteam_settings_override` json NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			`updated_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`member_userid`, `member_teamid`),
-			KEY `membership_of_user` (`member_userid`),
-			KEY `member_of_team` (`member_teamid`),
-			CONSTRAINT `member_of_team` FOREIGN KEY (`member_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE,
-			CONSTRAINT `membership_of_user` FOREIGN KEY (`member_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `team_monitors`
---
-DROP TABLE IF EXISTS `team_monitors`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`team_monitors` (
-		`monitor_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`monitor_teamid` bigint (20) unsigned NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`monitor_userid`, `monitor_teamid`),
-			KEY `user_be_appoint` (`monitor_userid`),
-			KEY `appoint_by_team` (`monitor_teamid`),
-			CONSTRAINT `appoint_by_team` FOREIGN KEY (`monitor_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE,
-			CONSTRAINT `user_be_appoint` FOREIGN KEY (`monitor_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `team_settings`
---
-DROP TABLE IF EXISTS `team_settings`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`team_settings` (
-		`owner_teamid` bigint (20) unsigned NOT NULL,
-		`team_override` json NOT NULL,
-		`updated_at` bigint (20) unsigned NOT NULL,
-		PRIMARY KEY (`owner_teamid`),
-		CONSTRAINT `team_own_settings` FOREIGN KEY (`owner_teamid`) REFERENCES `teams` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `submissions` (
+  `sid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `aid` bigint(20) unsigned NOT NULL,
+  `uid` bigint(20) unsigned NOT NULL,
+  `status` enum('assigned','submitted','returned') CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL DEFAULT 'assigned',
+  `grade` enum('A','B','C','D','F') CHARACTER SET ascii COLLATE ascii_general_ci DEFAULT NULL,
+  `comments` text,
+  `created` bigint(20) unsigned NOT NULL,
+  `updated` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`sid`),
+  KEY `submission_of_assignment_idx` (`aid`),
+  KEY `submission_of_user_idx` (`uid`),
+  CONSTRAINT `submission_of_assignment` FOREIGN KEY (`aid`) REFERENCES `assignments` (`aid`) ON DELETE CASCADE,
+  CONSTRAINT `submission_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `teams`
 --
+
 DROP TABLE IF EXISTS `teams`;
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`teams` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`display_name` varchar(30) NOT NULL,
-		`owner_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`description` varchar(80) NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			`updated_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`id`),
-			KEY `user_own_team` (`owner_userid`),
-			CONSTRAINT `user_own_team` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_passwords`
---
-DROP TABLE IF EXISTS `user_passwords`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`user_passwords` (
-		`owner_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`password_hash` binary(255) NOT NULL,
-			`password_salt` binary(32) NOT NULL,
-			`updated_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`owner_userid`),
-			CONSTRAINT `user_own_password` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_sessions`
---
-DROP TABLE IF EXISTS `user_sessions`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`user_sessions` (
-		`id` bigint (20) unsigned NOT NULL AUTO_INCREMENT,
-		`bearer_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`bearer_token_hash` binary(255) NOT NULL,
-			`bearer_token_salt` binary(32) NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			`expires_at` bigint (20) unsigned GENERATED ALWAYS AS ((`created_at` + ((7 * 24) * 3600))) VIRTUAL NOT NULL,
-			PRIMARY KEY (`id`),
-			KEY `user_bear_session` (`bearer_userid`),
-			CONSTRAINT `user_bear_session` FOREIGN KEY (`bearer_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_settings`
---
-DROP TABLE IF EXISTS `user_settings`;
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`user_settings` (
-		`owner_userid` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`user_override` json NOT NULL,
-			`updated_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`owner_userid`),
-			CONSTRAINT `user_own_settings` FOREIGN KEY (`owner_userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `teams` (
+  `tid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `owner_uid` bigint(20) unsigned NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(80) NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  `updated` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`tid`),
+  KEY `user_own_team_idx` (`owner_uid`),
+  CONSTRAINT `user_own_team` FOREIGN KEY (`owner_uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `users`
 --
+
 DROP TABLE IF EXISTS `users`;
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-SET
-	character_set_client = utf8mb4;
-
-CREATE TABLE
-	`users` (
-		`id` varchar(30) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`display_name` varchar(30) NOT NULL,
-			`email` varchar(254) CHARACTER
-		SET
-			ascii COLLATE ascii_general_ci NOT NULL,
-			`created_at` bigint (20) unsigned NOT NULL,
-			`updated_at` bigint (20) unsigned NOT NULL,
-			PRIMARY KEY (`id`)
-	) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users` (
+  `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(254) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `created` bigint(20) unsigned NOT NULL,
+  `updated` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-09 19:53:40
+-- Dump completed on 2025-01-12 13:58:58
