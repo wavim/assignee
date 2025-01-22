@@ -1,3 +1,4 @@
+%MO TODO cleanup and trim down useless sentences
 \documentclass[12pt]{report}
 
 \usepackage{times}
@@ -13,7 +14,7 @@
 \renewcommand{\DTstyle}{\rmfamily\large}
 
 \newcommand{\n}{\par}
-\newcommand{\br}{\vspace{1 em}\n}
+\newcommand{\br}{\n\vspace{1 em}\n}
 
 \title{SBA Web Application Report}
 \author{David W.}
@@ -194,7 +195,7 @@ This chapter covers the design and implementation of the supporting relational d
 \br
 In the section \hyperref[data-layer.design]{Design}, we discuss the design of tables, fields, and their data types, along with the rationales behind these choices. We also explore the relational mappings of tables and fields from multiple perspectives. Finally, we will delve into the adoption of normal forms in greater detail.
 \br
-%MO DEV unfinished
+%MO DEV data types and design seems uncorrelated
 % In the section \hyperref[data-layer.implementation]{Implementation}
 \section{Design} \label{data-layer.design}
 The design of the relational database follows the blueprint outlined in the section \hyperref[overview.project-objectives]{Project Objectives}.
@@ -202,28 +203,11 @@ The three core systems and their related entities (roles) are utilized to struct
 \br
 Notes:\n
 Throughout the database, lowercase is used for table and field names, in contrast to conventional practices.
-This choice helps distinguish entities from SQL commands, which are typically written in uppercase.\n
-When not otherwise specified (Null-able), all table attributes are defined as Not Null.
-This approach is taken to prevent potential issues related to database consistency that can arise from having Null entries.
-It reduces the risk of anomalies in data retrieval, and simplifies backend application logic dealing with complicated queries.
+This choice helps distinguish entities from SQL commands, which are typically written in uppercase.
 \subsection{User System} \label{data-layer.design.user-system}
 The User System serves as the backbone of the entire web application, responsible for storing user account-related data.
 This system encompasses user identifiers, user preferences, and authentication data.
 \br
-In Assignee, users can register for accounts using their email addresses.
-The email address acts as the unique identifier for user login.
-This approach simplifies the process, eliminating the need for users to create a username,
-as their email is readily available for use.
-\br
-While logging in with their email addresses, users can choose their own display names for better identification.
-These display names do not need to be unique, allowing users the flexibility to select names that resonate with them.
-\br
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{user_system.jpeg}
-	\caption{User System ER Diagram}
-	\label{fig:user-system-er}
-\end{figure}
 The User System consists of five tables, as described below,
 \begin{itemize}
 	\item users: Contains user account identification information;
@@ -232,23 +216,63 @@ The User System consists of five tables, as described below,
 	\item passwords: Manages user password information;
 	\item sessions: Tracks user browser sessions;
 \end{itemize}
-\subsubsection{Table - users} \label{data-layer.design.user-system.users}
-- uid (Primary Key) (BIGINT UNSIGNED) (Auto-Increment)\n
-Although the email address is a candidate key for the table, uid is chosen as the primary key for several reasons:\n
-\begin{itemize}
-	\item Storage Efficiency: Tables referencing a user can save on storage space by using a BIGINT instead of a VARCHAR.
-	\item Indexing Performance: Indexing this frequently accessed table is typically faster with a BIGINT.
-	\item Consistency and Flexibility: Using an auto-increment primary key helps maintain database consistency and flexibility, especially if there comes a time when email login is no longer used.
-\end{itemize}\n
-The BIGINT is set to be unsigned to maintain consistency across the application.
-This approach prevents potential issues in backend logic that could arise from wrapped negative numbers,
-ensuring stability and reliability in data handling.
+Relations:\n
+A \{user\} can only have a single set of \{preferences\};\null\hfill (Mandatory)\n
+A set of \{preferences\} is only owned by a single \{user\};\null\hfill (Mandatory)
 \br
-- email (Unique) (VARCHAR(254) ASCII)\n
-The unique email address used for account registration and login is defined as VARCHAR type in the database schema. This choice accommodates the flexible length of email addresses.\n
-VARCHAR is capped to 254 characters in ASCII, this is to align with the standards outlined in
-\href{https://www.rfc-editor.org/rfc/rfc5322}{RFC 5322: Internet Message Format}.
+A \{user\} can only have a single valid email \{authcode\} at a time;\null\hfill (Optional)\n
+An email \{authcode\} is only for a single \{user\};\null\hfill (Mandatory)
 \br
+A \{user\} can only have a single \{password\};\null\hfill (Mandatory)\n
+A \{password\} is only for a single \{user\};\null\hfill (Mandatory)
+\br
+A \{user\} can have many \{sessions\} at the same time;\null\hfill (Optional)\n
+A \{session\} is only borne by a single \{user\};\null\hfill (Mandatory)
+%MO TODO add rationales for those relation constraints
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{user_system.jpeg}
+	\caption{User System ER Diagram}
+	\label{fig:user-system-er}
+\end{figure}
+\subsection{Team System} \label{data-layer.design.team-system}
+The Team System is built upon the User System to store teams related information.
+This system contains team identification and invitation data,
+whilst also keeping track of team monitor appointments.
+
+
+
+
+
+% \n
+% When not otherwise specified (Null-able), all table attributes are defined as Not Null.
+% This approach is taken to prevent potential issues related to database consistency that can arise from having Null entries.
+% It reduces the risk of anomalies and simplifies backend application logic dealing with complicated queries.
+% \br
+% In Assignee, users can register for accounts using their email addresses.
+% The email address acts as the unique identifier for user login.
+% This approach simplifies the process, eliminating the need for users to create a username,
+% as their email is readily available for use.
+% \br
+% While logging in with their email addresses, users can choose their own display names for better identification.
+% These display names do not need to be unique, allowing users the flexibility to select names that resonate with them.
+
+% - uid (Primary Key) (BIGINT UNSIGNED) (Auto-Increment)\n
+% Although the email address is a candidate key for the table, uid is chosen as the primary key for several reasons:\n
+% \begin{itemize}
+%     \item Storage Efficiency: Tables referencing a user can save on storage space by using a BIGINT instead of a VARCHAR.
+%     \item Indexing Performance: Indexing this frequently accessed table is typically faster with a BIGINT.
+%     \item Consistency and Flexibility: Using an auto-increment primary key helps maintain database consistency and flexibility, especially if there comes a time when email login is no longer used.
+% \end{itemize}\n
+% The BIGINT is set to be unsigned to maintain consistency across the application.
+% This approach prevents potential issues in backend logic that could arise from wrapped negative numbers,
+% ensuring stability and reliability in data handling.
+% \br
+% - email (Unique) (VARCHAR(254) ASCII)\n
+% The unique email address used for account registration and login is defined as VARCHAR type in the database schema. This choice accommodates the flexible length of email addresses.\n
+% VARCHAR is capped to 254 characters in ASCII, this is to align with the standards outlined in
+% \href{https://www.rfc-editor.org/rfc/rfc5322}{RFC 5322: Internet Message Format}.
+% \br
 
 % \chapter{Application Layer} \label{application-layer}
 
