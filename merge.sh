@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git checkout master
+git switch master
 
 branches=$(git branch | grep -v 'master' | sed 's/[ *\n]//g')
 
@@ -13,10 +13,10 @@ git push origin master
 
 for branch in $branches; do
     echo -e "\nUpdating $branch with latest master..."
-    git checkout "$branch"
+    git switch "$branch"
     git merge master
     git push origin "$branch"
 done
 
 echo
-git checkout master
+git switch master
