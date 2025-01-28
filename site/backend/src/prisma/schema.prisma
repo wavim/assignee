@@ -104,8 +104,8 @@ model appointments {
 
 model authcodes {
     uid     BigInt @id @db.UnsignedBigInt
-    hash    Bytes  @db.Binary(255)
-    salt    Bytes  @db.Binary(32)
+    hash    Bytes  @db.Binary(32)
+    salt    Bytes  @db.Binary(16)
     created BigInt @db.UnsignedBigInt
     users   users  @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "authcode_for_user")
 }
@@ -130,8 +130,8 @@ model memberships {
 
 model passwords {
     uid     BigInt @id @db.UnsignedBigInt
-    hash    Bytes  @db.Binary(255)
-    salt    Bytes  @db.Binary(32)
+    hash    Bytes  @db.Binary(32)
+    salt    Bytes  @db.Binary(16)
     updated BigInt @db.UnsignedBigInt
     users   users  @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "password_of_user")
 }
@@ -146,8 +146,8 @@ model preferences {
 model sessions {
     id      BigInt @id @default(autoincrement()) @db.UnsignedBigInt
     uid     BigInt @db.UnsignedBigInt
-    hash    Bytes  @db.Binary(255)
-    salt    Bytes  @db.Binary(32)
+    hash    Bytes  @db.Binary(32)
+    salt    Bytes  @db.Binary(16)
     created BigInt @db.UnsignedBigInt
     users   users  @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "session_of_user")
 
