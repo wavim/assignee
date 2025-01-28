@@ -1,4 +1,3 @@
-%MO TODO cleanup and trim down useless sentences
 \documentclass[12pt]{report}
 
 \usepackage{times}
@@ -29,28 +28,34 @@ This report discusses Assignee, a web application developed to fulfill the SBA t
 \br
 This report includes the following chapters on various aspects:
 \begin{itemize}
-	\item \hyperref[overview]{Overview}:\\
+	\item \S \hyperref[overview]{Overview}:\\
 	      Project objectives and structure;
-	\item \hyperref[data-layer]{Data Layer}:\\
+	\item \S \hyperref[data-layer]{Data Layer}:\\
 	      Relational database design and implementation;
-	\item \hyperref[application-layer]{Application Layer}:\\
-	      Design and implementation of site back-end components;
-	\item \hyperref[presentation-layer]{Presentation Layer}:\\
-	      Design and implementation of site front-end components;
-	\item \hyperref[security]{Security}:\\
+	\item \S \hyperref[application-layer]{Application Layer}:\\
+	      Design and implementation of site backend components;
+	\item \S \hyperref[presentation-layer]{Presentation Layer}:\\
+	      Design and implementation of site frontend components;
+	\item \S \hyperref[security]{Security}:\\
 	      User authentication and cross-layer interaction security;
-	\item \hyperref[accessibility]{Accessibility}:\\
+	\item \S \hyperref[accessibility]{Accessibility}:\\
 	      Considerations for site accessibility and localization (l10n);
-	\item \hyperref[performance]{Performance}:\\
+	\item \S \hyperref[performance]{Performance}:\\
 	      Optimizations for application performance;
-	\item \hyperref[quality-assurance]{Quality Assurance}:\\
+	\item \S \hyperref[quality-assurance]{Quality Assurance}:\\
 	      Unit and integration testing;
-	\item \hyperref[tools-used]{Tools Used}:\\
+	\item \S \hyperref[tools-used]{Tools Used}:\\
 	      Applications, extensions, packages, and libraries utilized during development;
 \end{itemize}
 \tableofcontents
 
+
+
+
 \chapter{Overview} \label{overview}
+
+
+
 \section{Project Objectives} \label{overview.project-objectives}
 The following pages provide a brief overview of user capabilities by role.
 We have three core systems - User, Team, and Assignment - designed to manage complex application logic, as detailed below.
@@ -63,6 +68,8 @@ Symbolic Notes:\n
 ...... $\rightarrow$ \{A\}: The user performing the action attains role A.\n
 \{B\} $\rightarrow$ \{C\}: The action allows a user with role B to attain role C.\n
 \{D\} $\in$ \{E\}: Role D inherits from role E, granting users with role D all permissions of role E.
+
+
 \subsection{User System} \label{overview.project-objectives.user-system}
 Roles: \{Site Visitors\}, \{Logged-in Users\}\n
 \begin{itemize}
@@ -86,8 +93,12 @@ It allows visitors to create accounts, while registered users can log in and man
 Authentication techniques are implemented to support this system, with detailed information provided in later chapters.
 \br
 The User System is central to all components of this application,
-including the Team System, the Assignment System, and any future systems that may be introduced,
+including the \S \hyperref[overview.project-objectives.team-system]{Team System},
+the \S \hyperref[overview.project-objectives.assignment-system]{Assignment System},
+and any future systems that may be introduced,
 such as a Posts and Comments System or an Instant Messaging System using P2P WebRTC or C/S WebSockets.
+
+
 \subsection{Team System} \label{overview.project-objectives.team-system}
 Roles: \{Users\}, \{Team Members\}, \{Team Monitors\}, \{Team Owners\}\n
 \begin{itemize}
@@ -123,7 +134,9 @@ Additionally, roles within the hierarchy can manage members and perform team act
 The *post and comment features are not implemented in the initial version of the web app, as they are considered a lower priority.
 If these features are added later, they will be decoupled from the current system.
 \br
-The Team System is central to the \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
+The Team System is central to the \S \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
+
+
 \subsection{Assignment System} \label{overview.project-objectives.assignment-system}
 Roles: \{Team Owners\}, (\{Team Members\},) \{Assignees\}\n
 \begin{itemize}
@@ -149,7 +162,12 @@ After submission, the team owner can grade the assignment, provide comments, and
 An attachment system is designed to manage attachment files,
 enabling team owners and assignees to add additional files to their assignments and submissions without needing to reattach all previous files after exiting.
 More details will be provided in later chapters.
-\section{Project Structure} \label{overview.project-structure}
+
+
+
+\section{Miscellaneous} \label{overview.miscellaneous}
+
+
 \subsection{Folder Structure} \label{overview.project-structure.folder-structure}
 To maintain a clear separation of concerns and promote modularity, the web application is divided into three layers,\n
 Data Layer: Manages data storage and retrieval;\n
@@ -176,103 +194,297 @@ Notes:\n
 The database/ directory corresponds to the Data Layer.
 It is located under design/ because the hosted database is independent of the site/ folder (linked only via the database URL in the .env file).
 Only the distribution .sql file used to instantiate the database is stored here.
-Further details can be found in the chapter \hyperref[data-layer]{Data Layer}.
+Further details can be found in the chapter \S \hyperref[data-layer]{Data Layer}.
 \br
 The directory backend/ corresponds to the Application Layer.
-Further details can be found in the chapter \hyperref[application-layer]{Application Layer}.
+Further details can be found in the chapter \S \hyperref[application-layer]{Application Layer}.
 \br
 The directory frontend/ corresponds to the Presentation Layer.
-More information is provided in the chapter \hyperref[presentation-layer]{Presentation Layer}.
+More information is provided in the chapter \S \hyperref[presentation-layer]{Presentation Layer}.
+
+
 \subsection{Repository} \label{overview.project-structure.repository}
 The entire project folder is hosted in a repository available at
-\href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee} for inspection.
+\href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee (github.com/CarbonicSoda/assignee)} for inspection.
 \br
 With GitHub, we can review all past commits from the start of this project to the latest update or patch.
 This functionality not only facilitates version control and debugging but also enables simultaneous work on the back-end and front-end through branching.
 
+
+
+
 \chapter{Data Layer} \label{data-layer}
 This chapter covers the design and implementation of the supporting relational database.
 \br
-In the section \hyperref[data-layer.design]{Design}, we discuss the design of tables, fields, and their data types, along with the rationales behind these choices. We also explore the relational mappings of tables and fields from multiple perspectives. Finally, we will delve into the adoption of normal forms in greater detail.
+In \S \hyperref[data-layer.design]{Design}, we discuss the design of tables, fields, and their data types, along with the rationales behind these choices. We also explore the relational mappings of tables and fields from multiple perspectives. Finally, we will delve into the adoption of normal forms in greater detail.
 \br
-%MO DEV data types and design seems uncorrelated
+
+
+
 % In the section \hyperref[data-layer.implementation]{Implementation}
 \section{Design} \label{data-layer.design}
-The design of the relational database follows the blueprint outlined in the section \hyperref[overview.project-objectives]{Project Objectives}.
+The design of the relational database follows the blueprint outlined in the section \S \hyperref[overview.project-objectives]{Project Objectives}.
 The three core systems and their related entities (roles) are utilized to structure and populate the database.
 \br
 Notes:\n
 Throughout the database, lowercase is used for table and field names, in contrast to conventional practices.
 This choice helps distinguish entities from SQL commands, which are typically written in uppercase.
+
+
 \subsection{User System} \label{data-layer.design.user-system}
 The User System serves as the backbone of the entire web application, responsible for storing user account-related data.
-This system encompasses user identifiers, user preferences, and authentication data.
+This system encompasses user identifiers, authentication data and user preferences.
 \br
 The User System consists of five tables, as described below,
 \begin{itemize}
 	\item users: Contains user account identification information;
-	\item preferences: Stores user preferences;
 	\item authcodes: Holds user email authentication codes;
 	\item passwords: Manages user password information;
 	\item sessions: Tracks user browser sessions;
+	\item preferences: Stores user preferences;
 \end{itemize}
 Relations:\n
-A \{user\} can only have a single set of \{preferences\};\null\hfill (Mandatory)\n
-A set of \{preferences\} is only owned by a single \{user\};\null\hfill (Mandatory)
-\br
 A \{user\} can only have a single valid email \{authcode\} at a time;\null\hfill (Optional)\n
-An email \{authcode\} is only for a single \{user\};\null\hfill (Mandatory)
+An email \{authcode\} is for one \{user\} only;\null\hfill (Mandatory)
 \br
 A \{user\} can only have a single \{password\};\null\hfill (Mandatory)\n
-A \{password\} is only for a single \{user\};\null\hfill (Mandatory)
+A \{password\} is for a single \{user\};\null\hfill (Mandatory)
 \br
 A \{user\} can have many \{sessions\} at the same time;\null\hfill (Optional)\n
-A \{session\} is only borne by a single \{user\};\null\hfill (Mandatory)
-%MO TODO add rationales for those relation constraints
+A \{session\} is bore by one \{user\} only;\null\hfill (Mandatory)
+\br
+A \{user\} can only have a single set of \{preferences\};\null\hfill (Mandatory)\n
+A set of \{preferences\} is owned by a single \{user\};\null\hfill (Mandatory)
+\br
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{user_system.jpeg}
+	\includegraphics[width=1\linewidth]{user_system.jpeg}
 	\caption{User System ER Diagram}
 	\label{fig:user-system-er}
 \end{figure}
+\br
+Rationales and more details on table fields are given below.\n
+Notes:\n
+When not otherwise specified (Null-able), all table attributes are defined as Not Null.
+This approach is taken to prevent potential issues related to database consistency that can arise from having Null entries.
+It reduces the risk of anomalies and simplifies backend application logic dealing with complicated queries.
+
+\subsubsection{Table - users} \label{data-layer.design.user-system.users}
+In Assignee, users can register for accounts using their email addresses.
+The email address acts as the unique identifier for user login.
+This approach simplifies the process, eliminating the need for users to create a username,
+as their email is readily available for use.\n
+While logging in with their email addresses, users can choose their own display names for better identification.
+These display names do not need to be unique, allowing users the flexibility to select names that resonate with them.
+\br
+- uid (Unsigned BIGINT) (Auto-Increment) (Primary Key)\n
+Although \{email\} is a candidate key for the table, \{uid\} is chosen as the primary key for several reasons:\n
+\begin{itemize}
+	\item Storage Efficiency: Tables referencing a user can save on storage space by using a BIGINT instead of a VARCHAR.
+	\item Indexing Performance: Indexing this frequently accessed table is typically faster with a BIGINT.
+	\item Consistency and Flexibility: Using an auto-increment primary key helps maintain database consistency and flexibility, especially if there comes a time when email login is no longer used.
+\end{itemize}\n
+BIGINT is set to be unsigned to maintain consistency across the application.
+This approach prevents potential issues in backend logic that could arise from wrapped negative numbers,
+ensuring stability and reliability in data handling.
+\br
+- email (ASCII VARCHAR(254)) (Unique)\n
+The email address used for account registration and login is defined as VARCHAR type in the database schema, necessarily Unique.
+This choice accommodates the flexible length of email addresses.\n
+VARCHAR is capped to 254 characters in ASCII, this is to align with the standards outlined in
+\href{https://www.rfc-editor.org/rfc/rfc5322}{RFC 5322: Internet Message Format (www.rfc-editor.org/rfc/rfc5322)}.
+\br
+- name (UTF-8 VARCHAR(30))\n
+The arbitrary display name users may use.
+It is of UTF-8 encoding to encompass user names in different languages or even emojis.
+Capped to 30 characters, this ensures the user name will not be too long for display yet not too short for personalization.
+\br
+- created \& updated (Unsigned BIGINT)\n
+Metadata fields for table. They record the time the entry is created / updated.\n
+Instead of DATETIME or TIMESTAMP, BIGINT is used for several reasons:
+DATETIME is dependent on the database used, i.e. MySQL and might not be cross-database compatible.
+TIMESTAMP stores UNIX timestamps which is indeed what we want to store,
+but is signed 32-bit integer in MySQL and is thus prone to the \href{https://en.wikipedia.org/wiki/Year_2038_problem}{Y2K38 Problem (en.wikipedia.org\-/wiki/Year\_2038\_problem)}.
+By using middlewares in backend API handling this problem can be mitigated.
+Details in \S \hyperref[application-layer.design.middlewares]{Middlewares}.
+The attribute(s) also exist in other tables, unless something is special about it, they will not be otherwise mentioned.
+
+\subsubsection{Table - authcodes} \label{data-layer.design.user-system.authcodes}
+Upon user registration or log-in (contexts that require better authentication) an authcode would be sent via email.
+(Or phone just in case email login is no longer used, this is an example of the benefit of using \{uid\} as primary key for \{users\})
+\br
+- uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
+Only a single email authcode would be valid for a user at a time,
+before sending a new authcode in backend the old one (if exists) would be deleted.
+Therefore, uid is sufficiently unique as the Primary Key of the table.\n
+There will be a cron job to remove expired authcodes from the database,
+with expiry calculated with \{created\} + \{Some Time e.g. 10 minutes\},
+in interval of an hour or alike defined in backend.
+When a user attempts to use an authcode, the backend will also check if it expired.\n
+The relation mapping between \{authcodes\} and \{users\} has ON DELETE: CASCADE,
+which will remove all entries in \{authcodes\} with authcodes.uid = users.uid upon deletion of a \{users\} entry automatically,
+preventing anomalies on entry deletion.
+This together with ON UPDATE: RESTRICT, which restricts updating referenced field,
+is applied to all relations in the database and will not be mentioned again otherwise.
+\br
+- hash (BINARY(255)) \& salt (BINARY(32))\n
+Storing authentication related information in raw form is not a good idea, i.e. password or authcode.
+Instead, the raw data is hashed using \href{https://en.wikipedia.org/wiki/Cryptographic_hash_function}{Cryptographically Secure Hashing Algorithms (en.wikipedia.org/wiki/Cryptographic\_hash\_function)} and stored in digest form.
+Hashes are practicably impossible to crack reversely in reasonable polynomial time.
+On attempt to verify input data, it is hashed again with the same algorithm and compared with the stored hash.\n
+The only reason the hash is stored in BINARY is because the algorithm used returns a byte buffer directly and it is simply more convenient to do so.
+The hash digest length is fixed to 255 bytes because internally MySQL uses 1 byte to store the length of the BINARY,
+and exceeding 255 bytes would force MySQL to use longer BINARY types internally.
+To produce a 255 byte digest, a variable digest length hashing function \href{https://keccak.team/kangarootwelve.html}{K12 (keccak.team/kangarootwelve.html)} is used,
+instead of traditional SHA-256, which is also weaker than K12 in cryptanalysis.\n
+However, storing only the hash is vulnerable to \href{https://en.wikipedia.org/wiki/Rainbow_table}{Rainbow Table Attacks (en.wikipedia.org\-/wiki/Rainbow\_table)},
+thus a salt is needed. A salt is a BINARY generated with a
+\href{https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator}{Cryptographically Secure Pseudorandom Number Generator (en.wikipedia.org/wiki/Cryptographically\_secure\_\-pseudorandom\_number\_generator)}
+with enough entropy, that is concatenated to the raw string (in byte buffer form) before hashing.
+It is of length 32 bytes in our case which is totally sufficient for the purpose.
+The salt will be stored directly in the database along with the hash,
+as having the salt will not provide any help in attempt to crack the original string.\n
+To summarize, given a raw string as input, a random salt of 32 bytes would be generated,
+appended to the raw string after converting it into byte form.
+After which the resulting byte buffer is hashed with K12 into a 255 bytes digest and stored in the database together with the salt.
+When a user attempts to verify his input against the correct one,
+his input would be appended with the salt stored in the database and hashed with K12 again,
+to check if the result digest matches with the stored hash.\n
+Technically there is a chance for hashes to collide with each other with different input,
+but in the case of using a 255 bytes digest with salt in use, the chance would be vanishingly low:
+you would need roughly $10^{31}$ items before having a approximate $10^{-15}$ chance of collision with 256 bytes hashes even without salts.\n
+Hash + salt is used in all authentication related tables in the database, and will not be detailed again otherwise.
+However, more information could be found in
+\S \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
+\S \hyperref[security.authentication]{Security - Authentication}.
+
+\subsubsection{Table - passwords} \label{data-layer.design.user-system.passwords}
+\br
+- uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
+The uid of user that owns the password.
+\br
+- hash (BINARY(255)) \& salt (BINARY(32))\n
+Hash and salt of the user password.
+\br
+- updated (Unsigned BIGINT)\n
+Will also be used to track how long it was since the user last changed his password.
+
+\subsubsection{Table - sessions} \label{data-layer.design.user-system.sessions}
+To keep user logged-in in certain scenarios, browser sessions must be used.
+Many browser sessions can exist at the same time for the same user.
+When a user chose to stay logged-in, a bearer token of form
+\{ uid: int, token: string \}
+will be generated,
+uid being the uid of the session bearer, and
+token being a random binary number generated by a CSPRNG in hex representation.
+The token will then be serialized and stored in the browser cookie for the site having an expiry date itself.\n
+The hash will be created from a concatenation of (browser info + device info etc.) + token + salt.
+Upon attempt to log-in to a session,
+for all sessions with sessions.uid = bearer\_token.uid,
+expiry would be checked in backend with respect to \{created\}.
+Then, if one is still active, the current browser info etc. would be retrieved and concatenated with bearer\_token.token,
+hashed with salt and compared with the stored hash.
+If match, the user would be logged-in and handed a new bearer token (old one would be deleted), renewing session expiry.
+More details will be handed in \S \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
+\S \hyperref[security.authentication]{Security - Authentication}.
+\br
+- uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
+The uid of the session bearer.
+\br
+- hash (BINARY(255)) \& salt (BINARY(32))\n
+Hash and salt of the reinforced session token.
+
+\subsubsection{Table - preferences} \label{data-layer.design.user-system.preferences}
+- uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
+The uid of the user that has the preferences.
+\br
+- override (JSON)\n
+The user would be allowed to override default settings and the overridden ones would be specified in this JSON object.
+For instance, if the default settings is \{ a: 1, b: \{ c: true \}, d: "h" \},
+and the user only alters settings.b.c, the JSON object would be like \{ b: \{ c: false \} \}.\n
+This is against 1NF (actually it might not be, as argued below) in return of way greater flexibility and storage efficiency.
+Imagine a few other settings are added, a table in 1NF would need more columns to deal with this.
+However with our methodology, upon addition of new settings, they would automatically be the default values waiting for the user to override.
+Also, nesting settings would not have been possible in 1NF.
+Only storing overridden settings will save a lot of storage space and is flexible in the long term.\n
+It is worth mentioning that this may not be a violation of 1NF at all.
+Scholar C. J. Date has argued that values can be arbitrarily complex objects \footnote{Date, C. J. (2007). What First Normal Form Really Means}.
+But this is open to interpretations.\n
+Notes: JSON is supported by all major DBMS nowadays. If somehow not, JSON could be easily serialized into string and stored as TEXT instead.
+
+\subsubsection{Indexes} \label{data-layer.design.user-system.indexes}
+Most of the tables in the User System have one-to-one relations with \{users\},
+so would not need additional indexing.
+However, \{sessions\} and \{users\} have a many-to-one relation.
+To easily retrieve all sessions owned by a user, sessions.uid is indexed.\n
+It is worth mentioning that unlike the obsolete binary search based index taught in textbooks,
+modern DBMS typically uses \href{https://en.wikipedia.org/wiki/B-tree}{B-Tree (en.wikipedia.org/wiki/B-tree)} for indexing, which is self-balancing.
+That means, unlike binary search based indexes that would require rebuilding the index from scratch on insert / delete,
+or BST-based indexes with $O(n)$ worst case time complexities for search / insert / delete,
+it would only require at most $O(logn)$ in any scenario.
+Implication is that in modern DBMS, indexes are way cheaper and the overhead of adding many indexes is staggeringly small.\n
+Thus in other systems that require more indexes, the trade-off of indexing would not be discussed as it is trivial.
+Only the use case of the indexes would be covered otherwise.
+
 \subsection{Team System} \label{data-layer.design.team-system}
 The Team System is built upon the User System to store teams related information.
 This system contains team identification and invitation data,
 whilst also keeping track of team monitor appointments.
+\br
+The Team System consists of five tables, as described below,
+\begin{itemize}
+	\item users: \S \hyperref[data-layer.design.user-system.users]{User System - users};
+	\item teams: Contains team details;
+	\item invitations: Holds team invitation codes;
+	\item memberships: Stores user memberships of teams;
+	\item appointments: Manages team monitor appointments;
+\end{itemize}
+\br
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{team_system.jpeg}
+	\caption{Team System ER Diagram}
+	\label{fig:team-system-er}
+\end{figure}
+\br
+Relations:\n
+A \{user\} can create and own many \{teams\} at the same time;\null\hfill (Optional)\n
+A \{team\} is owned by one \{user\} only;\null\hfill (Mandatory)
+\br
+A \{team\} can only have a single active \{invitation\} code;\null\hfill (Optional)\n
+An \{invitation\} code is for a single \{team\};\null\hfill (Mandatory)
+\br
+A \{user\} can have many \{memberships\} at the same time;\null\hfill (Optional)\n
+A \{membership\} is for a single \{team\} only;\null\hfill (Mandatory)
+\br
+A \{team\} can own many \{memberships\} at once;\null\hfill (Optional)\n
+A \{membership\} is of one \{user\} only;\null\hfill (Mandatory)
+\br
+A \{user\} can be in many \{appointments\};\null\hfill (Optional)\n
+An \{appointment\} is for a single \{team\} only;\null\hfill (Mandatory)
+\br
+A \{team\} can have many \{appointments\} at once;\null\hfill (Optional)\n
+An \{appointment\} is of one \{user\} only;\null\hfill (Mandatory)
+\br
+Rationales and more details on table fields are given below.
+
+\subsubsection{Table - user} \label{data-layer.design.team-system.users}
+Refer to \S \hyperref[data-layer.design.user-system.users]{User System - users}.
+
+\subsubsection{Table - teams} \label{data-layer.design.team-system.teams}
+
+
+
+%MO TODO discuss NFs, also + uid&email business etc.
+\subsection{Miscellaneous}
+%MO TODO reason why views / triggers etc. are not implemented
 
 
 
 
+% The table is separated from the \{user\} table, even not violating any normal forms (at least up to 3NF),
+% is to separate different concerns and better time-stamping (with separated \{updated\}) for security issues investigation.
 
-% \n
-% When not otherwise specified (Null-able), all table attributes are defined as Not Null.
-% This approach is taken to prevent potential issues related to database consistency that can arise from having Null entries.
-% It reduces the risk of anomalies and simplifies backend application logic dealing with complicated queries.
-% \br
-% In Assignee, users can register for accounts using their email addresses.
-% The email address acts as the unique identifier for user login.
-% This approach simplifies the process, eliminating the need for users to create a username,
-% as their email is readily available for use.
-% \br
-% While logging in with their email addresses, users can choose their own display names for better identification.
-% These display names do not need to be unique, allowing users the flexibility to select names that resonate with them.
-
-% - uid (Primary Key) (BIGINT UNSIGNED) (Auto-Increment)\n
-% Although the email address is a candidate key for the table, uid is chosen as the primary key for several reasons:\n
-% \begin{itemize}
-%     \item Storage Efficiency: Tables referencing a user can save on storage space by using a BIGINT instead of a VARCHAR.
-%     \item Indexing Performance: Indexing this frequently accessed table is typically faster with a BIGINT.
-%     \item Consistency and Flexibility: Using an auto-increment primary key helps maintain database consistency and flexibility, especially if there comes a time when email login is no longer used.
-% \end{itemize}\n
-% The BIGINT is set to be unsigned to maintain consistency across the application.
-% This approach prevents potential issues in backend logic that could arise from wrapped negative numbers,
-% ensuring stability and reliability in data handling.
-% \br
-% - email (Unique) (VARCHAR(254) ASCII)\n
-% The unique email address used for account registration and login is defined as VARCHAR type in the database schema. This choice accommodates the flexible length of email addresses.\n
-% VARCHAR is capped to 254 characters in ASCII, this is to align with the standards outlined in
-% \href{https://www.rfc-editor.org/rfc/rfc5322}{RFC 5322: Internet Message Format}.
-% \br
 
 % \chapter{Application Layer} \label{application-layer}
 
