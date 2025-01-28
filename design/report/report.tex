@@ -317,7 +317,7 @@ Upon user registration or log-in (contexts that require better authentication) a
 Only a single email authcode would be valid for a user at a time,
 before sending a new authcode in backend the old one (if exists) would be deleted.
 Therefore, uid is sufficiently unique as the Primary Key of the table.\n
-There will be a cron job to remove expired authcodes from the database,
+There will be a \href{https://en.wikipedia.org/wiki/Cron}{Cron Job (en.wikipedia.org/wiki/Cron)} to remove expired authcodes from the database,
 with expiry calculated with \{created\} + \{Some Time e.g. 10 minutes\},
 in interval of an hour or alike defined in backend.
 When a user attempts to use an authcode, the backend will also check if it expired.\n
@@ -327,32 +327,31 @@ preventing anomalies on entry deletion.
 This together with ON UPDATE: RESTRICT, which restricts updating referenced field,
 is applied to all relations in the database and will not be mentioned again otherwise.
 \br
-- hash (BINARY(255)) \& salt (BINARY(32))\n
+- hash (BINARY(32)) \& salt (BINARY(16))\n
 Storing authentication related information in raw form is not a good idea, i.e. password or authcode.
 Instead, the raw data is hashed using \href{https://en.wikipedia.org/wiki/Cryptographic_hash_function}{Cryptographically Secure Hashing Algorithms (en.wikipedia.org/wiki/Cryptographic\_hash\_function)} and stored in digest form.
 Hashes are practicably impossible to crack reversely in reasonable polynomial time.
 On attempt to verify input data, it is hashed again with the same algorithm and compared with the stored hash.\n
-The only reason the hash is stored in BINARY is that the algorithm used returns a byte buffer directly, and it is simply more convenient to do so.
-The hash digest length is fixed to 255 bytes because internally MySQL uses 1 byte to store the length of the BINARY,
-and exceeding 255 bytes would force MySQL to use longer BINARY types internally.
-To produce a 255 byte digest, a variable digest length hashing function \href{https://keccak.team/kangarootwelve.html}{K12 (keccak.team/kangarootwelve.html)} is used,
-instead of traditional SHA-256, which is also weaker than K12 in cryptanalysis.\n
+The only reason the hash is stored in BINARY is that the algorithm used returns a byte buffer directly,
+and it is simply more convenient to do so.
+A variable digest length hashing function \href{https://keccak.team/kangarootwelve.html}{K12 (keccak.team/kangarootwelve.html)} is used
+instead of traditional SHA-256, which is weaker than K12 in cryptanalysis.\n
 However, storing only the hash is vulnerable to \href{https://en.wikipedia.org/wiki/Rainbow_table}{Rainbow Table Attacks (en.wikipedia.org\-/wiki/Rainbow\_table)},
 thus a salt is needed. A salt is a BINARY generated with a
 \href{https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator}{Cryptographically Secure Pseudorandom Number Generator (en.wikipedia.org/wiki/Cryptographically\_secure\_\-pseudorandom\_number\_generator)}
 with enough entropy, that is concatenated to the raw string (in byte buffer form) before hashing.
-It is of length 32 bytes in our case which is totally sufficient for the purpose.
+It is of length 16 bytes in our case which is totally sufficient for the purpose.
 The salt will be stored directly in the database along with the hash,
 as having the salt will not provide any help in attempt to crack the original string.\n
-To summarize, given a raw string as input, a random salt of 32 bytes would be generated,
+To summarize, given a raw string as input, a random salt of 16 bytes would be generated,
 appended to the raw string after converting it into byte form.
-After which the resulting byte buffer is hashed with K12 into a 255 bytes digest and stored in the database together with the salt.
+After which the resulting byte buffer is hashed with K12 into a 256-bits digest and stored in the database together with the salt.
 When a user attempts to verify his input against the correct one,
 his input would be appended with the salt stored in the database and hashed with K12 again,
 to check if the resulting digest matches with the stored hash.\n
 Technically there is a chance for hashes to collide with each other with different input,
-but in the case of using a 255 bytes digest with salt in use, the chance would be vanishingly low:
-you would need roughly $10^{31}$ items before having an approximate $10^{-15}$ chance of collision with 256 bytes hashes even without salts.\n
+but in the case of using a 32 bytes digest with salt in use, the chance would be vanishingly low:
+you would need roughly $10^{31}$ items before having an approximate $10^{-15}$ chance of collision even without salts.\n
 Hash + salt is used in all authentication related tables in the database, and will not be detailed again otherwise.
 However, more information could be found in
 \S \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
@@ -363,7 +362,7 @@ However, more information could be found in
 - uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
 The uid of user that owns the password.
 \br
-- hash (BINARY(255)) \& salt (BINARY(32))\n
+- hash (BINARY(32)) \& salt (BINARY(16))\n
 Hash and salt of the user password.
 \br
 - updated (Unsigned BIGINT)\n
@@ -391,7 +390,7 @@ More details will be handed in \S \hyperref[application-layer.implementation.aut
 - uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
 The uid of the session bearer.
 \br
-- hash (BINARY(255)) \& salt (BINARY(32))\n
+- hash (BINARY(32)) \& salt (BINARY(16))\n
 Hash and salt of the reinforced session token.
 
 \subsubsection{Table - preferences} \label{data-layer.design.user-system.preferences}
@@ -418,7 +417,7 @@ so would not need additional indexing.
 However, \{sessions\} and \{users\} have a many-to-one relation.
 To easily retrieve all sessions owned by a user, sessions.uid is indexed.\n
 It is worth mentioning that unlike the obsolete binary search based index taught in textbooks,
-modern DBMS typically uses \href{https://en.wikipedia.org/wiki/B-tree}{B-Tree (en.wikipedia.org/wiki/B-tree)} for indexing, which is self-balancing.
+modern DBMS typically uses \href{https://en.wikipedia.org/wiki/B-tree}{B-Trees (en.wikipedia.org/wiki/B-tree)} for indexing, which is self-balancing.
 That means, unlike binary search based indexes that would require rebuilding the index from scratch on insert / delete,
 or BST-based indexes with $O(n)$ worst case time complexities for search / insert / delete,
 it would only require at most $O(logn)$ in any scenario.
@@ -468,15 +467,52 @@ An \{appointment\} is of one \{user\} only;\null\hfill (Mandatory)
 \br
 Rationales and more details on table fields are given below.
 
-\subsubsection{Table - user} \label{data-layer.design.team-system.users}
+\subsubsection{Table - users} \label{data-layer.design.team-system.users}
 Refer to \S \hyperref[data-layer.design.user-system.users]{User System - users}.
 
 \subsubsection{Table - teams} \label{data-layer.design.team-system.teams}
-Users in assignee are allowed to create an arbitrary amount of teams.
+Users in assignee are allowed to create and own an arbitrary amount of teams.
 This is slightly isomorphic to Google Classroom / Discord.
 \br
-- tid (Unsigned BIGINT) (Auto-Increment) (Primary Key)
+- tid (Unsigned BIGINT) (Auto-Increment) (Primary Key)\n
+Users should not have to waste time thinking of a unique team ID,
+instead when they create a team an auto-increment tid would be given to the team,
+and users may use whatever team name they want without worrying about uniqueness.
+\br
+- owner\_uid (Unsigned BIGINT) (Foreign Key $\rightarrow$ users.uid)\n
+The uid of the owner of the team.
+\br
+- name (UTF-8 VARCHAR(30))\n
+The arbitrary name of the team.
+It is of UTF-8 encoding to support team names in different languages and emojis etc.
+Capped to 30 characters ensures the team name will not be too long for display yet not too short for identification.
+\br
+- description (UTF-8 VARCHAR(80))\n
+The detailed description of the team displayed less prominently.
+It is of UTF-8 encoding to support different languages and emojis etc.
+Capped to 80 characters to promote clarity and facilitate display.
 
+\subsubsection{Table - invitations} \label{data-layer.design.team-system.invitations}
+Users can only become members of a team through invitations.
+In assignee, invitations take the form of codes.
+\br
+- tid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ teams.tid)\n
+A team can only have one active invitation code at once.
+Before getting a new invitation code, in backend the old one (if exists) would be deleted.
+Therefore, tid is sufficiently unique as the Primary Key of the table.\n
+There will be a cron job to remove expired invitation codes from the database,
+with expiry calculated with \{created\} + \{Some Time e.g. 24 hours\},
+in interval of a day or alike defined in backend.
+When a user attempts to use an invitation code, the backend will also check if it expired.\n
+\br
+- code (Unique) (BINARY(4))\n
+The invitation code will be generated with a CSPRNG even though security is less of a concern here.
+The invitation code must be unique, the choice between tid and code as the primary key is minor,
+as code will be indexed too.\n
+For a randomly generated code to be unique, newly generated codes must be checked to not exist in the table already,
+otherwise it would be regenerated. But this will not be a problem.
+For one, the field is indexed, so uniqueness checks would be efficient;
+For two, for a 4 bytes binary code the chance of collision is vanishingly low.
 
 %MO TODO discuss NFs, also + uid&email business etc.
 \subsection{Miscellaneous}
