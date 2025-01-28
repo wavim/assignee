@@ -79,8 +79,8 @@ DROP TABLE IF EXISTS `authcodes`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `authcodes` (
   `uid` bigint(20) unsigned NOT NULL,
-  `hash` binary(255) NOT NULL,
-  `salt` binary(32) NOT NULL,
+  `hash` binary(32) NOT NULL,
+  `salt` binary(16) NOT NULL,
   `created` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`uid`),
   CONSTRAINT `authcode_for_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
@@ -131,8 +131,8 @@ DROP TABLE IF EXISTS `passwords`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `passwords` (
   `uid` bigint(20) unsigned NOT NULL,
-  `hash` binary(255) NOT NULL,
-  `salt` binary(32) NOT NULL,
+  `hash` binary(32) NOT NULL,
+  `salt` binary(16) NOT NULL,
   `updated` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`uid`),
   CONSTRAINT `password_of_user` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE
@@ -165,8 +165,8 @@ DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uid` bigint(20) unsigned NOT NULL,
-  `hash` binary(255) NOT NULL,
-  `salt` binary(32) NOT NULL,
+  `hash` binary(32) NOT NULL,
+  `salt` binary(16) NOT NULL,
   `created` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `session_of_user_idx` (`uid`),
@@ -263,4 +263,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-12 13:58:58
+-- Dump completed on 2025-01-28 15:06:42
