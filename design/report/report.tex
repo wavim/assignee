@@ -177,16 +177,23 @@ Presentation Layer: Handles user interface and user interaction;
 This organization can be observed in the project folder structure.
 While the folder structure may undergo frequent changes, its fundamental layout will remain consistent across revisions.
 \newpage
-\dirtree{%
-	.1 /.
-	.2 design/.
-	.3 database/.
-	.3 report/.
-	.2 site/.
-	.3 backend/.
-	.3 frontend/.
-}
-\vspace{2 em}
+\begin{figure}[h!]
+	\centering
+	\begin{minipage}{0.3\linewidth}
+		\dirtree{%
+			.1 /.
+			.2 design/.
+			.3 database/.
+			.3 report/.
+			.2 site/.
+			.3 backend/.
+			.3 frontend/.
+		}
+	\end{minipage}
+	\caption{Overall Folder Structure}
+	\label{fig:overview-folder-structure}
+\end{figure}
+\br
 The design/ directory contains files that are not part of the actual web application.
 This includes the report, media assets used in the report, and other related documents.
 \br
@@ -227,7 +234,7 @@ The design of the relational database follows the blueprint outlined in the sect
 The three core systems and their related entities (roles) are utilized to structure and populate the database.
 \br
 Notes:\n
-Throughout the database, lowercase is used for table and field names, in contrast to conventional practices.
+Throughout the database, snake\_case is used for table and field names, in contrast to conventional practices of using CONSTANT\_CASE.
 This choice helps distinguish entities from SQL commands, which are typically written in uppercase.
 
 
@@ -256,7 +263,7 @@ A \{session\} is borne by one \{user\} only;\null\hfill (Mandatory)
 A \{user\} can only have a single set of \{preferences\};\null\hfill (Mandatory)\n
 A set of \{preferences\} is owned by a single \{user\};\null\hfill (Mandatory)
 \br
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=1\linewidth]{user_system.jpeg}
 	\caption{User System ER Diagram}
@@ -289,10 +296,11 @@ This approach prevents potential issues in backend logic that could arise from w
 ensuring stability and reliability in data handling.
 \br
 - email (ASCII VARCHAR(254)) (Unique)\n
-The email address used for account registration and login is defined as VARCHAR type in the database schema, necessarily Unique.
+The email address used for account registration and login is defined as VARCHAR type in the database schema, necessarily unique.
 This choice accommodates the flexible length of email addresses.\n
 VARCHAR is capped to 254 characters in ASCII, this is to align with the standards outlined in
-\href{https://www.rfc-editor.org/rfc/rfc5322}{RFC 5322: Internet Message Format (www.rfc-editor.org/rfc/rfc5322)}.
+\href{https://www.rfc-editor.org/rfc/rfc5322}{RFC 5322: Internet Message Format}
+\footnote{Refer to www.rfc-editor.org/rfc/rfc5322.}.
 \br
 - name (UTF-8 VARCHAR(30))\n
 The arbitrary display name users may use.
@@ -304,7 +312,9 @@ Metadata fields for table. They record the time the entry is created / updated.\
 Instead of DATETIME or TIMESTAMP, BIGINT is used for several reasons:
 DATETIME is dependent on the database used, i.e. MySQL and might not be cross-database compatible.
 TIMESTAMP stores UNIX timestamps which is indeed what we want to store,
-but is signed 32-bit integer in MySQL and is thus prone to the \href{https://en.wikipedia.org/wiki/Year_2038_problem}{Y2K38 Problem (en.wikipedia.org\-/wiki/Year\_2038\_problem)}.
+but is signed 32-bit integer in MySQL and is thus prone to the
+\href{https://en.wikipedia.org/wiki/Year_2038_problem}{Y2K38 Problem}
+\footnote{Refer to en.wikipedia.org\-/wiki/Year\_2038\_problem.}.
 By using middlewares in backend API handling this problem can be mitigated.
 Details in \S \hyperref[application-layer.design.middlewares]{Middlewares}.
 The attribute(s) also exist in other tables, unless something is special about it, they will not be otherwise mentioned.
@@ -316,8 +326,10 @@ Upon user registration or log-in (contexts that require better authentication) a
 - uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
 Only a single email authcode would be valid for a user at a time,
 before sending a new authcode in backend the old one (if exists) would be deleted.
-Therefore, uid is sufficiently unique as the Primary Key of the table.\n
-There will be a \href{https://en.wikipedia.org/wiki/Cron}{Cron Job (en.wikipedia.org/wiki/Cron)} to remove expired authcodes from the database,
+Therefore, uid is sufficiently unique as the primary key of the table.\n
+There will be a \href{https://en.wikipedia.org/wiki/Cron}{Cron Job}
+\footnote{Refer to en.wikipedia.org/wiki/Cron.}
+to remove expired authcodes from the database,
 with expiry calculated with \{created\} + \{Some Time e.g. 10 minutes\},
 in interval of an hour or alike defined in backend.
 When a user attempts to use an authcode, the backend will also check if it expired.\n
@@ -329,16 +341,23 @@ is applied to all relations in the database and will not be mentioned again othe
 \br
 - hash (BINARY(32)) \& salt (BINARY(16))\n
 Storing authentication related information in raw form is not a good idea, i.e. password or authcode.
-Instead, the raw data is hashed using \href{https://en.wikipedia.org/wiki/Cryptographic_hash_function}{Cryptographically Secure Hashing Algorithms (en.wikipedia.org/wiki/Cryptographic\_hash\_function)} and stored in digest form.
+Instead, the raw data is hashed using
+\href{https://en.wikipedia.org/wiki/Cryptographic_hash_function}{Cryptographically Secure Hashing Algorithms}
+\footnote{Refer to en.wikipedia.org/wiki/Cryptographic\_hash\_function.}
+and stored in digest form.
 Hashes are practicably impossible to crack reversely in reasonable polynomial time.
 On attempt to verify input data, it is hashed again with the same algorithm and compared with the stored hash.\n
-The only reason the hash is stored in BINARY is that the algorithm used returns a byte buffer directly,
-and it is simply more convenient to do so.
-A variable digest length hashing function \href{https://keccak.team/kangarootwelve.html}{K12 (keccak.team/kangarootwelve.html)} is used
-instead of traditional SHA-256, which is weaker than K12 in cryptanalysis.\n
-However, storing only the hash is vulnerable to \href{https://en.wikipedia.org/wiki/Rainbow_table}{Rainbow Table Attacks (en.wikipedia.org\-/wiki/Rainbow\_table)},
+The only reason the hash is stored in BINARY is that the algorithm used returns a byte buffer directly, and it is simply more convenient to do so.
+A variable digest length hashing function
+\href{https://keccak.team/kangarootwelve.html}{K12}
+\footnote{Refer to keccak.team/kangarootwelve.html.}
+is used instead of traditional SHA-256, which is weaker than K12 in cryptanalysis.\n
+However, storing only the hash is vulnerable to
+\href{https://en.wikipedia.org/wiki/Rainbow_table}{Rainbow Table Attacks}
+\footnote{Refer to en.wikipedia.org\-/wiki/Rainbow\_table.},
 thus a salt is needed. A salt is a BINARY generated with a
-\href{https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator}{Cryptographically Secure Pseudorandom Number Generator (en.wikipedia.org/wiki/Cryptographically\_secure\_\-pseudorandom\_number\_generator)}
+\href{https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator}{Cryptographically Secure Pseudorandom Number Generator}
+\footnote{Later abbreviated as CSPRNG. Refer to en.wikipedia.org/wiki/Cryptographically\_secure\_pseudorandom\_number\_\-generator.}
 with enough entropy, that is concatenated to the raw string (in byte buffer form) before hashing.
 It is of length 16 bytes in our case which is totally sufficient for the purpose.
 The salt will be stored directly in the database along with the hash,
@@ -350,8 +369,9 @@ When a user attempts to verify his input against the correct one,
 his input would be appended with the salt stored in the database and hashed with K12 again,
 to check if the resulting digest matches with the stored hash.\n
 Technically there is a chance for hashes to collide with each other with different input,
-but in the case of using a 32 bytes digest with salt in use, the chance would be vanishingly low:
-you would need roughly $10^{31}$ items before having an approximate $10^{-15}$ chance of collision even without salts.\n
+but in the case of using a 32 bytes digest with salt in use, the chance would be vanishingly low
+\footnote{The collision chance calculation method used in this report: \href{https://stackoverflow.com/a/62667633}{Probability of Hash Collision on StackOverflow}. Refer to stackoverflow.com/a/62667633.}:
+you would need roughly $10^{31}$ items before having n approximate $10^{-15}$ chance of collision even without salts.\n
 Hash + salt is used in all authentication related tables in the database, and will not be detailed again otherwise.
 However, more information could be found in
 \S \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
@@ -407,7 +427,8 @@ However with our methodology, upon addition of new settings, they would automati
 Also, nesting settings would not have been possible in 1NF.
 Only storing overridden settings will save a lot of storage space and is flexible in the long term.\n
 It is worth mentioning that this may not be a violation of 1NF at all.
-Scholar C. J. Date has argued that values can be arbitrarily complex objects \footnote{Date, C. J. (2007). What First Normal Form Really Means}.
+Scholar C. J. Date has argued that values can be arbitrarily complex objects
+\footnote{Date, C. J. (2007). What First Normal Form Really Means.}.
 But this is open to interpretations.\n
 Notes: JSON is supported by all major DBMS nowadays. If somehow not, JSON could be easily serialized into string and stored as TEXT instead.
 
@@ -416,8 +437,10 @@ Most of the tables in the User System have one-to-one relations with \{users\},
 so would not need additional indexing.
 However, \{sessions\} and \{users\} have a many-to-one relation.
 To easily retrieve all sessions owned by a user, sessions.uid is indexed.\n
-It is worth mentioning that unlike the obsolete binary search based index taught in textbooks,
-modern DBMS typically uses \href{https://en.wikipedia.org/wiki/B-tree}{B-Trees (en.wikipedia.org/wiki/B-tree)} for indexing, which is self-balancing.
+It is worth mentioning that unlike the obsolete binary search based index taught in textbooks, modern DBMS typically uses
+\href{https://en.wikipedia.org/wiki/B-tree}{B-Trees}
+\footnote{Refer to en.wikipedia.org/wiki/B-tree.}
+for indexing, which is self-balancing.
 That means, unlike binary search based indexes that would require rebuilding the index from scratch on insert / delete,
 or BST-based indexes with $O(n)$ worst case time complexities for search / insert / delete,
 it would only require at most $O(logn)$ in any scenario.
@@ -425,12 +448,20 @@ Implication is that in modern DBMS, indexes are way cheaper and the overhead of 
 Thus, in other systems that require more indexes, the trade-off of indexing would not be discussed as it is trivial.
 Only the use case of the indexes would be covered otherwise.
 
+
 \subsection{Team System} \label{data-layer.design.team-system}
-The Team System is built upon the User System to store teams related information.
+The Team System is built upon the \S \hyperref[data-layer.design.user-system]{User System} to store teams related information.
 This system contains team identification and invitation data,
 whilst also keeping track of team monitor appointments.
 \br
-The Team System consists of five tables, as described below,
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{team_system.jpeg}
+	\caption{Team System ER Diagram}
+	\label{fig:team-system-er}
+\end{figure}
+\br
+The Team System encompasses five tables,
 \begin{itemize}
 	\item users: \S \hyperref[data-layer.design.user-system.users]{User System - users};
 	\item teams: Contains team details;
@@ -439,14 +470,7 @@ The Team System consists of five tables, as described below,
 	\item appointments: Manages team monitor appointments;
 \end{itemize}
 \br
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\linewidth]{team_system.jpeg}
-	\caption{Team System ER Diagram}
-	\label{fig:team-system-er}
-\end{figure}
-\br
-Relations:\n
+Table relations:\n
 A \{user\} can create and own many \{teams\} at the same time;\null\hfill (Optional)\n
 A \{team\} is owned by one \{user\} only;\null\hfill (Mandatory)
 \br
@@ -472,7 +496,7 @@ Refer to \S \hyperref[data-layer.design.user-system.users]{User System - users}.
 
 \subsubsection{Table - teams} \label{data-layer.design.team-system.teams}
 Users in assignee are allowed to create and own an arbitrary amount of teams.
-This is slightly isomorphic to Google Classroom / Discord.
+This is slightly isomorphic to Google Classroom or Discord.
 \br
 - tid (Unsigned BIGINT) (Auto-Increment) (Primary Key)\n
 Users should not have to waste time thinking of a unique team ID,
@@ -499,23 +523,121 @@ In assignee, invitations take the form of codes.
 - tid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ teams.tid)\n
 A team can only have one active invitation code at once.
 Before getting a new invitation code, in backend the old one (if exists) would be deleted.
-Therefore, tid is sufficiently unique as the Primary Key of the table.\n
+Therefore, tid is sufficiently unique as the primary key of the table.\n
 There will be a cron job to remove expired invitation codes from the database,
 with expiry calculated with \{created\} + \{Some Time e.g. 24 hours\},
 in interval of a day or alike defined in backend.
 When a user attempts to use an invitation code, the backend will also check if it expired.\n
 \br
-- code (Unique) (BINARY(4))\n
+- code (BINARY(4)) (Unique)\n
 The invitation code will be generated with a CSPRNG even though security is less of a concern here.
 The invitation code must be unique, the choice between tid and code as the primary key is minor,
 as code will be indexed too.\n
 For a randomly generated code to be unique, newly generated codes must be checked to not exist in the table already,
 otherwise it would be regenerated. But this will not be a problem.
 For one, the field is indexed, so uniqueness checks would be efficient;
-For two, for a 4 bytes binary code the chance of collision is vanishingly low.
+For two, the chance of collision using a 4 bytes binary code is vanishingly low:
+with $10,000$ codes in the table, a new code will only have a rough $0.01$ chance of colliding.
+There must be approximately $100,000$ codes in the table before a collision must happen.
+(Of course, if you deem that a small number,
+making codes BINARY(5) would increase that number to $1,500,000$).\n
+The code, when displayed in the application or inputted,
+would be in hex representation e.g. A1B2FFCA.
+A few good things about this is: 1. easy to generate and transform;
+2. hex strings only have the characters 0-9 A-F, which will not be hard to distinguish, unlike 0 and O;
+So they could be easily memorized.
+
+\subsubsection{Table - memberships} \label{data-layer.design.team-system.memberships}
+A linking table for users' memberships in teams.
+Users in assignee are allowed to join an arbitrary amount of teams and vice versa.
+\br
+- tid (Unsigned BIGINT) (Composite Primary Key) (Foreign Key $\rightarrow$ teams.tid)\n
+The tid of the team that the membership involves.
+\br
+- uid (Unsigned BIGINT) (Composite Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
+The uid of the user that is member of the involved team.
+
+\subsubsection{Table - appointments} \label{data-layer.design.team-system.memberships}
+A linking table for teams' monitor appointments.
+Teams in assignee can appoint an arbitrary amount of teams monitors and vice versa.
+\br
+- tid (Unsigned BIGINT) (Composite Primary Key) (Foreign Key $\rightarrow$ teams.tid)\n
+The tid of the team that appoints a team monitor.
+\br
+- uid (Unsigned BIGINT) (Composite Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
+The uid of the appointed team monitor of the team.
+
+\subsubsection{Indexes} \label{data-layer.design.team-system.indexes}
+All foreign key fields are automatically indexed by MySQL.
+Besides that, for tables with a composite primary key i.e. linking tables,
+the proper subset of the composite key excluding the primary one will also be indexed.
+For example, in \{memberships\}, the primary key index is (tid + uid).
+This key can be used to speed up operations on (tid + uid) and \{tid\} alone,
+as \{uid\} is only taken into consideration if \{tid\} is identical when sorting
+\footnote{The order of keys in indexes does matter, but many ignore this fact.}.
+However, \{uid\} alone cannot benefit from this index, and an additional index on \{uid\} must be added.
+This way, no matter we are searching for a specific record, group by a team or group by a user,
+an index will always be available at hand.\n
+Also, unique fields are also indexed i.e. invitations.code for fast lookup and existence checks.
+Otherwise, the foreign key indexes in the system are utilized for query grouping
+\footnote{Indexes on foreign keys are mandatory in MySQL for optimization, here we discuss how they may be useful.},
+e.g. index on teams.owner\_uid to retrieve all teams owned by a user.
+
+
+\subsection{Assignment System} \label{data-layer.design.assignment-system}
+The Assignment System is the core system supported by all previous systems.
+This system tracks assignment details and attachments.
+It also manages assignee submissions and attachments.
+\br
+The Assignment System contains six tables, as described below.\n
+Notes: only relations related to this system would be shown,
+e.g. users.uid - teams.owner\_uid will not be shown as it is irrelevant to assignments.
+\begin{itemize}
+	\item teams: \S \hyperref[data-layer.design.team-system.teams]{Team System - teams};
+	\item assignments: Holds team assignment details;
+	\item assignment\_attachments: Stores assignment attachments;
+	\item users: \S \hyperref[data-layer.design.user-system.users]{User System - users};
+	\item submissions: Manages assignee submission details;
+	\item submission\_attachments: Contains submission attachments;
+\end{itemize}
+\br
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{assignment_system.jpeg}
+	\caption{Assignment System ER Diagram}
+	\label{fig:assignment-system-er}
+\end{figure}
+\br
+Relation mappings:\n
+A \{team\} can post any amount of \{assignments\};\null\hfill (Optional)\n
+An \{assignment\} is issued by a single \{team\};\null\hfill (Mandatory)
+\br
+An \{assignment\} may have many \{assignment\_attachments\};\null\hfill (Optional)\n
+An \{assignment\_attachment\} is for a single \{assignment\};\null\hfill (Mandatory)
+\br
+An \{assignment\} can be assigned for many \{submissions\} (to assignees);\null\hfill (Optional)\n
+A \{user\} can be assigned to many \{submissions\} (as assignee);\null\hfill (Optional)\n
+A \{submission\} is only for one \{assignment\};\null\hfill (Mandatory)
+\br
+A \{submission\} may contain multiple \{submission\_attachments\};\null\hfill (Optional)\n
+A \{submission\_attachment\} is only for one \{submission\};\null\hfill (Mandatory)
+\br
+They will be justified below.
+
+\subsubsection{Table - teams} \label{data-layer.design.assignment-system.teams}
+Refer to \S \hyperref[data-layer.design.team-system.teams]{Team System - teams}.
+
+\subsubsection{Table - assignments} \label{data-layer.design.assignment-system.assignments}
+Teams in assignee are allowed to post assignments to a selection of their team members.
+This specific table holds the verbal details and the deadline of assignments.
+\br
+- aid (Unsigned BIGINT) (Auto-Increment) (Primary Key)\n
+Teams shall not waste any time thinking for a unique assignment ID themselves.
+\br
+- tid
 
 %MO TODO discuss NFs, also + uid&email business etc.
-\subsection{Miscellaneous}
+% \subsection{Miscellaneous}
 %MO TODO reason why views / triggers etc. are not implemented
 
 
