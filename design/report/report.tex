@@ -1,6 +1,7 @@
 \documentclass[12pt]{report}
 
 \usepackage{times}
+\usepackage{float}
 \usepackage{xcolor}
 \usepackage{dirtree}
 \usepackage{graphicx}
@@ -217,11 +218,15 @@ This functionality not only facilitates version control and debugging but also e
 \chapter{Data Layer} \label{data-layer}
 This chapter covers the design and implementation of the supporting relational database.
 \br
-In \S \hyperref[data-layer.design]{Design}, we discuss the design of tables, fields, and their data types, along with the rationales behind these choices. We also explore the relational mappings of tables and fields from multiple perspectives. Finally, we will delve into the adoption of normal forms in greater detail.
+In \S \hyperref[data-layer.design]{Design},
+we discuss the design of tables, fields, and their data types, along with the rationales behind these choices.
+We also explore the relational mappings of tables and fields from multiple perspectives.
+Finally, we will delve into the adoption of normal forms in greater detail.\n
+In \S \hyperref[data-layer.implementation]{Implementation},
+we will cover the actual deployment details of the database schema.
 
 
 
-% In the section \hyperref[data-layer.implementation]{Implementation}
 \section{Design} \label{data-layer.design}
 The design of the relational database follows the blueprint outlined in the section \S \hyperref[overview.project-objectives]{Project Objectives}.
 The three core systems and their related entities (roles) are utilized to structure and populate the database.
@@ -299,7 +304,9 @@ These display names do not need to be unique, allowing users the flexibility to 
 	      Metadata fields for table. They record the time the entry is created / updated.\n
 	      Instead of DATETIME or TIMESTAMP, BIGINT is used for several reasons:
 	      DATETIME is dependent on the database used, i.e. MySQL and might not be cross-database compatible.
-	      TIMESTAMP stores UNIX timestamps which is indeed what we want to store,
+	      TIMESTAMP stores \href{https://en.wikipedia.org/wiki/Unix_time}{UNIX Timestamps}
+	      \footnote{Refer to en.wikipedia.org/wiki/Unix\_time.}
+	      which is indeed what we want to store,
 	      but is signed 32-bit integer in MySQL and is thus prone to the
 	      \href{https://en.wikipedia.org/wiki/Year_2038_problem}{Y2K38 Problem}
 	      \footnote{Refer to en.wikipedia.org/wiki/Year\_2038\_problem.}.
