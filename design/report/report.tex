@@ -705,6 +705,8 @@ and the returned grades / comments if applicable.
 	      Comments given to the submitted work by the assigner.
 	      Of UTF-8 character set to support different languages and emojis etc.
 	      Of type TEXT to make sure comments could be sufficiently elaborate.
+	      The field would be NULL if the submission is not returned by the assigner yet,
+	      or if no comments are given.
 \end{itemize}
 
 \subsubsection{Table - submission\_attachments} \label{data-layer.design.assignment-system.submission_attachments}
