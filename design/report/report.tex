@@ -302,7 +302,7 @@ These display names do not need to be unique, allowing users the flexibility to 
 	      Capped to 30 characters, this ensures the username will not be too long for display yet not too short for personalization.
 	\item created \& updated (Unsigned BIGINT)\n
 	      Metadata fields for table. They record the time the entry is created / updated.\n
-	      Instead of DATETIME or TIMESTAMP, BIGINT is used for several reasons:
+	      Instead of DATETIME or TIMESTAMP, 64-bit BIGINT is used for several reasons:
 	      DATETIME is dependent on the database used, i.e. MySQL and might not be cross-database compatible.
 	      TIMESTAMP stores \href{https://en.wikipedia.org/wiki/Unix_time}{UNIX Timestamps}
 	      \footnote{Refer to en.wikipedia.org/wiki/Unix\_time.}
@@ -312,6 +312,7 @@ These display names do not need to be unique, allowing users the flexibility to 
 	      \footnote{Refer to en.wikipedia.org/wiki/Year\_2038\_problem.}.
 	      By using middlewares in backend API handling this problem can be mitigated.
 	      Details in \S \hyperref[application-layer.design.middlewares]{Middlewares}.
+	      BIGINT is unsigned since all timestamps that could exist in the database would be after the Unix epoch.
 	      The attribute(s) also exist in other tables, unless something is special about it, they will not be otherwise mentioned.
 \end{itemize}
 
@@ -687,7 +688,9 @@ and the returned grades / comments if applicable.
 	      The aid of the assignment this submission is for.
 	\item uid (Unsigned BIGINT) (Foreign Key $\rightarrow$ users.uid)\n
 	      The uid of the user that is the assignee of the assignment.
-	\item status (ENUM('assigned', 'submitted', 'returned'))\n
+	\item status (\href{https://dev.mysql.com/doc/refman/8.4/en/enum.html}{ENUM}
+	      \footnote{Available in all major DBMS. Refer to dev.mysql.com/doc/refman/8.4/en/enum.html.}
+	      ('assigned', 'submitted', 'returned'))\n
 	      The current status of the submission as an enumeration type.
 	      \begin{itemize}
 		      \item 'assigned': Assignee had not submitted his work yet;
