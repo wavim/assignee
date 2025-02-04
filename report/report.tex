@@ -29,23 +29,23 @@ This report discusses Assignee, a web application developed to fulfill the SBA t
 \br
 This report includes the following chapters on various aspects:
 \begin{itemize}
-	\item \S \hyperref[overview]{Overview}:\\
+	\item \S{} \hyperref[overview]{Overview}:\\
 	      Project objectives and structure;
-	\item \S \hyperref[data-layer]{Data Layer}:\\
+	\item \S{} \hyperref[data-layer]{Data Layer}:\\
 	      Relational database design and implementation;
-	\item \S \hyperref[application-layer]{Application Layer}:\\
+	\item \S{} \hyperref[application-layer]{Application Layer}:\\
 	      Design and implementation of site backend components;
-	\item \S \hyperref[presentation-layer]{Presentation Layer}:\\
+	\item \S{} \hyperref[presentation-layer]{Presentation Layer}:\\
 	      Design and implementation of site frontend components;
-	\item \S \hyperref[security]{Security}:\\
+	\item \S{} \hyperref[security]{Security}:\\
 	      User authentication and cross-layer interaction security;
-	\item \S \hyperref[accessibility]{Accessibility}:\\
+	\item \S{} \hyperref[accessibility]{Accessibility}:\\
 	      Considerations for site accessibility and localization (l10n);
-	\item \S \hyperref[performance]{Performance}:\\
+	\item \S{} \hyperref[performance]{Performance}:\\
 	      Optimizations for application performance;
-	\item \S \hyperref[quality-assurance]{Quality Assurance}:\\
+	\item \S{} \hyperref[quality-assurance]{Quality Assurance}:\\
 	      Unit and integration testing;
-	\item \S \hyperref[tools-used]{Tools Used}:\\
+	\item \S{} \hyperref[tools-used]{Tools Used}:\\
 	      Applications, extensions, packages, and libraries utilized during development;
 \end{itemize}
 \tableofcontents
@@ -90,8 +90,8 @@ It allows visitors to create accounts, while registered users can log in and man
 Authentication techniques are implemented to support this system, with detailed information provided in later chapters.
 \br
 The User System is central to all components of this application,
-including the \S \hyperref[overview.project-objectives.team-system]{Team System},
-the \S \hyperref[overview.project-objectives.assignment-system]{Assignment System},
+including the \S{} \hyperref[overview.project-objectives.team-system]{Team System},
+the \S{} \hyperref[overview.project-objectives.assignment-system]{Assignment System},
 and any future systems that may be introduced,
 such as a Posts and Comments System or an Instant Messaging System using P2P WebRTC or C/S WebSockets.
 
@@ -131,7 +131,7 @@ Additionally, roles within the hierarchy can manage members and perform team act
 The *post and comment features are not implemented in the initial version of the web app, as they are considered a lower priority.
 If these features are added later, they will be decoupled from the current system.
 \br
-The Team System is central to the \S \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
+The Team System is central to the \S{} \hyperref[overview.project-objectives.assignment-system]{Assignment System}.
 
 
 \subsection{Assignment System} \label{overview.project-objectives.assignment-system}
@@ -179,9 +179,8 @@ While the folder structure may undergo frequent changes, its fundamental layout 
 	\begin{minipage}{0.3\linewidth}
 		\dirtree{%
 			.1 /.
-			.2 design/.
-			.3 database/.
-			.3 report/.
+			.2 report/.
+			.2 database/.
 			.2 site/.
 			.3 backend/.
 			.3 frontend/.
@@ -190,19 +189,18 @@ While the folder structure may undergo frequent changes, its fundamental layout 
 	\caption{Overall Folder Structure}
 	\label{fig:overview-folder-structure}
 \end{figure}
-The design/ directory contains files that are not part of the actual web application.
-This includes the report, media assets used in the report, and other related documents.
+The report/ directory contains the \LaTeX{} source of the report, media assets used in the report, and other related documents.
 \br
 The database/ directory corresponds to the Data Layer.
 It is located under design/ because the hosted database is independent of the site/ folder (linked only via the database URL in the .env file).
 Only the distribution .sql file used to instantiate the database is stored here.
-Further details can be found in the chapter \S \hyperref[data-layer]{Data Layer}.
+Further details can be found in the chapter \S{} \hyperref[data-layer]{Data Layer}.
 \br
 The directory backend/ corresponds to the Application Layer.
-Further details can be found in the chapter \S \hyperref[application-layer]{Application Layer}.
+Further details can be found in the chapter \S{} \hyperref[application-layer]{Application Layer}.
 \br
 The directory frontend/ corresponds to the Presentation Layer.
-More information is provided in the chapter \S \hyperref[presentation-layer]{Presentation Layer}.
+More information is provided in the chapter \S{} \hyperref[presentation-layer]{Presentation Layer}.
 
 
 \subsection{Repository} \label{overview.project-structure.repository}
@@ -218,17 +216,17 @@ This functionality not only facilitates version control and debugging but also e
 \chapter{Data Layer} \label{data-layer}
 This chapter covers the design and implementation of the supporting relational database.
 \br
-In \S \hyperref[data-layer.design]{Design},
+In \S{} \hyperref[data-layer.design]{Design},
 we discuss the design of tables, fields, and their data types, along with the rationales behind these choices.
 We also explore the relational mappings of tables and fields from multiple perspectives.
 Finally, we will delve into the adoption of normal forms in greater detail.\n
-In \S \hyperref[data-layer.implementation]{Implementation},
+In \S{} \hyperref[data-layer.implementation]{Implementation},
 we will cover the actual deployment details of the database schema.
 
 
 
 \section{Design} \label{data-layer.design}
-The design of the relational database follows the blueprint outlined in the section \S \hyperref[overview.project-objectives]{Project Objectives}.
+The design of the relational database follows the blueprint outlined in the section \S{} \hyperref[overview.project-objectives]{Project Objectives}.
 The three core systems and their related entities (roles) are utilized to structure and populate the database.
 \br
 Throughout the database, snake\_case is used for table and field names, in contrast to conventional practices of using CONSTANT\_CASE.
@@ -311,7 +309,7 @@ These display names do not need to be unique, allowing users the flexibility to 
 	      \href{https://en.wikipedia.org/wiki/Year_2038_problem}{Y2K38 Problem}
 	      \footnote{Refer to en.wikipedia.org/wiki/Year\_2038\_problem.}.
 	      By using middlewares in backend API handling this problem can be mitigated.
-	      Details in \S \hyperref[application-layer.design.middlewares]{Middlewares}.
+	      Details in \S{} \hyperref[application-layer.design.middlewares]{Middlewares}.
 	      BIGINT is unsigned since all timestamps that could exist in the database would be after the Unix epoch.
 	      The attribute(s) also exist in other tables, unless something is special about it, they will not be otherwise mentioned.
 \end{itemize}
@@ -372,8 +370,8 @@ Upon user registration or log-in (contexts that require better authentication) a
 	      you would need roughly $10^{31}$ items before having n approximate $10^{-15}$ chance of collision even without salts.\n
 	      Hash + salt is used in all authentication related tables in the database, and will not be detailed again otherwise.
 	      However, more information could be found in
-	      \S \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
-	      \S \hyperref[security.authentication]{Security - Authentication}.
+	      \S{} \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
+	      \S{} \hyperref[security.authentication]{Security - Authentication}.
 \end{itemize}
 
 \subsubsection{Table - passwords} \label{data-layer.design.user-system.passwords}
@@ -402,8 +400,8 @@ expiry would be checked in backend with respect to \{created\}.
 Then, if one is still active, the current browser info etc. would be retrieved and concatenated with bearer\_token.token,
 hashed with salt and compared with the stored hash.
 If matched, the user would be logged-in and handed a new bearer token (old one would be deleted), renewing session expiry.
-More details will be handed in \S \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
-\S \hyperref[security.authentication]{Security - Authentication}.
+More details will be handed in \S{} \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
+\S{} \hyperref[security.authentication]{Security - Authentication}.
 \begin{itemize}
 	\item uid (Unsigned BIGINT) (Primary Key) (Foreign Key $\rightarrow$ users.uid)\n
 	      The uid of the session bearer.
@@ -450,7 +448,7 @@ Only the use case of the indexes would be covered otherwise.
 
 
 \subsection{Team System} \label{data-layer.design.team-system}
-The Team System is built upon the \S \hyperref[data-layer.design.user-system]{User System} to store teams related information.
+The Team System is built upon the \S{} \hyperref[data-layer.design.user-system]{User System} to store teams related information.
 This system contains team identification and invitation data,
 whilst also keeping track of team monitor appointments.
 \br
@@ -463,7 +461,7 @@ whilst also keeping track of team monitor appointments.
 \br
 The Team System encompasses five tables,
 \begin{itemize}
-	\item users: \S \hyperref[data-layer.design.user-system.users]{User System - users};
+	\item users: \S{} \hyperref[data-layer.design.user-system.users]{User System - users};
 	\item teams: Contains team details;
 	\item invitations: Holds team invitation codes;
 	\item memberships: Stores user memberships of teams;
@@ -492,7 +490,7 @@ An \{appointment\} is of one \{user\} only;\null\hfill (Mandatory)
 Rationales and more details on table fields are given below.
 
 \subsubsection{Table - users} \label{data-layer.design.team-system.users}
-Refer to \S \hyperref[data-layer.design.user-system.users]{User System - users}.
+Refer to \S{} \hyperref[data-layer.design.user-system.users]{User System - users}.
 
 \subsubsection{Table - teams} \label{data-layer.design.team-system.teams}
 Users in assignee are allowed to create and own an arbitrary amount of teams.
@@ -600,10 +598,10 @@ The Assignment System contains six tables, as described below
 	\label{fig:assignment-system-er}
 \end{figure}
 \begin{itemize}
-	\item teams: \S \hyperref[data-layer.design.team-system.teams]{Team System - teams};
+	\item teams: \S{} \hyperref[data-layer.design.team-system.teams]{Team System - teams};
 	\item assignments: Holds team assignment details;
 	\item assignment\_attachments: Stores assignment attachments;
-	\item users: \S \hyperref[data-layer.design.user-system.users]{User System - users};
+	\item users: \S{} \hyperref[data-layer.design.user-system.users]{User System - users};
 	\item submissions: Manages assignee submission details;
 	\item submission\_attachments: Contains submission attachments;
 \end{itemize}
@@ -624,7 +622,7 @@ A \{submission\_attachment\} is only for one \{submission\};\null\hfill (Mandato
 They will be justified below.
 
 \subsubsection{Table - teams} \label{data-layer.design.assignment-system.teams}
-Refer to \S \hyperref[data-layer.design.team-system.teams]{Team System - teams}.
+Refer to \S{} \hyperref[data-layer.design.team-system.teams]{Team System - teams}.
 
 \subsubsection{Table - assignments} \label{data-layer.design.assignment-system.assignments}
 Teams in assignee are allowed to post assignments to a selection of their team members.
@@ -674,7 +672,7 @@ Assignment assigners may attach multiple files to the assignment for assignees' 
 \end{itemize}
 
 \subsubsection{Table - users} \label{data-layer.design.assignment-system.users}
-Refer to \S \hyperref[data-layer.design.user-system.users]{User System - users}.
+Refer to \S{} \hyperref[data-layer.design.user-system.users]{User System - users}.
 
 \subsubsection{Table - submissions} \label{data-layer.design.assignment-system.submissions}
 This table acts as a linking table for assignees' submissions and also their details.
@@ -710,12 +708,12 @@ and the returned grades / comments if applicable.
 \end{itemize}
 
 \subsubsection{Table - submission\_attachments} \label{data-layer.design.assignment-system.submission_attachments}
-Essentially a clone of \S \hyperref[data-layer.design.assignment-system.assignment_attachments]{Assignment System - assignment\_attachments},
+Essentially a clone of \S{} \hyperref[data-layer.design.assignment-system.assignment_attachments]{Assignment System - assignment\_attachments},
 with assignment\_attach\-ments.aid replaced with sid standing for submission ID.
 
 \subsubsection{Indexes} \label{data-layer.design.assignment-system.indexes}
 Follows the same principles described in
-\S \hyperref[data-layer.design.team-system.indexes]{Team System - Indexes}
+\S{} \hyperref[data-layer.design.team-system.indexes]{Team System - Indexes}
 for grouping performance.
 For example retrieving all submissions for an assignment etc.
 
