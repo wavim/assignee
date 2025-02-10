@@ -5,6 +5,6 @@ const dotenvConfig = config();
 expand(dotenvConfig);
 
 export const configs = {
-	app: (await import("./app.config.js")).config,
-	db: (await import("./db.config.js")).config,
+	port: process.env.APP_PORT ?? "5450",
+	static: process.env.APP_STATIC ?? "public",
 };

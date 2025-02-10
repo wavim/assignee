@@ -1,3 +1,1 @@
-export function getTimestamp(): bigint {
-	return BigInt(Date.now()) / 1000n;
-}
+export const getTimestamp = () => BigInt(Date.now()) / 1000n;

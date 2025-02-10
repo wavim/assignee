@@ -5,7 +5,6 @@
 			"type": "npm",
 			"script": "watch",
 			"path": "site/frontend",
-			"group": "test",
 			"problemMatcher": [],
 			"label": "watch frontend"
 		},
@@ -28,7 +27,6 @@
 			"type": "npm",
 			"script": "watch",
 			"path": "site/backend",
-			"group": "test",
 			"problemMatcher": [],
 			"label": "watch backend"
 		},
@@ -49,4 +47,3 @@
 		}
 	]
 }
-
