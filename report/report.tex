@@ -205,7 +205,9 @@ More information is provided in the chapter \S{} \hyperref[presentation-layer]{P
 
 \subsection{Repository} \label{overview.project-structure.repository}
 The entire project folder is hosted in a repository available at
-\href{https://github.com/CarbonicSoda/assignee}{GitHub/Carbonic\-Soda/assignee (github.com/CarbonicSoda/assignee)} for inspection.
+\href{https://github.com/CarbonicSoda/assignee}{GitHub/CarbonicSoda/assignee}
+\footnote{Refer to github.com/CarbonicSoda/assignee.}
+for inspection.
 \br
 With GitHub, we can review all past commits from the start of this project to the latest update or patch.
 This functionality not only facilitates version control and debugging but also enables simultaneous work on the back-end and front-end through branching.
@@ -367,7 +369,7 @@ Upon user registration or log-in (contexts that require better authentication) a
 	      but in the case of using a 32 bytes digest with salt in use, the chance would be vanishingly low
 	      \footnote{The collision chance calculation method used in this report: \href{https://stackoverflow.com/a/62667633}{Probability of Hash Collision on StackOverflow}.\n
 		      Refer to stackoverflow.com/a/62667633.}:
-	      you would need roughly $10^{31}$ items before having n approximate $10^{-15}$ chance of collision even without salts.\n
+	      you would need roughly $10^{31}$ items before having an approximate $10^{-15}$ chance of collision even without salts.\n
 	      Hash + salt is used in all authentication related tables in the database, and will not be detailed again otherwise.
 	      However, more information could be found in
 	      \S{} \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
@@ -541,9 +543,9 @@ In assignee, invitations take the form of codes.
 	      A few good things about this is:
 	      \begin{enumerate}
 		      \item Easy to generate and transform;
-		      \item Hex strings only have the characters 0-9 A-F, which will not be hard to distinguish, unlike 0 and O;
+		      \item Hex strings only have the characters 0-9 A-F, which will not be hard to distinguish, unlike 0 and O.
+		            So they could be easily memorized;
 	      \end{enumerate}
-	      So they could be easily memorized.
 \end{itemize}
 
 \subsubsection{Table - memberships} \label{data-layer.design.team-system.memberships}
