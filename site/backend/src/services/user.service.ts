@@ -9,27 +9,28 @@ export namespace UserServices {
 		return Boolean(found);
 	}
 
-	export async function registerUser(data: { email: string; name: string; password: string }): Promise<void> {
-		const authenticated = await AuthServices.authUserRegister(data.email);
-		if (!authenticated) {
-			throw new Error(`User registration for ${JSON.stringify(data)} is not authenticated.`);
-		}
+	//MO TODO send email code shall be separate in logic
+	// export async function registerUser(data: { email: string; name: string; password: string }): Promise<void> {
+	// 	const authenticated = await AuthServices.authUserRegister(data.email);
+	// 	if (!authenticated) {
+	// 		throw new Error(`User registration for ${JSON.stringify(data)} is not authenticated.`);
+	// 	}
 
-		const user = await prisma.user.create({
-			data: { email: data.email, name: data.name, created: 0, updated: 0 },
-		});
+	// 	const user = await prisma.user.create({
+	// 		data: { email: data.email, name: data.name, created: 0, updated: 0 },
+	// 	});
 
-		const { hash, salt } = AuthServices.hash(data.password);
+	// 	const { hash, salt } = AuthServices.hash(data.password);
 
-		await prisma.password.create({
-			data: {
-				uid: user.uid,
-				hash,
-				salt,
-				updated: 0,
-			},
-		});
-	}
+	// 	await prisma.password.create({
+	// 		data: {
+	// 			uid: user.uid,
+	// 			hash,
+	// 			salt,
+	// 			updated: 0,
+	// 		},
+	// 	});
+	// }
 
 	// export async function updateUser(uid: bigint, data: Prisma.UserUpdateInput) {
 	// 	await prisma.user.update({
