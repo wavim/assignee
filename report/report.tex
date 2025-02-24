@@ -401,7 +401,8 @@ for all sessions with sessions.uid = bearer\_token.uid,
 expiry would be checked in backend with respect to \{created\}.
 Then, if one is still active, the current browser info etc. would be retrieved and concatenated with bearer\_token.token,
 hashed with salt and compared with the stored hash.
-If matched, the user would be logged-in and handed a new bearer token (old one would be deleted), renewing session expiry.
+If matched, the user would be logged-in and handed a new bearer token (old one would be deleted), renewing session expiry.\n
+Also, the validity of the token will be verified for further actions upon any CRUD API requests and on periodic checks.
 More details will be handed in \S{} \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
 \S{} \hyperref[security.authentication]{Security - Authentication}.
 \begin{itemize}
