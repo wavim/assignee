@@ -34,7 +34,7 @@ const template = `<body class="body" style="background-color:#fff;margin:0;paddi
                   <div style="font-family:sans-serif">
                     <div class="" style="font-size:12px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;mso-line-height-alt:18px;color:#555;line-height:1.5">
                     <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:21px">
-                      Do not share this code with <em>anyone</em>. The code will expire in <strong>10</strong> minutes.
+                      Do not share this code with <em>anyone</em>. This OTP will expire in <strong>10</strong> minutes.
                     </p>
                     </div>
                   </div>
