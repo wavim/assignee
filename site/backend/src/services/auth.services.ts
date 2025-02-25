@@ -1,6 +1,5 @@
 import { k12 } from "@noble/hashes/sha3-addons";
 import { randomBytes } from "@noble/hashes/utils";
-import { prisma } from "prisma/client.prisma.js";
 
 export namespace AuthServices {
 	export function hash(raw: string): { hash: Uint8Array; salt: Uint8Array } {
@@ -11,15 +10,8 @@ export namespace AuthServices {
 		concat.set(key);
 		concat.set(salt, key.length);
 
-		const hash = k12(concat, {
-			dkLen: 32,
-		});
+		const hash = k12(concat, { dkLen: 32 });
 
 		return { hash, salt };
-	}
-
-	export async function authUserRegister(email: string): Promise<boolean> {
-		//MO TODO email auth logic
-		return true;
 	}
 }

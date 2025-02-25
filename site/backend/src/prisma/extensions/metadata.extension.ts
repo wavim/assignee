@@ -1,41 +1,38 @@
 import { Prisma } from "@prisma/client";
-
-const TIME_STAMP = () => BigInt(Date.now()) / 1000n;
+import { PrismaTypes } from "prisma/types.prisma.js";
 
 export const TableMetadataExtension = Prisma.defineExtension({
 	query: {
 		$allModels: {
 			create({ args, query }) {
-				const now = TIME_STAMP();
-				if ("created" in args.data) args.data.created = now;
-				if ("updated" in args.data) args.data.updated = now;
+				setMetadata(args.data, true);
 				return query(args);
 			},
 			createMany({ args, query }) {
-				const now = TIME_STAMP();
 				if (!("length" in args.data)) {
-					if ("created" in args.data) args.data.created = now;
-					if ("updated" in args.data) args.data.updated = now;
+					setMetadata(args.data, true);
 					return query(args);
 				}
-				for (const item of args.data) {
-					if ("created" in item) item.created = now;
-					if ("updated" in item) item.updated = now;
-				}
+				for (const item of args.data) setMetadata(item, true);
 				return query(args);
 			},
 			update({ args, query }) {
-				const now = TIME_STAMP();
-				if ("updated" in args.data) args.data.updated = now;
-				else throw new Error(`Query attempts to update readonly table: ${query}`);
+				setMetadata(args.data);
 				return query(args);
 			},
 			updateMany({ args, query }) {
-				const now = TIME_STAMP();
-				if ("updated" in args.data) args.data.updated = now;
-				else throw new Error(`Query attempts to update readonly table: ${query}`);
+				setMetadata(args.data);
 				return query(args);
 			},
 		},
 	},
 });
+
+function setMetadata<T extends PrismaTypes.Models>(
+	data: Prisma.Args<T, "create" | "createMany" | "update" | "updateMany">["data"],
+	isCreate?: boolean,
+): void {
+	const now = BigInt(Date.now()) / 1000n;
+	if (isCreate && "created" in data) data.created = now;
+	if ("updated" in data) data.updated = now;
+}
