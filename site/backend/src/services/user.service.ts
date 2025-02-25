@@ -15,7 +15,6 @@ export namespace UserServices {
 		});
 
 		const { hash, salt } = AuthServices.hash(data.password);
-
 		await prisma.password.create({
 			data: {
 				uid: user.uid,
@@ -32,5 +31,8 @@ export namespace UserServices {
 				updated: 0,
 			},
 		});
+
+		//MO DEV
+		AuthServices.sendAuthcode(user);
 	}
 }
