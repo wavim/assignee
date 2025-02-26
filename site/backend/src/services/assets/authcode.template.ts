@@ -1,5 +1,5 @@
-export const authcodeEmail = (name: string, code: string) =>
-	template.replace("{{name}}", name).replace("{{code}}", code);
+export const authcodeEmail = (data: { name: string; code: string }) =>
+	template.replace("{{name}}", data.name).replace("{{code}}", data.code);
 
 const template = `<body class="body" style="background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
   <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff">

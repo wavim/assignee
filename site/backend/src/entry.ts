@@ -1,5 +1,6 @@
-import { configs } from "configs.js";
 import express from "express";
+
+import { configs } from "configs.js";
 import { prisma } from "prisma/client.prisma.js";
 import { AuthServices } from "services/auth.services.js";
 import { UserServices } from "services/user.service.js";
