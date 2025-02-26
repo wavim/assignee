@@ -389,7 +389,7 @@ Upon user registration or log-in (contexts that require better authentication) a
 \subsubsection{Table - sessions} \label{data-layer.design.user-system.sessions}
 To keep user logged-in in certain scenarios, browser sessions must be used.
 Many browser sessions can exist at the same time for the same user.
-When a user chose to stay logged-in, a bearer token of form
+When a user logged-in, a bearer token of form
 \{ uid: int, token: string \}
 will be generated,
 uid being the uid of the session bearer, and
