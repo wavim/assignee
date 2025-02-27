@@ -16,8 +16,8 @@
 	},
 	"devDependencies": {
 		"typescript": "^5.7.3",
-		"vite": "^6.1.1",
-		"vite-plugin-solid": "^2.11.2"
+		"vite": "^6.2.0",
+		"vite-plugin-solid": "^2.11.5"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
