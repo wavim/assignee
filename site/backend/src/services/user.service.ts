@@ -10,12 +10,12 @@ export namespace UserServices {
 		return !found;
 	}
 
-	export async function registerUser(data: { email: string; password: string; name: string }): Promise<void> {
+	export async function registerUser(data: { email: string; name: string; password: string }): Promise<void> {
 		const user = await prisma.user.create({
 			data: { email: data.email, name: data.name, created: 0, updated: 0 },
 		});
 
-		const salt = CryptUtil.random(16);
+		const salt = CryptUtil.randomBytes(16);
 		const hash = CryptUtil.hash(data.password, salt);
 		await prisma.password.create({
 			data: {

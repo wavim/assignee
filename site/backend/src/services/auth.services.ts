@@ -16,7 +16,7 @@ export namespace AuthServices {
 		} catch {}
 
 		const code = CryptUtil.randomCode(6);
-		const salt = CryptUtil.random(16);
+		const salt = CryptUtil.randomBytes(16);
 		const hash = CryptUtil.hash(code, salt);
 		await prisma.authcode.create({
 			data: {

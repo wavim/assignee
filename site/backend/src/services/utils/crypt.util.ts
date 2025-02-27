@@ -1,15 +1,17 @@
 import { k12 } from "@noble/hashes/sha3-addons";
-import { randomBytes } from "@noble/hashes/utils";
+import { randomBytes as _randomBytes } from "@noble/hashes/utils";
 
 export namespace CryptUtil {
-	export function random(byteLength: number): Uint8Array {
-		return randomBytes(byteLength);
+	export function randomBytes(count: number): Uint8Array {
+		return _randomBytes(count);
+	}
+
+	export function randomDigits(count: number): Uint8Array {
+		return randomBytes(count).map((b) => +`${b}`.at(-1)!);
 	}
 
 	export function randomCode(length: number): string {
-		return randomBytes(length)
-			.map((b) => +`${b}`.at(-1)!)
-			.join("");
+		return randomDigits(length).join("");
 	}
 
 	export function hash(raw: string, salt: Uint8Array): Uint8Array {
