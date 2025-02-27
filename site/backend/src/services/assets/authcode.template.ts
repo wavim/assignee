@@ -1,5 +1,5 @@
-export const authcodeEmail = (data: { name: string; code: string }) =>
-	template.replace("{{name}}", data.name).replace("{{code}}", data.code);
+export const authcodeEmail = (data: { name: string; code: string; expiry: number }) =>
+	template.replace("{{name}}", data.name).replace("{{code}}", data.code).replace("{{expiry}}", `${data.expiry}`);
 
 // Generated and designed with Enginemailer
 const template = `<body class="body" style="background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
@@ -35,7 +35,7 @@ const template = `<body class="body" style="background-color:#fff;margin:0;paddi
                   <div style="font-family:sans-serif">
                     <div class="" style="font-size:12px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;mso-line-height-alt:18px;color:#555;line-height:1.5">
                     <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:21px">
-                      Do not share this code with <em>anyone</em>. This OTP will expire in <strong>10</strong> minutes.
+                      Do not share this code with <em>anyone</em>. This OTP will expire in <strong>{{expiry}}</strong> minutes.
                     </p>
                     </div>
                   </div>

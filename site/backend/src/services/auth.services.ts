@@ -35,6 +35,7 @@ export namespace AuthServices {
 			html: authcodeEmail({
 				name: data.name,
 				code,
+				expiry: configs.auth.authcodeExpiry,
 			}),
 		});
 	}
