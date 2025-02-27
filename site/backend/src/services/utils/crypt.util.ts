@@ -14,13 +14,7 @@ export namespace CryptUtils {
 		return randomDigits(length).join("");
 	}
 
-	export function hash(raw: string, salt: Uint8Array): Uint8Array {
-		const key = new TextEncoder().encode(raw);
-		const concat = new Uint8Array(key.length + 16);
-		concat.set(key);
-		concat.set(salt, key.length);
-
-		const hash = k12(concat, { dkLen: 32 });
-		return hash;
+	export function hash(key: string, salt: Uint8Array): Uint8Array {
+		return k12(key, { personalization: salt, dkLen: 32 });
 	}
 }
