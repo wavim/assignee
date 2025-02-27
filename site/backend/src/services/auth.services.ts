@@ -3,7 +3,7 @@ import sgMail from "@sendgrid/mail";
 import { configs } from "configs.js";
 import { prisma } from "prisma/client.prisma.js";
 import { authcodeEmail } from "./assets/authcode.template.js";
-import { CryptUtil } from "./utils/crypt.util.js";
+import { CryptUtils } from "./utils/crypt.util.js";
 
 export namespace AuthServices {
 	export async function sendAuthcode(data: { uid: bigint; email: string; name: string }): Promise<void> {
@@ -15,9 +15,9 @@ export namespace AuthServices {
 			});
 		} catch {}
 
-		const code = CryptUtil.randomCode(6);
-		const salt = CryptUtil.randomBytes(16);
-		const hash = CryptUtil.hash(code, salt);
+		const code = CryptUtils.randomCode(6);
+		const salt = CryptUtils.randomBytes(16);
+		const hash = CryptUtils.hash(code, salt);
 		await prisma.authcode.create({
 			data: {
 				uid: data.uid,

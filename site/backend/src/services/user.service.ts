@@ -1,6 +1,6 @@
 import { prisma } from "prisma/client.prisma.js";
 import { AuthServices } from "./auth.services.js";
-import { CryptUtil } from "./utils/crypt.util.js";
+import { CryptUtils } from "./utils/crypt.util.js";
 
 export namespace UserServices {
 	export async function isEmailAvailable(email: string): Promise<boolean> {
@@ -15,8 +15,8 @@ export namespace UserServices {
 			data: { email: data.email, name: data.name, created: 0, updated: 0 },
 		});
 
-		const salt = CryptUtil.randomBytes(16);
-		const hash = CryptUtil.hash(data.password, salt);
+		const salt = CryptUtils.randomBytes(16);
+		const hash = CryptUtils.hash(data.password, salt);
 		await prisma.password.create({
 			data: {
 				uid: user.uid,
