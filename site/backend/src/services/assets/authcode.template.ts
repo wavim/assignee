@@ -21,7 +21,7 @@ const template = `<body class="body" style="background-color:#fff;margin:0;paddi
                   <td class="pad" style="padding-bottom:10px;padding-left:20px;padding-right:20px;padding-top:10px">
                   <div style="font-family:sans-serif">
                     <div class="" style="font-size:12px;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;mso-line-height-alt:14.4px;color:#555;line-height:1.2">
-                    <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><strong><span style="word-break: break-word; font-size: 24px;">Assignee Authcode for You, {{name}}</span></strong></p>
+                    <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><strong><span style="word-break: break-word; font-size: 24px;">Hi, Assignee Authcode for You, {{name}}</span></strong></p>
                     </div>
                   </div>
                   </td>
