@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Merges all branches into <master> and updates them with HEAD
+
 git switch master
 
 branches=$(git branch | grep -v 'master' | sed 's/[ *\n]//g')
