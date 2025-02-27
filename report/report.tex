@@ -355,12 +355,13 @@ Upon user registration or log-in (contexts that require better authentication) a
 	      \href{https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator}{Cryptographically Secure Pseudorandom Number Generator}
 	      \footnote{Later abbreviated as CSPRNG.\n
 		      Refer to en.wikipedia.org/wiki/Cryptographically\_secure\_pseudorandom\_number\_generator.}
-	      with enough entropy, that is concatenated to the raw string (in byte buffer form) before hashing.
+	      seeded with enough entropy, that is concatenated to the raw string (in byte buffer form) before hashing
+	      (actually it is more sophisticated for even better security).
 	      It is of length 16 bytes in our case which is totally sufficient for the purpose.
 	      The salt will be stored directly in the database along with the hash,
 	      as having the salt will not provide any help in attempt to crack the original string.\n
 	      To summarize, given a raw string as input, a random salt of 16 bytes would be generated,
-	      appended to the raw string after converting it into byte form.
+	      (appended) to the raw string after converting it into byte form.
 	      After which the resulting byte buffer is hashed with K12 into a 256-bits digest and stored in the database together with the salt.
 	      When a user attempts to verify his input against the correct one,
 	      his input would be appended with the salt stored in the database and hashed with K12 again,
@@ -375,6 +376,7 @@ Upon user registration or log-in (contexts that require better authentication) a
 	      \S{} \hyperref[application-layer.implementation.authentication]{Application Layer - Authentication} and
 	      \S{} \hyperref[security.authentication]{Security - Authentication}.
 \end{itemize}
+Also, the code itself would also be generated with an CSPRNG to prevent predictions.
 
 \subsubsection{Table - passwords} \label{data-layer.design.user-system.passwords}
 \begin{itemize}
