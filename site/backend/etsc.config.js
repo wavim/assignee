@@ -6,7 +6,7 @@ export default {
 		bundle: true,
 		packages: "external",
 		//MO DEV
-		minify: false,
+		// minify: true,
 		metafile: true,
 		plugins: [cleanPlugin()],
 	},

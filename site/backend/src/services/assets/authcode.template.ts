@@ -1,5 +1,7 @@
+import { TemplateUtils } from "services/utils/template.util.js";
+
 export const authcodeEmail = (data: { name: string; code: string; expiry: number }) =>
-	template.replace("{{name}}", data.name).replace("{{code}}", data.code).replace("{{expiry}}", `${data.expiry}`);
+	TemplateUtils.fill(template, data);
 
 // Generated and designed with Enginemailer
 const template = `<body class="body" style="background-color:#fff;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
