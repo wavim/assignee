@@ -121,6 +121,71 @@ export namespace AuthServices {
 		return session;
 	}
 
+	export async function loginSession(data: {
+		session: { uid: bigint; token: string };
+		browser: {
+			name: string;
+			os: string;
+			platform: string;
+			engine: string;
+		};
+	}): Promise<{
+		uid: bigint;
+		token: string;
+	}> {
+		const user = await prisma.user.findUniqueOrThrow({
+			where: { uid: data.session.uid },
+			include: {
+				sessions: true,
+			},
+		});
+		if (user.sessions.length === 0) throw new Error("User does not have sessions.");
+
+		const token = data.session.token;
+		const key = token + JSON.stringify(data.browser);
+
+		for (const session of user.sessions) {
+			const isExpired = TimeUtils.isExpired(session.created, {
+				d: configs.auth.sessionExpiryDay,
+			});
+			if (isExpired) {
+				prisma.session.delete({
+					where: {
+						id: session.id,
+					},
+				});
+				continue;
+			}
+
+			const isActiveSession = CryptUtils.areHashesEqual(
+				session.hash,
+				CryptUtils.hash(key, session.salt),
+			);
+			if (isActiveSession) continue;
+
+			const newToken = CryptUtils.randomToken(configs.auth.bearerTokenLen);
+			const newKey = newToken + JSON.stringify(data.browser);
+			const newSalt = CryptUtils.randomBytes(16);
+			const newHash = CryptUtils.hash(newKey, newSalt);
+			await prisma.session.update({
+				where: {
+					id: session.id,
+				},
+				data: {
+					hash: newHash,
+					salt: newSalt,
+				},
+			});
+
+			return {
+				uid: user.uid,
+				token: newToken,
+			};
+		}
+
+		throw new Error("User does not have active sessions.");
+	}
+
 	export async function loginUser(data: {
 		email: string;
 		password: string;
@@ -130,7 +195,6 @@ export namespace AuthServices {
 			platform: string;
 			engine: string;
 		};
-		token?: string;
 	}): Promise<{
 		uid: bigint;
 		token: string;
@@ -143,55 +207,14 @@ export namespace AuthServices {
 			},
 		});
 
-		const token = data.token ?? CryptUtils.randomToken(configs.auth.bearerTokenLen);
-		const key = token + JSON.stringify(data.browser);
-
-		if (data.token) {
-			for (const session of user.sessions) {
-				const isExpired = TimeUtils.isExpired(session.created, {
-					d: configs.auth.sessionExpiryDay,
-				});
-				if (isExpired) {
-					prisma.session.delete({
-						where: {
-							id: session.id,
-						},
-					});
-					continue;
-				}
-
-				const isActiveSession = CryptUtils.areHashesEqual(
-					session.hash,
-					CryptUtils.hash(key, session.salt),
-				);
-				if (!isActiveSession) continue;
-
-				const newToken = CryptUtils.randomToken(configs.auth.bearerTokenLen);
-				const newKey = token + JSON.stringify(data.browser);
-				const newSalt = CryptUtils.randomBytes(16);
-				const newHash = CryptUtils.hash(newKey, newSalt);
-				await prisma.session.update({
-					where: {
-						id: session.id,
-					},
-					data: {
-						hash: newHash,
-						salt: newSalt,
-					},
-				});
-
-				return {
-					uid: user.uid,
-					token: newToken,
-				};
-			}
-		}
-
 		const isPasswordValid = CryptUtils.areHashesEqual(
 			user.password!.hash,
 			CryptUtils.hash(data.password, user.password!.salt),
 		);
 		if (!isPasswordValid) throw new Error(`Invalid password on login: ${data.password}.`);
+
+		const token = CryptUtils.randomToken(configs.auth.bearerTokenLen);
+		const key = token + JSON.stringify(data.browser);
 
 		const salt = CryptUtils.randomBytes(16);
 		const hash = CryptUtils.hash(key, salt);
