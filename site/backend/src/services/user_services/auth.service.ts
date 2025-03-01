@@ -58,7 +58,7 @@ export namespace AuthServices {
 			m: configs.auth.authcodeExpiryMin,
 		});
 		if (isExpired) {
-			await prisma.authcode.delete({
+			prisma.authcode.delete({
 				where: { uid: authcode.uid },
 			});
 			return false;
@@ -114,6 +114,7 @@ export namespace AuthServices {
 			platform: string;
 			engine: string;
 		};
+		token?: string;
 	}): Promise<{
 		uid: bigint;
 		token: string;
@@ -126,7 +127,49 @@ export namespace AuthServices {
 			},
 		});
 
-		//MO TODO active sessions check & skip
+		const token = data.token ?? CryptUtils.randomToken(configs.auth.bearerTokenLen);
+		const key = token + JSON.stringify(data.browser);
+
+		if (data.token) {
+			for (const session of user.sessions) {
+				const isExpired = TimeUtils.isExpired(session.created, {
+					d: configs.auth.sessionExpiryDay,
+				});
+				if (isExpired) {
+					prisma.session.delete({
+						where: {
+							id: session.id,
+						},
+					});
+					continue;
+				}
+
+				const isActiveSession = CryptUtils.areHashesEqual(
+					session.hash,
+					CryptUtils.hash(key, session.salt),
+				);
+				if (!isActiveSession) continue;
+
+				const newToken = CryptUtils.randomToken(configs.auth.bearerTokenLen);
+				const newKey = token + JSON.stringify(data.browser);
+				const newSalt = CryptUtils.randomBytes(16);
+				const newHash = CryptUtils.hash(newKey, newSalt);
+				await prisma.session.update({
+					where: {
+						id: session.id,
+					},
+					data: {
+						hash: newHash,
+						salt: newSalt,
+					},
+				});
+
+				return {
+					uid: user.uid,
+					token: newToken,
+				};
+			}
+		}
 
 		const isPasswordValid = CryptUtils.areHashesEqual(
 			user.password!.hash,
@@ -134,9 +177,6 @@ export namespace AuthServices {
 		);
 		if (!isPasswordValid) throw new Error(`Invalid password on login: ${data.password}.`);
 
-		const token = CryptUtils.randomToken(configs.auth.bearerTokenLen);
-
-		const key = token + JSON.stringify(data.browser);
 		const salt = CryptUtils.randomBytes(16);
 		const hash = CryptUtils.hash(key, salt);
 		await prisma.session.create({

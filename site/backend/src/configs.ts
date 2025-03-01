@@ -12,6 +12,7 @@ export const configs = {
 		sgSender: getString("SENDGRID_SENDER", "test@test.com"),
 		sgApiKey: getString("SENDGRID_API_KEY", "abcd1234"),
 		authcodeExpiryMin: getNumber("AUTHCODE_EXPIRY_MIN", 3),
+		sessionExpiryDay: getNumber("SESSION_EXPIRY_DAY", 7),
 		bearerTokenLen: getNumber("BEARER_TOKEN_LEN", 32),
 	},
 	valid: {
