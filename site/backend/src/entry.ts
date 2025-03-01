@@ -5,6 +5,9 @@ import { prisma } from "prisma/client.prisma.js";
 
 import { AuthServices } from "services/user_services/auth.service.js";
 
+//MO DEV
+import { createInterface } from "node:readline";
+
 prisma.$connect();
 
 //MO DEV

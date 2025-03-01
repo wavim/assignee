@@ -37,7 +37,7 @@ export namespace AuthServices {
 		await sgMail.send({
 			from: configs.auth.sgSender,
 			to: data.email,
-			subject: "Assignee Authcode",
+			subject: `${code} - Assignee Authcode`,
 			html: AuthcodeEmail({
 				name: data.name,
 				code,
@@ -80,7 +80,13 @@ export namespace AuthServices {
 		return !found;
 	}
 
-	export async function signup(data: { email: string; name: string; password: string }): Promise<void> {
+	export async function registerUser(data: { email: string; name: string; password: string }): Promise<{
+		uid: bigint;
+		created: bigint;
+		email: string;
+		name: string;
+		updated: bigint;
+	}> {
 		const user = await prisma.user.create({
 			data: { email: data.email, name: data.name, created: 0, updated: 0 },
 		});
@@ -103,9 +109,11 @@ export namespace AuthServices {
 				updated: 0,
 			},
 		});
+
+		return user;
 	}
 
-	export async function login(data: {
+	export async function loginUser(data: {
 		email: string;
 		password: string;
 		browser: {
@@ -192,5 +200,11 @@ export namespace AuthServices {
 			uid: user.uid,
 			token,
 		};
+	}
+
+	export async function deleteUser(uid: bigint): Promise<void> {
+		await prisma.user.delete({
+			where: { uid },
+		});
 	}
 }

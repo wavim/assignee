@@ -25,6 +25,5 @@ function getString(config: string, fallback: string): string {
 }
 
 function getNumber(config: string, fallback: number): number {
-	const number = Number(process.env[config]);
-	return Number.isNaN(number) ? fallback : number;
+	return Number(process.env[config] ?? fallback);
 }
