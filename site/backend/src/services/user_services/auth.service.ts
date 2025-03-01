@@ -80,12 +80,19 @@ export namespace AuthServices {
 		return !found;
 	}
 
-	export async function registerUser(data: { email: string; name: string; password: string }): Promise<{
-		uid: bigint;
-		created: bigint;
+	export async function registerUser(data: {
 		email: string;
 		name: string;
-		updated: bigint;
+		password: string;
+		browser: {
+			name: string;
+			os: string;
+			platform: string;
+			engine: string;
+		};
+	}): Promise<{
+		uid: bigint;
+		token: string;
 	}> {
 		const user = await prisma.user.create({
 			data: { email: data.email, name: data.name, created: 0, updated: 0 },
@@ -110,7 +117,8 @@ export namespace AuthServices {
 			},
 		});
 
-		return user;
+		const session = await loginUser(data);
+		return session;
 	}
 
 	export async function loginUser(data: {
