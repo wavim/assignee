@@ -5,12 +5,25 @@ expand(config());
 
 export const configs = {
 	app: {
-		port: Number(process.env.APP_PORT) ?? 3000,
-		static: process.env.APP_STATIC ?? "public",
+		port: getNumber("APP_PORT", 5500),
+		static: getString("APP_STATIC", "public"),
 	},
 	auth: {
-		sgSender: process.env.SENDGRID_SENDER ?? "test@outlook.com",
-		sgApiKey: process.env.SENDGRID_API_KEY ?? "1234",
-		authcodeExpiry: Number(process.env.AUTHCODE_EXPIRY_MIN) ?? 3,
+		sgSender: getString("SENDGRID_SENDER", "test@test.com"),
+		sgApiKey: getString("SENDGRID_API_KEY", "abcd1234"),
+		authcodeExpiryMin: getNumber("AUTHCODE_EXPIRY_MIN", 3),
+		bearerTokenLen: getNumber("BEARER_TOKEN_LEN", 32),
+	},
+	valid: {
+		minPasswordLen: getNumber("MIN_PASSWORD_LEN", 8),
 	},
 };
+
+function getString(config: string, fallback: string): string {
+	return process.env[config] ?? fallback;
+}
+
+function getNumber(config: string, fallback: number): number {
+	const number = Number(process.env[config]);
+	return Number.isNaN(number) ? fallback : number;
+}

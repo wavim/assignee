@@ -1,8 +1,9 @@
-import express from "express";
-
 import { configs } from "configs.js";
+
+import express from "express";
 import { prisma } from "prisma/client.prisma.js";
-import { AuthServices } from "services/auth.services.js";
+
+import { AuthServices } from "services/user_services/auth.service.js";
 import { UserServices } from "services/user.service.js";
 
 prisma.$connect();
