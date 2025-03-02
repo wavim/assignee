@@ -1,6 +1,8 @@
+import { configs } from "configs.js";
 import { Router } from "express";
 
 import { AuthServices } from "services/user_services/auth.service.js";
+import { TimeUtils } from "utils/time.util.js";
 
 export const userRoutes = Router();
 
@@ -20,16 +22,18 @@ userRoutes.post("/loginsession", async (req, res, next) => {
 			sessionToken,
 			browser,
 		});
+
+		res.cookie("sessionToken", JSON.stringify(newSessionToken), {
+			httpOnly: true,
+			secure: true,
+			sameSite: "lax",
+			expires: TimeUtils.getDateAfter({
+				day: configs.auth.sessionExpiryDay,
+			}),
+		});
+
 		res.status(200).json(newSessionToken);
 	} catch (err) {
 		next(err);
 	}
 });
-
-// userRoutes.post("/register", (req, res) => {
-// 	const payload: {
-// 		email: string;
-// 		name: string;
-// 		password: string;
-// 	} = req.body;
-// });
