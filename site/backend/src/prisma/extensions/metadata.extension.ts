@@ -31,7 +31,10 @@ export const TableMetadataExtension = Prisma.defineExtension({
 });
 
 function setMetadata<T extends PrismaTypes.Models>(
-	data: Prisma.Args<T, "create" | "createMany" | "update" | "updateMany">["data"],
+	data: Prisma.Args<
+		T,
+		"create" | "createMany" | "update" | "updateMany"
+	>["data"],
 	isCreate?: boolean,
 ): void {
 	const now = TimeUtils.now();

@@ -1,6 +1,10 @@
 import { TemplateUtils } from "utils/template.util.js";
 
-export const AuthcodeEmail = (data: { name: string; code: string; expiry: number }) => {
+export const AuthcodeEmail = (data: {
+	name: string;
+	code: string;
+	expiry: number;
+}) => {
 	return TemplateUtils.fill(template, data);
 };
 

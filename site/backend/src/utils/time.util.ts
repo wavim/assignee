@@ -10,12 +10,15 @@ export namespace TimeUtils {
 	export function isExpired(
 		from: bigint,
 		expiry: {
-			d?: number;
-			h?: number;
-			m?: number;
+			day?: number;
+			hour?: number;
+			min?: number;
 		},
 	): boolean {
-		const _expiry = (expiry.d ?? 0) * 24 * 3600 + (expiry.h ?? 0) * 3600 + (expiry.m ?? 0) * 60;
+		const _expiry =
+			(expiry.day ?? 0) * 24 * 3600 +
+			(expiry.hour ?? 0) * 3600 +
+			(expiry.min ?? 0) * 60;
 		return elapsed(from) > _expiry;
 	}
 }
