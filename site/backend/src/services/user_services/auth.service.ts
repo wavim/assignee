@@ -183,7 +183,7 @@ export namespace AuthServices {
 	}
 
 	//MO NOTE room for improvement, database {session} shall have key {uid+sid} and can be updated
-	//MO TODO mention this ^ in the report, but really this is minor, bigint is, well, BIG
+	//MO NOTE but really this is minor, since bigint is, well, BIG
 	export async function loginSession(data: {
 		sessionToken: { id: string; token: string };
 		browser: { name: string; os: string; platform: string; engine: string };

@@ -1,8 +1,12 @@
 import { configs } from "configs.js";
 
+import { createServer } from "https";
+import { readFileSync } from "node:fs";
+
 import express from "express";
 import { prisma } from "prisma/client.prisma.js";
 
+//MO DEV
 import { AuthServices } from "services/user_services/auth.service.js";
 
 import { routes } from "routes/routes.js";
@@ -15,15 +19,20 @@ prisma.$connect();
 //MO DEV
 await prisma.user.deleteMany({});
 
+const key = readFileSync(`./${configs.app.sslcerts}/key.pem`, "utf-8");
+const cert = readFileSync(`./${configs.app.sslcerts}/cert.pem`, "utf-8");
+const passphrase = configs.app.sslpass;
+
 const app = express();
-app.set("port", configs.app.port);
-app.use("/api", routes);
+
 app.use(express.static(`./${configs.app.static}`));
-app.listen(app.get("port"), () => {
+app.use("/api", routes);
+
+const server = createServer({ key, cert, passphrase }, app);
+
+server.listen(configs.app.port, () => {
 	console.log(
-		`Express started on http://localhost:${app.get(
-			"port",
-		)}; Ctrl+C to terminate.`,
+		`Express started on https://localhost:${configs.app.port}; Ctrl+C to terminate.`,
 	);
 });
 
