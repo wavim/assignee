@@ -83,7 +83,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 						ref={logo}
 					></Logo>
 					<span
-						class="text-primary-fg font-montserrat py-5 text-2xl font-medium"
+						class="text-primary-fg font-primary py-5 text-2xl font-medium"
 						ref={attrib}
 					>
 						Presented by David W.
