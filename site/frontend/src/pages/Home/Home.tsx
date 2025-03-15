@@ -25,13 +25,13 @@ export default () => {
 		<>
 			<main class="bg-primary-bg h-[200vh] min-h-screen w-full">
 				<span
-					class="font-fira mt-96 ml-10 inline-block text-7xl"
+					class="font-montserrat mt-96 ml-10 inline-block text-7xl"
 					ref={hello}
 				>
 					Hello
 				</span>
 				<span
-					class="font-fira mt-96 ml-10 inline-block text-7xl"
+					class="font-montserrat mt-96 ml-10 inline-block text-7xl"
 					ref={world}
 				>
 					World!

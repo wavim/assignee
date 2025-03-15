@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { createSignal, onMount, Setter, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 
 import Logo from "../Logo/Logo";
 
@@ -79,11 +79,11 @@ export default (props: { loadPromise: Promise<void> }) => {
 					ref={screen}
 				>
 					<Logo
-						class="text-primary-fg -mt-16 w-1/5 origin-[center_top] transform-3d"
+						class="text-primary-fg -mt-16 w-1/3 max-w-96 origin-[center_top] transform-3d"
 						ref={logo}
 					></Logo>
 					<span
-						class="text-primary-fg font-fira py-5 text-2xl font-medium"
+						class="text-primary-fg font-montserrat py-5 text-2xl font-medium"
 						ref={attrib}
 					>
 						Presented by David W.
