@@ -1,18 +1,11 @@
 import { gsap } from "gsap";
-import { createEffect, createSignal } from "solid-js";
-
-import Loader from "../../components/Loader/Loader";
 
 export default () => {
 	//MO TODO use break text or smthin to streamline
 	let hello!: HTMLParagraphElement;
 	let world!: HTMLParagraphElement;
 
-	const [isRevealing, setIsRevealing] = createSignal(false);
-
-	createEffect(() => {
-		if (!isRevealing()) return;
-
+	window.addEventListener("pageReveal", () => {
 		gsap.fromTo(
 			[hello, world],
 			{ opacity: 0, translateY: "100%", filter: "blur(0.6rem)" },
@@ -30,8 +23,7 @@ export default () => {
 
 	return (
 		<>
-			<Loader setIsRevealing={setIsRevealing}></Loader>
-			<main class="bg-primary-bg min-h-screen w-full">
+			<main class="bg-primary-bg h-[200vh] min-h-screen w-full">
 				<span
 					class="font-fira mt-96 ml-10 inline-block text-7xl"
 					ref={hello}

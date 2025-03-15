@@ -7,6 +7,20 @@ import { Locomotive } from "./libs";
 
 import { routes } from "./routes";
 
+import Loader from "./components/Loader/Loader";
+
 new Locomotive();
 
-render(() => <Router>{routes}</Router>, document.getElementById("root")!);
+const loadPromise = new Promise<void>((res) => {
+	window.onload = () => res();
+});
+
+render(
+	() => (
+		<>
+			<Loader loadPromise={loadPromise}></Loader>
+			<Router>{routes}</Router>
+		</>
+	),
+	document.getElementById("root")!,
+);

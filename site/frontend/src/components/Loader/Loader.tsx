@@ -3,34 +3,41 @@ import { createSignal, onMount, Setter, Show } from "solid-js";
 
 import Logo from "../Logo/Logo";
 
-export default (props: { setIsRevealing: Setter<boolean> }) => {
+export default (props: { loadPromise: Promise<void> }) => {
 	let screen!: HTMLDivElement;
 	let mask!: HTMLDivElement;
 	let logo!: Element;
 	let attrib!: HTMLSpanElement;
 
-	const [isLoaded, setIsLoaded] = createSignal(false);
+	const [isShown, setIsShown] = createSignal(true);
 
-	onMount(() => {
-		const tl = gsap.timeline({
-			onComplete: () => {
-				setIsLoaded(true);
-			},
+	onMount(async () => {
+		document.body.classList.add("overflow-y-hidden");
+		await new Promise((res) => {
+			const inTL = gsap.timeline({ onComplete: res });
+
+			inTL.fromTo(
+				[logo, attrib],
+				{ opacity: 0, translateY: "100%", rotateX: "80deg" },
+				{
+					opacity: 1,
+					translateY: 0,
+					rotateX: 0,
+					duration: 0.8,
+					ease: "power2.out",
+					stagger: 0.1,
+				},
+			);
 		});
 
-		tl.fromTo(
-			[logo, attrib],
-			{ opacity: 0, translateY: "100%", rotateX: "80deg" },
-			{
-				opacity: 1,
-				translateY: 0,
-				rotateX: 0,
-				duration: 0.8,
-				ease: "power2.out",
-				stagger: 0.1,
+		await props.loadPromise;
+		const fadeTL = gsap.timeline({
+			onComplete: () => {
+				setIsShown(false);
+				document.body.classList.remove("overflow-y-hidden");
 			},
-		);
-		tl.fromTo(
+		});
+		fadeTL.fromTo(
 			screen,
 			{
 				clipPath:
@@ -44,7 +51,7 @@ export default (props: { setIsRevealing: Setter<boolean> }) => {
 			},
 			">",
 		);
-		tl.fromTo(
+		fadeTL.fromTo(
 			mask,
 			{ opacity: 1 },
 			{
@@ -52,7 +59,8 @@ export default (props: { setIsRevealing: Setter<boolean> }) => {
 				duration: 1.2,
 				ease: "expo.inOut",
 				onStart: () => {
-					props.setIsRevealing(true);
+					const revealEvent = new CustomEvent("pageReveal");
+					window.dispatchEvent(revealEvent);
 				},
 			},
 			"<",
@@ -60,7 +68,7 @@ export default (props: { setIsRevealing: Setter<boolean> }) => {
 	});
 
 	return (
-		<Show when={!isLoaded()}>
+		<Show when={isShown()}>
 			<div class="fixed z-[1000] h-screen w-full">
 				<div
 					class="bg-primary-fg absolute -z-[1000] h-full w-full"
