@@ -5,9 +5,9 @@
 	"description": "",
 	"type": "module",
 	"scripts": {
-		"watch": "vite",
+		"watch": "vite --host",
 		"build": "vite build",
-		"serve": "vite preview"
+		"serve": "vite preview --host"
 	},
 	"license": "MIT",
 	"dependencies": {

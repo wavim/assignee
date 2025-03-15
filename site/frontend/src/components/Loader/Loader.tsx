@@ -86,7 +86,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 						class="text-primary-fg font-primary py-5 text-2xl font-medium"
 						ref={attrib}
 					>
-						Presented by David W.
+						Presented by CarbonicSoda
 					</span>
 				</div>
 			</div>
