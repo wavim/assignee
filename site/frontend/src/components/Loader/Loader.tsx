@@ -79,11 +79,11 @@ export default (props: { loadPromise: Promise<void> }) => {
 					ref={screen}
 				>
 					<Logo
-						class="text-primary-fg -mt-16 w-1/3 max-w-96 origin-[center_top] transform-3d"
+						class="text-primary-fg -mt-16 w-1/3 origin-[center_top] transform-3d sm:w-1/5"
 						ref={logo}
 					></Logo>
 					<span
-						class="text-primary-fg font-primary py-5 text-2xl font-medium"
+						class="text-primary-fg font-primary py-5 text-xl font-medium sm:text-2xl"
 						ref={attrib}
 					>
 						Presented by CarbonicSoda
