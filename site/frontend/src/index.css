@@ -1,0 +1,4 @@
+@import "./theme.css";
+@import "tailwindcss";
+
+@import "tailwindcss-clip-path";

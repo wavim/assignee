@@ -1,0 +1,14 @@
+{
+	"endOfLine": "auto",
+	"htmlWhitespaceSensitivity": "css",
+	"objectWrap": "collapse",
+	"plugins": ["prettier-plugin-tailwindcss"],
+	"printWidth": 80,
+	"proseWrap": "always",
+	"quoteProps": "consistent",
+	"semi": true,
+	"singleAttributePerLine": true,
+	"tabWidth": 2,
+	"trailingComma": "all",
+	"useTabs": true
+}
