@@ -6,7 +6,7 @@ import Logo from "../Logo/Logo";
 export default (props: { loadPromise: Promise<void> }) => {
 	let screen!: HTMLDivElement;
 	let mask!: HTMLDivElement;
-	let logo!: Element;
+	let logo!: SVGSVGElement;
 	let attrib!: HTMLSpanElement;
 
 	const [isShown, setIsShown] = createSignal(true);
@@ -15,7 +15,6 @@ export default (props: { loadPromise: Promise<void> }) => {
 		document.body.classList.add("overflow-y-hidden");
 		await new Promise((res) => {
 			const inTL = gsap.timeline({ onComplete: res });
-
 			inTL.fromTo(
 				[logo, attrib],
 				{ opacity: 0, translateY: "100%", rotateX: "80deg" },
