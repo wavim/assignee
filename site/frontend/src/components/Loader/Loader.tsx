@@ -71,19 +71,19 @@ export default (props: { loadPromise: Promise<void> }) => {
 		<Show when={isShown()}>
 			<div class="fixed z-[1000] h-screen w-full">
 				<div
-					class="bg-primary-fg absolute -z-[1000] h-full w-full"
+					class="bg-p-dark dark:bg-p-light pointer-events-none absolute -z-[1] h-full w-full"
 					ref={mask}
 				></div>
 				<div
-					class="bg-primary-bg flex h-full w-full flex-col items-center justify-center"
+					class="bg-p-light dark:bg-p-dark flex h-full w-full flex-col items-center justify-center"
 					ref={screen}
 				>
 					<Logo
-						class="text-primary-fg -mt-16 w-1/3 origin-[center_top] transform-3d sm:w-1/5"
+						class="text-p-dark dark:text-p-light -mt-16 w-1/3 origin-[center_top] transform-3d sm:w-1/5"
 						ref={logo}
 					></Logo>
 					<span
-						class="text-primary-fg font-primary py-5 text-xl font-medium sm:text-2xl"
+						class="text-p-dark font-primary dark:text-p-light py-5 text-xl font-medium sm:text-2xl"
 						ref={attrib}
 					>
 						Presented by CarbonicSoda
