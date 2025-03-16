@@ -17,7 +17,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 			const inTL = gsap.timeline({ onComplete: res });
 			inTL.fromTo(
 				[logo, attrib],
-				{ opacity: 0, translateY: "100%", rotateX: "80deg" },
+				{ opacity: 0, translateY: "100%", rotateX: "-80deg" },
 				{
 					opacity: 1,
 					translateY: 0,
@@ -74,7 +74,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 					ref={mask}
 				></div>
 				<div
-					class="bg-p-light dark:bg-p-dark flex h-full w-full flex-col items-center justify-center"
+					class="bg-p-light dark:bg-p-dark flex h-full w-full flex-col items-center justify-center perspective-normal"
 					ref={screen}
 				>
 					<Logo
