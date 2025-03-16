@@ -7,6 +7,8 @@ import { Locomotive } from "./libs";
 
 import { routes } from "./routes";
 
+import "./effects";
+
 import Loader from "./components/Loader/Loader";
 
 new Locomotive();

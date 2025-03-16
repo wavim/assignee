@@ -14,19 +14,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 	onMount(async () => {
 		document.body.classList.add("overflow-y-hidden");
 		await new Promise((res) => {
-			const inTL = gsap.timeline({ onComplete: res });
-			inTL.fromTo(
-				[logo, attrib],
-				{ opacity: 0, translateY: "100%", rotateX: "-80deg" },
-				{
-					opacity: 1,
-					translateY: 0,
-					rotateX: 0,
-					duration: 0.8,
-					ease: "power2.out",
-					stagger: 0.1,
-				},
-			);
+			gsap.effects.rollIn([logo, attrib], { onComplete: res });
 		});
 
 		await props.loadPromise;
@@ -48,15 +36,10 @@ export default (props: { loadPromise: Promise<void> }) => {
 				duration: 1.2,
 				ease: "expo.inOut",
 			},
-			">",
 		);
-		fadeTL.fromTo(
+		fadeTL.fadeOut(
 			mask,
-			{ opacity: 1 },
 			{
-				opacity: 0,
-				duration: 1.2,
-				ease: "expo.inOut",
 				onStart: () => {
 					const revealEvent = new CustomEvent("pageReveal");
 					window.dispatchEvent(revealEvent);

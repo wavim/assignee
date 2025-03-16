@@ -6,19 +6,7 @@ export default () => {
 	let world!: HTMLParagraphElement;
 
 	window.addEventListener("pageReveal", () => {
-		gsap.fromTo(
-			[hello, world],
-			{ opacity: 0, translateY: "100%", filter: "blur(0.6rem)" },
-			{
-				opacity: 1,
-				translateY: 0,
-				filter: "blur(0rem)",
-				duration: 1.6,
-				ease: "circ.out",
-				delay: 0.6,
-				stagger: 0.06,
-			},
-		);
+		gsap.effects.blurIn([hello, world]);
 	});
 
 	return (
