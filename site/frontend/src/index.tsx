@@ -1,14 +1,14 @@
 import "locomotive-scroll/locomotive-scroll.css";
-import "./index.css";
+import "./styles/index.css";
 
 import { Router } from "@solidjs/router";
 import { Natlog } from "natural-log";
 import { render } from "solid-js/web";
 import { Locomotive } from "./libs";
 
-import { routes } from "./routes";
+import { routes } from "./pages/routes";
 
-import "./effects";
+import "./styles/effects";
 
 import Loader from "./components/Loader/Loader";
 

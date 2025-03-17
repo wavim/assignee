@@ -14,7 +14,7 @@
 		"@solidjs/router": "^0.15.3",
 		"gsap": "^3.12.7",
 		"locomotive-scroll": "5.0.0-beta.21",
-		"natural-log": "^1.0.2",
+		"natural-log": "^1.0.5",
 		"solid-js": "^1.9.5"
 	},
 	"devDependencies": {
