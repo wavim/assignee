@@ -51,7 +51,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 
 	return (
 		<Show when={isShown()}>
-			<div class="fixed z-[1000] h-screen w-full">
+			<div class="fixed z-[calc(infinity)] h-screen w-full">
 				<div
 					class="bg-p-dark dark:bg-p-light pointer-events-none absolute -z-[1] h-full w-full"
 					ref={mask}

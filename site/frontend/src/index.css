@@ -1,4 +1,5 @@
 @import "./theme.css";
 @import "tailwindcss";
 
+/* MO DEV currently not used, will be used for static clips */
 @import "tailwindcss-clip-path";
