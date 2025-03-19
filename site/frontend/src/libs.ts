@@ -1,1 +1,1 @@
-export { default as Locomotive } from "locomotive-scroll";
+export { default as Lenis } from "lenis";

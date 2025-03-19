@@ -14,9 +14,9 @@ importers:
       gsap:
         specifier: ^3.12.7
         version: 3.12.7
-      locomotive-scroll:
-        specifier: 4.1.4
-        version: 4.1.4
+      lenis:
+        specifier: ^1.2.3
+        version: 1.2.3
       natural-log:
         specifier: 1.1.0
         version: 1.1.0
@@ -591,12 +591,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  bezier-easing@2.1.0:
-    resolution: {integrity: sha512-gbIqZ/eslnUFC1tjEvtz0sgx+xTK20wDnYMIA27VA04R7w6xxXQPZDbibjA9DTWZRA2CXtwHykkVzlCaAJAZig==}
-
-  bindall-standalone@1.0.5:
-    resolution: {integrity: sha512-HDI7YBWXVJk/eoGz+e4lYQQJnYp1ZHcUvAY71lVptLMhQnDm86vD73AGPw2qIlgYR3P0bjmoAcXiA8qhFejBhA==}
-
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
@@ -719,8 +713,19 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  lethargy@1.0.9:
-    resolution: {integrity: sha512-nFM8blpCF9rqIL5mRAaTGc78W8oQixVtsD86jbEPvcI13+lDUYJf3R7DZQQL7tCiBpbGpGKMX2gwJFO9hiaOkg==}
+  lenis@1.2.3:
+    resolution: {integrity: sha512-H3VUn62jvQPfyxGW2F0STJPhP1VzX5r05KtiZ0uxHYD9xtbfTvj2eX/Km26+x13zlaKfHacEe1DTC3ouFrxw+g==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      react: '>=17.0.0'
+      vue: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
 
   lightningcss-darwin-arm64@1.29.2:
     resolution: {integrity: sha512-cK/eMabSViKn/PG8U/a7aCorpeKLMlK0bQeNHmdb7qUnBkNPnL+oV5DjJUo0kqWsJUapZsM4jCfYItbqBDvlcA==}
@@ -786,9 +791,6 @@ packages:
     resolution: {integrity: sha512-6b6gd/RUXKaw5keVdSEtqFVdzWnU5jMxTUjA2bVcMNPLwSQ08Sv/UodBVtETLCn7k4S1Ibxwh7k68IwLZPgKaA==}
     engines: {node: '>= 12.0.0'}
 
-  locomotive-scroll@4.1.4:
-    resolution: {integrity: sha512-6i98cFF2SKg6wIPpwVPuo2FG8qL3USsdDeew78TEYZyLoqleMWNfkSDpWA6mPym4dOfTIBXc678VmGlkgx3fTA==}
-
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -816,10 +818,6 @@ packages:
 
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
-
-  object-assign@4.1.1:
-    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
-    engines: {node: '>=0.10.0'}
 
   parse5@7.2.1:
     resolution: {integrity: sha512-BuBYQYlv1ckiPdQi/ohiivi9Sagc9JG+Ozs0r7b/0iK3sKmrb0b9FdWdBbOdx6hBCM/F9Ir82ofnBhtZOjCRPQ==}
@@ -923,9 +921,6 @@ packages:
     resolution: {integrity: sha512-yBxFFs3zmkvKNmR0pFSU//rIsYjuX418TnlDmc2weaq5XFDqDIV/NOMPBoLrbxjLH42p4UzRuXHryXh9dYcKcw==}
     engines: {node: '>=10'}
 
-  smoothscroll-polyfill@0.4.4:
-    resolution: {integrity: sha512-TK5ZA9U5RqCwMpfoMq/l1mrH0JAR7y7KRvOBx0n2869aLxch+gT9GhN3yUfjiw+d/DiF1mKo14+hd62JyMmoBg==}
-
   solid-js@1.9.5:
     resolution: {integrity: sha512-ogI3DaFcyn6UhYhrgcyRAMbu/buBJitYQASZz5WzfQVPP10RD2AbCoRZ517psnezrasyCbWzIxZ6kVqet768xw==}
 
@@ -950,9 +945,6 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
 
-  tiny-emitter@1.2.0:
-    resolution: {integrity: sha512-rWjF00inHeWtT5UbQYAXoMI4hL6TRMqohuKCsODyPYYmfAxqfMnXLsIeNrbdPEkNxlk++rojVilTnI9IVmEBtA==}
-
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -970,9 +962,6 @@ packages:
 
   validate-html-nesting@1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
-
-  virtual-scroll@1.5.2:
-    resolution: {integrity: sha512-7jDHwlKbHUho7CYU/HojE/VKFH8GV9P5fVWP2HCa7dRUOpVvwl93OBOKIIcb2mKd+vqsbVR/0zl0X70+3sUZqA==}
 
   vite-plugin-solid@2.11.6:
     resolution: {integrity: sha512-Sl5CTqJTGyEeOsmdH6BOgalIZlwH3t4/y0RQuFLMGnvWMBvxb4+lq7x3BSiAw6etf0QexfNJW7HSOO/Qf7pigg==}
@@ -1466,10 +1455,6 @@ snapshots:
       '@babel/core': 7.26.10
       babel-plugin-jsx-dom-expressions: 0.39.7(@babel/core@7.26.10)
 
-  bezier-easing@2.1.0: {}
-
-  bindall-standalone@1.0.5: {}
-
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
@@ -1583,7 +1568,7 @@ snapshots:
 
   json5@2.2.3: {}
 
-  lethargy@1.0.9: {}
+  lenis@1.2.3: {}
 
   lightningcss-darwin-arm64@1.29.2:
     optional: true
@@ -1630,12 +1615,6 @@ snapshots:
       lightningcss-win32-arm64-msvc: 1.29.2
       lightningcss-win32-x64-msvc: 1.29.2
 
-  locomotive-scroll@4.1.4:
-    dependencies:
-      bezier-easing: 2.1.0
-      smoothscroll-polyfill: 0.4.4
-      virtual-scroll: 1.5.2
-
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -1660,8 +1639,6 @@ snapshots:
     optional: true
 
   node-releases@2.0.19: {}
-
-  object-assign@4.1.1: {}
 
   parse5@7.2.1:
     dependencies:
@@ -1729,8 +1706,6 @@ snapshots:
 
   seroval@1.2.1: {}
 
-  smoothscroll-polyfill@0.4.4: {}
-
   solid-js@1.9.5:
     dependencies:
       csstype: 3.1.3
@@ -1756,8 +1731,6 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  tiny-emitter@1.2.0: {}
-
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
@@ -1772,13 +1745,6 @@ snapshots:
       picocolors: 1.1.1
 
   validate-html-nesting@1.2.2: {}
-
-  virtual-scroll@1.5.2:
-    dependencies:
-      bindall-standalone: 1.0.5
-      lethargy: 1.0.9
-      object-assign: 4.1.1
-      tiny-emitter: 1.2.0
 
   vite-plugin-solid@2.11.6(solid-js@1.9.5)(vite@6.2.2(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.85.1)):
     dependencies:

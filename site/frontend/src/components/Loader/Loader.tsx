@@ -13,7 +13,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 
 	onMount(async () => {
 		//MO DEV hide loader
-		// setIsShown(false);
+		setIsShown(false);
 
 		document.body.classList.add("overflow-y-hidden");
 		await new Promise((res) => {

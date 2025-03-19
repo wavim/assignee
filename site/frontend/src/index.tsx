@@ -10,7 +10,7 @@ import "./styles/effects";
 
 import Loader from "./components/Loader/Loader";
 
-const natlog = new Natlog({ history: false, popupTimeout: 1000 });
+new Natlog();
 
 const loadPromise = new Promise<void>((res) => {
 	window.onload = () => res();
@@ -25,5 +25,3 @@ render(
 	),
 	document.getElementById("root")!,
 );
-
-console.log("HUH");
