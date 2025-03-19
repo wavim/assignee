@@ -174,7 +174,7 @@ Presentation Layer: Handles user interface and user interaction;
 This organization can be observed in the project folder structure.
 While the folder structure may undergo frequent changes, its fundamental layout will remain consistent across revisions.
 \newpage
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
 	\begin{minipage}{0.3\linewidth}
 		\dirtree{%
@@ -259,9 +259,9 @@ A \{session\} is borne by one \{user\} only;\null\hfill (Mandatory)
 \br
 A \{user\} can only have a single set of \{preferences\};\null\hfill (Mandatory)\n
 A set of \{preferences\} is owned by a single \{user\};\null\hfill (Mandatory)
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[width=1\linewidth]{user_system.jpeg}
+	\includegraphics[width=1\linewidth]{assets/data-layer/user_system.jpeg}
 	\caption{User System ER Diagram}
 	\label{fig:user-system-er}
 \end{figure}
@@ -456,9 +456,9 @@ The Team System is built upon the \S{} \hyperref[data-layer.design.user-system]{
 This system contains team identification and invitation data,
 whilst also keeping track of team monitor appointments.
 \br
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[width=1\linewidth]{team_system.jpeg}
+	\includegraphics[width=1\linewidth]{assets/data-layer/team_system.jpeg}
 	\caption{Team System ER Diagram}
 	\label{fig:team-system-er}
 \end{figure}
@@ -595,9 +595,9 @@ It also manages assignee submissions and attachments.
 The Assignment System contains six tables, as described below
 \footnote{Only relations related to this system would be shown,
 	e.g. users.uid - teams.owner\_uid will not be shown as it is irrelevant to assignments.}.
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[width=1\linewidth]{assignment_system.jpeg}
+	\includegraphics[width=1\linewidth]{assets/data-layer/assignment_system.jpeg}
 	\caption{Assignment System ER Diagram}
 	\label{fig:assignment-system-er}
 \end{figure}
@@ -770,9 +770,107 @@ used for creating back-ups for database schema.
 
 
 
-% \chapter{Application Layer} \label{application-layer}
+\chapter{Application Layer} \label{application-layer}
+Skipped to finish the chapter \S{} \hyperref[presentation-layer]{Presentation Layer} first, though I had quite some progress you can inspect in the repository.
 
-% \chapter{Presentation Layer} \label{presentation-layer}
+\chapter{Presentation Layer} \label{presentation-layer}
+This chapter covers the design and implementation of the end-user interface i.e. the actual webpage.
+\br
+In \S{} \hyperref[presentation-layer.design]{Design},
+we discuss the choice of theme elements (e.g. font and colors etc.) along with the rationales behind these design choices.
+We will also delve into responsive layout designs that focus on message delivery.
+Finally, we will discuss the use of animations etc. in the webpage.\n
+In \S{} \hyperref[presentation-layer.implementation]{Implementation},
+we will cover the actual implementation details of the webpage.
+
+
+
+\section{Design} \label{presentation-layer.design}
+%MO DEV 
+**NOTE: No images are included yet, as I've decided to include them after finishing the website, ha ha.**\n
+**NOTE: No hyperlinks to external webpages are included yet, I will link them upon finish of the section.**
+\br
+The web application serves the purpose as an assignment manager.
+When we design a webpage we cannot let alone the aim of the webpage.
+\br
+The webpage consists of two main parts: the home page and the application.\n
+The home page is to appeal visitors and deliver core messages, while serving as a log-in/sign-up interface.
+Thus fancy animations and design elements are in use for attractiveness.\n
+The application, in contrast, is where people do their work and should be low-key and performant.
+Therefore, the application contains minimal animations and focuses on functionality.
+
+
+\subsection{Overall} \label{presentation-layer.design.overall}
+Theming the webpage requires careful considerations.
+For one, the page is for serious study/work, where excessively fancy colors/elements must not be adopted.
+For two, the page still has to appeal to visitors without the presence of them.\n
+I choose to adopt a minimalism design for the webpage,
+which deliver the idea of cleanness and elegance, which is a good fit for both challenges.
+Besides that, minimalism accentuates the content, in contrast to the use crowded elements that convey no message at all,
+therefore is much more efficient in delivering the purpose and description of the site.
+Minimalism also promotes easy navigation and faster page rendering speed.
+Subtle changes may be observed over revisions, but the overall design will remain constant.
+
+
+\subsection{Theme Colors} \label{presentation-layer.design.theme-colors}
+The theme colors used in light mode (where in dark mode follows similarly) are neutral colors,
+specifically colors with OKLCH values of 0 (C)hroma and 0 (H)ue, in other words, the unsaturated grayish color palette.
+This is not for no reasons, besides than matching with the philosophy of minimalism.
+Neutral colors prompt calmness and tranquility, soothing to users and is a timeless palette.
+Also, they reflect the colors of paper and ink roughly,
+which resonate well with the site icon I designed, an artistic representation of the initial A of Assignee
+in the form of the Greek character Delta: $\Delta$, which simultaneously symbolizing a pencil tip relating to the site's purpose.
+Clever choice to blend a pencil (the icon) into a piece of paper (the theme), obviously.\n
+I choose to use a minimal amount of colors to fill up the page to keep styles consistent and of course, minimal.
+To emphasize content, high contrast background-foreground colors are used.
+The primary background color in use is White Smoke (Cultured) [oklch(0.97 0 0)], a light shade of gray;
+The primary foreground color in use is Rust-Oleum Traffic Black [oklch(0.145 0 0)], a very dark shade of gray.
+Variants for dark mode is a flip of the two (saved me some work honestly).
+The rationales are already discussed above, besides they provide sufficient contrast for clarity.
+
+
+\subsection{Font Face} \label{presentation-layer.design.font-face}
+Font face is another important design element, and should principally be unambiguous and elegant.
+My choice is Montserrat, a sans-serif typeface available on Google Fonts.
+Montserrat features high legibility, so characters could be distinguished with ease on any device.
+Described by its lead designer Ulanovsky, the font is functional and contemporary,
+an excellent match of the minimalism philosophy: modern, content-oriented and beautiful on glance.\n
+This typography masterpiece features full Unicode support, is widely available and web-safe,
+while greatly recognized in the designer community.
+After all, sans-serif fonts are easy to read across different mediums and screen sizes,
+give a sense of modernity and appear minimal and simple, making it an easy choice to go with.
+
+
+\subsection{Layout} \label{presentation-layer.design.layout}
+On the layout, irrespective of the device, I choose to use single-axis flex layout design.
+Even though many sites nowadays use duo-axis grid layout,
+I consider content on multiple axis potentially distracting and may fail to keep focus on track.
+Also, using single-axis layouts allows the design to be more consistent over screen sizes,
+they also simply look better in my inherent opinion.
+\br
+For the roles of different sections, they will be nothing other than:
+\begin{enumerate}
+	\item Hero: slogans, brief introductions and log-in/sign-up prompt.
+	\item Features: more in detail feature presentations. (will span multiple sections)
+	\item Misc: reserved for similar purposes.
+\end{enumerate}\n
+And not to forget the header and the footer, which will contain navigation and accessibility options etc.\n
+There will be visual guides that guide the users' attention across the page,
+aiming for a smoother blend of sections and a better user experience.
+Some elements will behave differently in responsive designs to deliver a curated UX.
+
+
+\subsection{Animations} \label{presentation-layer.design.animations}
+The home page delivers a handful amount of delicate animations to boost user impression.
+Do note that the figure will drop by a lot in the application, reasoned before.\n
+The aim of animations is not simply to impress users, though.
+Animations serve the purpose of blending different elements and sections,
+calibrating an interactive encounter and make the page less dull.
+Besides that, they also help to fill up the gap of empty content e.g. when assets are still loading.
+Common uses include all sorts of fade-in/out animations and user action variants.\n
+Smooth scrolling is implemented to sync the UX of mobile and PC users.
+\br
+**NOTE: NOT FINISHED, more content will be stuffed later as I make more progress.**
 
 % \chapter{Security} \label{security}
 
