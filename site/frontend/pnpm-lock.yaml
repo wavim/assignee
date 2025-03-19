@@ -18,8 +18,8 @@ importers:
         specifier: 4.1.4
         version: 4.1.4
       natural-log:
-        specifier: 1.0.12
-        version: 1.0.12
+        specifier: 1.1.0
+        version: 1.1.0
       solid-js:
         specifier: ^1.9.5
         version: 1.9.5
@@ -808,8 +808,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  natural-log@1.0.12:
-    resolution: {integrity: sha512-ZfgDkcUXaXF9C+LYkaWeMoKhCgfF1h/vm2FMv8Aen2xFQbk7FjQCHT2Poa4T8uOYcTdH8sCSyU7e0ZLKZ3sNXA==}
+  natural-log@1.1.0:
+    resolution: {integrity: sha512-exWPpvJkUOE6hfyVuJ3pu5s5STMtPvUSsgLyYv8ClZycj/wyR9i5hLk97FcyZ/+t8MQluBUNBK/0ZBv61uUVgg==}
 
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
@@ -1654,7 +1654,7 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  natural-log@1.0.12: {}
+  natural-log@1.1.0: {}
 
   node-addon-api@7.1.1:
     optional: true
