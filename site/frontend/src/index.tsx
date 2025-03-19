@@ -1,10 +1,8 @@
-import "locomotive-scroll/locomotive-scroll.css";
 import "./styles/index.css";
 
 import { Router } from "@solidjs/router";
 import { Natlog } from "natural-log";
 import { render } from "solid-js/web";
-import { Locomotive } from "./libs";
 
 import { routes } from "./pages/routes";
 
@@ -12,8 +10,7 @@ import "./styles/effects";
 
 import Loader from "./components/Loader/Loader";
 
-new Natlog();
-new Locomotive();
+const natlog = new Natlog({ history: false });
 
 const loadPromise = new Promise<void>((res) => {
 	window.onload = () => res();

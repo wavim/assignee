@@ -10,7 +10,7 @@ export default defineConfig({
 		outDir: "../backend/public",
 		emptyOutDir: true,
 		target: "esnext",
-		//MO DEV
+		//MO DEV minify
 		minify: false,
 		cssMinify: false,
 	},

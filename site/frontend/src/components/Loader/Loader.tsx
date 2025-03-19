@@ -12,6 +12,9 @@ export default (props: { loadPromise: Promise<void> }) => {
 	const [isShown, setIsShown] = createSignal(true);
 
 	onMount(async () => {
+		//MO DEV hide loader
+		// setIsShown(false);
+
 		document.body.classList.add("overflow-y-hidden");
 		await new Promise((res) => {
 			gsap.effects.rollIn([logo, attrib], { onComplete: res });
@@ -53,7 +56,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 		<Show when={isShown()}>
 			<div class="fixed z-[calc(infinity)] h-screen w-full">
 				<div
-					class="bg-p-dark dark:bg-p-light pointer-events-none absolute -z-[1] h-full w-full"
+					class="bg-p-dark dark:bg-p-light pointer-events-none absolute -z-10 h-full w-full"
 					ref={mask}
 				></div>
 				<div
@@ -65,7 +68,7 @@ export default (props: { loadPromise: Promise<void> }) => {
 						ref={logo}
 					></Logo>
 					<span
-						class="text-p-dark font-primary dark:text-p-light py-5 text-xl font-medium sm:text-2xl"
+						class="text-p-dark font-p dark:text-p-light py-5 text-xl font-medium sm:text-2xl"
 						ref={attrib}
 					>
 						Presented by CarbonicSoda

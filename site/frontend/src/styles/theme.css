@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-@theme {
-	--color-p-light: var(--color-neutral-100);
-	--color-p-dark: var(--color-neutral-950);
+@custom-variant dark (&:where(.dark, .dark *));
 
-	--font-primary: "Montserrat", sans-serif;
+@theme inline {
+	--color-p-light: var(--color-neutral-100);
+	--color-s-light: var(--color-neutral-200);
+	--color-p-dark: var(--color-neutral-950);
+	--color-s-dark: var(--color-neutral-900);
+
+	--font-p: "Montserrat", sans-serif;
 }
