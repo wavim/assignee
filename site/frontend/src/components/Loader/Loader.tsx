@@ -12,9 +12,6 @@ export default (props: { loadPromise: Promise<void> }) => {
 	const [isShown, setIsShown] = createSignal(true);
 
 	onMount(async () => {
-		//MO DEV hide loader
-		setIsShown(false);
-
 		document.body.classList.add("overflow-y-hidden");
 		await new Promise((res) => {
 			gsap.effects.rollIn([logo, attrib], { onComplete: res });

@@ -1,25 +1,20 @@
-import "./styles/index.css";
+import "./init";
 
 import { Router } from "@solidjs/router";
-import { Natlog } from "natural-log";
 import { render } from "solid-js/web";
-
-import { routes } from "./pages/routes";
-
-import "./styles/effects";
-
 import Loader from "./components/Loader/Loader";
-
-new Natlog();
-
-const loadPromise = new Promise<void>((res) => {
-	window.onload = () => res();
-});
+import { routes } from "./data/routes";
 
 render(
 	() => (
 		<>
-			<Loader loadPromise={loadPromise}></Loader>
+			<Loader
+				loadPromise={
+					new Promise((res) => {
+						window.onload = () => res();
+					})
+				}
+			></Loader>
 			<Router>{routes}</Router>
 		</>
 	),

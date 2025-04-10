@@ -1,4 +1,4 @@
 @import "./theme.css";
 @import "tailwindcss";
 @import "tailwindcss-clip-path";
-@import "locomotive-scroll/dist/locomotive-scroll.css";
+@import "lenis/dist/lenis.css";

@@ -1,17 +1,6 @@
 import { gsap } from "gsap";
 
-gsap.registerEffect({
-	name: "fadeOut",
-	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
-		return gsap.fromTo(
-			targets,
-			{ opacity: 1 },
-			{ opacity: 0, duration: 1.2, ease: "expo.inOut", ...configs },
-		);
-	},
-	extendTimeline: true,
-});
-
+//#region in animations
 gsap.registerEffect({
 	name: "rollIn",
 	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
@@ -31,7 +20,6 @@ gsap.registerEffect({
 	},
 	extendTimeline: true,
 });
-
 gsap.registerEffect({
 	name: "blurIn",
 	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
@@ -52,3 +40,18 @@ gsap.registerEffect({
 	},
 	extendTimeline: true,
 });
+//#endregion in animations
+
+//#region out animations
+gsap.registerEffect({
+	name: "fadeOut",
+	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
+		return gsap.fromTo(
+			targets,
+			{ opacity: 1 },
+			{ opacity: 0, duration: 1.2, ease: "expo.inOut", ...configs },
+		);
+	},
+	extendTimeline: true,
+});
+//#endregion out animations
