@@ -5,11 +5,15 @@ import { render } from "solid-js/web";
 import Loader from "./components/Loader/Loader";
 import { routes } from "./data/routes";
 
+//MO DEV clear browser storage
+// localStorage.clear();
+// sessionStorage.clear();
+
 render(
 	() => (
 		<>
 			<Loader
-				loadPromise={
+				pageLoad={
 					new Promise((res) => {
 						window.onload = () => res();
 					})

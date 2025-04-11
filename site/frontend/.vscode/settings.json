@@ -1,4 +1,7 @@
 {
 	"files.associations": { "*.css": "tailwindcss" },
-	"editor.quickSuggestions": { "strings": "on" }
+	"editor.quickSuggestions": {
+		"strings": "on"
+	},
+	"git-branch-master.includeRemotes": false
 }
