@@ -6,36 +6,59 @@ export namespace effects {
 		targets: gsap.TweenTarget,
 		configs?: gsap.TimelineVars,
 	) => {
-		const tl = gsap.timeline({ defaults: { duration: 0.8 }, ...configs });
+		const ease: gsap.TweenVars = { duration: 0.8 };
 
-		tl.add(atoms.fadein(targets))
-			.add(atoms.moveup(targets), "<")
-			.add(atoms.rollup(targets), "<");
+		const tl = gsap.timeline(configs);
+
+		tl.add(atoms.fadein(targets, ease))
+			.add(atoms.moveup(targets, ease), "<")
+			.add(atoms.rollup(targets, ease), "<");
 
 		return tl;
 	};
+
+	export const blurin = (
+		targets: gsap.TweenTarget,
+		configs?: gsap.TimelineVars,
+	) => {
+		const ease: gsap.TweenVars = { duration: 1.6, ease: "circ.out" };
+
+		const tl = gsap.timeline(configs);
+
+		tl.add(atoms.fadein(targets, ease))
+			.add(atoms.moveup(targets, ease), "<")
+			.add(atoms.blurin(targets, ease), "<");
+
+		return tl;
+	};
+
+	export namespace scanin {
+		const ease: gsap.TweenVars = { duration: 1.2, ease: "power4.out" };
+
+		export const parent = (
+			targets: gsap.TweenTarget,
+			configs?: gsap.TimelineVars,
+		) => {
+			const tl = gsap.timeline(configs);
+
+			tl.add(atoms.scanin(targets, ease));
+
+			return tl;
+		};
+
+		export const child = (
+			targets: gsap.TweenTarget,
+			configs?: gsap.TimelineVars,
+		) => {
+			const tl = gsap.timeline(configs);
+
+			tl.add(atoms.moveup(targets, ease));
+
+			return tl;
+		};
+	}
 }
 
-// gsap.registerEffect({
-// 	name: "blurIn",
-// 	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
-// 		return gsap.fromTo(
-// 			targets,
-// 			{ opacity: 0, translateY: "100%", filter: "blur(0.3rem)" },
-// 			{
-// 				opacity: 1,
-// 				translateY: 0,
-// 				filter: "blur(0rem)",
-// 				duration: TIMES.blurIn,
-// 				delay: TIMES.blurInDelay,
-// 				stagger: TIMES.blurInStagger,
-// 				ease: "circ.out",
-// 				...configs,
-// 			},
-// 		);
-// 	},
-// 	extendTimeline: true,
-// });
 // gsap.registerEffect({
 // 	name: "scanIn",
 // 	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
@@ -55,17 +78,3 @@ export namespace effects {
 // 	},
 // 	extendTimeline: true,
 // });
-
-// //#region out animations
-// gsap.registerEffect({
-// 	name: "fadeOut",
-// 	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
-// 		return gsap.fromTo(
-// 			targets,
-// 			{ opacity: 1 },
-// 			{ opacity: 0, duration: TIMES.fadeOut, ease: "expo.inOut", ...configs },
-// 		);
-// 	},
-// 	extendTimeline: true,
-// });
-// //#endregion out animations

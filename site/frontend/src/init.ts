@@ -2,6 +2,8 @@ import "./effects/effects";
 import "./styles/index.css";
 
 import { loadGFont } from "gfont-loader";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
 import Lenis from "lenis";
 import { Natlog } from "natural-log";
 
@@ -13,5 +15,13 @@ loadGFont({
 		{ ital: 1, wght: "100..900" },
 	],
 });
-new Lenis({ autoRaf: true, lerp: 0.05 });
+
+const lenis = new Lenis({ lerp: 0.05 });
+gsap.registerPlugin(ScrollTrigger);
+gsap.ticker.lagSmoothing(0);
+gsap.ticker.add((time) => {
+	lenis.raf(time * 1000);
+});
+lenis.on("scroll", ScrollTrigger.update);
+
 new Natlog({ popup: import.meta.env.DEV });

@@ -1,0 +1,7 @@
+@utility z-inf {
+	z-index: calc(infinity);
+}
+
+@utility z-top {
+	z-index: 1000;
+}

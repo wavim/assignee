@@ -1,4 +1,5 @@
 @import "./theme.css";
+@import "./utils.css";
 @import "tailwindcss";
 @import "tailwindcss-clip-path";
 @import "lenis/dist/lenis.css";

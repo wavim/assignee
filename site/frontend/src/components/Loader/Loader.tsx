@@ -55,7 +55,7 @@ export default (props: { pageLoad: Promise<void> }) => {
 
 	return (
 		<Show when={isLoading()}>
-			<div class="fixed z-[calc(infinity)] h-screen w-full">
+			<div class="z-inf fixed h-screen w-full">
 				<div
 					ref={mask}
 					class="bg-p-dark pointer-events-none absolute -z-10 h-full w-full"
@@ -66,11 +66,11 @@ export default (props: { pageLoad: Promise<void> }) => {
 				>
 					<Logo
 						ref={logo}
-						class="text-p-dark -mt-16 w-1/5 origin-[center_top] transform-3d"
+						class="text-p-dark -mt-16 w-1/5 origin-[center_top] opacity-0 transform-3d"
 					></Logo>
 					<span
 						ref={attrib}
-						class="text-p-dark font-p py-5 text-xl font-medium"
+						class="text-p-dark font-p origin-[center_top] py-5 text-xl font-medium opacity-0 transform-3d"
 					>
 						Presented by David W
 					</span>

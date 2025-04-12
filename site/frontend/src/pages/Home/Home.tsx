@@ -1,10 +1,13 @@
-import Splash from "./Splash/Splash";
+import Header from "../../components/Header/Header";
+import Hero from "./Hero/Hero";
 
 export default () => {
+	//MO DEV height for scroll
 	return (
 		<>
-			<main class="bg-p-light flex min-h-screen w-full flex-col justify-center">
-				<Splash></Splash>
+			<Header></Header>
+			<main class="bg-p-light flex h-[1000vh] min-h-screen w-full flex-col">
+				<Hero></Hero>
 			</main>
 		</>
 	);
