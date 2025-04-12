@@ -14,12 +14,7 @@ export namespace atoms {
 		return gsap.fromTo(
 			targets,
 			{ opacity: 0 },
-			{
-				opacity: 1,
-
-				...ease,
-				...configs,
-			},
+			{ opacity: 1, ...ease, ...configs },
 		);
 	};
 
@@ -30,12 +25,7 @@ export namespace atoms {
 		return gsap.fromTo(
 			targets,
 			{ opacity: 1 },
-			{
-				opacity: 0,
-
-				...ease,
-				...configs,
-			},
+			{ opacity: 0, ...ease, ...configs },
 		);
 	};
 
@@ -46,12 +36,7 @@ export namespace atoms {
 		return gsap.fromTo(
 			targets,
 			{ translateY: "100%" },
-			{
-				translateY: 0,
-
-				...ease,
-				...configs,
-			},
+			{ translateY: 0, ...ease, ...configs },
 		);
 	};
 
@@ -62,12 +47,7 @@ export namespace atoms {
 		return gsap.fromTo(
 			targets,
 			{ rotateX: "-80deg" },
-			{
-				rotateX: 0,
-
-				...ease,
-				...configs,
-			},
+			{ rotateX: 0, ...ease, ...configs },
 		);
 	};
 
@@ -78,12 +58,7 @@ export namespace atoms {
 		return gsap.fromTo(
 			targets,
 			{ filter: "blur(0.5rem)" },
-			{
-				filter: "blur(0rem)",
-
-				...ease,
-				...configs,
-			},
+			{ filter: "blur(0rem)", ...ease, ...configs },
 		);
 	};
 
@@ -96,7 +71,6 @@ export namespace atoms {
 			{ clipPath: "polygon(0 0,100% 0,100% 0,0 50%)" },
 			{
 				clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
 				...ease,
 				...configs,
 			},

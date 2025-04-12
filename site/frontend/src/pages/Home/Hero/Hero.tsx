@@ -29,6 +29,7 @@ export default () => {
 					duration: 1.2,
 					ease: "power4.out",
 				},
+				">-0.6",
 			)
 			.add(effects.scanin.parent(loginButtonParent), "<")
 			.add(effects.scanin.child(loginButtonChild), "<");

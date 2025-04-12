@@ -15,8 +15,6 @@ export default (props: { pageLoad: Promise<void> }) => {
 	const [isLoading, setIsLoading] = createSignal(true);
 
 	onMount(async () => {
-		document.body.classList.add("overflow-y-hidden");
-
 		await new Promise((res) => {
 			const tl = gsap.timeline();
 
@@ -29,8 +27,6 @@ export default (props: { pageLoad: Promise<void> }) => {
 		const tl = gsap.timeline({
 			onComplete: () => {
 				setIsLoading(false);
-				document.body.classList.remove("overflow-y-hidden");
-
 				sessionStorage.setItem("debut", "false");
 			},
 		});
