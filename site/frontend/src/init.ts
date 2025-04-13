@@ -16,7 +16,7 @@ loadGFont({
 	],
 });
 
-const lenis = new Lenis({ lerp: 0.05 });
+const lenis = new Lenis();
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
 gsap.ticker.add((time) => {
