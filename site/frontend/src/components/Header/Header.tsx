@@ -2,7 +2,6 @@ import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
 import { atoms } from "../../effects/atoms";
-import { effects } from "../../effects/effects";
 import { reveal } from "../../utils/reveal";
 import Logo from "../Logo/Logo";
 
@@ -16,7 +15,7 @@ export default () => {
 
 		const tl = gsap.timeline();
 
-		tl.add(effects.blurin(header, { delay: 0.5 }));
+		tl.add(atoms.scanin(header, { delay: 0.8 }));
 
 		const ease: gsap.TweenVars = { duration: 0.6, ease: "power3.inOut" };
 		const scroll = gsap.timeline({
