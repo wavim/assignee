@@ -6,8 +6,8 @@ import Loader from "./components/Loader/Loader";
 import { routes } from "./data/routes";
 
 //MO DEV clear browser storage
-localStorage.clear();
-sessionStorage.clear();
+// localStorage.clear();
+// sessionStorage.clear();
 
 render(
 	() => (

@@ -2,21 +2,6 @@ import { gsap } from "gsap";
 import { atoms } from "./atoms";
 
 export namespace effects {
-	export const rollin = (
-		targets: gsap.TweenTarget,
-		configs?: gsap.TimelineVars,
-	) => {
-		const ease: gsap.TweenVars = { duration: 0.8 };
-
-		const tl = gsap.timeline(configs);
-
-		tl.add(atoms.fadein(targets, ease))
-			.add(atoms.moveup(targets, ease), "<")
-			.add(atoms.rollup(targets, ease), "<");
-
-		return tl;
-	};
-
 	export const blurin = (
 		targets: gsap.TweenTarget,
 		configs?: gsap.TimelineVars,
@@ -28,6 +13,21 @@ export namespace effects {
 		tl.add(atoms.fadein(targets, ease))
 			.add(atoms.moveup(targets, ease), "<")
 			.add(atoms.blurin(targets, ease), "<");
+
+		return tl;
+	};
+
+	export const rollin = (
+		targets: gsap.TweenTarget,
+		configs?: gsap.TimelineVars,
+	) => {
+		const ease: gsap.TweenVars = { duration: 0.8 };
+
+		const tl = gsap.timeline(configs);
+
+		tl.add(atoms.fadein(targets, ease))
+			.add(atoms.moveup(targets, ease), "<")
+			.add(atoms.rollup(targets, ease), "<");
 
 		return tl;
 	};
@@ -58,23 +58,3 @@ export namespace effects {
 		};
 	}
 }
-
-// gsap.registerEffect({
-// 	name: "scanIn",
-// 	effect: (targets: gsap.TweenTarget, configs?: gsap.TweenVars) => {
-// 		return gsap.fromTo(
-// 			targets,
-// 			{ translateY: "100%", clipPath: "polygon(0 0,100% 0,100% 0,0 50%)" },
-// 			{
-// 				translateY: 0,
-// 				clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-// 				duration: TIMES.blurIn,
-// 				delay: TIMES.blurInDelay,
-// 				stagger: TIMES.blurInStagger,
-// 				ease: "circ.out",
-// 				...configs,
-// 			},
-// 		);
-// 	},
-// 	extendTimeline: true,
-// });
