@@ -1,16 +1,16 @@
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
-import Button from "../../../components/Button/Button";
-import Split from "../../../components/utils/Split";
+import SplitWords from "../../../components/utils/SplitWords";
 import { effects } from "../../../effects/effects";
 import { reveal } from "../../../utils/reveal";
+import Login from "./Login/Login";
 
 export default () => {
 	let motos!: HTMLDivElement;
 	let moto1!: HTMLDivElement;
 	let moto2!: HTMLDivElement;
-	let loginButtonParent!: HTMLDivElement;
-	let loginButtonChild!: HTMLButtonElement;
+	let loginParent!: HTMLDivElement;
+	let loginChild!: HTMLButtonElement;
 
 	onMount(async () => {
 		await reveal();
@@ -31,8 +31,8 @@ export default () => {
 				},
 				">-0.6",
 			)
-			.add(effects.scanin.parent(loginButtonParent), "<")
-			.add(effects.scanin.child(loginButtonChild), "<");
+			.add(effects.scanin.parent(loginParent), "<")
+			.add(effects.scanin.child(loginChild), "<");
 	});
 
 	return (
@@ -45,20 +45,20 @@ export default () => {
 					ref={moto1}
 					class="origin-[center_top] transform-3d"
 				>
-					<Split>Streamline the Process</Split>
+					<SplitWords>Streamline the Process</SplitWords>
 				</div>
 				<div
 					ref={moto2}
 					class="origin-[center_top] transform-3d"
 				>
-					<Split>Assignments Made Easy</Split>
+					<SplitWords>Assignments Made Easy</SplitWords>
 				</div>
 			</div>
 			<div
-				ref={loginButtonParent}
+				ref={loginParent}
 				class="ml-20"
 			>
-				<Button ref={loginButtonChild}>Login/Signup</Button>
+				<Login ref={loginChild}></Login>
 			</div>
 		</section>
 	);

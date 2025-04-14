@@ -4,6 +4,8 @@ import { onMount } from "solid-js";
 import { atoms } from "../../effects/atoms";
 import { reveal } from "../../utils/reveal";
 import Logo from "../Logo/Logo";
+import Accessibility from "./Accessibility/Accessibility";
+import Menu from "./Menu/Menu";
 
 export default () => {
 	let header!: HTMLDivElement;
@@ -44,19 +46,22 @@ export default () => {
 	return (
 		<header
 			ref={header}
-			class="z-top fixed mt-5 flex h-24 w-[97vw] items-center justify-around self-center"
+			class="z-top fixed mt-5 flex h-24 w-[97vw] items-center justify-between self-center"
 		>
 			<div
 				ref={backdrop}
 				class="bg-s-light/60 absolute top-0 right-0 left-0 -z-10 h-full w-full rounded-2xl backdrop-blur-xl"
 			></div>
+			<Menu></Menu>
 			<A
 				ref={homenav}
 				href="/home"
 				class="h-1/2"
+				aria-label="Navigate to home"
 			>
 				<Logo class="text-p-dark h-full"></Logo>
 			</A>
+			<Accessibility></Accessibility>
 		</header>
 	);
 };

@@ -22,11 +22,7 @@ export namespace atoms {
 		targets: gsap.TweenTarget,
 		configs?: gsap.TweenVars,
 	) => {
-		return gsap.fromTo(
-			targets,
-			{ opacity: 1 },
-			{ opacity: 0, ...ease, ...configs },
-		);
+		return fadein(targets, configs).reverse();
 	};
 
 	export const moveup = (

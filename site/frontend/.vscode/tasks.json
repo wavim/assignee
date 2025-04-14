@@ -7,14 +7,14 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: build",
-			"detail": "vite build"
+			"detail": "build"
 		},
 		{
 			"type": "npm",
 			"script": "serve",
 			"problemMatcher": [],
 			"label": "npm: serve",
-			"detail": "vite preview"
+			"detail": "preview"
 		},
 		{
 			"type": "npm",
@@ -22,7 +22,7 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: watch",
-			"detail": "vite"
+			"detail": "watch"
 		}
 	]
 }

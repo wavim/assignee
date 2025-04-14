@@ -7,6 +7,8 @@ import { ScrollTrigger } from "gsap/all";
 import Lenis from "lenis";
 import { Natlog } from "natural-log";
 
+// already preconnected by omnires (natlog)
+// preconnect();
 loadGFont({
 	family: "Montserrat",
 	axis: [

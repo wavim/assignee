@@ -6,7 +6,7 @@ export default () => {
 	return (
 		<>
 			<Header></Header>
-			<main class="bg-p-light flex h-[1000vh] min-h-screen w-full flex-col">
+			<main class="bg-p-light flex h-[1000vh] w-full flex-col">
 				<Hero></Hero>
 			</main>
 		</>
