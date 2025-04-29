@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 
-export namespace ErrorUtils {
+export namespace ErrorUtil {
 	export class ErrorResponse extends Error {
 		constructor(public code: StatusCodes, details: string) {
 			super(details);

@@ -1,14 +1,6 @@
 import { configs } from "configs.js";
 
-export namespace ValidUtils {
-	/**
-	 * This only filters dummy inputs,
-	 * as RE alone CANNOT validate an email, details in report.
-	 */
-	export function isEmailValid(email: string): boolean {
-		return /^\S+@\S+\.\S+$/.test(email);
-	}
-
+export namespace ValidUtil {
 	export function isPasswordValid(password: string): boolean {
 		if (password.length < configs.valid.minPasswordLen) return false;
 

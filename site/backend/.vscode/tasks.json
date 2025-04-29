@@ -23,6 +23,13 @@
 			"problemMatcher": [],
 			"label": "npm: watch",
 			"detail": "nodemon"
+		},
+		{
+			"type": "npm",
+			"script": "kill",
+			"problemMatcher": [],
+			"label": "npm: kill",
+			"detail": "npx kill-port 5450"
 		}
 	]
 }

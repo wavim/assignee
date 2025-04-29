@@ -1,4 +1,4 @@
-export namespace TemplateUtils {
+export namespace TemplateUtil {
 	export function fill(
 		template: string,
 		substitutes: { [key: string]: any },

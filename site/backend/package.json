@@ -7,7 +7,8 @@
 	"scripts": {
 		"watch": "nodemon",
 		"build": "etsc",
-		"start": "node dist/entry.js"
+		"start": "node dist/entry.js",
+		"kill": "npx kill-port 5450"
 	},
 	"license": "MIT",
 	"prisma": {
@@ -19,6 +20,7 @@
 		"@sendgrid/mail": "^8.1.4",
 		"@types/express": "^5.0.0",
 		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
 		"dotenv": "^16.4.7",
 		"dotenv-expand": "^12.0.1",
 		"express": "^4.21.2",
@@ -26,6 +28,7 @@
 	},
 	"devDependencies": {
 		"@types/cookie-parser": "^1.4.8",
+		"@types/cors": "^2.8.17",
 		"@types/node": "^22.13.5",
 		"@typescript-eslint/eslint-plugin": "^8.24.1",
 		"@typescript-eslint/parser": "^8.24.1",

@@ -1,18 +1,14 @@
-import { configs } from "configs.js";
-
 import sgMail from "@sendgrid/mail";
-import { prisma } from "prisma/client.prisma.js";
-
+import { configs } from "configs.js";
 import { StatusCodes } from "http-status-codes";
+import { prisma } from "prisma/client.prisma.js";
+import { ErrorUtil } from "utils/error.util.js";
+import { AuthcodeEmail } from "../assets/authcode.template.js";
+import { CryptUtil } from "../utils/crypt.util.js";
+import { TimeUtil } from "../utils/time.util.js";
+import { ValidUtil } from "../utils/valid.util.js";
 
-import { ErrorUtils } from "utils/error.util.js";
-import { CryptUtils } from "../../utils/crypt.util.js";
-import { TimeUtils } from "../../utils/time.util.js";
-import { ValidUtils } from "../../utils/valid.util.js";
-
-import { AuthcodeEmail } from "../../assets/authcode.template.js";
-
-export namespace AuthServices {
+export namespace AuthService {
 	export async function sendAuthcode(data: {
 		uid: string;
 		email: string;
@@ -24,9 +20,9 @@ export namespace AuthServices {
 			await prisma.authcode.delete({ where: { uid }, select: { uid: true } });
 		} catch {}
 
-		const code = CryptUtils.randomDecCode(6);
-		const salt = CryptUtils.randomBytes(16);
-		const hash = CryptUtils.hash(code, salt);
+		const code = CryptUtil.randomDecCode(6);
+		const salt = CryptUtil.randomBytes(16);
+		const hash = CryptUtil.hash(code, salt);
 		await prisma.authcode.create({
 			data: { uid, hash, salt, created: 0 },
 			select: { uid: true },
@@ -45,7 +41,7 @@ export namespace AuthServices {
 				}),
 			});
 		} catch {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.SERVICE_UNAVAILABLE,
 				`SendGrid service failed to send authcode to ${data.email}.`,
 			);
@@ -61,7 +57,7 @@ export namespace AuthServices {
 		const authcode = await prisma.authcode.findUnique({ where: { uid } });
 		if (!authcode) return false;
 
-		const isExpired = TimeUtils.isExpired(authcode.created, {
+		const isExpired = TimeUtil.isExpired(authcode.created, {
 			min: configs.auth.authcodeExpiryMin,
 		});
 		if (isExpired) {
@@ -72,9 +68,9 @@ export namespace AuthServices {
 			return false;
 		}
 
-		const isMatch = CryptUtils.areHashesEqual(
+		const isMatch = CryptUtil.areHashesEqual(
 			authcode.hash,
-			CryptUtils.hash(data.authcode, authcode.salt),
+			CryptUtil.hash(data.authcode, authcode.salt),
 		);
 		if (isMatch) {
 			await prisma.authcode.delete({
@@ -86,28 +82,14 @@ export namespace AuthServices {
 		return isMatch;
 	}
 
-	export async function isEmailAvailable(email: string): Promise<boolean> {
-		const found = await prisma.user.findUnique({
-			where: { email },
-			select: { uid: true },
-		});
-		return !found;
-	}
-
 	export async function registerUser(data: {
 		email: string;
 		name: string;
 		password: string;
 		browser: { name: string; os: string; platform: string; engine: string };
 	}): Promise<{ id: string; token: string }> {
-		if (!ValidUtils.isEmailValid(data.email)) {
-			throw new ErrorUtils.ErrorResponse(
-				StatusCodes.BAD_REQUEST,
-				`Invalid email on registration: ${data.email}.`,
-			);
-		}
-		if (!ValidUtils.isPasswordValid(data.password)) {
-			throw new ErrorUtils.ErrorResponse(
+		if (!ValidUtil.isPasswordValid(data.password)) {
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.BAD_REQUEST,
 				`Invalid password on registration: ${data.password}.`,
 			);
@@ -120,14 +102,14 @@ export namespace AuthServices {
 				select: { uid: true },
 			});
 		} catch {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.CONFLICT,
 				`User with email ${data.email} already exists on registration.`,
 			);
 		}
 
-		const salt = CryptUtils.randomBytes(16);
-		const hash = CryptUtils.hash(data.password, salt);
+		const salt = CryptUtil.randomBytes(16);
+		const hash = CryptUtil.hash(data.password, salt);
 		await prisma.password.create({
 			data: { uid: user.uid, hash, salt, updated: 0 },
 			select: { uid: true },
@@ -152,28 +134,28 @@ export namespace AuthServices {
 			select: { uid: true, password: true, sessions: true },
 		});
 		if (!user) {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.UNAUTHORIZED,
 				`User with email ${data.email} does not exist on login.`,
 			);
 		}
 
-		const isPasswordValid = CryptUtils.areHashesEqual(
+		const isPasswordValid = CryptUtil.areHashesEqual(
 			user.password!.hash,
-			CryptUtils.hash(data.password, user.password!.salt),
+			CryptUtil.hash(data.password, user.password!.salt),
 		);
 		if (!isPasswordValid) {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.UNAUTHORIZED,
 				`Invalid password for ${data.email} on login: ${data.password}.`,
 			);
 		}
 
-		const token = CryptUtils.randomHexCode(configs.auth.bearerTokenLen);
+		const token = CryptUtil.randomHexCode(configs.auth.bearerTokenLen);
 		const key = token + JSON.stringify(data.browser);
 
-		const salt = CryptUtils.randomBytes(16);
-		const hash = CryptUtils.hash(key, salt);
+		const salt = CryptUtil.randomBytes(16);
+		const hash = CryptUtil.hash(key, salt);
 		const session = await prisma.session.create({
 			data: { uid: user.uid, hash, salt, created: 0 },
 			select: { id: true },
@@ -182,8 +164,6 @@ export namespace AuthServices {
 		return { id: session.id.toString(), token };
 	}
 
-	//MO NOTE room for improvement, database {session} shall have key {uid+sid} and can be updated
-	//MO NOTE but really this is minor, since bigint is, well, BIG
 	export async function loginSession(data: {
 		sessionToken: { id: string; token: string };
 		browser: { name: string; os: string; platform: string; engine: string };
@@ -196,7 +176,7 @@ export namespace AuthServices {
 				where: { id: sid },
 			});
 		} catch {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.NOT_FOUND,
 				`Session with id ${sid} does not exist on session login.`,
 			);
@@ -205,31 +185,31 @@ export namespace AuthServices {
 		const token = data.sessionToken.token;
 		const key = token + JSON.stringify(data.browser);
 
-		const isExpired = TimeUtils.isExpired(session.created, {
+		const isExpired = TimeUtil.isExpired(session.created, {
 			day: configs.auth.sessionExpiryDay,
 		});
 		if (isExpired) {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.UNAUTHORIZED,
 				`Session with id ${sid} has expired on session login.`,
 			);
 		}
 
-		const isValidToken = CryptUtils.areHashesEqual(
+		const isValidToken = CryptUtil.areHashesEqual(
 			session.hash,
-			CryptUtils.hash(key, session.salt),
+			CryptUtil.hash(key, session.salt),
 		);
 		if (!isValidToken) {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.UNAUTHORIZED,
 				`Invalid bearer token for session with id ${sid} on session login.`,
 			);
 		}
 
-		const newToken = CryptUtils.randomHexCode(configs.auth.bearerTokenLen);
+		const newToken = CryptUtil.randomHexCode(configs.auth.bearerTokenLen);
 		const newKey = newToken + JSON.stringify(data.browser);
-		const newSalt = CryptUtils.randomBytes(16);
-		const newHash = CryptUtils.hash(newKey, newSalt);
+		const newSalt = CryptUtil.randomBytes(16);
+		const newHash = CryptUtil.hash(newKey, newSalt);
 		const newSession = await prisma.session.create({
 			data: { uid: session.uid, hash: newHash, salt: newSalt, created: 0 },
 			select: { id: true },
@@ -245,7 +225,7 @@ export namespace AuthServices {
 				select: { uid: true },
 			});
 		} catch {
-			throw new ErrorUtils.ErrorResponse(
+			throw new ErrorUtil.ErrorResponse(
 				StatusCodes.NOT_FOUND,
 				`User with uid ${uid} does not exist on user deletion.`,
 			);

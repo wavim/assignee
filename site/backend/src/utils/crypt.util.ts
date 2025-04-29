@@ -1,7 +1,7 @@
 import { k12 } from "@noble/hashes/sha3-addons";
 import { randomBytes as _randomBytes, bytesToHex } from "@noble/hashes/utils";
 
-export namespace CryptUtils {
+export namespace CryptUtil {
 	export function randomBytes(count: number): Uint8Array {
 		return _randomBytes(count);
 	}

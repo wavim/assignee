@@ -1,19 +1,19 @@
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { ErrorRequestHandler, Router, json } from "express";
+import { ErrorUtil } from "utils/error.util.js";
+import { emailRoute } from "./email.route.js";
 
-import { ErrorUtils } from "utils/error.util.js";
-import { userRoutes } from "./user.route.js";
+export const router = Router();
 
-export const routes = Router();
-routes.use(json());
-routes.use(cookieParser());
+router.use(cors());
+router.use(json());
+router.use(cookieParser());
 
-routes.use("/user", userRoutes);
+router.use("/email", emailRoute);
 
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-	const _err = <ErrorUtils.ErrorResponse>err;
-	res.status(_err.code).json({
-		error: _err.message,
-	});
+const errorHandler: ErrorRequestHandler = (_err, req, res, next) => {
+	const err = <ErrorUtil.ErrorResponse>_err;
+	res.status(err.code).json({ error: err.message });
 };
-routes.use(errorHandler);
+router.use(errorHandler);

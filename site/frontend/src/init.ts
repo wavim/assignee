@@ -26,4 +26,6 @@ gsap.ticker.add((time) => {
 });
 lenis.on("scroll", ScrollTrigger.update);
 
-new Natlog({ popup: import.meta.env.DEV });
+// new Natlog({ popup: import.meta.env.DEV });
+//MO DEV natlog always on
+new Natlog();

@@ -1,11 +1,11 @@
-import { TemplateUtils } from "utils/template.util.js";
+import { TemplateUtil } from "utils/template.util.js";
 
 export const AuthcodeEmail = (data: {
 	name: string;
 	code: string;
 	expiry: number;
 }) => {
-	return TemplateUtils.fill(template, data);
+	return TemplateUtil.fill(template, data);
 };
 
 // Generated and designed with Enginemailer

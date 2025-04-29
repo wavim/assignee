@@ -5,7 +5,7 @@ export default {
 		format: "esm",
 		bundle: true,
 		packages: "external",
-		//MO DEV
+		//MO DEV minify off
 		// minify: true,
 		metafile: true,
 		plugins: [cleanPlugin()],

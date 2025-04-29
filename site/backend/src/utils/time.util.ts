@@ -1,4 +1,4 @@
-export namespace TimeUtils {
+export namespace TimeUtil {
 	export function now(): bigint {
 		return BigInt(Date.now()) / 1000n;
 	}

@@ -1,3 +1,4 @@
+import axios from "axios";
 import gsap from "gsap";
 import { createSignal, onMount, Show } from "solid-js";
 import Button from "../../../../components/Button/Button";
@@ -61,14 +62,22 @@ export default (props: { ref?: any }) => {
 					ref={(ele: HTMLInputElement) => {
 						emailInput = ele;
 
-						ele.oninput = () => {
+						//MO DEV remove async after tests
+						ele.oninput = async () => {
 							ele.setCustomValidity("");
 							setEmailHint("");
 
 							if (!ele.validity.valid) {
 								ele.setCustomValidity("Invalid Email Address");
 								setEmailHint("Invalid Email Address");
+								return;
 							}
+
+							//MO DEV email-is-free api test
+							const email = ele.value;
+							if (email === "") return;
+							const res = await axios.get(`/api/email/is-free/${email}`);
+							console.log(res.data);
 						};
 					}}
 					class="valid:not-placeholder-shown:border-valid-blue invalid:border-invalid-red ml-8"

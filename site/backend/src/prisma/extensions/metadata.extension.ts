@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { PrismaTypes } from "prisma/types.prisma.js";
-
-import { TimeUtils } from "utils/time.util.js";
+import { TimeUtil } from "utils/time.util.js";
 
 export const TableMetadataExtension = Prisma.defineExtension({
 	query: {
@@ -37,7 +36,7 @@ function setMetadata<T extends PrismaTypes.Models>(
 	>["data"],
 	isCreate?: boolean,
 ): void {
-	const now = TimeUtils.now();
+	const now = TimeUtil.now();
 	if (isCreate && "created" in data) data.created = now;
 	if ("updated" in data) data.updated = now;
 }
