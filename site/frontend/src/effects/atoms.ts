@@ -31,7 +31,7 @@ export namespace atoms {
 	) => {
 		return gsap.fromTo(
 			targets,
-			{ translateY: "100%" },
+			{ translateY: "105%" },
 			{ translateY: 0, ...ease, ...configs },
 		);
 	};

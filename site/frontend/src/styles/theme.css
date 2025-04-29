@@ -6,5 +6,8 @@
 	--color-s-light: var(--color-neutral-200);
 	--color-s-dark: var(--color-neutral-600);
 
+	--color-valid-blue: var(--color-blue-500);
+	--color-invalid-red: var(--color-rose-500);
+
 	--font-p: "Montserrat", sans-serif;
 }

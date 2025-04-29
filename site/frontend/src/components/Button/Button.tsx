@@ -1,5 +1,12 @@
-export default (props: { children?: string; class?: string; ref?: any }) => (
+export default (props: {
+	name: string;
+	ref?: any;
+	class?: string;
+	children?: string;
+}) => (
 	<button
+		type="button"
+		name={props.name}
 		ref={props.ref}
 		class={`inset-ring-p-light group relative flex h-max w-max cursor-pointer items-center overflow-hidden rounded-full border-none bg-transparent inset-ring-3 ${props.class ?? ""}`}
 	>

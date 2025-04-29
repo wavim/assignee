@@ -1,4 +1,4 @@
-export default (props: { class?: string; ref?: any }) => (
+export default (props: { ref?: any; class?: string }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="-20 -15 660 140"
