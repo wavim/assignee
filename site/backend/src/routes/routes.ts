@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { ErrorRequestHandler, Router, json } from "express";
+
 import { ErrorUtil } from "utils/error.util.js";
 import { emailRoute } from "./email.route.js";
 

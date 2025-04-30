@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { PrismaTypes } from "prisma/types.prisma.js";
+
 import { TimeUtil } from "utils/time.util.js";
 
 export const TableMetadataExtension = Prisma.defineExtension({
