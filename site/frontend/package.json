@@ -27,7 +27,7 @@
 		"tailwindcss-clip-path": "^1.0.1",
 		"terser": "^5.39.0",
 		"typescript": "^5.8.3",
-		"vite": "^6.3.3",
+		"vite": "^6.3.4",
 		"vite-plugin-solid": "^2.11.6"
 	},
 	"pnpm": {
