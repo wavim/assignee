@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
+
 import SplitWords from "../../../components/utils/SplitWords";
 import { effects } from "../../../effects/effects";
 import { reveal } from "../../../utils/reveal";

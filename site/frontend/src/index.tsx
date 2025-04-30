@@ -2,6 +2,7 @@ import "./init";
 
 import { Router } from "@solidjs/router";
 import { render } from "solid-js/web";
+
 import Loader from "./components/Loader/Loader";
 import { routes } from "./data/routes";
 

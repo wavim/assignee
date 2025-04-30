@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { createSignal, onMount, Show } from "solid-js";
+
 import { atoms } from "../../effects/atoms";
 import { effects } from "../../effects/effects";
 import Logo from "../Logo/Logo";

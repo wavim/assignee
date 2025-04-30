@@ -1,8 +1,9 @@
 import axios from "axios";
 import gsap from "gsap";
 import { createSignal, onMount, Show } from "solid-js";
+
 import Button from "../../../../components/Button/Button";
-import Input from "../../../../components/TextInput/Input";
+import Input from "../../../../components/Input/Input";
 import { atoms } from "../../../../effects/atoms";
 
 export default (props: { ref?: any }) => {
@@ -10,7 +11,7 @@ export default (props: { ref?: any }) => {
 	let emailInput!: HTMLInputElement;
 
 	const [toggle, setToggle] = createSignal(false);
-	const [emailHint, setEmailHint] = createSignal("");
+	const [emailInputHint, setEmailHint] = createSignal("");
 
 	let debounce = false;
 	let debounceTimeout!: number;
@@ -41,6 +42,30 @@ export default (props: { ref?: any }) => {
 		};
 	});
 
+	const onEmailInputMount = (ele: HTMLInputElement) => {
+		emailInput = ele;
+
+		ele.oninput = async () => {
+			ele.setCustomValidity("");
+
+			if (!ele.validity.valid) {
+				ele.setCustomValidity("Invalid Email Address");
+				setEmailHint("Invalid Email Address");
+				return;
+			}
+
+			const email = ele.value;
+			if (email === "") {
+				setEmailHint("");
+				return;
+			}
+
+			const req = await axios.get(`/api/email/is-free/${email}`);
+			const isfree: boolean = req.data;
+			setEmailHint(isfree ? "Signup" : "Login");
+		};
+	};
+
 	return (
 		<div
 			ref={props.ref}
@@ -58,29 +83,9 @@ export default (props: { ref?: any }) => {
 					name="login/signup email address"
 					title="Email Address"
 					placeholder="Enter your email address"
-					hints={emailHint()}
-					ref={(ele: HTMLInputElement) => {
-						emailInput = ele;
-
-						//MO DEV remove async after tests
-						ele.oninput = async () => {
-							ele.setCustomValidity("");
-							setEmailHint("");
-
-							if (!ele.validity.valid) {
-								ele.setCustomValidity("Invalid Email Address");
-								setEmailHint("Invalid Email Address");
-								return;
-							}
-
-							//MO DEV email-is-free api test
-							const email = ele.value;
-							if (email === "") return;
-							const res = await axios.get(`/api/email/is-free/${email}`);
-							console.log(res.data);
-						};
-					}}
-					class="valid:not-placeholder-shown:border-valid-blue invalid:border-invalid-red ml-8"
+					hint={emailInputHint()}
+					ref={onEmailInputMount}
+					class="ml-8"
 					nospellcheck
 				></Input>
 			</Show>

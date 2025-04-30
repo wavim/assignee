@@ -1,6 +1,7 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
+
 import { atoms } from "../../effects/atoms";
 import { reveal } from "../../utils/reveal";
 import Logo from "../Logo/Logo";

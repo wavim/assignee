@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+
 import { atoms } from "./atoms";
 
 export namespace effects {
