@@ -1,14 +1,19 @@
 {
+	"useTabs": true,
+	"tabWidth": 2,
+
+	"semi": true,
 	"endOfLine": "auto",
-	"htmlWhitespaceSensitivity": "css",
-	"objectWrap": "collapse",
-	"plugins": ["prettier-plugin-tailwindcss"],
+
+	"trailingComma": "all",
+
 	"printWidth": 80,
 	"proseWrap": "always",
+	"objectWrap": "collapse",
+
 	"quoteProps": "consistent",
-	"semi": true,
 	"singleAttributePerLine": true,
-	"tabWidth": 2,
-	"trailingComma": "all",
-	"useTabs": true
+
+	"htmlWhitespaceSensitivity": "css",
+	"plugins": ["prettier-plugin-tailwindcss"]
 }

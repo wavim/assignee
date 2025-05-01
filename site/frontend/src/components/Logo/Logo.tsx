@@ -1,9 +1,10 @@
-export default (props: { ref?: any; class?: string }) => (
+import { Ref } from "solid-js";
+
+export default (props: { ref?: Ref<SVGSVGElement>; class: string }) => (
 	<svg
+		{...props}
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="-20 -15 660 140"
-		ref={props.ref}
-		class={props.class}
 	>
 		<path
 			d="m50 10 50 100H0z"

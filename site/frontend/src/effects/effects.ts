@@ -5,11 +5,16 @@ import { atoms } from "./atoms";
 export namespace effects {
 	export const blurin = (
 		targets: gsap.TweenTarget,
-		configs?: gsap.TimelineVars,
+		tweenvars?: gsap.TweenVars,
+		timevars?: gsap.TimelineVars,
 	) => {
-		const ease: gsap.TweenVars = { duration: 1.6, ease: "circ.out" };
+		const ease: gsap.TweenVars = {
+			duration: 1.6,
+			ease: "circ.out",
+			...tweenvars,
+		};
 
-		const tl = gsap.timeline(configs);
+		const tl = gsap.timeline(timevars);
 
 		tl.add(atoms.fadein(targets, ease))
 			.add(atoms.moveup(targets, ease), "<")
@@ -20,11 +25,12 @@ export namespace effects {
 
 	export const rollin = (
 		targets: gsap.TweenTarget,
-		configs?: gsap.TimelineVars,
+		tweenvars?: gsap.TweenVars,
+		timevars?: gsap.TimelineVars,
 	) => {
-		const ease: gsap.TweenVars = { duration: 0.8 };
+		const ease: gsap.TweenVars = { duration: 0.8, ...tweenvars };
 
-		const tl = gsap.timeline(configs);
+		const tl = gsap.timeline(timevars);
 
 		tl.add(atoms.fadein(targets, ease))
 			.add(atoms.moveup(targets, ease), "<")
@@ -38,22 +44,24 @@ export namespace effects {
 
 		export const parent = (
 			targets: gsap.TweenTarget,
-			configs?: gsap.TimelineVars,
+			tweenvars?: gsap.TweenVars,
+			timevars?: gsap.TimelineVars,
 		) => {
-			const tl = gsap.timeline(configs);
+			const tl = gsap.timeline(timevars);
 
-			tl.add(atoms.scanin(targets, ease));
+			tl.add(atoms.scanin(targets, { ...ease, ...tweenvars }));
 
 			return tl;
 		};
 
 		export const child = (
 			targets: gsap.TweenTarget,
-			configs?: gsap.TimelineVars,
+			tweenvars?: gsap.TweenVars,
+			timevars?: gsap.TimelineVars,
 		) => {
-			const tl = gsap.timeline(configs);
+			const tl = gsap.timeline(timevars);
 
-			tl.add(atoms.moveup(targets, ease));
+			tl.add(atoms.moveup(targets, { ...ease, ...tweenvars }));
 
 			return tl;
 		};

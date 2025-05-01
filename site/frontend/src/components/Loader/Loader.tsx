@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { createSignal, onMount, Show } from "solid-js";
+import { createSignal, onMount, Ref, Show } from "solid-js";
 
 import { atoms } from "../../effects/atoms";
 import { effects } from "../../effects/effects";
@@ -8,10 +8,10 @@ import Logo from "../Logo/Logo";
 export default (props: { pageLoad: Promise<void> }) => {
 	if (sessionStorage.getItem("debut") === "false") return <></>;
 
-	let screen!: HTMLDivElement;
-	let mask!: HTMLDivElement;
-	let logo!: SVGSVGElement;
-	let attrib!: HTMLSpanElement;
+	let screen!: Ref<HTMLDivElement>;
+	let mask!: Ref<HTMLDivElement>;
+	let logo!: Ref<SVGSVGElement>;
+	let attrib!: Ref<HTMLSpanElement>;
 
 	const [isLoading, setIsLoading] = createSignal(true);
 
@@ -19,7 +19,7 @@ export default (props: { pageLoad: Promise<void> }) => {
 		await new Promise((res) => {
 			const tl = gsap.timeline();
 
-			tl.add(effects.rollin([logo, attrib], { onComplete: res }));
+			tl.add(effects.rollin([logo, attrib], {}, { onComplete: res }));
 		});
 
 		await props.pageLoad;

@@ -1,6 +1,6 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
-import { onMount } from "solid-js";
+import { onMount, Ref } from "solid-js";
 
 import { atoms } from "../../effects/atoms";
 import { reveal } from "../../utils/reveal";
@@ -9,9 +9,9 @@ import Accessibility from "./Accessibility/Accessibility";
 import Menu from "./Menu/Menu";
 
 export default () => {
-	let header!: HTMLDivElement;
-	let backdrop!: HTMLDivElement;
-	let homenav!: HTMLAnchorElement;
+	let header!: Ref<HTMLElement>;
+	let backdrop!: Ref<HTMLDivElement>;
+	let homenav!: Ref<HTMLAnchorElement>;
 
 	onMount(async () => {
 		await reveal();
@@ -57,8 +57,8 @@ export default () => {
 			<A
 				ref={homenav}
 				href="/home"
-				class="h-1/2"
 				aria-label="Navigate to home"
+				class="h-1/2"
 			>
 				<Logo class="text-p-dark h-full"></Logo>
 			</A>
