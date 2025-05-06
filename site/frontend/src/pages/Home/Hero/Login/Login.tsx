@@ -6,64 +6,64 @@ import Button from "../../../../components/Button/Button";
 import { atoms } from "../../../../effects/atoms";
 
 export default (props: { ref?: any }) => {
-	let toggleButton!: HTMLButtonElement;
-	let emailInput!: HTMLInputElement;
+	// let toggleButton!: HTMLButtonElement;
+	// let emailInput!: HTMLInputElement;
 
-	const [toggle, setToggle] = createSignal(false);
-	const [emailInputHint, setEmailHint] = createSignal("");
+	// const [toggle, setToggle] = createSignal(false);
+	// const [emailInputHint, setEmailHint] = createSignal("");
 
-	let debounce = false;
-	let debounceTimeout!: number;
+	// let debounce = false;
+	// let debounceTimeout!: number;
 
-	onMount(() => {
-		toggleButton.onclick = () => {
-			if (debounce) return;
-			debounce = true;
-			clearTimeout(debounceTimeout);
-			debounceTimeout = setTimeout(() => (debounce = false), 500);
+	// onMount(() => {
+	// 	toggleButton.onclick = () => {
+	// 		if (debounce) return;
+	// 		debounce = true;
+	// 		clearTimeout(debounceTimeout);
+	// 		debounceTimeout = setTimeout(() => (debounce = false), 500);
 
-			setEmailHint("");
+	// 		setEmailHint("");
 
-			const ease: gsap.TweenVars = { duration: 0.5, ease: "power3.inOut" };
+	// 		const ease: gsap.TweenVars = { duration: 0.5, ease: "power3.inOut" };
 
-			if (toggle()) {
-				const tl = gsap.timeline({ onComplete: () => void setToggle(false) });
+	// 		if (toggle()) {
+	// 			const tl = gsap.timeline({ onComplete: () => void setToggle(false) });
 
-				tl.add(atoms.moveup(emailInput, ease).reverse());
-			} else {
-				setToggle(true);
-				emailInput.focus();
+	// 			tl.add(atoms.moveup(emailInput, ease).reverse());
+	// 		} else {
+	// 			setToggle(true);
+	// 			emailInput.focus();
 
-				const tl = gsap.timeline();
+	// 			const tl = gsap.timeline();
 
-				tl.add(atoms.moveup(emailInput, ease));
-			}
-		};
-	});
+	// 			tl.add(atoms.moveup(emailInput, ease));
+	// 		}
+	// 	};
+	// });
 
-	const onEmailInputMount = (ele: HTMLInputElement) => {
-		emailInput = ele;
+	// const onEmailInputMount = (ele: HTMLInputElement) => {
+	// 	emailInput = ele;
 
-		ele.oninput = async () => {
-			ele.setCustomValidity("");
+	// 	ele.oninput = async () => {
+	// 		ele.setCustomValidity("");
 
-			if (!ele.validity.valid) {
-				ele.setCustomValidity("Invalid Email Address");
-				setEmailHint("Invalid Email Address");
-				return;
-			}
+	// 		if (!ele.validity.valid) {
+	// 			ele.setCustomValidity("Invalid Email Address");
+	// 			setEmailHint("Invalid Email Address");
+	// 			return;
+	// 		}
 
-			const email = ele.value;
-			if (email === "") {
-				setEmailHint("");
-				return;
-			}
+	// 		const email = ele.value;
+	// 		if (email === "") {
+	// 			setEmailHint("");
+	// 			return;
+	// 		}
 
-			const req = await axios.get(`/api/email/is-free/${email}`);
-			const isfree: boolean = req.data;
-			setEmailHint(isfree ? "Signup" : "Login");
-		};
-	};
+	// 		const req = await axios.get(`/api/email/is-free/${email}`);
+	// 		const isfree: boolean = req.data;
+	// 		setEmailHint(isfree ? "Signup" : "Login");
+	// 	};
+	// };
 
 	return (
 		<div

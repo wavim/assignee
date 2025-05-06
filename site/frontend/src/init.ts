@@ -3,7 +3,6 @@ import "./styles/index.css";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { default as Lenis } from "lenis";
-import { Natlog } from "natural-log";
 
 //MO DEV clear local storage
 sessionStorage.clear();
@@ -17,5 +16,7 @@ gsap.ticker.add((time) => {
 });
 lenis.on("scroll", ScrollTrigger.update);
 
-//MO DEV natlog always on
-new Natlog({ popup: import.meta.env.DEV || true });
+if (import.meta.env.DEV) {
+	const natlog = await import("natural-log");
+	new natlog.Natlog();
+}
