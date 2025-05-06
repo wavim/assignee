@@ -6,8 +6,14 @@ export default () => {
 	return (
 		<>
 			<Header></Header>
-			<main class="bg-p-light flex h-[1000vh] w-full flex-col">
+			<main class="bg-main-bg flex h-[1000vh] w-full flex-col">
 				<Hero></Hero>
+				<button
+					onclick={() => document.documentElement.classList.toggle("dark")}
+					class="mt-10 h-20 w-full bg-amber-400"
+				>
+					DevToggle
+				</button>
 			</main>
 		</>
 	);

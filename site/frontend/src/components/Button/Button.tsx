@@ -1,24 +1,26 @@
-import { Ref } from "solid-js";
-
-import Wrap from "../utils/Wrap";
+import { JSXElement } from "solid-js";
 
 export default (props: {
-	ref?: Ref<HTMLButtonElement>;
 	name: string;
 	class?: string;
-	children?: string;
+	children?: JSXElement;
 }) => (
-	<Wrap pclass={props.class}>
-		<button
-			ref={props.ref}
-			name={props.name}
-			type="button"
-			class="inset-ring-p-light group relative flex h-max w-max cursor-pointer items-center overflow-hidden rounded-full border-none bg-transparent inset-ring-3"
-		>
-			<div class="bg-p-light absolute top-0 right-0 left-0 h-full origin-top scale-y-0 transition-transform duration-200 ease-out group-hover:origin-bottom group-hover:scale-y-100"></div>
-			<span class="bg-p-light font-p px-9 py-7 text-3xl font-medium mix-blend-difference">
+	<button
+		type="button"
+		name={props.name}
+		class={
+			"group inset-ring-button-invert relative flex h-max w-max cursor-pointer items-center overflow-hidden rounded-lg border-none bg-transparent inset-ring-1" +
+			(props.class ?? "")
+		}
+	>
+		<div class="bg-button-invert absolute top-0 right-0 left-0 h-full origin-right scale-x-0 transition-transform duration-300 ease-in-out group-hover:origin-left group-hover:scale-x-100"></div>
+		<span class="text-button-invert font-jakarta group-hover:text-button z-10 p-3 text-xl transition-colors duration-300 ease-in-out">
+			<span class="inline-block pr-1 transition-transform duration-300 ease-in-out group-hover:translate-x-1">
 				{props.children}
 			</span>
-		</button>
-	</Wrap>
+			<span class="inline-block transition-transform duration-300 ease-in-out group-hover:-translate-x-0.5">
+				{"≫"}
+			</span>
+		</span>
+	</button>
 );

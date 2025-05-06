@@ -1,9 +1,8 @@
 import axios from "axios";
-import gsap from "gsap";
 import { createSignal, onMount, Show } from "solid-js";
 
 import Button from "../../../../components/Button/Button";
-import Input from "../../../../components/Input/Input";
+// import Input from "../../../../components/Input/Input";
 import { atoms } from "../../../../effects/atoms";
 
 export default (props: { ref?: any }) => {
@@ -73,12 +72,11 @@ export default (props: { ref?: any }) => {
 		>
 			<Button
 				name="toggle login/signup"
-				ref={toggleButton}
 			>
 				Login/Signup
 			</Button>
-			<Show when={toggle()}>
-				<Input
+			{/* <Show when={toggle()}> */}
+			{/* <Input
 					type="email"
 					name="login/signup email address"
 					title="Email Address"
@@ -87,8 +85,8 @@ export default (props: { ref?: any }) => {
 					ref={onEmailInputMount}
 					class="ml-8"
 					nospellcheck
-				></Input>
-			</Show>
+				></Input> */}
+			{/* </Show> */}
 		</div>
 	);
 };
