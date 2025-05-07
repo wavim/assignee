@@ -1,89 +1,40 @@
 import axios from "axios";
-import gsap from "gsap";
-import { createSignal, onMount, Show } from "solid-js";
+
 import Button from "../../../../components/Button/Button";
-import Input from "../../../../components/TextInput/Input";
-import { atoms } from "../../../../effects/atoms";
 
-export default (props: { ref?: any }) => {
-	let toggleButton!: HTMLButtonElement;
-	let emailInput!: HTMLInputElement;
+export default () => {
+	// const onEmailInputMount = (ele: HTMLInputElement) => {
+	// 	emailInput = ele;
 
-	const [toggle, setToggle] = createSignal(false);
-	const [emailHint, setEmailHint] = createSignal("");
+	// 	ele.oninput = async () => {
+	// 		ele.setCustomValidity("");
 
-	let debounce = false;
-	let debounceTimeout!: number;
+	// 		if (!ele.validity.valid) {
+	// 			ele.setCustomValidity("Invalid Email Address");
+	// 			setEmailHint("Invalid Email Address");
+	// 			return;
+	// 		}
 
-	onMount(() => {
-		toggleButton.onclick = () => {
-			if (debounce) return;
-			debounce = true;
-			clearTimeout(debounceTimeout);
-			debounceTimeout = setTimeout(() => (debounce = false), 500);
+	// 		const email = ele.value;
+	// 		if (email === "") {
+	// 			setEmailHint("");
+	// 			return;
+	// 		}
 
-			setEmailHint("");
-
-			const ease: gsap.TweenVars = { duration: 0.5, ease: "power3.inOut" };
-
-			if (toggle()) {
-				const tl = gsap.timeline({ onComplete: () => void setToggle(false) });
-
-				tl.add(atoms.moveup(emailInput, ease).reverse());
-			} else {
-				setToggle(true);
-				emailInput.focus();
-
-				const tl = gsap.timeline();
-
-				tl.add(atoms.moveup(emailInput, ease));
-			}
-		};
-	});
+	// 		const req = await axios.get(`/api/email/is-free/${email}`);
+	// 		const isfree: boolean = req.data;
+	// 		setEmailHint(isfree ? "Signup" : "Login");
+	// 	};
+	// };
 
 	return (
-		<div
-			ref={props.ref}
-			class="flex items-center"
-		>
+		<div class="flex items-center">
 			<Button
-				name="toggle login/signup"
-				ref={toggleButton}
+				name="get started"
+				onclick={() => void 0}
 			>
-				Login/Signup
+				Get Started
 			</Button>
-			<Show when={toggle()}>
-				<Input
-					type="email"
-					name="login/signup email address"
-					title="Email Address"
-					placeholder="Enter your email address"
-					hints={emailHint()}
-					ref={(ele: HTMLInputElement) => {
-						emailInput = ele;
-
-						//MO DEV remove async after tests
-						ele.oninput = async () => {
-							ele.setCustomValidity("");
-							setEmailHint("");
-
-							if (!ele.validity.valid) {
-								ele.setCustomValidity("Invalid Email Address");
-								setEmailHint("Invalid Email Address");
-								return;
-							}
-
-							//MO DEV email-is-free api test
-							const email = ele.value;
-							if (email === "") return;
-							const res = await axios.get(`/api/email/is-free/${email}`);
-							console.log(res.data);
-						};
-					}}
-					class="valid:not-placeholder-shown:border-valid-blue invalid:border-invalid-red ml-8"
-					nospellcheck
-				></Input>
-			</Show>
 		</div>
 	);
 };

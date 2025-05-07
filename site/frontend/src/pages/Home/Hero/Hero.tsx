@@ -1,64 +1,17 @@
-import { gsap } from "gsap";
-import { onMount } from "solid-js";
-import SplitWords from "../../../components/utils/SplitWords";
-import { effects } from "../../../effects/effects";
-import { reveal } from "../../../utils/reveal";
 import Login from "./Login/Login";
 
 export default () => {
-	let motos!: HTMLDivElement;
-	let moto1!: HTMLDivElement;
-	let moto2!: HTMLDivElement;
-	let loginParent!: HTMLDivElement;
-	let loginChild!: HTMLButtonElement;
-
-	onMount(async () => {
-		await reveal();
-
-		const tl = gsap.timeline();
-
-		tl.add(
-			effects.rollin([...moto1.children, ...moto2.children], { delay: 0.5 }),
-		)
-			.fromTo(
-				motos,
-				{ marginBottom: 0 },
-				{
-					marginBottom: "10vh",
-
-					duration: 1.2,
-					ease: "power4.out",
-				},
-				">-0.6",
-			)
-			.add(effects.scanin.parent(loginParent), "<")
-			.add(effects.scanin.child(loginChild), "<");
-	});
-
 	return (
-		<section class="flex min-h-screen flex-col justify-center">
-			<div
-				ref={motos}
-				class="text-p-dark font-p ml-16 flex w-max flex-col text-9xl perspective-normal"
-			>
-				<div
-					ref={moto1}
-					class="origin-[center_top] transform-3d"
-				>
-					<SplitWords>Streamline the Process</SplitWords>
-				</div>
-				<div
-					ref={moto2}
-					class="origin-[center_top] transform-3d"
-				>
-					<SplitWords>Assignments Made Easy</SplitWords>
-				</div>
-			</div>
-			<div
-				ref={loginParent}
-				class="ml-20"
-			>
-				<Login ref={loginChild}></Login>
+		<section class="flex justify-around">
+			<div class="flex w-full flex-col gap-7 px-7 pt-24">
+				<h1 class="font-jakarta text-text-primary w-4/5 text-4xl">
+					Your simplest app for assignments
+				</h1>
+				<p class="font-jakarta text-text-secondary w-full text-xl">
+					Assign, return and grade with utmost ease – from business to school to
+					hobbies and more
+				</p>
+				<Login></Login>
 			</div>
 		</section>
 	);

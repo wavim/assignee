@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { EmailService } from "services/email.service.js";
 
 export const emailRoute = Router();

@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 import { TableMetadataExtension } from "./extensions/metadata.extension.js";
 
 const getPrisma = () => {

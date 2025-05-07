@@ -1,7 +1,8 @@
 import sgMail from "@sendgrid/mail";
-import { configs } from "configs.js";
 import { StatusCodes } from "http-status-codes";
 import { prisma } from "prisma/client.prisma.js";
+
+import { configs } from "configs.js";
 import { ErrorUtil } from "utils/error.util.js";
 import { AuthcodeEmail } from "../assets/authcode.template.js";
 import { CryptUtil } from "../utils/crypt.util.js";

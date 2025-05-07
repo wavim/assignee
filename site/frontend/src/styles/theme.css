@@ -1,13 +1,31 @@
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme inline {
-	--color-p-light: var(--color-neutral-50);
-	--color-p-dark: var(--color-neutral-950);
-	--color-s-light: var(--color-neutral-200);
-	--color-s-dark: var(--color-neutral-600);
+	--font-jakarta: "Plus Jakarta Sans", sans-serif;
 
-	--color-valid-blue: var(--color-blue-500);
-	--color-invalid-red: var(--color-rose-500);
+	--color-accessibility: var(--color-accessibility);
+	--color-button-invert: var(--color-button-invert);
+	--color-button: var(--color-button);
+	--color-header-bg: var(--color-header-bg);
+	--color-main-bg: var(--color-main-bg);
+	--color-text-primary: var(--color-text-primary);
+	--color-text-secondary: var(--color-text-secondary);
+}
 
-	--font-p: "Montserrat", sans-serif;
+:root {
+	--color-accessibility: var(--color-blue-700);
+	--color-button-invert: var(--color-neutral-950);
+	--color-button: var(--color-neutral-50);
+	--color-header-bg: var(--color-neutral-400);
+	--color-main-bg: var(--color-neutral-50);
+	--color-text-primary: var(--color-neutral-950);
+	--color-text-secondary: var(--color-neutral-700);
+}
+
+:root.dark {
+	--color-accessibility: var(--color-blue-400);
+	--color-button-invert: var(--color-neutral-50);
+	--color-button: var(--color-neutral-950);
+	--color-header-bg: var(--color-neutral-500);
+	--color-main-bg: var(--color-neutral-950);
+	--color-text-primary: var(--color-neutral-50);
+	--color-text-secondary: var(--color-neutral-300);
 }

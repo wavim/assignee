@@ -5,9 +5,7 @@ expand(config());
 
 export const configs = {
 	app: {
-		port: getNumber("APP_PORT", 5500),
-		sslcerts: getString("APP_SSLCERTS", "sslcerts"),
-		sslpass: getString("APP_SSLPASS", "??"),
+		port: getNumber("APP_PORT", 5450),
 		static: getString("APP_STATIC", "public"),
 	},
 	auth: {

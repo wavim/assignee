@@ -1,31 +1,26 @@
-import "./effects/effects";
 import "./styles/index.css";
 
-import { loadGFont } from "gfont-loader";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import Lenis from "lenis";
-import { Natlog } from "natural-log";
+import { default as Lenis } from "lenis";
 
-// already preconnected by omnires (natlog)
-// preconnect();
-loadGFont({
-	family: "Montserrat",
-	axis: [
-		//MO TODO see if i need italics
-		{ ital: 0, wght: "100..900" },
-		{ ital: 1, wght: "100..900" },
-	],
+gsap.config({
+	autoSleep: 60,
+	//MO DEV unsuppress gsap null target warning
+	// nullTargetWarn: false,
 });
 
 const lenis = new Lenis();
+
 gsap.registerPlugin(ScrollTrigger);
+lenis.on("scroll", ScrollTrigger.update);
+
 gsap.ticker.lagSmoothing(0);
 gsap.ticker.add((time) => {
 	lenis.raf(time * 1000);
 });
-lenis.on("scroll", ScrollTrigger.update);
 
-// new Natlog({ popup: import.meta.env.DEV });
-//MO DEV natlog always on
-new Natlog();
+if (import.meta.env.DEV) {
+	const natlog = await import("natural-log");
+	new natlog.Natlog();
+}
