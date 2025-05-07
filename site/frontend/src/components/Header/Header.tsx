@@ -2,6 +2,8 @@ import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount, Ref } from "solid-js";
 
+import { defineEase } from "../../utils/define-ease";
+
 import Logo from "../Logo/Logo";
 import Accessibility from "./Accessibility/Accessibility";
 import Menu from "./Menu/Menu";
@@ -14,12 +16,12 @@ export default () => {
 	onMount(() => {
 		const scroll = gsap.timeline({
 			scrollTrigger: {
-				start: window.innerHeight * 0.2,
+				start: window.innerHeight * 0.05,
 				onLeaveBack: () => scroll.reverse(),
 			},
 		});
 
-		const ease: gsap.TweenVars = { duration: 0.6, ease: "power3.inOut" };
+		const ease = defineEase({ duration: 0.6, ease: "power3.inOut" });
 
 		scroll
 			.fromTo(
@@ -38,13 +40,13 @@ export default () => {
 	return (
 		<header
 			ref={header}
-			class="z-top fixed mt-2 flex h-12 w-[96vw] items-center justify-between self-center"
+			class="z-top fixed mt-2 flex h-16 w-[95vw] items-center justify-center"
 		>
 			<div
 				ref={backdrop}
-				class="bg-header-bg/40 absolute top-0 right-0 left-0 -z-10 h-full w-full rounded-2xl backdrop-blur-xl"
+				class="bg-header-bg/35 absolute top-0 right-0 left-0 -z-10 h-full w-full rounded-2xl opacity-0 backdrop-blur-md"
 			></div>
-			<Menu></Menu>
+			<Menu class="absolute left-4 h-full"></Menu>
 			<A
 				ref={homenav}
 				href="/home"
@@ -53,7 +55,9 @@ export default () => {
 			>
 				<Logo class="text-text-primary h-full"></Logo>
 			</A>
-			<Accessibility></Accessibility>
+			<div class="absolute right-4 h-1/2">
+				<Accessibility></Accessibility>
+			</div>
 		</header>
 	);
 };

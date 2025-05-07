@@ -5,11 +5,5 @@ import solidPlugin from "vite-plugin-solid";
 
 export default defineConfig({
 	plugins: [solidPlugin(), tailwindCSS()],
-	build: {
-		target: "esnext",
-		outDir: "../backend/public",
-		emptyOutDir: true,
-		minify: "terser",
-		cssMinify: "lightningcss",
-	},
+	build: { target: "esnext", outDir: "../backend/public", emptyOutDir: true },
 });

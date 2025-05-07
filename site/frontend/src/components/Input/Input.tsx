@@ -2,25 +2,6 @@
 
 // import Wrap from "../utils/Wrap";
 
-// export default (props: {
-// 	ref?: Ref<HTMLInputElement>;
-
-// 	type: "email" | "number" | "password" | "tel" | "text" | "url";
-// 	name: string;
-// 	title: string;
-// 	placeholder: string;
-// 	hint: string;
-
-// 	autocomplete?: "on" | "off" | `${string} ${string}`;
-// 	autocorrect?: "on" | "off";
-// 	autocapitalize?: JSX.HTMLAutocapitalize;
-
-// 	required?: boolean;
-// 	spellcheck?: boolean;
-
-// 	class?: string;
-// }) => (
-// 	<Wrap pclass={props.class}>
 // 		<div class="flex h-max items-center">
 // 			<input
 // 				{...{ ...props, hint: null }}
@@ -30,5 +11,22 @@
 // 				{props.hint}
 // 			</div>
 // 		</div>
-// 	</Wrap>
+
+// export default (props: {
+// 	type: "text" | "number" | "email" | "password";
+// 	title: string;
+// 	placeholder: string;
+// 	name: string;
+// 	hint: string;
+// 	class?: string;
+// }) => (
+// 	<div class={" " + (props.class ?? "")}>
+// 		<input
+// 			type={props.type}
+// 			title={props.title}
+// 			placeholder={props.placeholder}
+// 			name={props.name}
+// 		></input>
+// 		<span>{props.hint}</span>
+// 	</div>
 // );
