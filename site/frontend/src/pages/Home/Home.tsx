@@ -11,10 +11,13 @@ export default () => {
 				<Hero></Hero>
 				<Show when={import.meta.env.DEV}>
 					<button
-						onclick={() => document.documentElement.classList.toggle("dark")}
+						onclick={() => {
+							const isDark = document.documentElement.classList.toggle("dark");
+							localStorage.setItem("scheme", isDark ? "dark" : "light");
+						}}
 						class="mt-10 h-20 w-full bg-amber-400"
 					>
-						Dev Toggle
+						DEV (Toggle Dark Mode) DEV
 					</button>
 				</Show>
 			</main>

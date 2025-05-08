@@ -1,24 +1,30 @@
-import "./styles/index.css";
-
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { default as Lenis } from "lenis";
-
-gsap.config({
-	autoSleep: 60,
-	//MO DEV unsuppress gsap null target warning
-	// nullTargetWarn: false,
-});
-
-const lenis = new Lenis();
 
 gsap.registerPlugin(ScrollTrigger);
-lenis.on("scroll", ScrollTrigger.update);
+gsap.config({ autoSleep: 60, nullTargetWarn: false });
 
-gsap.ticker.lagSmoothing(0);
-gsap.ticker.add((time) => {
-	lenis.raf(time * 1000);
-});
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion)");
+
+prefersDarkScheme.onchange = () => location.reload();
+prefersReducedMotion.onchange = () => location.reload();
+
+const scheme =
+	(localStorage.getItem("scheme") as "light" | "dark" | null) ??
+	(prefersDarkScheme.matches ? "dark" : "light");
+if (scheme === "dark") document.documentElement.classList.add("dark");
+
+if (!prefersReducedMotion.matches) {
+	const lenis = new (await import("lenis")).default();
+
+	gsap.ticker.lagSmoothing(0);
+	gsap.ticker.add((time) => {
+		lenis.raf(time * 1000);
+	});
+
+	lenis.on("scroll", ScrollTrigger.update);
+}
 
 if (import.meta.env.DEV) {
 	const natlog = await import("natural-log");
