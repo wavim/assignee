@@ -1,3 +1,4 @@
+//MO TODO this will be toggle-able later
 const prefersReducedMotion = window.matchMedia(
 	"(prefers-reduced-motion)",
 ).matches;

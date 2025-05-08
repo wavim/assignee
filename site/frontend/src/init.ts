@@ -4,16 +4,8 @@ import { ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
 gsap.config({ autoSleep: 60, nullTargetWarn: false });
 
-const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion)");
-
-prefersDarkScheme.onchange = () => location.reload();
 prefersReducedMotion.onchange = () => location.reload();
-
-const scheme =
-	(localStorage.getItem("scheme") as "light" | "dark" | null) ??
-	(prefersDarkScheme.matches ? "dark" : "light");
-if (scheme === "dark") document.documentElement.classList.add("dark");
 
 if (!prefersReducedMotion.matches) {
 	const lenis = new (await import("lenis")).default();

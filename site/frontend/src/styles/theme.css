@@ -1,6 +1,7 @@
 @theme inline {
 	--font-jakarta: "Plus Jakarta Sans", sans-serif;
 
+	--color-accessibility-action: var(--color-accessibility-action);
 	--color-accessibility: var(--color-accessibility);
 	--color-button-invert: var(--color-button-invert);
 	--color-button: var(--color-button);
@@ -11,6 +12,7 @@
 }
 
 :root {
+	--color-accessibility-action: var(--color-blue-500);
 	--color-accessibility: var(--color-blue-700);
 	--color-button-invert: var(--color-neutral-950);
 	--color-button: var(--color-neutral-50);
@@ -21,6 +23,7 @@
 }
 
 :root.dark {
+	--color-accessibility-action: var(--color-blue-600);
 	--color-accessibility: var(--color-blue-400);
 	--color-button-invert: var(--color-neutral-50);
 	--color-button: var(--color-neutral-950);
