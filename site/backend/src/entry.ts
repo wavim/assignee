@@ -1,3 +1,4 @@
+import compression from "compression";
 import express from "express";
 import { prisma } from "prisma/client.prisma.js";
 
@@ -12,6 +13,7 @@ prisma.$connect();
 
 const app = express();
 
+app.use(compression());
 app.use(express.static(`./${configs.app.static}`));
 app.use("/api", router);
 
