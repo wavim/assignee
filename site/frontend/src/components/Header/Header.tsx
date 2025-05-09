@@ -2,12 +2,12 @@ import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
 
-import { defineEase } from "../../utils/define-ease";
+import { ease } from "../../accessibility/ease";
 
 import Logo from "../Logo/Logo";
 import Accessibility from "./Accessibility/Accessibility";
-import Menu from "./Menu/Menu";
 import AccessibilityOptions from "./AccessibilityOptions/AccessibilityOptions";
+import Menu from "./Menu/Menu";
 
 export default () => {
 	let extrapad!: HTMLDivElement;
@@ -22,7 +22,7 @@ export default () => {
 				start: window.innerHeight * 0.05,
 				onLeaveBack: () => scroll.reverse(),
 			},
-			defaults: defineEase({ duration: 0.6, ease: "power3.inOut" }),
+			defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
 		});
 
 		scroll
@@ -66,15 +66,15 @@ export default () => {
 					<Accessibility
 						ontoggle={(shown) => {
 							const padding = gsap.timeline({
-								defaults: defineEase({ duration: 0.6, ease: "power3.inOut" }),
+								defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
 							});
 
 							padding
-								.fromTo(extrapad, { height: 0 }, { height: "7rem" })
+								.fromTo(extrapad, { height: 0 }, { height: "9.5rem" })
 								.fromTo(
 									backdrop,
 									{ paddingBottom: 0 },
-									{ paddingBottom: "7rem" },
+									{ paddingBottom: "9.5rem" },
 									"<",
 								)
 								.fromTo(

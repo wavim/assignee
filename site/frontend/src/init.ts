@@ -1,24 +1,22 @@
+import "./accessibility/media";
+
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
-gsap.registerPlugin(ScrollTrigger);
+import { media } from "./accessibility/media";
+
 gsap.config({ autoSleep: 60, nullTargetWarn: false });
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion)");
-prefersReducedMotion.onchange = () => location.reload();
+gsap.registerPlugin(ScrollTrigger);
 
-if (!prefersReducedMotion.matches) {
+if (media.getReduceMotion("eval") === "off") {
 	const lenis = new (await import("lenis")).default();
 
-	gsap.ticker.lagSmoothing(0);
-	gsap.ticker.add((time) => {
-		lenis.raf(time * 1000);
-	});
-
 	lenis.on("scroll", ScrollTrigger.update);
+
+	gsap.ticker.add((time) => lenis.raf(time * 1000));
+
+	gsap.ticker.lagSmoothing(0);
 }
 
-if (import.meta.env.DEV) {
-	const natlog = await import("natural-log");
-	new natlog.Natlog();
-}
+if (import.meta.env.DEV) new (await import("natural-log")).Natlog();
