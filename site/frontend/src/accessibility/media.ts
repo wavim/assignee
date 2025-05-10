@@ -84,6 +84,11 @@ export namespace media {
 	): void {
 		localStorage.setItem("reduceMotion", reduceMotion);
 
+		document.documentElement.classList.toggle(
+			"reduce-motion",
+			media.getReduceMotion("eval") === "on",
+		);
+
 		if (!options?.noreload) location.reload();
 	}
 }
