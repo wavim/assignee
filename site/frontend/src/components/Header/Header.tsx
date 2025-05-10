@@ -1,6 +1,6 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
-import { onMount } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 
 import { ease } from "../../accessibility/ease";
 
@@ -15,6 +15,8 @@ export default () => {
 	let backdrop!: HTMLDivElement;
 	let homenav!: HTMLAnchorElement;
 	let accessibilityOptions!: HTMLDivElement;
+
+	const [showAccessibility, setShowAccessibilty] = createSignal(false);
 
 	onMount(() => {
 		const scroll = gsap.timeline({
@@ -51,7 +53,7 @@ export default () => {
 			>
 				<div
 					ref={backdrop}
-					class="bg-header-bg/35 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-2xl opacity-0 backdrop-blur-sm"
+					class="bg-header-bg/35 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-2xl backdrop-blur-sm"
 				></div>
 				<Menu class="absolute left-4 h-full"></Menu>
 				<A
@@ -64,9 +66,12 @@ export default () => {
 				</A>
 				<div class="absolute right-4 h-1/2">
 					<Accessibility
-						ontoggle={(shown) => {
+						ontoggle={(show) => {
+							if (show) setShowAccessibilty(true);
+
 							const padding = gsap.timeline({
 								defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
+								onReverseComplete: () => void setShowAccessibilty(false),
 							});
 
 							padding
@@ -84,11 +89,15 @@ export default () => {
 									"<50%",
 								);
 
-							if (!shown) padding.progress(1).reverse();
+							if (!show) padding.progress(1).reverse();
 						}}
 					></Accessibility>
 				</div>
-				<AccessibilityOptions ref={accessibilityOptions}></AccessibilityOptions>
+				<Show when={showAccessibility()}>
+					<AccessibilityOptions
+						ref={accessibilityOptions}
+					></AccessibilityOptions>
+				</Show>
 			</header>
 		</>
 	);

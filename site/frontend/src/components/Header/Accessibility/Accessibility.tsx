@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 
-export default (props: { ontoggle: (shown: boolean) => any }) => {
+export default (props: { ontoggle: (show: boolean) => any }) => {
 	const [showOptions, setShowOptions] = createSignal(false);
 
 	return (

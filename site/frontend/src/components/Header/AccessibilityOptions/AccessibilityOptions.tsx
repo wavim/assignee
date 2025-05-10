@@ -15,7 +15,7 @@ export default (props: { ref?: HTMLDivElement }) => {
 		<div
 			ref={props.ref}
 			aria-label="Accessibility Options"
-			class="absolute top-20 flex h-max w-full flex-col flex-wrap pl-4 text-3xl opacity-0"
+			class="absolute top-20 flex h-max w-full flex-col flex-wrap pl-4 text-3xl"
 		>
 			<OptionPicker option="Font">
 				<For each={["𝙰⁻", "𝙰", "𝙰⁺"]}>
@@ -39,9 +39,9 @@ export default (props: { ref?: HTMLDivElement }) => {
 				</For>
 			</OptionPicker>
 			<OptionPicker option="Theme">
-				<For each={["○", "◑", "●"]}>
+				<For each={["◑", "○", "●"]}>
 					{(option, i) => {
-						const theme = (["light", "system", "dark"] as const)[i()];
+						const theme = (["system", "light", "dark"] as const)[i()];
 						const active = createMemo(() => colorTheme() === theme);
 
 						return (
@@ -60,9 +60,9 @@ export default (props: { ref?: HTMLDivElement }) => {
 				</For>
 			</OptionPicker>
 			<OptionPicker option="Motion">
-				<For each={["✓", "◑", "✗"]}>
+				<For each={["◑", "✓", "✗"]}>
 					{(option, i) => {
-						const reduce = (["off", "system", "on"] as const)[i()];
+						const reduce = (["system", "off", "on"] as const)[i()];
 						const active = createMemo(() => reduceMotion() === reduce);
 
 						return (
@@ -105,7 +105,7 @@ const Option = (props: {
 		aria-label={props.label}
 		onclick={() => props.active() || props.action()}
 		class={twMerge(
-			"text-text-primary hover:text-accessibility-action active:text-accessibility-action inline-block w-1/3 cursor-pointer text-center transition-colors duration-500 select-none",
+			"text-text-primary hover:text-accessibility-action active:text-accessibility-action inline-block w-1/3 cursor-pointer text-center font-serif transition-colors duration-500 select-none",
 			props.active() && "text-accessibility",
 			props.class,
 		)}
