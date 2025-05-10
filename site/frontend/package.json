@@ -11,6 +11,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
+		"@solid-primitives/i18n": "^2.2.1",
 		"@solidjs/router": "^0.15.3",
 		"axios": "^1.9.0",
 		"gsap": "^3.13.0",
