@@ -57,8 +57,6 @@ export const getI18n = <T extends BaseDict>(
 	};
 
 	async function fetchDictionary(locale: Locale): Promise<Dictionary> {
-		if (locale === "en") return enDictionaryFlat;
-
 		const dict: T = await import(`../../locales/${module}/${locale}.json`);
 		return flatten(dict);
 	}
