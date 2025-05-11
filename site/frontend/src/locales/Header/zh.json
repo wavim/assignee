@@ -3,9 +3,9 @@
 	"accessibility": { "title": "輔助使用" },
 	"options": {
 		"label": "輔助使用選項",
-		"font": { "option": "字體", "label": "{{size}}字體大小" },
-		"lang": { "option": "語言", "label": "{{lang}}語言" },
-		"theme": { "option": "主題", "label": "{{theme}}主題" },
+		"font": { "option": "字體", "label": "字體大小{{size}}" },
+		"lang": { "option": "語言", "label": "語言{{lang}}" },
+		"theme": { "option": "主題", "label": "主題{{theme}}" },
 		"motion": { "option": "動態", "label": "減少動態{{reduce}}" }
 	}
 }
