@@ -24,7 +24,7 @@ export default (props: {
 			ref={props.ref}
 			aria-label={t("options.label")}
 			class={twMerge(
-				"absolute top-20 flex h-max w-full flex-col flex-wrap pl-4 text-3xl",
+				"flex h-max w-full flex-col flex-wrap text-3xl",
 				props.class,
 			)}
 		>
@@ -51,7 +51,7 @@ export default (props: {
 				</For>
 			</OptionPicker>
 			<OptionPicker option={t("options.lang.option")}>
-				<For each={["◑", "𝙴", "中"]}>
+				<For each={["◑", "E", "中"]}>
 					{(option, i) => {
 						const lang = (["system", "en", "zh"] as const)[i()];
 						const active = createMemo(() => language() === lang);
@@ -121,7 +121,7 @@ export default (props: {
 	);
 };
 
-const OptionPicker = (props: { option?: string; children: JSXElement }) => (
+const OptionPicker = (props: { option: string; children: JSXElement }) => (
 	<div class="my-0.5 flex w-full justify-between">
 		<span class="font-jakarta text-accessibility">{props.option}</span>
 		<div class="border-accessibility-options-br flex w-1/2 rounded-lg px-1">
@@ -131,7 +131,7 @@ const OptionPicker = (props: { option?: string; children: JSXElement }) => (
 );
 
 const Option = (props: {
-	label?: string;
+	label: string;
 	children: string;
 	enable: boolean;
 	active: () => boolean;

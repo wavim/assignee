@@ -50,7 +50,7 @@ export default () => {
 			></div>
 			<header
 				ref={header}
-				class="z-inf fixed mt-2 flex h-16 w-[95vw] items-center justify-center"
+				class="fixed z-[calc(infinity)] mt-2 flex h-16 w-[95vw] items-center justify-center"
 			>
 				<div
 					ref={backdrop}
@@ -88,7 +88,7 @@ export default () => {
 				<Options
 					ref={options}
 					enable={showOptions()}
-					class="opacity-0"
+					class="absolute top-20 pl-4 opacity-0"
 				></Options>
 			</header>
 		</I18n>

@@ -3,6 +3,7 @@ import {
 	flatten,
 	Flatten,
 	resolveTemplate,
+	Translator,
 	translator,
 } from "@solid-primitives/i18n";
 import {
@@ -28,9 +29,7 @@ export const getI18n = <T extends BaseDict>(
 	const enDictionaryFlat = flatten(enDictionary);
 
 	const i18nContext =
-		createContext<
-			[ReturnType<typeof translator<Dictionary>>, Setter<Locale>]
-		>();
+		createContext<[Translator<Flatten<T>, string>, Setter<Locale>]>();
 
 	const useI18n = () => useContext(i18nContext)!;
 
