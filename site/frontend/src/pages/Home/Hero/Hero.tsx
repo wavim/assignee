@@ -6,7 +6,7 @@ export default () => {
 	const [t] = useI18n();
 
 	return (
-		<section class="flex justify-around">
+		<section class="bg-main-bg flex justify-around">
 			<div class="flex w-full flex-col gap-7 px-7 pt-24">
 				<h1 class="font-jakarta text-text-primary w-4/5 text-4xl">
 					{t("hero.header")}

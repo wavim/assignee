@@ -1,11 +1,29 @@
 {
 	"hero": {
 		"header": "Your simplest app for assignments",
-		"subtitle": "Assign, return and grade with utmost ease – from business to school to hobbies and more",
+		"subtitle": "Assign, return, and grade with utmost ease – whether for business, school, or hobbies",
 		"login": { "prompt": "Get Started" }
 	},
 	"quote": {
 		"quote": "The ultimate in sophistication is simplicity.",
 		"cite": "Leonard Thiessen"
+	},
+	"features": {
+		"groups": {
+			"title": "Groups",
+			"detail": "Create, invite, and join as many groups as you need. Promote members for management, and track it all with unparalleled ease."
+		},
+		"assign": {
+			"title": "Assign",
+			"detail": "Assign tasks to members with details and attachments for their reference. And of course, set deadlines to keep things on track."
+		},
+		"submit": {
+			"title": "Submit",
+			"detail": "Remember to submit your assigned tasks on time. Gradually attach and update your work for review as you progress."
+		},
+		"return": {
+			"title": "Return",
+			"detail": "Should it be schoolwork or workplace tasks, you can grade the submissions of assignees and provide feedback with comments."
+		}
 	}
 }

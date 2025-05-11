@@ -1,16 +1,17 @@
 import Header from "../../components/Header/Header";
+import Features from "./Features/Features";
 import Hero from "./Hero/Hero";
 import I18n from "./I18n";
 import Quote from "./Quote/Quote";
 
 export default () => {
-	//MO DEV height for scroll
 	return (
 		<I18n>
 			<Header></Header>
-			<main class="flex h-[1000vh] w-full flex-col gap-8">
+			<main class="mb-8 flex w-full flex-col gap-8">
 				<Hero></Hero>
 				<Quote></Quote>
+				<Features></Features>
 			</main>
 		</I18n>
 	);
