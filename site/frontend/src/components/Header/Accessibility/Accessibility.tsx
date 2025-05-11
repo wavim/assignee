@@ -1,21 +1,15 @@
-import { createSignal } from "solid-js";
-
 import { useI18n } from "../I18n";
 
-export default (props: { ontoggle: (show: boolean) => any }) => {
+export default (props: { ref: HTMLButtonElement; onclick: () => any }) => {
 	const [t] = useI18n();
-
-	const [showOptions, setShowOptions] = createSignal(false);
 
 	return (
 		<button
+			ref={props.ref}
 			type="button"
 			title={t("accessibility.title")}
 			class="h-full cursor-pointer"
-			onclick={() => {
-				setShowOptions((show) => !show);
-				props.ontoggle(showOptions());
-			}}
+			onclick={props.onclick}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

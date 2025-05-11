@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { createSignal, onMount, Show } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 
 import { ease } from "../../accessibility/ease";
 
@@ -14,9 +14,10 @@ export default () => {
 	let header!: HTMLElement;
 	let backdrop!: HTMLDivElement;
 	let homenav!: HTMLAnchorElement;
-	let accessibilityOptions!: HTMLDivElement;
+	let accessibility!: HTMLButtonElement;
+	let options!: HTMLDivElement;
 
-	const [showAccessibility, setShowAccessibilty] = createSignal(false);
+	const [showOptions, setShowOptions] = createSignal(false);
 
 	onMount(() => {
 		const scroll = gsap.timeline({
@@ -59,15 +60,16 @@ export default () => {
 				<HomeNav ref={homenav}></HomeNav>
 				<div class="absolute right-4 h-1/2">
 					<Accessibility
-						ontoggle={(show) => {
-							if (show) setShowAccessibilty(true);
+						ref={accessibility}
+						onclick={() => {
+							accessibility.disabled = true;
+							setTimeout(() => (accessibility.disabled = false), 600);
 
-							const padding = gsap.timeline({
+							const reveal = gsap.timeline({
 								defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
-								onReverseComplete: () => void setShowAccessibilty(false),
 							});
 
-							padding
+							reveal
 								.fromTo(extrapad, { height: 0 }, { height: "12rem" })
 								.fromTo(
 									backdrop,
@@ -75,20 +77,19 @@ export default () => {
 									{ paddingBottom: "12rem" },
 									"<",
 								)
-								.fromTo(
-									accessibilityOptions,
-									{ opacity: 0 },
-									{ opacity: 1 },
-									"<50%",
-								);
+								.fromTo(options, { opacity: 0 }, { opacity: 1 }, "<50%");
 
-							if (!show) padding.progress(1).reverse();
+							if (showOptions()) reveal.progress(1).reverse();
+
+							setShowOptions((show) => !show);
 						}}
 					></Accessibility>
 				</div>
-				<Show when={showAccessibility()}>
-					<Options ref={accessibilityOptions}></Options>
-				</Show>
+				<Options
+					ref={options}
+					enable={showOptions()}
+					class="opacity-0"
+				></Options>
 			</header>
 		</I18n>
 	);
