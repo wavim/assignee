@@ -45,12 +45,6 @@ importers:
       tailwindcss:
         specifier: ^4.1.5
         version: 4.1.5
-      tailwindcss-clip-path:
-        specifier: ^1.0.1
-        version: 1.0.1(tailwindcss@4.1.5)
-      terser:
-        specifier: ^5.39.0
-        version: 5.39.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1106,11 +1100,6 @@ packages:
   tailwind-merge@3.2.0:
     resolution: {integrity: sha512-FQT/OVqCD+7edmmJpsgCsY820RTD5AkBryuG5IUqR5YQZSdj5xlH5nLgH7YPths7WsLPSpSBNneJdM8aS8aeFA==}
 
-  tailwindcss-clip-path@1.0.1:
-    resolution: {integrity: sha512-cGeaEgxoXLbn+EWsXQwOUiRDFHFYgIArJwfK+ramnMhiylQZqDdv+aPDTCYOkuqaBSKwWgHJZxnmOGLbEgagXg==}
-    peerDependencies:
-      tailwindcss: '>=4.0.0'
-
   tailwindcss@4.1.5:
     resolution: {integrity: sha512-nYtSPfWGDiWgCkwQG/m+aX83XCwf62sBgg3bIlNiiOcggnS1x3uVRDAuyelBFL+vJdOPPCGElxv9DjHJjRHiVA==}
 
@@ -1411,6 +1400,7 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
+    optional: true
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
@@ -1636,7 +1626,8 @@ snapshots:
 
   '@types/estree@1.0.7': {}
 
-  acorn@8.14.1: {}
+  acorn@8.14.1:
+    optional: true
 
   asynckit@0.4.0: {}
 
@@ -1675,7 +1666,8 @@ snapshots:
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.5)
 
-  buffer-from@1.1.2: {}
+  buffer-from@1.1.2:
+    optional: true
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -1693,7 +1685,8 @@ snapshots:
     dependencies:
       delayed-stream: 1.0.0
 
-  commander@2.20.3: {}
+  commander@2.20.3:
+    optional: true
 
   convert-source-map@2.0.0: {}
 
@@ -2049,14 +2042,12 @@ snapshots:
     dependencies:
       buffer-from: 1.1.2
       source-map: 0.6.1
+    optional: true
 
-  source-map@0.6.1: {}
+  source-map@0.6.1:
+    optional: true
 
   tailwind-merge@3.2.0: {}
-
-  tailwindcss-clip-path@1.0.1(tailwindcss@4.1.5):
-    dependencies:
-      tailwindcss: 4.1.5
 
   tailwindcss@4.1.5: {}
 
@@ -2068,6 +2059,7 @@ snapshots:
       acorn: 8.14.1
       commander: 2.20.3
       source-map-support: 0.5.21
+    optional: true
 
   tinyglobby@0.2.13:
     dependencies:

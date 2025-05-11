@@ -49,7 +49,7 @@ export default () => {
 			></div>
 			<header
 				ref={header}
-				class="z-top fixed mt-2 flex h-16 w-[95vw] items-center justify-center"
+				class="z-inf fixed mt-2 flex h-16 w-[95vw] items-center justify-center"
 			>
 				<div
 					ref={backdrop}

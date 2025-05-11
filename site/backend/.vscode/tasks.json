@@ -7,14 +7,14 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: build",
-			"detail": "etsc"
+			"detail": "build"
 		},
 		{
 			"type": "npm",
 			"script": "start",
 			"problemMatcher": [],
 			"label": "npm: start",
-			"detail": "node dist/entry.js"
+			"detail": "serve"
 		},
 		{
 			"type": "npm",
@@ -22,14 +22,14 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "npm: watch",
-			"detail": "nodemon"
+			"detail": "watch"
 		},
 		{
 			"type": "npm",
 			"script": "kill",
 			"problemMatcher": [],
 			"label": "npm: kill",
-			"detail": "npx kill-port 5450"
+			"detail": "kill"
 		}
 	]
 }

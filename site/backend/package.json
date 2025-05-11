@@ -4,15 +4,15 @@
 	"author": "",
 	"description": "",
 	"type": "module",
-	"scripts": {
-		"watch": "nodemon",
-		"build": "etsc",
-		"start": "node dist/entry.js",
-		"kill": "npx kill-port 5450"
-	},
 	"license": "MIT",
 	"prisma": {
 		"schema": "src/prisma/schema.prisma"
+	},
+	"scripts": {
+		"watch": "nodemon",
+		"build": "etsc",
+		"start": "etsc && node dist/entry.js",
+		"kill": "npx kill-port 5450"
 	},
 	"dependencies": {
 		"@noble/hashes": "^1.8.0",
