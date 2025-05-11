@@ -53,7 +53,7 @@ export default () => {
 			>
 				<div
 					ref={backdrop}
-					class="bg-header-bg/35 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-2xl backdrop-blur-sm"
+					class="bg-header-bg/35 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-2xl backdrop-blur-lg"
 				></div>
 				<Menu class="absolute left-4 h-full"></Menu>
 				<HomeNav ref={homenav}></HomeNav>
@@ -87,9 +87,7 @@ export default () => {
 					></Accessibility>
 				</div>
 				<Show when={showAccessibility()}>
-					<Options
-						ref={accessibilityOptions}
-					></Options>
+					<Options ref={accessibilityOptions}></Options>
 				</Show>
 			</header>
 		</I18n>

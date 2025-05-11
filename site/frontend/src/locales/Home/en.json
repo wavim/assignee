@@ -3,5 +3,9 @@
 		"header": "Your simplest app for assignments",
 		"subtitle": "Assign, return and grade with utmost ease – from business to school to hobbies and more",
 		"login": { "prompt": "Get Started" }
+	},
+	"quote": {
+		"quote": "The ultimate in sophistication is simplicity.",
+		"cite": "Leonard Thiessen"
 	}
 }
