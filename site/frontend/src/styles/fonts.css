@@ -7,3 +7,7 @@
 	src: url("../../assets/fonts/plus-jakarta-sans-v8-latin-regular.woff2")
 		format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
+@theme {
+	--font-jakarta: "Plus Jakarta Sans", sans-serif;
+}

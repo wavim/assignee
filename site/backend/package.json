@@ -47,8 +47,6 @@
 			"@prisma/client",
 			"@prisma/engines",
 			"esbuild",
-			"iltorb",
-			"node-zopfli-es",
 			"prisma"
 		]
 	}
