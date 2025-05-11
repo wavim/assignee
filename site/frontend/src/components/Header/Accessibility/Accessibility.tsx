@@ -1,13 +1,16 @@
 import { createSignal } from "solid-js";
 
+import { useI18n } from "../I18n";
+
 export default (props: { ontoggle: (show: boolean) => any }) => {
+	const [t] = useI18n();
+
 	const [showOptions, setShowOptions] = createSignal(false);
 
 	return (
 		<button
 			type="button"
-			name="accessibility"
-			title="Accessibility"
+			title={t("accessibility.title")}
 			class="h-full cursor-pointer"
 			onclick={() => {
 				setShowOptions((show) => !show);

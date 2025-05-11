@@ -2,14 +2,12 @@ import { JSXElement } from "solid-js";
 import { twMerge } from "tailwind-merge";
 
 export default (props: {
-	name: string;
 	onclick: () => any;
 	class?: string;
 	children?: JSXElement;
 }) => (
 	<button
 		type="button"
-		name={props.name}
 		onclick={props.onclick}
 		class={twMerge(
 			"group inset-ring-button-invert relative flex h-max w-full cursor-pointer items-center overflow-hidden border-none bg-transparent inset-ring-1 select-none",

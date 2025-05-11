@@ -1,13 +1,13 @@
-import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { createSignal, onMount, Show } from "solid-js";
 
 import { ease } from "../../accessibility/ease";
 
-import Logo from "../Logo/Logo";
 import Accessibility from "./Accessibility/Accessibility";
-import AccessibilityOptions from "./AccessibilityOptions/AccessibilityOptions";
+import HomeNav from "./HomeNav/HomeNav";
+import I18n from "./I18n";
 import Menu from "./Menu/Menu";
+import Options from "./Options/Options";
 
 export default () => {
 	let extrapad!: HTMLDivElement;
@@ -42,7 +42,7 @@ export default () => {
 	});
 
 	return (
-		<>
+		<I18n>
 			<div
 				ref={extrapad}
 				class="h-0 w-full"
@@ -56,14 +56,7 @@ export default () => {
 					class="bg-header-bg/35 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-2xl backdrop-blur-sm"
 				></div>
 				<Menu class="absolute left-4 h-full"></Menu>
-				<A
-					ref={homenav}
-					href="/home"
-					aria-label="Navigate to Home"
-					class="h-1/2"
-				>
-					<Logo class="text-text-primary h-full"></Logo>
-				</A>
+				<HomeNav ref={homenav}></HomeNav>
 				<div class="absolute right-4 h-1/2">
 					<Accessibility
 						ontoggle={(show) => {
@@ -75,11 +68,11 @@ export default () => {
 							});
 
 							padding
-								.fromTo(extrapad, { height: 0 }, { height: "9.5rem" })
+								.fromTo(extrapad, { height: 0 }, { height: "12rem" })
 								.fromTo(
 									backdrop,
 									{ paddingBottom: 0 },
-									{ paddingBottom: "9.5rem" },
+									{ paddingBottom: "12rem" },
 									"<",
 								)
 								.fromTo(
@@ -94,11 +87,11 @@ export default () => {
 					></Accessibility>
 				</div>
 				<Show when={showAccessibility()}>
-					<AccessibilityOptions
+					<Options
 						ref={accessibilityOptions}
-					></AccessibilityOptions>
+					></Options>
 				</Show>
 			</header>
-		</>
+		</I18n>
 	);
 };

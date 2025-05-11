@@ -29,6 +29,35 @@ export namespace media {
 		}[fontSize];
 	}
 
+	const languages = ["en", "zh"] as const;
+	type Locale = (typeof languages)[number];
+
+	export function getLanguage(type?: "option"): Locale | "system";
+	export function getLanguage(type: "eval"): Locale;
+	export function getLanguage(type: "option" | "eval" = "option") {
+		const langOption =
+			(localStorage.getItem("language") as Locale | "system" | null) ??
+			"system";
+
+		if (type === "option" || langOption !== "system") return langOption;
+
+		for (const lang of navigator.languages) {
+			const locale = lang.split("-", 1)[0];
+
+			if (languages.includes(locale as Locale)) return locale;
+		}
+
+		return "en";
+	}
+
+	export function setLanguage(
+		language: Locale | "system" = getLanguage(),
+	): void {
+		localStorage.setItem("language", language);
+
+		window.dispatchEvent(new Event("assignee:SetLocale"));
+	}
+
 	export function getColorTheme(type?: "option"): "light" | "dark" | "system";
 	export function getColorTheme(type: "eval"): "light" | "dark";
 	export function getColorTheme(type: "option" | "eval" = "option") {
@@ -39,13 +68,9 @@ export namespace media {
 				| "system"
 				| null) ?? "system";
 
-		if (type === "option") return themeOption;
+		if (type === "option" || themeOption !== "system") return themeOption;
 
-		return themeOption === "system"
-			? prefersDarkColorScheme.matches
-				? "dark"
-				: "light"
-			: themeOption;
+		return prefersDarkColorScheme.matches ? "dark" : "light";
 	}
 
 	export function setColorTheme(
@@ -55,7 +80,7 @@ export namespace media {
 
 		document.documentElement.classList.toggle(
 			"dark",
-			media.getColorTheme("eval") === "dark",
+			getColorTheme("eval") === "dark",
 		);
 	}
 
@@ -69,13 +94,9 @@ export namespace media {
 				| "system"
 				| null) ?? "system";
 
-		if (type === "option") return reduceOption;
+		if (type === "option" || reduceOption !== "system") return reduceOption;
 
-		return reduceOption === "system"
-			? prefersReducedMotion.matches
-				? "on"
-				: "off"
-			: reduceOption;
+		return prefersReducedMotion.matches ? "on" : "off";
 	}
 
 	export function setReduceMotion(
@@ -86,7 +107,7 @@ export namespace media {
 
 		document.documentElement.classList.toggle(
 			"reduce-motion",
-			media.getReduceMotion("eval") === "on",
+			getReduceMotion("eval") === "on",
 		);
 
 		if (!options?.noreload) location.reload();
@@ -94,6 +115,9 @@ export namespace media {
 }
 
 media.setFontSize();
+
+media.setLanguage();
+window.onlanguagechange = () => media.setLanguage();
 
 media.setColorTheme();
 prefersDarkColorScheme.onchange = () => media.setColorTheme();

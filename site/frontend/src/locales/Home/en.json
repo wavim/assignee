@@ -1,6 +1,7 @@
 {
 	"hero": {
 		"header": "Your simplest app for assignments",
-		"subtitle": "Assign, return and grade with utmost ease – from business to school to hobbies and more"
+		"subtitle": "Assign, return and grade with utmost ease – from business to school to hobbies and more",
+		"login": { "prompt": "Get Started" }
 	}
 }

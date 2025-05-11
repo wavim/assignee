@@ -1,4 +1,5 @@
-import { useI18n } from "../Context";
+import { useI18n } from "../I18n";
+
 import Login from "./Login/Login";
 
 export default () => {

@@ -2,10 +2,14 @@ import { createMemo, createSignal, For, JSXElement } from "solid-js";
 import { twMerge } from "tailwind-merge";
 
 import { media } from "../../../accessibility/media";
+import { useI18n } from "../I18n";
 
-//MO TODO option font/size inconsistent accross device
 export default (props: { ref?: HTMLDivElement }) => {
+	const [t] = useI18n();
+
 	const [fontSize, setFontSize] = createSignal(media.getFontSize());
+
+	const [language, setLanguage] = createSignal(media.getLanguage());
 
 	const [colorTheme, setColorTheme] = createSignal(media.getColorTheme());
 
@@ -14,10 +18,10 @@ export default (props: { ref?: HTMLDivElement }) => {
 	return (
 		<div
 			ref={props.ref}
-			aria-label="Accessibility Options"
+			aria-label={t("options.label")}
 			class="absolute top-20 flex h-max w-full flex-col flex-wrap pl-4 text-3xl"
 		>
-			<OptionPicker option="Font">
+			<OptionPicker option={t("options.font.option")}>
 				<For each={["𝙰⁻", "𝙰", "𝙰⁺"]}>
 					{(option, i) => {
 						const size = (["small", "middle", "large"] as const)[i()];
@@ -25,7 +29,7 @@ export default (props: { ref?: HTMLDivElement }) => {
 
 						return (
 							<Option
-								label={`${size} font size`}
+								label={t("options.font.label", { size })}
 								active={active}
 								action={() => {
 									setFontSize(size);
@@ -38,7 +42,29 @@ export default (props: { ref?: HTMLDivElement }) => {
 					}}
 				</For>
 			</OptionPicker>
-			<OptionPicker option="Theme">
+			<OptionPicker option={t("options.lang.option")}>
+				<For each={["◑", "Ⓔ", "㊥"]}>
+					{(option, i) => {
+						const lang = (["system", "en", "zh"] as const)[i()];
+						const active = createMemo(() => language() === lang);
+
+						return (
+							<Option
+								label={t("options.lang.label", { lang })}
+								active={active}
+								action={() => {
+									setLanguage(lang);
+									media.setLanguage(lang);
+								}}
+								class="font-jakarta not-first:scale-75"
+							>
+								{option}
+							</Option>
+						);
+					}}
+				</For>
+			</OptionPicker>
+			<OptionPicker option={t("options.theme.option")}>
 				<For each={["◑", "○", "●"]}>
 					{(option, i) => {
 						const theme = (["system", "light", "dark"] as const)[i()];
@@ -46,7 +72,7 @@ export default (props: { ref?: HTMLDivElement }) => {
 
 						return (
 							<Option
-								label={`${theme} color theme`}
+								label={t("options.theme.label", { theme })}
 								active={active}
 								action={() => {
 									setColorTheme(theme);
@@ -59,7 +85,7 @@ export default (props: { ref?: HTMLDivElement }) => {
 					}}
 				</For>
 			</OptionPicker>
-			<OptionPicker option="Motion">
+			<OptionPicker option={t("options.motion.option")}>
 				<For each={["◑", "✓", "✗"]}>
 					{(option, i) => {
 						const reduce = (["system", "off", "on"] as const)[i()];
@@ -67,7 +93,7 @@ export default (props: { ref?: HTMLDivElement }) => {
 
 						return (
 							<Option
-								label={`reduce motion ${reduce}`}
+								label={t("options.motion.label", { reduce })}
 								active={active}
 								action={() => {
 									setReduceMotion(reduce);
@@ -84,17 +110,17 @@ export default (props: { ref?: HTMLDivElement }) => {
 	);
 };
 
-const OptionPicker = (props: { option: string; children: JSXElement }) => (
+const OptionPicker = (props: { option?: string; children: JSXElement }) => (
 	<div class="my-0.5 flex w-full justify-between">
 		<span class="font-jakarta text-accessibility">{props.option}</span>
-		<div class="border-accessibility-options-br w-1/2 rounded-lg px-1">
+		<div class="border-accessibility-options-br flex w-1/2 rounded-lg px-1">
 			{props.children}
 		</div>
 	</div>
 );
 
 const Option = (props: {
-	label: string;
+	label?: string;
 	children: string;
 	active: () => boolean;
 	action: () => any;
@@ -105,7 +131,7 @@ const Option = (props: {
 		aria-label={props.label}
 		onclick={() => props.active() || props.action()}
 		class={twMerge(
-			"text-text-primary hover:text-accessibility-action active:text-accessibility-action inline-block w-1/3 cursor-pointer text-center font-serif transition-colors duration-500 select-none",
+			"text-text-primary hover:text-accessibility-action active:text-accessibility-action inline-block flex-[1] cursor-pointer text-center font-serif transition-colors duration-500 select-none",
 			props.active() && "text-accessibility",
 			props.class,
 		)}
