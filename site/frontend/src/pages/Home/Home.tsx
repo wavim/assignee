@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Features from "./Features/Features";
 import Hero from "./Hero/Hero";
@@ -13,6 +14,7 @@ export default () => {
 				<Quote></Quote>
 				<Features></Features>
 			</main>
+			<Footer></Footer>
 		</I18n>
 	);
 };

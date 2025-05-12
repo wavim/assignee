@@ -1,4 +1,4 @@
-import { getI18n } from "../../components/I18n/I18n";
+import { getI18n } from "../I18n/I18n";
 
 import enDictionary from "../../locales/Header/en.json";
 
