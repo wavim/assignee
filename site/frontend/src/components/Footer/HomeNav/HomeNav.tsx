@@ -11,7 +11,7 @@ export default () => {
 		<A
 			href="/home"
 			aria-label={t("homenav.label")}
-			class="block w-1/2"
+			class="block w-40"
 		>
 			<Logo class="text-text-primary w-full"></Logo>
 		</A>
