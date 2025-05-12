@@ -8,7 +8,7 @@ export default () => {
 			<blockquote class="font-jakarta text-text-primary max-w-[95%] text-4xl">
 				{t("quote.quote")}
 			</blockquote>
-			<cite class="font-jakarta text-text-secondary text-right text-xl">
+			<cite class="font-jakarta text-text-secondary text-right text-xl not-italic">
 				{t("quote.cite")}
 			</cite>
 		</section>
