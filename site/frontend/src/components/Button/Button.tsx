@@ -2,7 +2,7 @@ import { JSXElement } from "solid-js";
 import { twMerge } from "tailwind-merge";
 
 export default (props: {
-	onclick: () => any;
+	onclick?: () => any;
 	class?: string;
 	children?: JSXElement;
 }) => (

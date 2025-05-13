@@ -25,6 +25,7 @@ export default (props: {
 			aria-label={t("options.label")}
 			class={twMerge(
 				"flex h-max w-full flex-col flex-wrap text-3xl",
+				!props.enable && "pointer-events-none",
 				props.class,
 			)}
 		>
