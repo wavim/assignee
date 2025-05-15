@@ -145,7 +145,7 @@ const Option = (props: {
 		disabled={!props.enable}
 		onclick={() => props.active() || props.action()}
 		class={twMerge(
-			"text-text-primary hover:text-accessibility-action active:text-accessibility-action inline-block flex-[1] cursor-pointer text-center font-serif transition-colors duration-500 select-none",
+			"text-text-primary hover:text-options-active active:text-options-active inline-block flex-[1] cursor-pointer text-center font-serif transition-colors duration-500 select-none",
 			props.active() && "text-accessibility",
 			props.class,
 		)}

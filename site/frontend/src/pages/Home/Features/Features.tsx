@@ -5,7 +5,7 @@ export default () => {
 	const [t] = useI18n();
 
 	return (
-		<section class="bg-main-bg px-7">
+		<section class="bg-main px-7">
 			{/* for pc version <h1 class="font-jakarta sticky top-20 block text-3xl">Features</h1> */}
 			<Feature title={t("features.groups.title")}>
 				{t("features.groups.detail")}

@@ -10,7 +10,7 @@ export default (props: {
 		type="button"
 		onclick={props.onclick}
 		class={twMerge(
-			"group inset-ring-button-invert relative flex h-max w-full cursor-pointer items-center overflow-hidden border-none bg-transparent inset-ring-1 select-none",
+			"group inset-ring-button-invert relative flex h-max w-full cursor-pointer items-center border-none inset-ring-1 select-none",
 			props.class,
 		)}
 	>

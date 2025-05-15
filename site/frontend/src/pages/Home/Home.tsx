@@ -9,7 +9,7 @@ export default () => {
 	return (
 		<I18n>
 			<Header></Header>
-			<main class="mt-24 mb-12 flex w-full flex-col gap-8">
+			<main class="flex w-full flex-[1] flex-col gap-8">
 				<Hero></Hero>
 				<Quote></Quote>
 				<Features></Features>
