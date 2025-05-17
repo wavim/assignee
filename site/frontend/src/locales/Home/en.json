@@ -2,7 +2,7 @@
 	"hero": {
 		"header": "Your simplest app for assignments.",
 		"subtitle": "Assign, return, and grade with utmost ease – whether for business, school, or hobbies.",
-		"login": { "prompt": "Get Started" }
+		"prompt": "Get Started"
 	},
 	"quote": {
 		"quote": "The ultimate in sophistication is simplicity.",
@@ -26,5 +26,10 @@
 			"title": "Return",
 			"detail": "Should it be schoolwork or workplace tasks, you can grade the submissions of assignees and provide feedback with comments."
 		}
+	},
+	"action": {
+		"header": "Never forget anything anymore.",
+		"subtitle": "Bring your productivity to the next dimension with Assignee.",
+		"prompt": "Get Started"
 	}
 }
