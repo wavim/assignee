@@ -46,7 +46,7 @@ export default () => {
 		<I18n>
 			<div
 				ref={extrapad}
-				class="mb-24 h-0 w-full"
+				class="mb-26 h-0 w-full"
 			></div>
 			<header
 				ref={header}
@@ -54,7 +54,7 @@ export default () => {
 			>
 				<div
 					ref={backdrop}
-					class="bg-header/70 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-2xl backdrop-blur-lg"
+					class="bg-header/50 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-4xl backdrop-blur-lg"
 				></div>
 				<Menu class="absolute left-4 h-full"></Menu>
 				<HomeNav ref={homenav}></HomeNav>
@@ -88,7 +88,7 @@ export default () => {
 				<Options
 					ref={options}
 					enable={showOptions()}
-					class="absolute top-20 pl-4 opacity-0"
+					class="absolute top-18 w-11/12 opacity-0"
 				></Options>
 			</header>
 		</I18n>
