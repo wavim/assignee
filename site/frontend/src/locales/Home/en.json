@@ -1,7 +1,7 @@
 {
 	"hero": {
-		"header": "Your simplest app for assignments",
-		"subtitle": "Assign, return, and grade with utmost ease – whether for business, school, or hobbies",
+		"header": "Your simplest app for assignments.",
+		"subtitle": "Assign, return, and grade with utmost ease – whether for business, school, or hobbies.",
 		"login": { "prompt": "Get Started" }
 	},
 	"quote": {
@@ -9,6 +9,7 @@
 		"cite": "Leonard Thiessen"
 	},
 	"features": {
+		"title": "All in one.",
 		"groups": {
 			"title": "Groups",
 			"detail": "Create, invite, and join as many groups as you need. Promote members for management, and track it all with unparalleled ease."

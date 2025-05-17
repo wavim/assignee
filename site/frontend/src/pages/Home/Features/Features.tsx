@@ -6,6 +6,9 @@ export default () => {
 
 	return (
 		<section class="bg-main px-7">
+			<h1 class="font-jakarta text-text-primary mb-8 text-center text-5xl font-bold">
+				{t("features.title")}
+			</h1>
 			{/* for pc version <h1 class="font-jakarta sticky top-20 block text-3xl">Features</h1> */}
 			<Feature title={t("features.groups.title")}>
 				{t("features.groups.detail")}
