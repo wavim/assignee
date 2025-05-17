@@ -1,13 +1,14 @@
 @theme inline {
 	--color-accessibility: var(--color-accessibility);
-	--color-button-invert: var(--color-button-invert);
+	--color-button-shadow: var(--color-button-shadow);
+	--color-button-text: var(--color-button-text);
 	--color-button: var(--color-button);
 	--color-header: var(--color-header);
 	--color-input-br: var(--color-input-br);
-	--color-input-placeholder: var(--color-input-placeholder);
-	--color-input: var(--color-input);
-	--color-input-valid: var(--color-input-valid);
 	--color-input-invalid: var(--color-input-invalid);
+	--color-input-placeholder: var(--color-input-placeholder);
+	--color-input-valid: var(--color-input-valid);
+	--color-input: var(--color-input);
 	--color-main: var(--color-main);
 	--color-options-active: var(--color-options-active);
 	--color-quote: var(--color-quote);
@@ -17,14 +18,15 @@
 
 :root {
 	--color-accessibility: var(--color-blue-700);
-	--color-button-invert: var(--color-neutral-950);
-	--color-button: var(--color-neutral-50);
+	--color-button-shadow: var(--color-neutral-600);
+	--color-button-text: var(--color-neutral-50);
+	--color-button: var(--color-neutral-950);
 	--color-header: var(--color-neutral-200);
 	--color-input-br: var(--color-neutral-700);
-	--color-input-placeholder: var(--color-neutral-500);
-	--color-input: var(--color-neutral-50);
-	--color-input-valid: var(--color-blue-500);
 	--color-input-invalid: var(--color-rose-500);
+	--color-input-placeholder: var(--color-neutral-500);
+	--color-input-valid: var(--color-blue-500);
+	--color-input: var(--color-neutral-50);
 	--color-main: var(--color-neutral-50);
 	--color-options-active: var(--color-blue-500);
 	--color-quote: var(--color-violet-100);
@@ -34,8 +36,9 @@
 
 :root.dark {
 	--color-accessibility: var(--color-blue-400);
-	--color-button-invert: var(--color-neutral-50);
-	--color-button: var(--color-neutral-950);
+	--color-button-shadow: var(--color-neutral-300);
+	--color-button-text: var(--color-neutral-950);
+	--color-button: var(--color-neutral-50);
 	--color-header: var(--color-neutral-600);
 	--color-input-br: var(--color-neutral-200);
 	--color-input: var(--color-neutral-950);

@@ -10,14 +10,10 @@ export default (props: {
 		type="button"
 		onclick={props.onclick}
 		class={twMerge(
-			"group inset-ring-button-invert relative flex h-max w-full cursor-pointer items-center overflow-hidden rounded-2xl border-none inset-ring-1 select-none",
+			"bg-button font-jakarta text-button-text shadow-button-shadow cursor-pointer rounded-full px-5 py-3 text-xl transition duration-300 ease-out select-none hover:shadow-[0.2rem_0.3rem] active:shadow-[0.2rem_0.3rem]",
 			props.class,
 		)}
 	>
-		<div class="bg-button-invert absolute top-0 right-0 left-0 h-full origin-right scale-x-0 transition-transform duration-300 ease-in-out group-hover:origin-left group-hover:scale-x-100 group-active:scale-x-100 group-active:transition-none"></div>
-		<span class="text-button-invert font-jakarta group-hover:text-button group-active:text-button z-10 py-4 pl-6 text-xl transition-colors duration-300 ease-in-out group-active:transition-none">
-			<span class="">{props.children}</span>
-			<span class="absolute right-6 left-auto">{"≫"}</span>
-		</span>
+		{props.children}
 	</button>
 );

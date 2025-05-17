@@ -54,7 +54,7 @@ export default () => {
 			>
 				<div
 					ref={backdrop}
-					class="bg-header/50 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-4xl backdrop-blur-lg"
+					class="bg-header/75 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-4xl backdrop-blur-lg"
 				></div>
 				<Menu class="absolute left-4 h-full"></Menu>
 				<HomeNav ref={homenav}></HomeNav>
