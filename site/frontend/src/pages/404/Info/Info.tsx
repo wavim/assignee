@@ -1,5 +1,3 @@
-import { A } from "@solidjs/router";
-
 import { useI18n } from "../I18n";
 
 import Button from "../../../components/Button/Button";
@@ -15,9 +13,7 @@ export default () => {
 			<p class="font-jakarta text-text-secondary w-full text-xl">
 				{t("info.detail")}
 			</p>
-			<A href="/">
-				<Button>{t("info.action")}</Button>
-			</A>
+			<Button onclick={() => history.back()}>{t("info.action")}</Button>
 		</section>
 	);
 };
