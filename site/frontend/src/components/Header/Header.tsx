@@ -88,7 +88,7 @@ export default () => {
 				<Options
 					ref={options}
 					enable={showOptions()}
-					class="absolute top-18 w-11/12 opacity-0"
+					class="absolute top-19 w-11/12 opacity-0"
 				></Options>
 			</header>
 		</I18n>

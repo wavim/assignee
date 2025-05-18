@@ -29,7 +29,7 @@
 	--color-input: var(--color-neutral-50);
 	--color-main: var(--color-neutral-50);
 	--color-options-active: var(--color-blue-500);
-	--color-quote: var(--color-violet-100);
+	--color-quote: var(--color-gray-200);
 	--color-text-primary: var(--color-neutral-950);
 	--color-text-secondary: var(--color-neutral-700);
 }
@@ -44,7 +44,7 @@
 	--color-input: var(--color-neutral-950);
 	--color-main: var(--color-neutral-950);
 	--color-options-active: var(--color-blue-600);
-	--color-quote: var(--color-indigo-950);
+	--color-quote: var(--color-gray-800);
 	--color-text-primary: var(--color-neutral-50);
 	--color-text-secondary: var(--color-neutral-300);
 }
