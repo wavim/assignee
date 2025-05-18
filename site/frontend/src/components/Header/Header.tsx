@@ -50,11 +50,11 @@ export default () => {
 			></div>
 			<header
 				ref={header}
-				class="fixed z-[calc(infinity)] mt-2 flex h-16 w-[95%] items-center justify-center"
+				class="fixed mt-2 flex h-16 w-[95%] items-center justify-center"
 			>
 				<div
 					ref={backdrop}
-					class="bg-header/75 absolute top-0 right-0 left-0 -z-10 box-content h-full w-full rounded-4xl backdrop-blur-lg"
+					class="bg-header/75 absolute top-0 box-content h-full w-full rounded-4xl backdrop-blur-lg"
 				></div>
 				<Menu class="absolute left-4 h-full"></Menu>
 				<HomeNav ref={homenav}></HomeNav>
