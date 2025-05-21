@@ -1,0 +1,8 @@
+{
+	"name": "assignee-report",
+	"version": "0.0.0",
+	"devDependencies": {
+		"prettier": "^3.5.3",
+		"prettier-plugin-latex": "^2.0.1"
+	}
+}

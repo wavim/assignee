@@ -1,0 +1,66 @@
+\chapter{Overview}
+\label{overview}
+
+\section{Introduction}
+\label{overview.intro}
+
+This report concerns Assignee, a full stack web application for the ICT SBA task
+of implementing an assignment system.
+
+In this chapter, we would cover the capabilities of Assignee users, and the core
+systems of design that would guide later sections. At the end of the chapter, we
+would provide resources for reference and validation.
+
+\section{User Capabilities}
+\label{overview.capab}
+
+This section aims to describe the roles of different users of Assignee and what they
+can accomplish via the app. The section would be a high level overview of user
+workflow, thus omitting other capabilities such as those related to accessibility,
+which would be covered in later chapters.
+
+Symbolic notes:
+\begin{itemize}
+	\item Role inheritance is denoted by $Child \in Parent$
+
+	\item Role transitions are denoted by $Old \xrightarrow{Transition}New$
+\end{itemize}
+
+Role inheritance means all actions that could be done by the role $Parent$ could
+be done by the role $Child$. A role transition happens when the user with the role
+$Old$ performs a certain action and thus attains the $New$ role.
+
+Capabilities marked with a dagger \textdagger{} are not implemented in the
+actual application, at least in initial versions. This is primarily because they
+have lower priority, but details would be given as needed.
+
+\subsection{User System}
+\label{overview.capab.user}
+
+Roles: $(Visitor, User)$
+
+\begin{samepage}
+	$Visitor$
+	\begin{itemize}
+		\item $Visitor \xrightarrow{Signup}User$
+
+		\item $Visitor \xrightarrow{Login}User$
+	\end{itemize}
+\end{samepage}
+
+\begin{samepage}
+	$User$
+	\begin{itemize}
+		\item Change login email
+
+		\item Change login password
+
+		\item Change display name
+
+		\item Change other settings \textdagger
+
+		\item $User \xrightarrow{Logout}Visitor$
+
+		\item $User \xrightarrow{Delete}Visitor$
+	\end{itemize}
+\end{samepage}
