@@ -11,7 +11,7 @@ export default (props: { ref: HTMLAnchorElement }) => {
 		<A
 			ref={props.ref}
 			href="/home"
-			aria-label={t("homenav.label")}
+			aria-label={t("home.label")}
 			class="h-1/2"
 		>
 			<Logo class="text-text-primary h-full"></Logo>

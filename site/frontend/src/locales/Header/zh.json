@@ -1,5 +1,5 @@
 {
-	"homenav": { "label": "返回首頁" },
+	"home": { "label": "返回首頁" },
 	"accessibility": { "title": "輔助使用" },
 	"options": {
 		"label": "輔助使用選項",

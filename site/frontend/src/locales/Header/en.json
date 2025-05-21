@@ -1,5 +1,5 @@
 {
-	"homenav": { "label": "Navigate to Home" },
+	"home": { "label": "Navigate to Home" },
 	"accessibility": { "title": "Accessibility" },
 	"options": {
 		"label": "Accessibility Options",

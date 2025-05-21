@@ -1,11 +1,11 @@
-import { createSignal } from "solid-js";
-
 import { useI18n } from "../I18n";
 
-export default (props: { ref: HTMLButtonElement; onclick: () => any }) => {
+export default (props: {
+	ref: HTMLButtonElement;
+	onclick: () => any;
+	expanded: boolean;
+}) => {
 	const [t] = useI18n();
-
-	const [pressed, setPressed] = createSignal(false);
 
 	return (
 		<button
@@ -13,11 +13,8 @@ export default (props: { ref: HTMLButtonElement; onclick: () => any }) => {
 			type="button"
 			title={t("accessibility.title")}
 			class="group h-full cursor-pointer"
-			onclick={() => {
-				setPressed((pressed) => !pressed);
-				props.onclick();
-			}}
-			aria-pressed={pressed()}
+			onclick={props.onclick}
+			aria-expanded={props.expanded}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

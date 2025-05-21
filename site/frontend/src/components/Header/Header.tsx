@@ -3,20 +3,19 @@ import { createSignal, onMount } from "solid-js";
 
 import { ease } from "../../accessibility/ease";
 
-import Accessibility from "./Accessibility/Accessibility";
-import HomeNav from "./HomeNav/HomeNav";
+import Home from "./Home/Home";
 import I18n from "./I18n";
 import Options from "./Options/Options";
+import Toggle from "./Toggle/Toggle";
 
 export default () => {
-	let extrapad!: HTMLDivElement;
-	let header!: HTMLElement;
 	let backdrop!: HTMLDivElement;
-	let homenav!: HTMLAnchorElement;
-	let accessibility!: HTMLButtonElement;
+	let home!: HTMLAnchorElement;
+	let pad!: HTMLDivElement;
+	let toggle!: HTMLButtonElement;
 	let options!: HTMLDivElement;
 
-	const [showOptions, setShowOptions] = createSignal(false);
+	const [expanded, setExpand] = createSignal(false);
 
 	onMount(() => {
 		const scroll = gsap.timeline({
@@ -34,7 +33,7 @@ export default () => {
 				{ opacity: 1, scaleX: 1, scaleY: 1 },
 			)
 			.fromTo(
-				homenav,
+				home,
 				{ clipPath: "rect(0 100% 100% 0)", translateX: 0 },
 				{ clipPath: "rect(0 21% 100% 0)", translateX: "42%" },
 				"<",
@@ -44,31 +43,28 @@ export default () => {
 	return (
 		<I18n>
 			<div
-				ref={extrapad}
+				ref={pad}
 				class="mb-26 h-0 w-full"
 			></div>
-			<header
-				ref={header}
-				class="fixed mt-2 flex h-16 w-[95%] items-center justify-center"
-			>
+			<header class="fixed mt-2 flex h-16 w-[95%] items-center justify-center">
 				<div
 					ref={backdrop}
 					class="bg-header/75 absolute top-0 box-content h-full w-full rounded-4xl backdrop-blur-lg"
 				></div>
-				<HomeNav ref={homenav}></HomeNav>
+				<Home ref={home}></Home>
 				<div class="absolute right-4 h-1/2">
-					<Accessibility
-						ref={accessibility}
+					<Toggle
+						ref={toggle}
 						onclick={() => {
-							accessibility.disabled = true;
-							setTimeout(() => (accessibility.disabled = false), 600);
+							toggle.disabled = true;
+							setTimeout(() => (toggle.disabled = false), 600);
 
 							const reveal = gsap.timeline({
 								defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
 							});
 
 							reveal
-								.fromTo(extrapad, { height: 0 }, { height: "12rem" })
+								.fromTo(pad, { height: 0 }, { height: "12rem" })
 								.fromTo(
 									backdrop,
 									{ paddingBottom: 0 },
@@ -77,15 +73,16 @@ export default () => {
 								)
 								.fromTo(options, { opacity: 0 }, { opacity: 1 }, "<50%");
 
-							if (showOptions()) reveal.progress(1).reverse();
+							if (expanded()) reveal.progress(1).reverse();
 
-							setShowOptions((show) => !show);
+							setExpand((show) => !show);
 						}}
-					></Accessibility>
+						expanded={expanded()}
+					></Toggle>
 				</div>
 				<Options
 					ref={options}
-					enable={showOptions()}
+					enable={expanded()}
 					class="absolute top-19 w-11/12 opacity-0"
 				></Options>
 			</header>
