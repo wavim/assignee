@@ -1,8 +1,6 @@
-import { A } from "@solidjs/router";
-
 import { useI18n } from "../I18n";
 
-import Button from "../../../components/Button/Button";
+import ButtonA from "../../../components/ButtonA/ButtonA";
 
 export default () => {
 	const [t] = useI18n();
@@ -12,12 +10,10 @@ export default () => {
 			<h1 class="font-jakarta text-text-primary w-4/5 text-4xl font-bold">
 				{t("action.header")}
 			</h1>
-			<p class="font-jakarta text-text-secondary w-full text-xl">
+			<p class="font-jakarta text-text-secondary text-xl">
 				{t("action.subtitle")}
 			</p>
-			<A href="/login">
-				<Button>{t("action.prompt")}</Button>
-			</A>
+			<ButtonA href="/signup">{t("action.prompt")}</ButtonA>
 		</section>
 	);
 };

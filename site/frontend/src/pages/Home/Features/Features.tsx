@@ -39,5 +39,5 @@ const Feature = (props: { title: string; children: JSXElement }) => (
 );
 
 const Separator = () => (
-	<div class="border-text-secondary my-6 h-0 w-full border-1"></div>
+	<div class="border-text-secondary my-6 h-0 border-1"></div>
 );

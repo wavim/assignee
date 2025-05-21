@@ -24,7 +24,7 @@ export default (props: {
 			ref={props.ref}
 			aria-label={t("options.label")}
 			class={twMerge(
-				"ml-4 flex h-max w-full flex-col flex-wrap text-3xl",
+				"ml-4 flex flex-col flex-wrap text-3xl",
 				!props.enable && "pointer-events-none",
 				props.class,
 			)}
@@ -123,7 +123,7 @@ export default (props: {
 };
 
 const OptionPicker = (props: { option: string; children: JSXElement }) => (
-	<div class="my-0.5 flex w-full justify-between">
+	<div class="my-0.5 flex justify-between">
 		<span class="font-jakarta text-accessibility">{props.option}</span>
 		<div class="border-accessibility-options-br flex w-1/2 rounded-lg px-1">
 			{props.children}
@@ -145,7 +145,7 @@ const Option = (props: {
 		disabled={!props.enable}
 		onclick={() => props.active() || props.action()}
 		class={twMerge(
-			"text-text-primary hover:text-options-active active:text-options-active inline-block flex-[1] cursor-pointer text-center font-serif transition-colors duration-500 select-none",
+			"text-text-primary hover:text-options-active active:text-options-active inline-block flex-[1] cursor-pointer text-center font-serif transition-colors duration-300 select-none",
 			props.active() && "text-accessibility",
 			props.class,
 		)}

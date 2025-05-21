@@ -6,7 +6,6 @@ import { ease } from "../../accessibility/ease";
 import Accessibility from "./Accessibility/Accessibility";
 import HomeNav from "./HomeNav/HomeNav";
 import I18n from "./I18n";
-import Menu from "./Menu/Menu";
 import Options from "./Options/Options";
 
 export default () => {
@@ -56,7 +55,6 @@ export default () => {
 					ref={backdrop}
 					class="bg-header/75 absolute top-0 box-content h-full w-full rounded-4xl backdrop-blur-lg"
 				></div>
-				<Menu class="absolute left-4 h-full"></Menu>
 				<HomeNav ref={homenav}></HomeNav>
 				<div class="absolute right-4 h-1/2">
 					<Accessibility

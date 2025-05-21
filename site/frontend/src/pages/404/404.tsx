@@ -7,7 +7,7 @@ export default () => {
 	return (
 		<I18n>
 			<Header></Header>
-			<main class="flex w-full flex-[1] flex-col gap-16">
+			<main class="w-full flex-[1]">
 				<Info></Info>
 			</main>
 			<Footer></Footer>
