@@ -8,72 +8,68 @@ This report concerns Assignee, a full stack web application for the ICT SBA task
 of implementing an assignment system.
 
 In this chapter, we would cover the capabilities of Assignee users, and the core
-systems of design that would guide later sections. At the end of the chapter, we
-would provide resources for reference and validation.
+systems of design that would guide later sections. We would also touch side systems
+built upon the core. At the end of the chapter, resources for reference and validation
+would be provided.
 
-\section{User Capabilities}
+\section{Capabilities}
 \label{overview.capab}
 
-This section aims to describe the roles of different users of Assignee and what they
-can accomplish via the app. The section would be a high level overview of user
-workflow, thus omitting other capabilities such as those related to accessibility,
-which would be covered in later chapters.
+This section aims to describe the roles of different users of Assignee and what
+they can accomplish via the app. The section would be a high level overview of user
+workflow, thus omitting other capabilities such as those related to
+accessibility, which would be covered in later chapters.
 
 Symbolic notes:
 \begin{itemize}
 	\item Role inheritance is denoted by $Child\in{}Parent$
 
 	\item Role transitions are denoted by $Old\xrightarrow{Transition}New$
+
+	\item Role transitions of $\geq{}1$ users are post-fixed with $*$
 \end{itemize}
 
 Role inheritance means all actions that could be done by the role $Parent$ could
-be done by the role $Child$. A role transition happens when the user with the role
-$Old$ performs a certain action and thus attains the $New$ role.
+be done by the role $Child$. A role transition happens when the user with the
+role $Old$ performs a certain action and thus attains the $New$ role.
 
-Capabilities marked with a dagger \textdagger{} are not implemented in the
-actual application, at least in initial versions. This is primarily because they
-have lower priority, but details would be given as needed in paragraphs starting
-with daggers.
+Items marked with a dagger \textdagger{} are not implemented in the actual application,
+at least in initial versions. This is primarily because they have lower priority,
+but details would be given as needed in paragraphs starting with daggers.
 
 \subsection{User System}
 \label{overview.capab.user}
 
 Roles: $(Visitor, User)$
 
-\begin{samepage}
-	$Visitor$
-	\begin{itemize}
-		\item $Visitor\xrightarrow{Signup}User$
+$Visitor$
+\begin{itemize}
+	\item $Visitor\xrightarrow{Signup}User$
 
-		\item $Visitor\xrightarrow{Signin}User$
-	\end{itemize}
-\end{samepage}
+	\item $Visitor\xrightarrow{Signin}User$
+\end{itemize}
 
-\begin{samepage}
-	$User$
-	\begin{itemize}
-		\item Change sign-in email
+$User$
+\begin{itemize}
+	\item Change sign-in email
 
-		\item Change sign-in password
+	\item Change sign-in password
 
-		\item Change display name
+	\item Change display name
 
-		\item Change other settings \textdagger{}
+	\item Change other settings \textdagger{}
 
-		\item $User\xrightarrow{Signout}Visitor$
+	\item $User\xrightarrow{Signout}Visitor$
 
-		\item $User\xrightarrow{Delete}Visitor$
-	\end{itemize}
-\end{samepage}
+	\item $User\xrightarrow{Revoke}Visitor$
+\end{itemize}
 
-The very basics of the application is the user system which manages user
-accounts. An account can be identified by an email and verified by a password,
-like any well-known websites.
+The very basics of the application is the user system which manages user accounts.
 
-People nowadays almost definitely owns an email (which obviously holds for students/employers
-with school-/corp-domain emails). Therefore, visitors do not need to spend time thinking
-of unique names for sign-up but to use their email right away. They can set
-custom display names that resonate with them later.
+An account can be identified solely by an email. The majority nowadays own an
+email (students/employers own school-/corp-domain emails). Therefore, visitors will
+not have to think of unique names to sign-up but to use their email right away.
+After which they can choose display names that resonate with them.
 
 \textdagger{} Other settings are not implemented in initial versions. For one, Assignee
 is rather opinionated, with everything tuned for the good. For two, the
@@ -87,3 +83,55 @@ for reference of potential implementation.
 % otherwise pose security threats. The database table for it would still be included
 % in later chapters for reference, having simple implementations available for
 % actual deployments.
+
+\subsection{Team System}
+\label{overview.capab.team}
+
+Roles: $(User, Member, Admin\dagger{}, Owner)$
+
+$User$
+\begin{itemize}
+	\item $User\xrightarrow{Join}Member$
+
+	\item $User\xrightarrow{Create}Owner$
+\end{itemize}
+
+$Member\in{}User$
+\begin{itemize}
+	\item $Member\xrightarrow{Leave}User$
+\end{itemize}
+
+$Admin\in{}Member\dagger{}$
+\begin{itemize}
+	\item Invite members ($User\xrightarrow{Invite*}Member$)
+
+	\item Kick members ($Member\xrightarrow{Kick*}User$)
+\end{itemize}
+
+$Owner\in{}Admin$
+\begin{itemize}
+	\item Change team name
+
+	\item Change team description
+
+	\item Appoint admin ($Member\xrightarrow{Appoint*}Admin$) \textdagger{}
+
+	\item Dismiss admin ($Admin\xrightarrow{Dismiss*}Member$) \textdagger{}
+
+	\item $Owner\xrightarrow{Disband}User$ ($Member\xrightarrow{Dismiss*}User$)
+\end{itemize}
+
+Built upon the user system is the team system which manages user-created teams.
+
+Assignee users are free to create or join teams as they need, and team owners
+are allowed to appoint team admins to help with management. To some extent, the
+logic is similar to Google Classroom.
+
+\textdagger{} The $Admin$ role is not directly implemented in initial versions to
+speed up project iteration. However, the $Owner$ role, which is inherited from
+$Admin$, would still have the privileges of it. The database table for the role
+would still be present in later chapters for reference of potential
+implementation.
+
+\subsection{Assignment System}
+\label{overview.capab.assign}
