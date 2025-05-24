@@ -188,21 +188,20 @@ Several resources are listed here for reference and validation of the SBA invigi
 \subsection{Repository}
 \label{overview.src.repo}
 
-The entire project is hosted in a repository, available at \href{https://github.com/CarbonicSoda/assignee}{GitHub/CarbonicSoda/assignee}
+The entire project is hosted in a repository, available at \href{https://github.com/CarbonicSoda/assignee}{Repository}
 for inspection.
 
-Modular approach is taken for maximum clarity and separation of purpose. The
-report/ directory contains the \LaTeX{} source of this report; The database/
-directory contains the SQL dump file that can be used to instantiate the backing
-database; The site/ directory contains the actual web application, further separated
-into backend/ of application logic and frontend/ of presentation logic.
+Modular approach is taken for clarity and separation of concern. The report/ directory
+contains the \LaTeX{} source of this report; The database/ directory contains
+the SQL dump file that is used to instantiate the backing database; The site/
+directory contains the actual web application, further separated into backend/
+of application logic and frontend/ of presentation logic.
 
-It is worth noting, however, that certain files such as .env files or SSL certs
-are not included in the repository for security considerations. To allow invigilators
-to build and start the application on their devices without these dependencies,
-fallbacks are coded into the application to skip file resolvers.
+\subsection{Review}
+\label{overview.src.review}
 
-\subsection{Build}
-\label{overview.src.build}
-
-%MO TODO migrate to sqlite and use pkg to serve executable
+Invigilators may not have dependencies of Assignee installed, so prebuilt archives
+are provided in \href{https://github.com/CarbonicSoda/assignee/releases}{Releases}.
+To run the app, unzip the archive to somewhere convenient and execute the binary
+(app.exe for Windows, for other platforms pick corresponding archives). Database
+records would be preserved in the app.db file.
