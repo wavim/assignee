@@ -4,11 +4,11 @@ import tailwindCSS from "@tailwindcss/vite";
 import solidPlugin from "vite-plugin-solid";
 
 export default defineConfig({
-	plugins: [solidPlugin(), tailwindCSS()],
+	plugins: [tailwindCSS(), solidPlugin()],
 	build: {
 		target: "esnext",
-		outDir: "../backend/public",
 		emptyOutDir: true,
+		outDir: "../backend/public",
 		minify: "terser",
 		cssMinify: "lightningcss",
 	},

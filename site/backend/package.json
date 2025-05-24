@@ -1,5 +1,5 @@
 {
-	"name": "assignee",
+	"name": "assignee-backend",
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
@@ -7,7 +7,7 @@
 		"build": "etsc",
 		"start": "etsc && node dist/entry.cjs",
 		"kill": "npx kill-port 5450",
-		"pkg": "etsc && npx cpr src/prisma/dev.db bin/app.db --overwrite && npx pkg . -t node18-win-x64 --out-path bin -C Brotli"
+		"pkg": "etsc && npx cpr src/prisma/dev.db bin/app.db --overwrite && npx pkg . -t node18-win-x64 -o bin/app -C Brotli"
 	},
 	"dependencies": {
 		"@noble/hashes": "^1.8.0",
