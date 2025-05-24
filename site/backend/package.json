@@ -1,44 +1,38 @@
 {
-	"name": "assignee-backend",
+	"name": "assignee",
 	"version": "0.0.0",
-	"author": "",
-	"description": "",
 	"type": "module",
-	"license": "MIT",
-	"prisma": {
-		"schema": "src/prisma/schema.prisma"
-	},
 	"scripts": {
 		"watch": "nodemon",
 		"build": "etsc",
-		"start": "etsc && node dist/entry.js",
-		"kill": "npx kill-port 5450"
+		"start": "etsc && node dist/entry.cjs",
+		"kill": "npx kill-port 5450",
+		"pkg": "etsc && npx cpr src/prisma/dev.db bin/app.db --overwrite && npx pkg . -t node18-win-x64 --out-path bin -C Brotli"
 	},
 	"dependencies": {
 		"@noble/hashes": "^1.8.0",
 		"@prisma/client": "^6.8.2",
-		"@sendgrid/mail": "^8.1.5",
-		"@types/express": "^5.0.1",
 		"compression": "^1.8.0",
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
-		"dotenv": "^16.5.0",
-		"dotenv-expand": "^12.0.2",
 		"express": "^5.1.0",
 		"http-status-codes": "^2.3.0"
 	},
 	"devDependencies": {
-		"@types/compression": "^1.7.5",
+		"@types/compression": "^1.8.0",
 		"@types/cookie-parser": "^1.4.8",
 		"@types/cors": "^2.8.18",
-		"@types/node": "^22.15.16",
-		"@typescript-eslint/eslint-plugin": "^8.32.0",
-		"@typescript-eslint/parser": "^8.32.0",
+		"@types/express": "^5.0.2",
+		"@types/node": "^22.15.21",
+		"@typescript-eslint/eslint-plugin": "^8.32.1",
+		"@typescript-eslint/parser": "^8.32.1",
+		"cpr": "^3.0.1",
 		"esbuild": "^0.25.4",
 		"esbuild-clean-plugin": "^2.0.0",
 		"esbuild-node-tsc": "^2.0.5",
-		"eslint": "^9.26.0",
+		"eslint": "^9.27.0",
 		"nodemon": "^3.1.10",
+		"pkg": "^5.8.1",
 		"prisma": "^6.8.2",
 		"typescript": "^5.8.3"
 	},
@@ -49,5 +43,12 @@
 			"esbuild",
 			"prisma"
 		]
+	},
+	"prisma": {
+		"schema": "src/prisma/schema.prisma"
+	},
+	"bin": "dist/entry.cjs",
+	"pkg": {
+		"assets": "public/**/*"
 	}
 }

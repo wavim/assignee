@@ -1,11 +1,12 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  //MO DEV https://github.com/prisma/prisma/issues/27072 not yet fixed
+  // output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./assignee.db"
+  url      = "file:./dev.db"
 }
 
 model User {

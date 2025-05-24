@@ -1,7 +1,7 @@
 {
 	"watch": ["src"],
 	"ignore": ["node_modules"],
-	"ext": "ts,js,json",
-	"exec": "etsc && node dist/entry.js",
+	"ext": "ts,js,cjs,mjs,json",
+	"exec": "etsc && node dist/entry.cjs",
 	"legacyWatch": true
 }

@@ -30,6 +30,13 @@
 			"problemMatcher": [],
 			"label": "npm: kill",
 			"detail": "kill"
+		},
+		{
+			"type": "npm",
+			"script": "pkg",
+			"problemMatcher": [],
+			"label": "npm: pkg",
+			"detail": "pkg"
 		}
 	]
 }
