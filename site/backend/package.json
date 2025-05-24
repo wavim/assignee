@@ -6,8 +6,8 @@
 		"watch": "nodemon",
 		"build": "etsc",
 		"start": "etsc && node dist/app.cjs",
-		"kill": "npx kill-port 5450",
-		"pkg": "etsc && npx cpr src/prisma/dev.db bin/app.db --overwrite && npx pkg . -t node18-win-x64 -o bin/app -C Brotli"
+		"kill": "kill-port 5450",
+		"pkg": "prisma db push --force-reset && cpr src/prisma/dev.db bin/app.db --overwrite && etsc && pkg . -t node18-win-x64 -o bin/app -C Brotli"
 	},
 	"dependencies": {
 		"@noble/hashes": "^1.8.0",
@@ -31,6 +31,7 @@
 		"esbuild-clean-plugin": "^2.0.0",
 		"esbuild-node-tsc": "^2.0.5",
 		"eslint": "^9.27.0",
+		"kill-port": "^2.0.1",
 		"nodemon": "^3.1.10",
 		"pkg": "^5.8.1",
 		"prisma": "^6.8.2",
