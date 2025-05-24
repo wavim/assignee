@@ -1,15 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-
-import { TableMetadataExtension } from "./extensions/metadata.extension.js";
-
-const getPrisma = () => {
-	const prisma = new PrismaClient();
-	return prisma.$extends(TableMetadataExtension);
-};
+import { PrismaClient } from "generated/prisma/index.js";
 
 const globalForPrisma = global as unknown as {
-	prisma?: ReturnType<typeof getPrisma>;
+	prisma?: PrismaClient;
 };
 
-export const prisma = globalForPrisma.prisma ?? getPrisma();
-globalForPrisma.prisma = prisma;
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

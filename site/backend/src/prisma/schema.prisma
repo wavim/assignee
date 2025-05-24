@@ -1,187 +1,44 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DB_URL")
+  provider = "sqlite"
+  url      = "file:./assignee.db"
 }
 
 model User {
-  uid          BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
-  email        String        @unique(map: "email_UNIQUE") @db.VarChar(254)
-  name         String        @db.VarChar(30)
-  created      BigInt        @db.UnsignedBigInt
-  updated      BigInt        @db.UnsignedBigInt
-  appointments Appointment[]
-  authcode     Authcode?
-  memberships  Membership[]
-  password     Password?
-  preference   Preference?
-  sessions     Session[]
-  submissions  Submission[]
-  teams        Team[]
+  uid   Int    @id
+  email String @unique
+  name  String
 
-  @@map("users")
-}
+  password Password?
+  Session  Session[]
 
-model Authcode {
-  uid       BigInt @id @db.UnsignedBigInt
-  hash      Bytes  @db.Binary(32)
-  salt      Bytes  @db.Binary(16)
-  created   BigInt @db.UnsignedBigInt
-  requestor User   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "authcode_for_user")
-
-  @@map("authcodes")
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 }
 
 model Password {
-  uid     BigInt @id @db.UnsignedBigInt
-  hash    Bytes  @db.Binary(32)
-  salt    Bytes  @db.Binary(16)
-  updated BigInt @db.UnsignedBigInt
-  owner   User   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "password_of_user")
+  hash Bytes
+  salt Bytes
 
-  @@map("passwords")
+  uid  Int  @id
+  user User @relation(fields: [uid], references: [uid], onDelete: Cascade)
+
+  updated DateTime @updatedAt
 }
 
 model Session {
-  id      BigInt @id @default(autoincrement()) @db.UnsignedBigInt
-  uid     BigInt @db.UnsignedBigInt
-  hash    Bytes  @db.Binary(32)
-  salt    Bytes  @db.Binary(16)
-  created BigInt @db.UnsignedBigInt
-  bearer  User   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "session_of_user")
+  sid  Int   @id
+  hash Bytes
+  salt Bytes
 
-  @@index([uid], map: "session_of_user_idx")
-  @@map("sessions")
-}
+  uid  Int
+  user User @relation(fields: [uid], references: [uid], onDelete: Cascade)
 
-model Preference {
-  uid      BigInt @id @db.UnsignedBigInt
-  override Json
-  updated  BigInt @db.UnsignedBigInt
-  owner    User   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "preferences_of_user")
+  created DateTime @default(now())
 
-  @@map("preferences")
-}
-
-model Team {
-  tid          BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
-  ownerUid     BigInt        @map("owner_uid") @db.UnsignedBigInt
-  name         String        @db.VarChar(30)
-  description  String        @db.VarChar(80)
-  created      BigInt        @db.UnsignedBigInt
-  updated      BigInt        @db.UnsignedBigInt
-  appointments Appointment[]
-  assignments  Assignment[]
-  invitation   Invitation?
-  memberships  Membership[]
-  owner        User          @relation(fields: [ownerUid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "user_own_team")
-
-  @@index([ownerUid], map: "user_own_team_idx")
-  @@map("teams")
-}
-
-model Invitation {
-  tid     BigInt @id @db.UnsignedBigInt
-  code    Bytes  @unique(map: "invite_code_bytes_UNIQUE") @db.Binary(4)
-  created BigInt @db.UnsignedBigInt
-  team    Team   @relation(fields: [tid], references: [tid], onDelete: Cascade, onUpdate: Restrict, map: "code_for_team")
-
-  @@map("invitations")
-}
-
-model Membership {
-  tid     BigInt @db.UnsignedBigInt
-  uid     BigInt @db.UnsignedBigInt
-  created BigInt @db.UnsignedBigInt
-  team    Team   @relation(fields: [tid], references: [tid], onDelete: Cascade, onUpdate: Restrict, map: "membership_of_team")
-  user    User   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "membership_of_user")
-
-  @@id([tid, uid])
-  @@index([uid], map: "membership_of_user_idx")
-  @@map("memberships")
-}
-
-model Appointment {
-  tid     BigInt @db.UnsignedBigInt
-  uid     BigInt @db.UnsignedBigInt
-  created BigInt @db.UnsignedBigInt
-  team    Team   @relation(fields: [tid], references: [tid], onDelete: Cascade, onUpdate: Restrict, map: "appointment_of_team")
-  user    User   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "appointment_of_user")
-
-  @@id([tid, uid])
-  @@index([uid], map: "appointment_of_user_idx")
-  @@map("appointments")
-}
-
-model Assignment {
-  aid         BigInt                 @id @default(autoincrement()) @db.UnsignedBigInt
-  tid         BigInt                 @db.UnsignedBigInt
-  details     String                 @db.Text
-  deadline    BigInt                 @db.UnsignedBigInt
-  created     BigInt                 @db.UnsignedBigInt
-  updated     BigInt                 @db.UnsignedBigInt
-  attachments AssignmentAttachment[]
-  assigner    Team                   @relation(fields: [tid], references: [tid], onDelete: Cascade, onUpdate: Restrict, map: "assignment_of_team")
-  submissions Submission[]
-
-  @@index([tid], map: "assignment_of_team_idx")
-  @@map("assignments")
-}
-
-model AssignmentAttachment {
-  aid        BigInt     @db.UnsignedBigInt
-  name       String     @db.VarChar(255)
-  blob       Bytes      @db.MediumBlob
-  created    BigInt     @db.UnsignedBigInt
-  assignment Assignment @relation(fields: [aid], references: [aid], onDelete: Cascade, onUpdate: Restrict, map: "attachment_of_assignment")
-
-  @@id([aid, name])
-  @@map("assignment_attachments")
-}
-
-model Submission {
-  sid         BigInt                 @id @default(autoincrement()) @db.UnsignedBigInt
-  aid         BigInt                 @db.UnsignedBigInt
-  uid         BigInt                 @db.UnsignedBigInt
-  status      SubmissionStatus       @default(assigned)
-  grade       SubmissionGrade?
-  comments    String?                @db.Text
-  created     BigInt                 @db.UnsignedBigInt
-  updated     BigInt                 @db.UnsignedBigInt
-  attachments SubmissionAttachment[]
-  assignment  Assignment             @relation(fields: [aid], references: [aid], onDelete: Cascade, onUpdate: Restrict, map: "submission_of_assignment")
-  assignee    User                   @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Restrict, map: "submission_of_user")
-
-  @@index([aid], map: "submission_of_assignment_idx")
-  @@index([uid], map: "submission_of_user_idx")
-  @@map("submissions")
-}
-
-model SubmissionAttachment {
-  sid        BigInt     @db.UnsignedBigInt
-  name       String     @db.VarChar(255)
-  blob       Bytes      @db.MediumBlob
-  created    BigInt     @db.UnsignedBigInt
-  submission Submission @relation(fields: [sid], references: [sid], onDelete: Cascade, onUpdate: Restrict, map: "attachment_of_submission")
-
-  @@id([sid, name])
-  @@index([sid, name], map: "attachment_submission_filename")
-  @@map("submission_attachments")
-}
-
-enum SubmissionStatus {
-  assigned
-  submitted
-  returned
-}
-
-enum SubmissionGrade {
-  A
-  B
-  C
-  D
-  F
+  @@index([uid])
 }
