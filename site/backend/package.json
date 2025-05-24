@@ -5,7 +5,7 @@
 	"scripts": {
 		"watch": "nodemon",
 		"build": "etsc",
-		"start": "etsc && node dist/entry.cjs",
+		"start": "etsc && node dist/app.cjs",
 		"kill": "npx kill-port 5450",
 		"pkg": "etsc && npx cpr src/prisma/dev.db bin/app.db --overwrite && npx pkg . -t node18-win-x64 -o bin/app -C Brotli"
 	},
@@ -47,7 +47,7 @@
 	"prisma": {
 		"schema": "src/prisma/schema.prisma"
 	},
-	"bin": "dist/entry.cjs",
+	"bin": "dist/app.cjs",
 	"pkg": {
 		"assets": "public/**/*"
 	}
