@@ -193,15 +193,17 @@ for inspection.
 
 Modular approach is taken for clarity and separation of concern. The report/ directory
 contains the \LaTeX{} source of this report; The database/ directory contains
-the SQL dump file that is used to instantiate the backing database; The site/
-directory contains the actual web application, further separated into backend/
-of application logic and frontend/ of presentation logic.
+the SQL dump file that is used to instantiate the backing database (with slight differences
+actually, details later); The site/ directory contains the actual web application,
+further separated into backend/ of application logic and frontend/ of
+presentation logic.
 
 \subsection{Review}
 \label{overview.src.review}
 
-Invigilators may not have dependencies of Assignee installed, so prebuilt archives
-are provided in \href{https://github.com/CarbonicSoda/assignee/releases}{Releases}.
-To run the app, unzip the archive to somewhere convenient and execute the binary
-(app.exe for Windows, for other platforms pick corresponding archives). Database
-records would be preserved in the app.db file.
+Invigilators may not have dependencies of Assignee installed, so prebuilt
+archives are provided in
+\href{https://github.com/CarbonicSoda/assignee/releases}{Releases}. To run the app,
+unzip the archive to somewhere convenient and execute the binary (app.exe for Windows,
+for other platforms pick corresponding archives). Database records would be
+preserved in the app.db file.
