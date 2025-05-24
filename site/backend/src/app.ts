@@ -13,5 +13,7 @@ const app = express()
 // .use("/api", router);
 
 app.listen(5450, () => {
-	console.log(`Express started on http://localhost:5450; Ctrl+C to terminate.`);
+	console.log(
+		`Assignee started on http://localhost:5450; Ctrl+C to terminate.`,
+	);
 });
