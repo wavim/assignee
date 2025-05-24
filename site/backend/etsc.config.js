@@ -2,14 +2,15 @@ import { cleanPlugin } from "esbuild-clean-plugin";
 
 export default {
 	esbuild: {
-		bundle: true,
 		format: "cjs",
-		metafile: true,
-		minify: true,
+		bundle: true,
+		packages: "external",
 		outExtension: {
 			".js": ".cjs",
 		},
-		packages: "external",
+		minify: true,
+		metafile: true,
+
 		plugins: [cleanPlugin()],
 	},
 };

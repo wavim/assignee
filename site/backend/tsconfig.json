@@ -1,18 +1,25 @@
 {
 	"compilerOptions": {
+		"strict": true,
+
 		"target": "ESNext",
 		"module": "NodeNext",
-		"moduleResolution": "nodenext",
+
 		"baseUrl": "src",
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"sourceMap": true,
-		"resolveJsonModule": true,
-		"noEmit": true,
 		"isolatedModules": true,
-		"strict": true,
+		"esModuleInterop": true,
+		"moduleResolution": "nodenext",
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+
+		"noEmit": true,
+		"sourceMap": true,
+
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
+
 	"include": ["src/**/*"],
 	"exclude": ["src/generated/**/*"]
 }
