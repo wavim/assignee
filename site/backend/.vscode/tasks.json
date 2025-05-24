@@ -3,14 +3,6 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "build",
-			"group": "build",
-			"problemMatcher": [],
-			"label": "npm: build",
-			"detail": "build"
-		},
-		{
-			"type": "npm",
 			"script": "start",
 			"problemMatcher": [],
 			"label": "npm: start",
@@ -30,13 +22,6 @@
 			"problemMatcher": [],
 			"label": "npm: kill",
 			"detail": "kill"
-		},
-		{
-			"type": "npm",
-			"script": "pkg",
-			"problemMatcher": [],
-			"label": "npm: pkg",
-			"detail": "pkg"
 		}
 	]
 }

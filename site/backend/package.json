@@ -7,6 +7,7 @@
 		"build": "etsc",
 		"start": "etsc && node dist/app.cjs",
 		"kill": "kill-port 5450",
+		"dump": "prisma db push --force-reset && sqlite3 src/prisma/dev.db .schema > ../../database/db.sql",
 		"pkg": "prisma db push --force-reset && cpr src/prisma/dev.db bin/app.db --overwrite && etsc && pkg . -t node18-win-x64 -o bin/app -C Brotli"
 	},
 	"dependencies": {
