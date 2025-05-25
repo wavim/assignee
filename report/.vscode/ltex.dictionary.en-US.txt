@@ -10,3 +10,5 @@ bigint
 middlewares
 datetime
 Bigint
+KangarooTwelve
+Keccak

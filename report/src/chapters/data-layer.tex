@@ -98,10 +98,10 @@ User - Preference (One-To-One) \textdagger{}
 \label{data-layer.design.user.tables}
 
 \paragraph{User}
-\S{}
+\S{} \label{data-layer.design.user.tables.user}
 
 \subparagraph{uid}
-(Integer) (Auto-Increment) (Primary Key)
+(Integer) (Auto-Increment) (Primary Key) \label{data-layer.design.user.tables.user.uid}
 
 Although User.email is a candidate key for the table, User.uid is chosen as the primary
 key for several reasons, considering that the table will be referenced a lot:
@@ -127,7 +127,7 @@ application logic due to wrapped negative numbers, ensuring reliability. This is
 not a concern in SQLite.
 
 \subparagraph{email}
-(Text) (Unique)
+(Text) (Unique) \label{data-layer.design.user.tables.user.email}
 
 The email address used for sign-up/in is necessarily unique.
 
@@ -137,7 +137,7 @@ ASCII, this is to align with the standards outlined in RFC 5322: Internet
 Message Format. This is not a concern in SQLite.
 
 \subparagraph{name}
-(Text)
+(Text) \label{data-layer.design.user.tables.user.name}
 
 The arbitrary display name users may choose.
 
@@ -146,8 +146,8 @@ display name will not be too long for display and not too short for
 personalization, It is capped to 30 characters in UTF-8 encoding, to encompass
 usernames in different languages or even emojis. This is not a concern in SQLite.
 
-\subparagraph{created \& updated}
-(DateTime)
+\subparagraph{created/updated}
+(DateTime) \label{data-layer.design.user.tables.user.meta}
 
 Metadata fields that record the creation/update time of entries for internal validation.
 
@@ -162,3 +162,56 @@ This is not a concern in SQLite.
 The fields are also present in other tables (either one may be omitted depending
 on the context). Unless they serve a special purpose elsewhere, they will not be
 mentioned again.
+
+\paragraph{Password}
+\S{} \label{data-layer.design.user.tables.pswd}
+
+\subparagraph{uid}
+(Integer) (Primary Key) (Foreign Key - \hyperref[data-layer.design.user.tables.user.uid]{User.uid})
+\label{data-layer.design.user.tables.pswd.uid}
+
+Foreign key referencing password owner, at the same time serves as the primary
+key, since it is a one-to-one map.
+
+\subparagraph{hash/salt}
+(Blob) \label{data-layer.design.user.tables.pswd.crypt}
+
+Blob refers to Binary Large Object, blobs in SQLite is roughly equivalent to
+bytes in other DBMS.
+
+Storing authentication related data in raw form is not a good idea. Instead, the
+raw data is hashed using cryptographically secure hashing algorithms and stored
+in digest form, which is impossible to crack in polynomial time. To verify input
+data, hash the input with the same algorithm and compare against the stored hash.
+
+However, relying on the hash alone is vulnerable to rainbow table attacks, thus a
+salt is needed. A salt is a random binary generated with a cryptographically
+secure pseudo-random number generator seeded with enough entropy, which would be
+concatenated to the key (in byte buffer form) before hashing. The salt will be
+stored directly in the database along with the hash, as having the salt will not
+provide any help in attempt to crack the key.
+
+Given a key, a salt would be generated, which is appended to the key in byte buffer
+form. Then the byte buffer would be hashed, and the digest would be stored in the
+database together with the salt. On attempt to verify an input against the key, the
+whole procedure would be repeated but with the salt from the database. It would
+suffice to check if the digest matches the one stored.
+
+Assignee uses a variable digest length hashing function K12 (KangarooTwelve)
+from the Keccak Team, instead of traditional SHA-256 which is weaker than K12 in
+cryptanalysis. Assignee uses 128-bit salts and 256-bit digests for the procedure.
+
+It is actually possible for hashes to collide for different input. But in our case
+the chance is vanishingly low: you will need a minimum of $1.5\cdot{}10^{31}$
+items before having a less than $10^{-15}$ chance of collision, even without salts.
+This is to be ignored in practice.
+
+Stored as blob is to prevent bytes from being trimmed silently by other data
+types, and it is simply more convenient and conventional to do so.
+
+\textdagger{} In other DBMS, hashes and salts can be stored in fixed length binaries,
+since they will always be of the same length i.e. 32-bytes and 16-bytes. This is
+not possible in SQLite.
+
+Hashes and salts are used in all authentication related tables in the database, and
+shall not be detailed again.
