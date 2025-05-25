@@ -10,7 +10,8 @@ datasource db {
 }
 
 model User {
-  uid   Int    @id
+  uid Int @id
+
   email String @unique
   name  String
 
@@ -22,21 +23,23 @@ model User {
 }
 
 model Password {
+  uid Int @id
+
   hash Bytes
   salt Bytes
 
-  uid  Int  @id
   user User @relation(fields: [uid], references: [uid], onDelete: Cascade)
 
   updated DateTime @updatedAt
 }
 
 model Session {
-  sid  Int   @id
+  sid Int @id
+  uid Int
+
   hash Bytes
   salt Bytes
 
-  uid  Int
   user User @relation(fields: [uid], references: [uid], onDelete: Cascade)
 
   created DateTime @default(now())

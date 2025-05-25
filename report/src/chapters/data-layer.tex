@@ -1,0 +1,164 @@
+\chapter{Data Layer}
+\label{data-layer}
+
+\section{Introduction}
+\label{data-layer.intro}
+
+Backing the application is the data layer, featuring a database to preserve user
+data efficiently.
+
+In this chapter, we would first go through the design of the relational database
+and provide rationales behind those design choices. Later, we would cover the actual
+implementation of the database in more detail.
+
+\section{Design}
+\label{data-layer.design}
+
+In this section, we discuss the design of tables, fields, and their data types.
+We also explore the relational mappings of tables and fields from multiple
+perspectives. Besides, we will also delve into the adoption of normal forms.
+
+The design of the database follows the blueprint outlined in
+\hyperref[overview.capab]{Capabilities}, centering the core systems and their related
+roles.
+
+If not otherwise specified, all table fields are Not Null. This prevents database
+inconsistency from having Null entries, reduces the risks of anomalies, and simplifies
+backend application logic dealing with the database.
+
+It should be noted prior that SQLite is used to implement the database. Since
+there are no data type modifiers e.g. int(n), unsigned or char(n) in SQLite (all
+which are stored variably internally), we only describe the data type of fields with
+general classes. However, constraints e.g. email length limits will still be
+mentioned for reference of application logic or other DMBS implementations in
+paragraphs starting with daggers.
+
+\subsection{User System}
+\label{data-layer.design.user}
+
+The user system serves as the backbone of the entire application, responsible
+for storing user account-related data. It encompasses user identifiers,
+authentication data and user preferences \textdagger{}.
+
+The system consists of the following tables:
+
+\begin{itemize}
+	\item User: User account identifiers
+
+	\item Password: User sign-in password
+
+	\item Session: User active sessions
+
+	\item Authcode \textdagger{}: User 2FA codes
+
+	\item Preference \textdagger{}: User preferences
+\end{itemize}
+
+As seen in \autoref{fig:data-layer.user-system}.
+
+\begin{figure}[h]
+	\centering
+	\includesvg[width=0.75\linewidth]{assets/data-layer/user-system}
+	\caption{User System ER Diagram}
+	\label{fig:data-layer.user-system}
+\end{figure}
+
+\subsubsection{Relations}
+\label{data-layer.design.user.rels}
+
+User - Password (One-To-One)
+\begin{itemize}
+	\item A user owns a single password (Mandatory)
+
+	\item A password has a single owner (Mandatory)
+\end{itemize}
+
+User - Session (One-To-Many)
+\begin{itemize}
+	\item A user can have many sessions (Optional)
+
+	\item A session is for a single user (Mandatory)
+\end{itemize}
+
+User - Authcode (One-To-One) \textdagger{}
+\begin{itemize}
+	\item A user has at most one valid code (Optional)
+
+	\item An authcode is for a single user (Mandatory)
+\end{itemize}
+
+User - Preference (One-To-One) \textdagger{}
+\begin{itemize}
+	\item A user owns a set of preferences (Mandatory)
+
+	\item A preference is for a single user (Mandatory)
+\end{itemize}
+
+\subsubsection{Tables}
+\label{data-layer.design.user.tables}
+
+\paragraph{User}
+\S{}
+
+\subparagraph{uid}
+(Integer) (Auto-Increment) (Primary Key)
+
+Although User.email is a candidate key for the table, User.uid is chosen as the primary
+key for several reasons, considering that the table will be referenced a lot:
+
+\begin{itemize}
+	\item Space Efficient: Tables reference users with integer instead of text
+
+	\item Index Performant: Indexing is faster in magnitudes with integers
+
+	\item Consistent: Auto-increment primary keys are consistent throughout
+
+	\item Flexible: Flawless even if one day email login is no longer used
+\end{itemize}
+
+This applies to all auto-increment primary keys in the database and shall not be
+mentioned again.
+
+\textdagger{} In other DBMS, integers can be defined with fixed bit-width. In
+practical applications, 32-bit integers would be more than suffice, holding up
+to $2^{32}=4 ,294,967,296$ users, which is over half of the world population.
+Setting it to unsigned would enforce consistency and prevent failures in
+application logic due to wrapped negative numbers, ensuring reliability. This is
+not a concern in SQLite.
+
+\subparagraph{email}
+(Text) (Unique)
+
+The email address used for sign-up/in is necessarily unique.
+
+\textdagger{} In other DBMS, text can be varchar with max length. To accommodate
+the flexible length of email addresses, it should be capped to 254 characters in
+ASCII, this is to align with the standards outlined in RFC 5322: Internet
+Message Format. This is not a concern in SQLite.
+
+\subparagraph{name}
+(Text)
+
+The arbitrary display name users may choose.
+
+\textdagger{} In other DBMS, text can be varchar with max length. To ensures the
+display name will not be too long for display and not too short for
+personalization, It is capped to 30 characters in UTF-8 encoding, to encompass
+usernames in different languages or even emojis. This is not a concern in SQLite.
+
+\subparagraph{created \& updated}
+(DateTime)
+
+Metadata fields that record the creation/update time of entries for internal validation.
+
+\textdagger{} In other DBMS, 64-bit integers can be used instead of datetime if the
+available datetime type or timestamp type is prone to the Y2K38 Problem, either
+due to the DBMS being outdated or runs on a 32-bit OS. Bigint could also be preferred
+if cross-DBMS compatibility is required. However, dealing with UNIX timestamps in
+form of bigint adds complexities to application logic, requiring middlewares to
+handle datetime conversion. The same applies for other datetime fields mentioned.
+This is not a concern in SQLite.
+
+The fields are also present in other tables (either one may be omitted depending
+on the context). Unless they serve a special purpose elsewhere, they will not be
+mentioned again.
