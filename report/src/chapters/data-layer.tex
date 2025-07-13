@@ -176,7 +176,7 @@ key, since it is a one-to-one map.
 \subparagraph{hash/salt}
 (Blob) \label{data-layer.design.user.tables.pswd.crypt}
 
-Blob refers to Binary Large Object, blobs in SQLite is roughly equivalent to
+Blob refers to Binary Large Object, a blob in SQLite is roughly equivalent to
 bytes in other DBMS.
 
 Storing authentication related data in raw form is not a good idea. Instead, the
@@ -198,8 +198,9 @@ whole procedure would be repeated but with the salt from the database. It would
 suffice to check if the digest matches the one stored.
 
 Assignee uses a variable digest length hashing function K12 (KangarooTwelve)
-from the Keccak Team, instead of traditional SHA-256 which is weaker than K12 in
-cryptanalysis. Assignee uses 128-bit salts and 256-bit digests for the procedure.
+based on Keccak-p, instead of the traditional SHA-256 hash which is weaker than K12
+in cryptanalysis. Assignee uses 128-bit salts and 256-bit digests for the
+procedure.
 
 It is actually possible for hashes to collide for different input. But in our case
 the chance is vanishingly low: you will need a minimum of $1.5\cdot{}10^{31}$
@@ -214,4 +215,126 @@ since they will always be of the same length i.e. 32-bytes and 16-bytes. This is
 not possible in SQLite.
 
 Hashes and salts are used in all authentication related tables in the database, and
-shall not be detailed again.
+shall not be detailed again. For this specific case, the key that is hashed is simply
+the user password.
+
+\paragraph{Session}
+\S{} \label{data-layer.design.user.tables.sess}
+
+\subparagraph{sid}
+(Integer) (Auto-Increment) (Primary Key) \label{data-layer.design.user.tables.sess.sid}
+
+Since the user-session relation is one-to-many, the foreign key Session.uid cannot
+be used as the primary key. The benefits of such a primary key had already been
+mentioned.
+
+\subparagraph{uid}
+(Integer) (Foreign Key -
+\hyperref[data-layer.design.user.tables.user.uid]{User.uid}) \label{data-layer.design.user.tables.sess.uid}
+
+The referential key to User.uid, representing the session bearer.
+
+\subparagraph{hash/salt}
+(Blob) \label{data-layer.design.user.tables.sess.crypt}
+
+This part is about the design of the authentication process specific to a session.
+For the reasons of using a hash/salt pair, refer to \hyperref[data-layer.design.user.tables.pswd.crypt]{Crypt}.
+
+When a user is logged-in, a bearer token consisting of a session identifier and
+a token string. The session identifier is unique globally, and the token string
+is a random hex string of specific length.
+
+The token would then be serialized and stored as a browser cookie with an
+expiration date. On the server side, a hash/salt pair would be generated with
+the key being the concatenation of the bearer token string and the browser
+metadata e.g. browser type and device OS, to ensure invalidation if token is
+migrated to other locations.
+
+Upon log-in attempt, the token cookie would be checked. If it is still active, it
+would be retrieved and hashed to compare with the stored version. If the hashes
+match, the user would be logged-in and handed a new bearer token, and the old
+token would be invalidated. Also, the expiry of the session would be checked
+prior with respect to the session creation date, so it would not be possible to use
+an expired token.
+
+The session token would also be validated against upon certain CRUD API requests
+to prevent unauthorized access.
+
+\paragraph{Authcode \textdagger{}}
+\S{} \label{data-layer.design.user.tables.code}
+
+\subparagraph{uid}
+(Integer) (Foreign Key -
+\hyperref[data-layer.design.user.tables.user.uid]{User.uid}) \label{data-layer.design.user.tables.code.uid}
+
+The referential key to User.uid, representing the authcode requestor.
+
+\subparagraph{hash/salt}
+(Blob) \label{data-layer.design.user.tables.code.crypt}
+
+Refer to \hyperref[data-layer.design.user.tables.pswd.crypt]{Crypt}, the process
+mentioned is identical to the one used except that the key is the authcode
+instead of the password.
+
+\textdagger{} Using password solely harms security, but email 2FA is still
+abandoned so that reviewers could run the app without access to my personal
+email API keys, otherwise posing privacy and security threats on leakage. The
+implementation of the process would still be mentioned in the application layer
+for reference of actual deployments.
+
+\paragraph{Preferences \textdagger{}}
+\S{} \label{data-layer.design.user.tables.pref}
+
+\subparagraph{uid}
+(Integer) (Foreign Key - \hyperref[data-layer.design.user.tables.user.uid]{User.uid})
+\label{data-layer.design.user.tables.pref.uid}
+
+The referential key to User.uid, representing the preference owner.
+
+\subparagraph{override}
+(JSON) \label{data-layer.design.user.tables.pref.override}
+
+The method used to store custom settings is through overrides. Given the global default
+settings e.g. ( a: 0, b: true, c: ( x: "foo" ) ), the users settings are stored as
+overrides e.g. ( b: false, c: ( x: "bar" ) ). Merge the overrides into the defaults
+to get the complete setting i.e. ( a: 0, b: false, c: ( x: "bar" ) ).
+
+This use of JSON has several benefits:
+
+\begin{itemize}
+	\item Space Efficient: Only store settings user altered
+
+	\item Flexible: Default settings could be updated freely
+
+	\item Organization: Settings sectioning is always implied
+\end{itemize}
+
+Using JSON values is sort of against 1NF (first normal form) that it stores multiple
+attributes in the same field, but as scholars had argued, values in 1NF are allowed
+to be arbitrarily complex objects. A table in 1NF would need as many columns as
+there are settings, and nesting settings for sectioning would not be possible.
+This arguable compromise is preferred for its great efficiency and flexibility.
+
+\textdagger{} In other DBMS, JSON values might not be supported. But since JSON could
+be easily serialized into string
+
+\textdagger{} This table is not implemented in initial versions, since Assignee
+is highly opinionated in style, and we cannot see the necessity of implementing a
+settings feature.
+
+\subsubsection{Indexes}
+\label{data-layer.design.user.indexes}
+
+Some tables in Assignee owe one-to-one relations and would not need additional
+indexing. However, some tables owe many-to-one relations, thus their foreign keys
+are indexed to ease relational item gathering.
+
+Unlike obsolete binary search based index taught in textbooks, modern DBMS
+typically uses B-Trees for indexing, which is a self-balancing data structure.
+Unlike BST indexes with O(n) time complexities, which also require index
+reconstruction on insertion or deletion; B-Trees allow O(logn) operations, and index
+reconstruction is not necessary. This implies that in modern DBMS indexes are
+very cheap and the overhead of adding indexes is staggeringly small.
+
+The same applies for other systems e.g. indexing foreign keys, and details on
+indexes shall only be given in later sections if it is used for other purposes.

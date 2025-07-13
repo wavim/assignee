@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       prettier:
-        specifier: ^3.5.3
-        version: 3.5.3
+        specifier: ^3.6.2
+        version: 3.6.2
       prettier-plugin-latex:
         specifier: ^2.0.1
         version: 2.0.1
@@ -20,11 +20,11 @@ packages:
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
 
-  '@unified-latex/unified-latex-builder@1.8.0':
-    resolution: {integrity: sha512-1s5MIan/qaYeqJI1Tk3bfUwdkk0jIrQXRJt0dF0j3JWT9RG60WbiXp+593eOJgFYJtn+h3FdM0bvalfa+ZzTXg==}
+  '@unified-latex/unified-latex-builder@1.8.3':
+    resolution: {integrity: sha512-DxZZHcSBUYaJD4LIDsgHqHG3sxY1Ycb+C+Ig/Xc7yjxV38CF6Hq+AfpgfT4dS5fs/sj0FK2/tNGwKEqRTgXy1w==}
 
-  '@unified-latex/unified-latex-ctan@1.8.2':
-    resolution: {integrity: sha512-VuOEU3Kzed/b+lm+nypYtV1IiqIuFWpwx92WNtBW1w3S+Ba/Ffolx+/LoAd8uuCcyCmygkQi3eZJNHxarzyVIg==}
+  '@unified-latex/unified-latex-ctan@1.8.3':
+    resolution: {integrity: sha512-bqApSRcGFNMPdAV939E9/oxhGp0AJZ5EfOp1LfdH0qhn0OXMqHYD30GJvvgOh+mfb8MdCcDNKU4QWUHBsvovwQ==}
 
   '@unified-latex/unified-latex-prettier@2.4.2':
     resolution: {integrity: sha512-gMvlKGiGi9zOWVHXPhzeURhPYwPIJ7MBht42et/sVb4Z2wTjhcn+bU7kookT067ywOptVZNBgJw+iAgSORAd+w==}
@@ -36,26 +36,26 @@ packages:
   '@unified-latex/unified-latex-util-align@1.8.1':
     resolution: {integrity: sha512-csJxLrvziRc5ZkhcRsYI7gSQBGC4fXucPtwNkTscbSIy7PfYF7BfWBPc61sb9jXQg4T4R6MLdG/Tz6Pgb6z1bw==}
 
-  '@unified-latex/unified-latex-util-argspec@1.8.2':
-    resolution: {integrity: sha512-ts+6Ha9JhcMCt+rbajjiG0srxCz2jHcNrIe3zma2HQzmKNOGxpoTdA7+E4sG2wJgQK1+eQ9MrjGeLBCNXH7fGg==}
+  '@unified-latex/unified-latex-util-argspec@1.8.3':
+    resolution: {integrity: sha512-GPJIycwLIVpt3g9LIdv+ut5F2N0xscpMlDsrCnjRutgD1GzpbLeROxmRNfZ6EaOlL7POLCyL8TY6S79U2tuTBA==}
 
-  '@unified-latex/unified-latex-util-arguments@1.8.2':
-    resolution: {integrity: sha512-81OqsLoVUhVFgp64z7Jrtndgl5fJGvZKV1eipNWH4IH2hFEM8RZ0fmLxyOn7S/NjYuqWeOJ3WhjOvRHtmLLf2Q==}
+  '@unified-latex/unified-latex-util-arguments@1.8.3':
+    resolution: {integrity: sha512-CNazx2/PdimzQW7zo9Z1M+/4GBTdpE2hUJdxbXkn9G/dGF4QE63++GWbFiPK/N7+CzVgnewi0TOq6ARL+frN3Q==}
 
-  '@unified-latex/unified-latex-util-catcode@1.8.2':
-    resolution: {integrity: sha512-zChzwfcXufJ5tMkBNC06GdMFj3ldWnlL1eLszFNtcWPvB6KyXHjOPRSZ9aILjbZEd2ogBc8lOKc5ug+iBFBVxA==}
+  '@unified-latex/unified-latex-util-catcode@1.8.3':
+    resolution: {integrity: sha512-EHdsqGPGh3pbuQTw8ejcGhDbIKp3ghibT7MCGkDhUK5cUqm8tTPknTg5/cGm3G+te5AsxT8fjlYbFQ/nQGi3UQ==}
 
-  '@unified-latex/unified-latex-util-comments@1.8.2':
-    resolution: {integrity: sha512-OGeT3BYzLT6hRgyRrPqXTJBpD/JaJl5yIcpQfm5wpcDFBVfcDOCZ8/Xc7UwosOvCjM5EHVTJIxmDQ1epZg3IzA==}
+  '@unified-latex/unified-latex-util-comments@1.8.3':
+    resolution: {integrity: sha512-eC1RXiFia8Fw6RxXKAOI0sVQqqwJhyTO3JhvRSTWAjrvwLoMi9b/96Ny7sBO68haRo4HarwyxmBaIWL3SYVjyQ==}
 
-  '@unified-latex/unified-latex-util-environments@1.8.2':
-    resolution: {integrity: sha512-ZaL28+sUtVOSsWv2LfcGXmOJoQJ0Vu4se/7R83awutr2cS3YIZsyCIRFfhz1jYyedWfGLtq+a/2MWJfcIcd7Jg==}
+  '@unified-latex/unified-latex-util-environments@1.8.3':
+    resolution: {integrity: sha512-5cw+lCxLwv/+VRz2WQpLEG7Emok5SOVgT42bBTpJkeHyrxewiTqnqTbTmZMYYVep1D0lE/1RsO/xd+7+mrVToA==}
 
   '@unified-latex/unified-latex-util-match@1.8.0':
     resolution: {integrity: sha512-fjuLI1KVhWTHkfWn0kR8/RhM2oD2hxWhzgskUMLJ/IZMye9ESvVo8ItG4y+BtpwGFWpTmCtpMNXHjknIQxza9Q==}
 
-  '@unified-latex/unified-latex-util-parse@1.8.2':
-    resolution: {integrity: sha512-PyHQTZWS7/BCVa8ojBEmVl5a3iXs5ZSOqhp2R/bbroe7+OEmQbqULPq4GigHA6ClEbPmP8uxmgHZDFGH2cfR7A==}
+  '@unified-latex/unified-latex-util-parse@1.8.3':
+    resolution: {integrity: sha512-H+VBB4/hxR1W7sTMMftiQCV9TRGGKVnPpisKBCfONN3KkyGuqGgmFKPna98tmoDU6A75gQCz6tu8f+1eW+RoYA==}
 
   '@unified-latex/unified-latex-util-pegjs@1.8.1':
     resolution: {integrity: sha512-1N6WknnzKGACFCmgaEZ2j89j5C2dKhmAOCfy6moD+AMm6nUb69Xp9pJ1jDfqz+Uz9+zRo5I6ksr6q5GgmAJvtw==}
@@ -66,11 +66,11 @@ packages:
   '@unified-latex/unified-latex-util-print-raw@1.8.0':
     resolution: {integrity: sha512-lMuLqnHXCDNqrjslf6hBAA2McEI+oaaxvjA9zfeAeWZyZh+DUJjkmwiuxYejwHHKbQvqzregNP4wtb9OvaC21g==}
 
-  '@unified-latex/unified-latex-util-render-info@1.8.2':
-    resolution: {integrity: sha512-Hjqt8Kx2/pYWwd/S3H397zyenLFwoZsmo7BL/Q7mJfj5wNs35ZMdoHQa0O8tLeZjezkWB2eejODVBsu5xDDCjw==}
+  '@unified-latex/unified-latex-util-render-info@1.8.3':
+    resolution: {integrity: sha512-L1orYqc9U5DGObSqjYIAclAybMWYpL41eR5E2NkJjZAAypSPkLeRT7yvaGz879HJNS2C1C9UoIsPlHDPok0Gcg==}
 
-  '@unified-latex/unified-latex-util-replace@1.8.2':
-    resolution: {integrity: sha512-89GNj4p5wJmSUGAmdFlGnb/SaV4WykroK85bYbY3Fwppp7kO6sVYSRGfrTEIFob1S4HGL6xrYYUnCueI0+ZzhQ==}
+  '@unified-latex/unified-latex-util-replace@1.8.3':
+    resolution: {integrity: sha512-HdrWVF+pwfsXkAiIGK5q7y2klBt5QK7r5sxbSZD+X3wXzpJFuFCYQQYe2Tmi5lOcssqLK94+1OUqRTrmA/rFbg==}
 
   '@unified-latex/unified-latex-util-scan@1.8.0':
     resolution: {integrity: sha512-4WWDTcLOhlkZsGmGl/IZA0Jg2rTitVwGf6ktxs57AyuCEdzHA5ZeNwzSewW8wpHQdLfnPX+LNEnaukwEdWfF1g==}
@@ -78,11 +78,11 @@ packages:
   '@unified-latex/unified-latex-util-split@1.8.0':
     resolution: {integrity: sha512-gRlRge72wcvLRs6bEoVbh0fDACbkioEPDJOr7XaCuQqjNNu1VTXlcvImZQVXCdMG6CJ4lqiaJRwnUupK4rsmsA==}
 
-  '@unified-latex/unified-latex-util-trim@1.8.2':
-    resolution: {integrity: sha512-zshEykIuLvngWNl7RnMP86KE3yieVLK2u+byPioh6JVQCwkHoz/UiPzl+fuPw/u+93LPNSJBRa16a03sviqyBA==}
+  '@unified-latex/unified-latex-util-trim@1.8.3':
+    resolution: {integrity: sha512-Vb5YcVyebWuwU0koBTsVOvxKFWKfqP1T7nJdpzT+IUrfX7zcMiA4HlGdL/3imbEfuLBTHJb3IoLsymU0XfWCZg==}
 
-  '@unified-latex/unified-latex-util-visit@1.8.2':
-    resolution: {integrity: sha512-Xq8516ZTKCfjB/txSIbUWtdIR2NdWO8/LlhjMLljFCEO4IE1KfhCCgKgwxNa7uuCkGG0e0BwVEHQIjH4TQZARQ==}
+  '@unified-latex/unified-latex-util-visit@1.8.3':
+    resolution: {integrity: sha512-y1uxwXLbzXliAhTrxaDx4+LgIWaeNWMgS7q4DC/i/5RXXRQOImdCqQsTWwvQk2x5/8zQ3eweiTsd3q1gbBCqAA==}
 
   bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -119,8 +119,8 @@ packages:
     resolution: {integrity: sha512-xIKGN0uWU+JwGHI92ixohngGLpy2nGQhYnmTtVue/jbw+K0fFPddQ3pMXx3fjtmmUhlbZisYXehJtcJ9Ford0g==}
     engines: {node: '>= 18.0'}
 
-  prettier@3.5.3:
-    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -149,40 +149,40 @@ snapshots:
 
   '@types/unist@2.0.11': {}
 
-  '@unified-latex/unified-latex-builder@1.8.0':
+  '@unified-latex/unified-latex-builder@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
 
-  '@unified-latex/unified-latex-ctan@1.8.2':
+  '@unified-latex/unified-latex-ctan@1.8.3':
     dependencies:
-      '@unified-latex/unified-latex-builder': 1.8.0
+      '@unified-latex/unified-latex-builder': 1.8.3
       '@unified-latex/unified-latex-types': 1.8.0
-      '@unified-latex/unified-latex-util-argspec': 1.8.2
-      '@unified-latex/unified-latex-util-arguments': 1.8.2
-      '@unified-latex/unified-latex-util-comments': 1.8.2
+      '@unified-latex/unified-latex-util-argspec': 1.8.3
+      '@unified-latex/unified-latex-util-arguments': 1.8.3
+      '@unified-latex/unified-latex-util-comments': 1.8.3
       '@unified-latex/unified-latex-util-match': 1.8.0
       '@unified-latex/unified-latex-util-pegjs': 1.8.1
       '@unified-latex/unified-latex-util-print-raw': 1.8.0
-      '@unified-latex/unified-latex-util-render-info': 1.8.2
-      '@unified-latex/unified-latex-util-replace': 1.8.2
+      '@unified-latex/unified-latex-util-render-info': 1.8.3
+      '@unified-latex/unified-latex-util-replace': 1.8.3
       '@unified-latex/unified-latex-util-scan': 1.8.0
       '@unified-latex/unified-latex-util-split': 1.8.0
-      '@unified-latex/unified-latex-util-trim': 1.8.2
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-trim': 1.8.3
+      '@unified-latex/unified-latex-util-visit': 1.8.3
       color: 4.2.3
 
   '@unified-latex/unified-latex-prettier@2.4.2':
     dependencies:
-      '@unified-latex/unified-latex-ctan': 1.8.2
+      '@unified-latex/unified-latex-ctan': 1.8.3
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-align': 1.8.1
       '@unified-latex/unified-latex-util-match': 1.8.0
-      '@unified-latex/unified-latex-util-parse': 1.8.2
+      '@unified-latex/unified-latex-util-parse': 1.8.3
       '@unified-latex/unified-latex-util-pgfkeys': 1.8.1
       '@unified-latex/unified-latex-util-print-raw': 1.8.0
-      '@unified-latex/unified-latex-util-trim': 1.8.2
-      '@unified-latex/unified-latex-util-visit': 1.8.2
-      prettier: 3.5.3
+      '@unified-latex/unified-latex-util-trim': 1.8.3
+      '@unified-latex/unified-latex-util-visit': 1.8.3
+      prettier: 3.6.2
       unified: 10.1.2
 
   '@unified-latex/unified-latex-types@1.8.0': {}
@@ -193,41 +193,41 @@ snapshots:
       '@unified-latex/unified-latex-util-match': 1.8.0
       '@unified-latex/unified-latex-util-pegjs': 1.8.1
 
-  '@unified-latex/unified-latex-util-argspec@1.8.2':
+  '@unified-latex/unified-latex-util-argspec@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-util-pegjs': 1.8.1
 
-  '@unified-latex/unified-latex-util-arguments@1.8.2':
+  '@unified-latex/unified-latex-util-arguments@1.8.3':
     dependencies:
-      '@unified-latex/unified-latex-builder': 1.8.0
+      '@unified-latex/unified-latex-builder': 1.8.3
       '@unified-latex/unified-latex-types': 1.8.0
-      '@unified-latex/unified-latex-util-argspec': 1.8.2
+      '@unified-latex/unified-latex-util-argspec': 1.8.3
       '@unified-latex/unified-latex-util-match': 1.8.0
-      '@unified-latex/unified-latex-util-render-info': 1.8.2
+      '@unified-latex/unified-latex-util-render-info': 1.8.3
       '@unified-latex/unified-latex-util-scan': 1.8.0
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-visit': 1.8.3
       unified: 10.1.2
 
-  '@unified-latex/unified-latex-util-catcode@1.8.2':
+  '@unified-latex/unified-latex-util-catcode@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-match': 1.8.0
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-visit': 1.8.3
 
-  '@unified-latex/unified-latex-util-comments@1.8.2':
+  '@unified-latex/unified-latex-util-comments@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-match': 1.8.0
-      '@unified-latex/unified-latex-util-replace': 1.8.2
+      '@unified-latex/unified-latex-util-replace': 1.8.3
 
-  '@unified-latex/unified-latex-util-environments@1.8.2':
+  '@unified-latex/unified-latex-util-environments@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
-      '@unified-latex/unified-latex-util-arguments': 1.8.2
+      '@unified-latex/unified-latex-util-arguments': 1.8.3
       '@unified-latex/unified-latex-util-match': 1.8.0
       '@unified-latex/unified-latex-util-print-raw': 1.8.0
-      '@unified-latex/unified-latex-util-render-info': 1.8.2
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-render-info': 1.8.3
+      '@unified-latex/unified-latex-util-visit': 1.8.3
       unified: 10.1.2
 
   '@unified-latex/unified-latex-util-match@1.8.0':
@@ -235,18 +235,18 @@ snapshots:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-print-raw': 1.8.0
 
-  '@unified-latex/unified-latex-util-parse@1.8.2':
+  '@unified-latex/unified-latex-util-parse@1.8.3':
     dependencies:
-      '@unified-latex/unified-latex-ctan': 1.8.2
+      '@unified-latex/unified-latex-ctan': 1.8.3
       '@unified-latex/unified-latex-types': 1.8.0
-      '@unified-latex/unified-latex-util-arguments': 1.8.2
-      '@unified-latex/unified-latex-util-catcode': 1.8.2
-      '@unified-latex/unified-latex-util-environments': 1.8.2
+      '@unified-latex/unified-latex-util-arguments': 1.8.3
+      '@unified-latex/unified-latex-util-catcode': 1.8.3
+      '@unified-latex/unified-latex-util-environments': 1.8.3
       '@unified-latex/unified-latex-util-match': 1.8.0
       '@unified-latex/unified-latex-util-pegjs': 1.8.1
       '@unified-latex/unified-latex-util-print-raw': 1.8.0
-      '@unified-latex/unified-latex-util-trim': 1.8.2
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-trim': 1.8.3
+      '@unified-latex/unified-latex-util-visit': 1.8.3
       unified: 10.1.2
 
   '@unified-latex/unified-latex-util-pegjs@1.8.1':
@@ -265,18 +265,18 @@ snapshots:
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
 
-  '@unified-latex/unified-latex-util-render-info@1.8.2':
+  '@unified-latex/unified-latex-util-render-info@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-visit': 1.8.3
 
-  '@unified-latex/unified-latex-util-replace@1.8.2':
+  '@unified-latex/unified-latex-util-replace@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-match': 1.8.0
       '@unified-latex/unified-latex-util-split': 1.8.0
-      '@unified-latex/unified-latex-util-trim': 1.8.2
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-trim': 1.8.3
+      '@unified-latex/unified-latex-util-visit': 1.8.3
       unified: 10.1.2
 
   '@unified-latex/unified-latex-util-scan@1.8.0':
@@ -291,14 +291,14 @@ snapshots:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-match': 1.8.0
 
-  '@unified-latex/unified-latex-util-trim@1.8.2':
+  '@unified-latex/unified-latex-util-trim@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-match': 1.8.0
-      '@unified-latex/unified-latex-util-visit': 1.8.2
+      '@unified-latex/unified-latex-util-visit': 1.8.3
       unified: 10.1.2
 
-  '@unified-latex/unified-latex-util-visit@1.8.2':
+  '@unified-latex/unified-latex-util-visit@1.8.3':
     dependencies:
       '@unified-latex/unified-latex-types': 1.8.0
       '@unified-latex/unified-latex-util-match': 1.8.0
@@ -332,9 +332,9 @@ snapshots:
   prettier-plugin-latex@2.0.1:
     dependencies:
       '@unified-latex/unified-latex-prettier': 2.4.2
-      prettier: 3.5.3
+      prettier: 3.6.2
 
-  prettier@3.5.3: {}
+  prettier@3.6.2: {}
 
   simple-swizzle@0.2.2:
     dependencies:

@@ -12,3 +12,6 @@ datetime
 Bigint
 KangarooTwelve
 Keccak
+sid
+Keccak-p
+logn

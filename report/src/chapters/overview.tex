@@ -79,13 +79,6 @@ complexities of Assignee in its current phase is low, writing one would over-com
 the app. However, the database table for it would still be given in later
 chapters for reference of potential implementation.
 
-%MO TODO move to other chapters/sections, doesnt fit here
-% \textdagger{} Albeit using password solely can harm security, email 2FA is abandoned
-% so that reviewers can run the app without access to email API keys, which would
-% otherwise pose security threats. The database table for it would still be included
-% in later chapters for reference, having simple implementations available for
-% actual deployments.
-
 \subsection{Team System}
 \label{overview.capab.team}
 
@@ -125,14 +118,15 @@ $Owner\in{}Admin$
 
 Built upon the user system is the team system which manages user-created teams.
 
-Assignee users are free to create or join teams as they need, and team owners are
-allowed to appoint team admins to help with management. To some extent, the logic
-is similar to Google Classroom.
+Assignee users are free to create or join teams as they need, and team owners
+are allowed to appoint team admins to help with management. To some extent, the
+logic is similar to Google Classroom.
 
-\textdagger{} The $Admin$ role is not directly implemented in initial versions
-to speed up project iteration. However, the $Owner$ role, which is inherited from
-$Admin$, would still have the privileges of it. The database table for the role would
-still be present in later chapters for reference of potential implementation.
+\textdagger{} The $Admin$ role is not directly implemented in initial versions to
+speed up project iteration. However, the $Owner$ role, which is inherited from
+$Admin$, would still have the privileges of it. The database table for the role
+would still be present in later chapters for reference of potential
+implementation.
 
 \subsection{Assignment System}
 \label{overview.capab.assign}
@@ -162,48 +156,47 @@ $Assignee\in{}Member$
 The system that fulfills the core objective is the assignment system which keeps
 track of assignments and submissions.
 
-Team owners are allowed to create assignments with descriptions, assign them to a
-selection of team members with a deadline, and later return grades or comments. Attachments
-would be preserved across different sessions, without the need to re-attach all
-previously attached files.
+Team owners are allowed to create assignments with descriptions, assign them to
+a selection of team members with a deadline, and later return grades or comments.
+Attachments would be preserved across different sessions, without the need to re-attach
+all previously attached files.
 
 \subsection{Side Systems \textdagger{}}
 \label{overview.capab.side}
 
-Other systems would all be built upon the previous three systems. This would
-become potential extensions of Assignee, like team messaging channels with WebSockets
+Other systems would all be built upon the previous three systems. This would become
+potential extensions of Assignee, like team messaging channels with WebSockets
 or user instant messaging system with WebRTC.
 
-\textdagger{} Side systems are after all relatively minor as its name suggests. To
-speed up project completion and iterations, side systems are not featured in
-initial versions. In fact, not even database tables were designed for them. However,
-potential implementations would not be sophisticated given the foundation of the
-core systems.
+\textdagger{} Side systems are after all relatively minor as its name suggests.
+To speed up project completion and iterations, side systems are not featured in initial
+versions. In fact, not even database tables were designed for them. However, potential
+implementations would not be sophisticated given the foundation of the core systems.
 
 \section{Resources}
 \label{overview.src}
 
-Several resources are listed here for reference and validation of the SBA invigilators.
+Several resources are listed here for reference and validation of the SBA
+invigilators.
 
 \subsection{Repository}
 \label{overview.src.repo}
 
-The entire project is hosted in a repository, available at \href{https://github.com/CarbonicSoda/assignee}{Repository}
-for inspection.
+The entire project is hosted in a repository, available at
+\href{https://github.com/CarbonicSoda/assignee}{Repository} for inspection.
 
-Modular approach is taken for clarity and separation of concern. The report/ directory
-contains the \LaTeX{} source of this report; The database/ directory contains
-the SQL dump file that is used to instantiate the backing database (with slight differences
-actually, details later); The site/ directory contains the actual web application,
-further separated into backend/ of application logic and frontend/ of
-presentation logic.
+Modular approach is taken for clarity and separation of concern. The report/
+directory contains the \LaTeX{} source of this report; The database/ directory contains
+the SQL dump file that is used to instantiate the backing database (with slight
+differences actually, details later); The site/ directory contains the actual
+web application, further separated into backend/ of application logic and
+frontend/ of presentation logic.
 
 \subsection{Review}
 \label{overview.src.review}
 
-Invigilators may not have dependencies of Assignee installed, so prebuilt
-archives are provided in
-\href{https://github.com/CarbonicSoda/assignee/releases}{Releases}. To run the app,
-unzip the archive to somewhere convenient and execute the binary (app.exe for Windows,
-for other platforms pick corresponding archives). Database records would be
-preserved in the app.db file.
+Invigilators may not have dependencies of Assignee installed, so prebuilt archives
+are provided in \href{https://github.com/CarbonicSoda/assignee/releases}{Releases}.
+To run the app, unzip the archive to somewhere convenient and execute the binary
+(app.exe for Windows, for other platforms pick corresponding archives). Database
+records would be preserved in the app.db file.
