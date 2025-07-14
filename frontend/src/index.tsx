@@ -6,7 +6,7 @@ import { natlog } from "natural-log";
 
 gsap.registerPlugin(ScrollTrigger);
 
-if (import.meta.env.DEV) {
+if (import.meta.env.DEV === undefined) {
 	natlog({ prompts: ["log"] });
 }
 
