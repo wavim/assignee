@@ -1,1 +1,2 @@
-pnpm test
+cd frontend
+npx lint-staged
