@@ -1,1 +1,5 @@
-{ "files.associations": { "*.css": "tailwindcss" }, "editor.quickSuggestions": { "strings": "on" } }
+{
+	"files.associations": { "*.css": "tailwindcss" },
+	"editor.quickSuggestions": { "strings": "on" },
+	"[typescriptreact]": { "editor.wordWrap": "on" }
+}
