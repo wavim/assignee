@@ -11,39 +11,47 @@ import {
 	createResource,
 	createSignal,
 	JSXElement,
-	Setter,
+	onCleanup,
 	useContext,
 } from "solid-js";
-import { Locale, resLocale } from "./locale";
+import { LocaleVal, resLocale } from "../configs/locale";
 
-export function createI18n<D extends BaseDict>(module: string, EnDict: D) {
+export function createI18n<D extends BaseDict>(module: string, enDict: D) {
 	type Dict = Flatten<D>;
 
-	const I18nContext = createContext<[Translator<Dict>, Setter<Locale>]>();
+	const I18nContext = createContext<Translator<Dict>>();
 
 	const I18n = (props: { children: JSXElement }) => {
-		const [locale, setLocale] = createSignal<Locale>(resLocale());
+		const [locale, setLocale] = createSignal<LocaleVal>(resLocale());
+
+		const updateLocale = () => {
+			setLocale(resLocale());
+		};
+		window.addEventListener("$update-locale", updateLocale);
+
+		onCleanup(() => {
+			window.removeEventListener("$update-locale", updateLocale);
+		});
 
 		const [dict] = createResource(
 			locale,
 			async (locale) => {
-				return flatten(await import(`./${module}/${locale}.json`)) as Dict;
+				return flatten(await import(`./${locale}/${module}.json`)) as Dict;
 			},
-			{ initialValue: flatten(EnDict) },
+			{ initialValue: flatten(enDict) },
 		);
 
 		const t = translator(dict, resolveTemplate);
 
-		return <I18nContext.Provider value={[t, setLocale]}>{props.children}</I18nContext.Provider>;
+		return <I18nContext.Provider value={t}>{props.children}</I18nContext.Provider>;
 	};
 
 	const useI18n = () => {
 		const context = useContext(I18nContext);
 
 		if (!context) {
-			throw new Error("not in i18n context provider");
+			throw new Error("not in i18n context");
 		}
-
 		return context;
 	};
 
