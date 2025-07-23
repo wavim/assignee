@@ -1,0 +1,52 @@
+import { gsap } from "gsap";
+import { createEffect, createSignal } from "solid-js";
+import { twMerge } from "tailwind-merge";
+import { ease } from "../configs/media";
+import { Props } from "../types/props";
+
+export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
+	let modal!: HTMLDivElement;
+
+	const [open, toggle] = createSignal(false);
+	props.toggle.addEventListener("click", () => toggle(!open()));
+
+	const onclick = (ev: MouseEvent) => {
+		const node = ev.target as Node | null;
+		toggle(props.toggle.contains(node) || modal.contains(node));
+	};
+	const onpress = (ev: KeyboardEvent) => {
+		if (ev.key === "Escape") {
+			toggle(false);
+		}
+	};
+
+	createEffect(() => {
+		if (open()) {
+			document.addEventListener("click", onclick);
+			document.addEventListener("keyup", onpress);
+		} else {
+			document.removeEventListener("click", onclick);
+			document.removeEventListener("keyup", onpress);
+		}
+
+		gsap.timeline({ defaults: ease({ duration: 0.3, ease: "power2.out" }) }).to(
+			modal,
+			open()
+				? { opacity: 1, scaleX: 1, scaleY: 1 }
+				: { opacity: 0, scaleX: 1.03, scaleY: 1.03 },
+		);
+	});
+
+	return (
+		<div
+			ref={modal}
+			role="dialog"
+			class={twMerge(
+				!open() && "pointer-events-none",
+				"bg-overlay/75 shadow-overlay-shadow fixed top-1/2 left-1/2 h-max w-max -translate-1/2 rounded-2xl p-6 opacity-0 shadow-2xl/30 backdrop-blur-lg",
+			)}
+		>
+			<div {...props}></div>
+		</div>
+	);
+};

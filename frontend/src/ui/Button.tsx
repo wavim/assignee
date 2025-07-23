@@ -1,6 +1,6 @@
 import { JSXElement } from "solid-js";
 
-export default (props: { onclick?: () => any; children?: JSXElement }) => (
+export default (props: { onclick?: () => unknown; children?: JSXElement }) => (
 	<button
 		type="button"
 		onclick={props.onclick}

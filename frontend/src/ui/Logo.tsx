@@ -1,6 +1,6 @@
-import { BaseProps } from "../../types/props";
+import { Props } from "../types/props";
 
-export default (props: BaseProps<HTMLDivElement>) => (
+export default (props: Props<"div">) => (
 	<div {...props}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
