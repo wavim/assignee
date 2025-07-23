@@ -1,4 +1,3 @@
-import { createI18n } from "../../locales/I18n";
-import en from "../../locales/en/header.json";
+import { defineI18n } from "../../locales/I18n";
 
-export default createI18n("header", en);
+export default defineI18n({ en: { link: "Homepage" }, zh: { link: "首頁" } });

@@ -103,33 +103,29 @@ const Config = <T extends string>(props: {
 	options: Record<T, string>;
 	default: T;
 	children: (option: T) => void;
-}) => {
-	return (
-		<label class="font-jakarta flex text-xl">
-			<span class="text-text-secondary flex-1">{props.name}</span>
-			<select
-				name={props.name}
-				onchange={({ currentTarget }) => {
-					const key = Object.keys(props.options).find(
-						(k) =>
-							props.options[k as T] ===
-							currentTarget.value,
-					) as T;
-					props.children(key);
-				}}
-				class="text-text-primary w-30"
-			>
-				<For each={Object.entries<string>(props.options)}>
-					{([key, value]) => (
-						<option
-							selected={key === props.default}
-							class="bg-main"
-						>
-							{value}
-						</option>
-					)}
-				</For>
-			</select>
-		</label>
-	);
-};
+}) => (
+	<label class="font-jakarta flex text-xl">
+		<span class="text-text-secondary flex-1">{props.name}</span>
+		<select
+			name={props.name}
+			onchange={({ currentTarget }) => {
+				const key = Object.keys(props.options).find(
+					(k) => props.options[k as T] === currentTarget.value,
+				) as T;
+				props.children(key);
+			}}
+			class="text-text-primary w-30"
+		>
+			<For each={Object.entries<string>(props.options)}>
+				{([key, value]) => (
+					<option
+						selected={key === props.default}
+						class="bg-main"
+					>
+						{value}
+					</option>
+				)}
+			</For>
+		</select>
+	</label>
+);

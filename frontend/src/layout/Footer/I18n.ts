@@ -1,4 +1,6 @@
-import { createI18n } from "../../locales/I18n";
-import en from "../../locales/en/footer.json";
+import { defineI18n } from "../../locales/I18n";
 
-export default createI18n("footer", en);
+export default defineI18n({
+	en: { copyright: "Copyright © 2025 David W" },
+	zh: { copyright: "版權所有 © 2025 David W" },
+});
