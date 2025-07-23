@@ -3,15 +3,9 @@
 	--color-button-shadow: var(--color-button-shadow);
 	--color-button-text: var(--color-button-text);
 	--color-button: var(--color-button);
-	--color-header: var(--color-header);
-	--color-input-br: var(--color-input-br);
-	--color-input-invalid: var(--color-input-invalid);
-	--color-input-placeholder: var(--color-input-placeholder);
-	--color-input-valid: var(--color-input-valid);
-	--color-input: var(--color-input);
 	--color-main: var(--color-main);
-	--color-options-active: var(--color-options-active);
-	--color-quote: var(--color-quote);
+	--color-overlay-shadow: var(--color-overlay-shadow);
+	--color-overlay: var(--color-overlay);
 	--color-text-primary: var(--color-text-primary);
 	--color-text-secondary: var(--color-text-secondary);
 }
@@ -21,15 +15,9 @@
 	--color-button-shadow: var(--color-neutral-600);
 	--color-button-text: var(--color-neutral-50);
 	--color-button: var(--color-neutral-950);
-	--color-header: var(--color-neutral-200);
-	--color-input-br: var(--color-neutral-700);
-	--color-input-invalid: var(--color-rose-500);
-	--color-input-placeholder: var(--color-neutral-500);
-	--color-input-valid: var(--color-blue-500);
-	--color-input: var(--color-neutral-50);
 	--color-main: var(--color-neutral-50);
-	--color-options-active: var(--color-blue-500);
-	--color-quote: var(--color-gray-200);
+	--color-overlay-shadow: var(--color-neutral-950);
+	--color-overlay: var(--color-neutral-200);
 	--color-text-primary: var(--color-neutral-950);
 	--color-text-secondary: var(--color-neutral-700);
 }
@@ -39,12 +27,9 @@
 	--color-button-shadow: var(--color-neutral-300);
 	--color-button-text: var(--color-neutral-950);
 	--color-button: var(--color-neutral-50);
-	--color-header: var(--color-neutral-600);
-	--color-input-br: var(--color-neutral-200);
-	--color-input: var(--color-neutral-950);
 	--color-main: var(--color-neutral-950);
-	--color-options-active: var(--color-blue-600);
-	--color-quote: var(--color-gray-800);
+	--color-overlay-shadow: var(--color-neutral-50);
+	--color-overlay: var(--color-neutral-600);
 	--color-text-primary: var(--color-neutral-50);
 	--color-text-secondary: var(--color-neutral-300);
 }
