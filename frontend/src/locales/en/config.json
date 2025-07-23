@@ -1,8 +1,0 @@
-{
-	"title": "Accessibility",
-	"os": "System",
-	"fontsize": { "name": "Font Size", "sm": "Small", "md": "Medium", "lg": "Large" },
-	"language": { "name": "Language" },
-	"darkmode": { "name": "Color Theme", "no": "Light", "on": "Dark" },
-	"rdmotion": { "name": "Motion Effects", "no": "On", "on": "Off" }
-}

@@ -16,13 +16,19 @@ import {
 } from "solid-js";
 import { LocaleVal, resLocale } from "../configs/locale";
 
-export function createI18n<D extends BaseDict>(module: string, enDict: D) {
-	type Dict = Flatten<D>;
+export function defineI18n<D extends BaseDict>(dicts: Record<LocaleVal, D>) {
+	return $createI18n(dicts.en, (locale) => dicts[locale]);
+}
 
-	const I18nContext = createContext<Translator<Dict>>();
+export function importI18n<D extends BaseDict>(en: D, name: string) {
+	return $createI18n(en, (locale) => import(`./${locale}/${name}.json`) as Promise<D>);
+}
+
+function $createI18n<D extends BaseDict>(init: D, callback: (locale: LocaleVal) => D | Promise<D>) {
+	const I18nContext = createContext<Translator<Flatten<D>>>();
 
 	const I18n = (props: { children: JSXElement }) => {
-		const [locale, setLocale] = createSignal<LocaleVal>(resLocale());
+		const [locale, setLocale] = createSignal(resLocale());
 
 		const updateLocale = () => {
 			setLocale(resLocale());
@@ -36,23 +42,26 @@ export function createI18n<D extends BaseDict>(module: string, enDict: D) {
 		const [dict] = createResource(
 			locale,
 			async (locale) => {
-				return flatten(await import(`./${locale}/${module}.json`)) as Dict;
+				return flatten(await callback(locale));
 			},
-			{ initialValue: flatten(enDict) },
+			{ initialValue: flatten(init) },
 		);
 
-		const t = translator(dict, resolveTemplate);
-
-		return <I18nContext.Provider value={t}>{props.children}</I18nContext.Provider>;
+		return (
+			<I18nContext.Provider value={translator(dict, resolveTemplate)}>
+				{props.children}
+			</I18nContext.Provider>
+		);
 	};
 
 	const useI18n = () => {
-		const context = useContext(I18nContext);
+		const i18n = useContext(I18nContext);
 
-		if (!context) {
-			throw new Error("not in i18n context");
+		if (!i18n) {
+			throw new Error("missing i18n context provider");
 		}
-		return context;
+
+		return i18n;
 	};
 
 	return { I18n, useI18n };
