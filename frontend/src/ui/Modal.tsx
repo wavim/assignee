@@ -41,6 +41,7 @@ export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
 		<div
 			ref={modal}
 			role="dialog"
+			title={props.toggle.title}
 			class={twMerge(
 				!open() && "pointer-events-none",
 				"bg-overlay/75 shadow-overlay-shadow fixed top-1/2 left-1/2 h-max w-max -translate-1/2 rounded-2xl p-6 opacity-0 shadow-2xl/30 backdrop-blur-lg",
