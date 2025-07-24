@@ -1,35 +1,32 @@
 @theme inline {
-	--color-accessibility: var(--color-accessibility);
-	--color-button-shadow: var(--color-button-shadow);
-	--color-button-text: var(--color-button-text);
+	--color-a11y: var(--color-a11y);
+	--color-text-button: var(--color-text-button);
 	--color-button: var(--color-button);
 	--color-main: var(--color-main);
 	--color-overlay-shadow: var(--color-overlay-shadow);
 	--color-overlay: var(--color-overlay);
-	--color-text-primary: var(--color-text-primary);
-	--color-text-secondary: var(--color-text-secondary);
+	--color-text-major: var(--color-text-major);
+	--color-text-minor: var(--color-text-minor);
 }
 
 :root {
-	--color-accessibility: var(--color-blue-700);
-	--color-button-shadow: var(--color-neutral-600);
-	--color-button-text: var(--color-neutral-50);
+	--color-a11y: var(--color-blue-700);
+	--color-text-button: var(--color-neutral-50);
 	--color-button: var(--color-neutral-950);
 	--color-main: var(--color-neutral-50);
 	--color-overlay-shadow: var(--color-neutral-950);
 	--color-overlay: var(--color-neutral-200);
-	--color-text-primary: var(--color-neutral-950);
-	--color-text-secondary: var(--color-neutral-700);
+	--color-text-major: var(--color-neutral-950);
+	--color-text-minor: var(--color-neutral-700);
 }
 
 :root.dark {
-	--color-accessibility: var(--color-blue-400);
-	--color-button-shadow: var(--color-neutral-300);
-	--color-button-text: var(--color-neutral-950);
+	--color-a11y: var(--color-blue-400);
+	--color-text-button: var(--color-neutral-950);
 	--color-button: var(--color-neutral-50);
 	--color-main: var(--color-neutral-950);
 	--color-overlay-shadow: var(--color-neutral-50);
 	--color-overlay: var(--color-neutral-600);
-	--color-text-primary: var(--color-neutral-50);
-	--color-text-secondary: var(--color-neutral-300);
+	--color-text-major: var(--color-neutral-50);
+	--color-text-minor: var(--color-neutral-300);
 }

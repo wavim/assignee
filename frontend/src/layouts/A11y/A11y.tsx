@@ -3,7 +3,7 @@ import { getFontSize, setFontSize } from "../../configs/font-size";
 import { getLocale, setLocale } from "../../configs/locale";
 import { getMedia, setMedia } from "../../configs/media";
 import { Props } from "../../types/props";
-import Modal from "../../ui/Modal";
+import Modal from "../../atoms/Modal";
 import I18n from "./I18n";
 
 export default (props: Props<"button">) => {
@@ -32,7 +32,7 @@ const Toggle = (props: Props<"button">) => {
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
-				class="fill-accessibility h-full cursor-pointer"
+				class="fill-a11y h-full cursor-pointer"
 			>
 				<path d="m13.5 6.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5S11.2 5 12 5s1.5.7 1.5 1.5" />
 				<path d="m6.05 8.69c-.18.52.11 1.09.63 1.26.18.06.35.12.53.17.32.1.77.23 1.29.36.58.14 1.27.3 1.97.4-.04.89-.16 1.54-.26 1.96L8.1 17.06c-.24.49-.04 1.1.45 1.34s1.09.04 1.34-.45L12 13.74l2.11 4.2c.25.5.84.7 1.34.45s.7-.85.45-1.34l-2.11-4.22c-.1-.43-.21-1.07-.26-1.96.7-.1 1.39-.25 1.97-.4.51-.13.97-.26 1.29-.36.18-.05.36-.1.53-.16.52-.17.81-.76.64-1.27a1 1 0 00-1.26-.63c-.15.05-.31.1-.47.15-.31.09-.73.21-1.21.33-.99.25-2.14.47-3.01.47S9.99 8.78 9 8.53c-.49-.12-.91-.24-1.21-.33-.16-.05-.32-.1-.47-.15-.52-.17-1.1.11-1.27.63z" />
@@ -105,7 +105,7 @@ const Config = <T extends string>(props: {
 	children: (option: T) => void;
 }) => (
 	<label class="font-jakarta flex text-xl">
-		<span class="text-text-secondary flex-1">{props.name}</span>
+		<span class="text-text-minor flex-1">{props.name}</span>
 		<select
 			name={props.name}
 			onchange={({ currentTarget }) => {
@@ -114,7 +114,7 @@ const Config = <T extends string>(props: {
 				) as T;
 				props.children(key);
 			}}
-			class="text-text-primary w-30"
+			class="text-text-major w-30"
 		>
 			<For each={Object.entries<string>(props.options)}>
 				{([key, value]) => (

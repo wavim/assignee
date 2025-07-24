@@ -3,8 +3,8 @@ import { gsap } from "gsap";
 import { onMount } from "solid-js";
 import { ease } from "../../configs/media";
 import { Props } from "../../types/props";
-import Logo from "../../ui/Logo";
-import Config from "../Config/Config";
+import Logo from "../../atoms/Logo";
+import A11y from "../A11y/A11y";
 import I18n from "./I18n";
 
 export default () => {
@@ -44,7 +44,7 @@ export default () => {
 					ref={nav}
 					class="h-1/2"
 				></Link>
-				<Config class="absolute right-5 h-1/2"></Config>
+				<A11y class="absolute right-5 h-1/2"></A11y>
 			</header>
 		</I18n.I18n>
 	);
@@ -59,7 +59,7 @@ const Link = (props: Props<"a">) => {
 			href="/"
 			title={t("link")}
 		>
-			<Logo class="fill-text-primary h-full"></Logo>
+			<Logo class="fill-text-major h-full"></Logo>
 		</A>
 	);
 };

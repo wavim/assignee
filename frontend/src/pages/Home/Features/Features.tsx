@@ -1,12 +1,12 @@
 import { JSXElement } from "solid-js";
-import { useI18n } from "../I18n";
+import I18n from "../I18n";
 
 export default () => {
-	const [t] = useI18n();
+	const t = I18n.useI18n();
 
 	return (
 		<section class="bg-main px-7">
-			<h1 class="font-jakarta text-text-primary mb-10 text-center text-5xl font-bold">
+			<h1 class="font-jakarta text-text-major mb-10 text-center text-5xl font-bold">
 				{t("features.title")}
 			</h1>
 			{/* for pc version <h1 class="font-jakarta sticky top-20 block text-3xl">Features</h1> */}
@@ -31,13 +31,9 @@ export default () => {
 
 const Feature = (props: { title: string; children: JSXElement }) => (
 	<div>
-		<h1 class="font-jakarta text-text-primary mb-4 text-3xl">{`${props.title}.`}</h1>
-		<p class="font-jakarta text-text-primary max-w-[95%] text-xl">
-			{props.children}
-		</p>
+		<h1 class="font-jakarta text-text-major mb-4 text-3xl">{`${props.title}.`}</h1>
+		<p class="font-jakarta text-text-major max-w-[95%] text-xl">{props.children}</p>
 	</div>
 );
 
-const Separator = () => (
-	<div class="border-text-secondary my-6 h-0 border-1"></div>
-);
+const Separator = () => <div class="border-text-minor my-6 h-0 border-1"></div>;
