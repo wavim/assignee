@@ -23,10 +23,10 @@ export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
 	createEffect(() => {
 		if (open()) {
 			document.addEventListener("click", onclick);
-			document.addEventListener("keyup", onpress);
+			document.addEventListener("keydown", onpress);
 		} else {
 			document.removeEventListener("click", onclick);
-			document.removeEventListener("keyup", onpress);
+			document.removeEventListener("keydown", onpress);
 		}
 
 		gsap.timeline({ defaults: ease({ duration: 0.3, ease: "power2.out" }) }).to(
