@@ -10,6 +10,15 @@ const queries = {
 	rdmotion: window.matchMedia("(prefers-reduced-motion)"),
 };
 
+queries.darkmode.addEventListener("change", () => {
+	setMedia("darkmode");
+});
+
+queries.rdmotion.addEventListener("change", () => {
+	setMedia("rdmotion");
+	location.reload();
+});
+
 export function getMedia(key: MediaKey): MediaOpt {
 	return (localStorage.getItem(key) as MediaOpt | null) ?? "os";
 }
