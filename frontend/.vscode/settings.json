@@ -1,1 +1,5 @@
-{ "files.associations": { "*.css": "tailwindcss" }, "editor.wordWrap": "on" }
+{
+	"files.associations": { "*.css": "tailwindcss" },
+	"editor.quickSuggestions": { "strings": "on" },
+	"editor.wordWrap": "on"
+}
