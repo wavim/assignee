@@ -1,9 +1,9 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
+import Logo from "../../atoms/Logo";
 import { ease } from "../../configs/media";
 import { Props } from "../../types/props";
-import Logo from "../../atoms/Logo";
 import A11y from "../A11y/A11y";
 import I18n from "./I18n";
 
@@ -34,11 +34,11 @@ export default () => {
 
 	return (
 		<I18n.I18n>
-			<div class="mb-24"></div>
+			<div class="mb-28"></div>
 			<header class="fixed mt-2 flex h-16 w-[95%] items-center justify-center">
 				<div
 					ref={bg}
-					class="bg-overlay/75 shadow-overlay-shadow absolute h-full w-full rounded-full shadow-xl/10 backdrop-blur-lg"
+					class="bg-overlay/75 shadow-shadow absolute h-full w-full rounded-full shadow-xl/10 backdrop-blur-lg"
 				></div>
 				<Link
 					ref={nav}

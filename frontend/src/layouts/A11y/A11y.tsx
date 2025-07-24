@@ -1,9 +1,9 @@
 import { For } from "solid-js";
+import Modal from "../../atoms/Modal";
 import { getFontSize, setFontSize } from "../../configs/font-size";
 import { getLocale, setLocale } from "../../configs/locale";
 import { getMedia, setMedia } from "../../configs/media";
 import { Props } from "../../types/props";
-import Modal from "../../atoms/Modal";
 import I18n from "./I18n";
 
 export default (props: Props<"button">) => {
