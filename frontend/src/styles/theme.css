@@ -17,7 +17,7 @@
 	--color-shadow: var(--color-neutral-950);
 	--color-text-button: var(--color-neutral-50);
 	--color-text-major: var(--color-neutral-950);
-	--color-text-minor: var(--color-neutral-600);
+	--color-text-minor: var(--color-neutral-700);
 }
 
 :root.darkmode {
@@ -28,5 +28,5 @@
 	--color-shadow: var(--color-neutral-50);
 	--color-text-button: var(--color-neutral-950);
 	--color-text-major: var(--color-neutral-50);
-	--color-text-minor: var(--color-neutral-300);
+	--color-text-minor: var(--color-neutral-200);
 }
