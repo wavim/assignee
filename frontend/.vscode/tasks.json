@@ -1,28 +1,8 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-		{
-			"type": "npm",
-			"script": "build",
-			"group": "build",
-			"problemMatcher": [],
-			"label": "npm: build",
-			"detail": "build"
-		},
-		{
-			"type": "npm",
-			"script": "serve",
-			"problemMatcher": [],
-			"label": "npm: serve",
-			"detail": "preview"
-		},
-		{
-			"type": "npm",
-			"script": "watch",
-			"group": "build",
-			"problemMatcher": [],
-			"label": "npm: watch",
-			"detail": "watch"
-		}
+		{ "type": "npm", "script": "watch", "label": "vite watch" },
+		{ "type": "npm", "script": "serve", "label": "vite serve" },
+		{ "type": "npm", "script": "build", "label": "vite build", "group": "build" }
 	]
 }

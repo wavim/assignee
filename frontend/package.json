@@ -4,9 +4,9 @@
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
-		"watch": "vite --host",
+		"watch": "vite --host --open",
+		"serve": "vite build && vite preview --host --open",
 		"build": "vite build",
-		"serve": "vite build && vite preview --host",
 		"prepare": "cd .. && husky frontend/.husky"
 	},
 	"lint-staged": {
