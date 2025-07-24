@@ -1,11 +1,12 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { getFontSize, setFontSize } from "./configs/font-size";
-import { getMedia, resMedia, setMedia } from "./configs/media";
+import { setFontSize } from "./configs/font-size";
+import { resMedia, setMedia } from "./configs/media";
 
 export async function init(): Promise<void> {
-	setFontSize(getFontSize());
-	setMedia("darkmode", getMedia("darkmode"));
+	setFontSize();
+	setMedia("darkmode");
+	setMedia("rdmotion");
 
 	gsap.registerPlugin(ScrollTrigger);
 

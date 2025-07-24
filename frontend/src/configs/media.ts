@@ -20,18 +20,8 @@ export function resMedia(key: MediaKey): boolean {
 	return option === "os" ? queries[key].matches : option === "on";
 }
 
-export function setMedia(key: MediaKey, option: MediaOpt): void {
+export function setMedia(key: MediaKey, option: MediaOpt = getMedia(key)): void {
 	localStorage.setItem(key, option);
 
-	switch (key) {
-		case "darkmode": {
-			document.documentElement.classList.toggle("dark", resMedia("darkmode"));
-			break;
-		}
-
-		case "rdmotion": {
-			location.reload();
-			break;
-		}
-	}
+	document.documentElement.classList.toggle(key, resMedia(key));
 }

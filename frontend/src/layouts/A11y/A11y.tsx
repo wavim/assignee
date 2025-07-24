@@ -92,6 +92,7 @@ const Menu = (props: { toggle: HTMLButtonElement }) => {
 			>
 				{(option) => {
 					setMedia("rdmotion", option);
+					location.reload();
 				}}
 			</Config>
 		</Modal>
