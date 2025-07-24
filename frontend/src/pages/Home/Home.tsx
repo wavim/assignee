@@ -1,398 +1,81 @@
+import Line from "../../atoms/Line";
+import Link from "../../atoms/Link";
+import Tiles from "../../atoms/Tiles";
 import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header/Header";
-import Action from "./Action/Action";
-import Features from "./Features/Features";
-import Hero from "./Hero/Hero";
 import I18n from "./I18n";
 
 export default () => (
 	<I18n.I18n>
 		<Header></Header>
-		<main class="flex w-full flex-[1] flex-col gap-16">
+		<main class="flex w-full flex-col gap-16">
 			<Hero></Hero>
-			<div class="flex w-full items-center justify-center">
-				<div class="w-full">
-					<svg
-						xmlns:xlink="http://www.w3.org/1999/xlink"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 1000 299.99270072992704"
-						preserveAspectRatio="xMaxYMax slice"
-					>
-						<g transform="scale(1.2165450121654502)">
-							<rect
-								x="0"
-								y="0"
-								width="822"
-								height="246.60000000000002"
-								fill="#ffffff"
-							/>
-							<rect
-								x="0"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#191919"
-							/>
-							<rect
-								x="0"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#f5f5f5"
-							/>
-							<rect
-								x="82.2"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#878787"
-							/>
-							<path
-								d="M 82.2 0 A 82.2 82.2 0 0 1 164.4 82.2 L 82.2 82.2L82.2 0"
-								fill="#898989"
-							/>
-							<rect
-								x="164.4"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#090909"
-							/>
-							<path
-								d="M 164.4 82.2 A 82.2 82.2 0 0 1  246.60000000000002 0 L 246.60000000000002 82.2L164.4 82.2"
-								fill="#5d5d5d"
-							/>
-							<rect
-								x="246.6"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#0d0d0d"
-							/>
-							<path
-								d="M 246.6 0 A 82.2 82.2 0 0 1 328.8 82.2 L 246.6 82.2L246.6 0"
-								fill="#555555"
-							/>
-							<rect
-								x="328.8"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#989898"
-							/>
-							<polygon
-								points="328.8,0 411,82.2 328.8,82.2"
-								fill="#f3f3f3"
-							/>
-							<rect
-								x="411"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#0c0c0c"
-							/>
-							<polygon
-								points="411,0 493.2,0 411,82.2"
-								fill="#c8c8c8"
-							/>
-							<rect
-								x="493.2"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#8d8d8d"
-							/>
-							<rect
-								x="493.2"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#353535"
-							/>
-							<rect
-								x="575.4"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#d9d9d9"
-							/>
-							<rect
-								x="575.4"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#aeaeae"
-							/>
-							<rect
-								x="657.6"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#c5c5c5"
-							/>
-							<polygon
-								points="739.8000000000001,0 739.8000000000001,82.2 657.6,82.2"
-								fill="#545454"
-							/>
-							<rect
-								x="739.8"
-								y="0"
-								width="82.2"
-								height="82.2"
-								fill="#adadad"
-							/>
-							<polygon
-								points="739.8,0 822,82.2 739.8,82.2"
-								fill="#2f2f2f"
-							/>
-							<rect
-								x="0"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#525252"
-							/>
-							<polygon
-								points="0,82.2 82.2,82.2 82.2,164.4"
-								fill="#b2b2b2"
-							/>
-							<rect
-								x="82.2"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#a6a6a6"
-							/>
-							<rect
-								x="82.2"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#7a7a7a"
-							/>
-							<rect
-								x="164.4"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#e4e4e4"
-							/>
-							<rect
-								x="164.4"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#151515"
-							/>
-							<rect
-								x="246.6"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#d5d5d5"
-							/>
-							<path
-								d="M 246.6 164.4 A 82.2 82.2 0 0 1  328.8 82.2 L 246.6 164.4 A 82.2 82.2 0 0 0 328.8 82.2"
-								fill="#6b6b6b"
-							/>
-							<rect
-								x="328.8"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#919191"
-							/>
-							<polygon
-								points="328.8,82.2 411,82.2 411,164.4"
-								fill="#4c4c4c"
-							/>
-							<rect
-								x="411"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#454545"
-							/>
-							<rect
-								x="411"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#dddddd"
-							/>
-							<rect
-								x="493.2"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#e9e9e9"
-							/>
-							<rect
-								x="493.2"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#292929"
-							/>
-							<rect
-								x="575.4"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#5e5e5e"
-							/>
-							<polygon
-								points="575.4,82.2 657.6,164.4 575.4,164.4"
-								fill="#909090"
-							/>
-							<rect
-								x="657.6"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#656565"
-							/>
-							<path
-								d="M 657.6 164.4 A 82.2 82.2 0 0 1  739.8000000000001 82.2 L 739.8000000000001 164.4L657.6 164.4"
-								fill="#cbcbcb"
-							/>
-							<rect
-								x="739.8"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#5e5e5e"
-							/>
-							<rect
-								x="739.8"
-								y="82.2"
-								width="82.2"
-								height="82.2"
-								fill="#242424"
-							/>
-							<rect
-								x="0"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#929292"
-							/>
-							<rect
-								x="0"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#a8a8a8"
-							/>
-							<rect
-								x="82.2"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#cfcfcf"
-							/>
-							<polygon
-								points="82.2,164.4 164.4,164.4 164.4,246.60000000000002"
-								fill="#f6f6f6"
-							/>
-							<rect
-								x="164.4"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#323232"
-							/>
-							<polygon
-								points="164.4,164.4 246.60000000000002,164.4 164.4,246.60000000000002"
-								fill="#a9a9a9"
-							/>
-							<rect
-								x="246.6"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#ffffff"
-							/>
-							<polygon
-								points="328.8,164.4 328.8,246.60000000000002 246.6,246.60000000000002"
-								fill="#d9d9d9"
-							/>
-							<rect
-								x="328.8"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#646464"
-							/>
-							<polygon
-								points="328.8,164.4 411,164.4 328.8,246.60000000000002"
-								fill="#484848"
-							/>
-							<rect
-								x="411"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#111111"
-							/>
-							<polygon
-								points="411,164.4 493.2,164.4 411,246.60000000000002"
-								fill="#474747"
-							/>
-							<rect
-								x="493.2"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#c8c8c8"
-							/>
-							<polygon
-								points="575.4,164.4 575.4,246.60000000000002 493.2,246.60000000000002"
-								fill="#666666"
-							/>
-							<rect
-								x="575.4"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#858585"
-							/>
-							<rect
-								x="575.4"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#949494"
-							/>
-							<rect
-								x="657.6"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#cccccc"
-							/>
-							<polygon
-								points="657.6,164.4 739.8000000000001,164.4 657.6,246.60000000000002"
-								fill="#8a8a8a"
-							/>
-							<rect
-								x="739.8"
-								y="164.4"
-								width="82.2"
-								height="82.2"
-								fill="#626262"
-							/>
-							<polygon
-								points="822,164.4 822,246.60000000000002 739.8,246.60000000000002"
-								fill="#e7e7e7"
-							/>
-						</g>
-					</svg>
-				</div>
-			</div>
-			<Features></Features>
+			<Tiles></Tiles>
+			<Feature></Feature>
 			<Action></Action>
 		</main>
 		<Footer></Footer>
 	</I18n.I18n>
 );
+
+const Hero = () => {
+	const t = I18n.useI18n();
+
+	return (
+		<section class="font-jakarta bg-main flex flex-col gap-8 px-8">
+			<h1 class="text-text-major w-4/5 text-4xl font-medium">
+				{t("hero.title")}
+			</h1>
+			<p class="text-text-minor w-11/12 text-xl">{t("hero.subtitle")}</p>
+			<Link href="/login">{t("hero.login")}</Link>
+		</section>
+	);
+};
+
+const Feature = () => {
+	const t = I18n.useI18n();
+
+	const Item = (props: { title: string; children: string }) => (
+		<>
+			<h2 class="text-text-major mb-4 text-3xl">{props.title}</h2>
+			<p class="text-text-major text-xl">{props.children}</p>
+		</>
+	);
+
+	return (
+		<section class="font-jakarta bg-main px-8">
+			<h1 class="text-text-major mb-12 text-center text-5xl font-medium">
+				{t("features.title")}
+			</h1>
+			<Item title={t("features.groups.title")}>
+				{t("features.groups.detail")}
+			</Item>
+			<Line></Line>
+			<Item title={t("features.assign.title")}>
+				{t("features.assign.detail")}
+			</Item>
+			<Line></Line>
+			<Item title={t("features.submit.title")}>
+				{t("features.submit.detail")}
+			</Item>
+			<Line></Line>
+			<Item title={t("features.return.title")}>
+				{t("features.return.detail")}
+			</Item>
+		</section>
+	);
+};
+
+const Action = () => {
+	const t = I18n.useI18n();
+
+	return (
+		<section class="font-jakarta bg-main flex flex-col gap-8 px-8">
+			<h1 class="text-text-major w-4/5 text-4xl font-medium">
+				{t("action.title")}
+			</h1>
+			<p class="text-text-minor w-11/12 text-xl">{t("action.subtitle")}</p>
+			<Link href="/login">{t("action.login")}</Link>
+		</section>
+	);
+};

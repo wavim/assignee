@@ -4,7 +4,7 @@ import I18n from "./I18n";
 export default () => {
 	return (
 		<I18n.I18n>
-			<footer class="bg-main mt-12 flex w-full flex-col gap-2 p-7">
+			<footer class="bg-main mt-12 flex w-full flex-col gap-2 p-8">
 				<Logo class="fill-text-major h-8"></Logo>
 				<Copyright></Copyright>
 			</footer>
