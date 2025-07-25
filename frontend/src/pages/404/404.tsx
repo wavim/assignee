@@ -7,7 +7,7 @@ export default () => {
 	return (
 		<I18n.I18n>
 			<Header></Header>
-			<main class="w-full">
+			<main class="w-full flex-1">
 				<Info></Info>
 			</main>
 			<Footer></Footer>
@@ -19,7 +19,7 @@ const Info = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="font-jakarta bg-main flex flex-col gap-8 px-8">
+		<section class="font-jakarta flex flex-col gap-8 px-8">
 			<h1 class="text-text-major text-6xl font-medium">404</h1>
 			<p class="text-text-minor text-xl">{t("detail")}</p>
 			<Link href="/">{t("link")}</Link>

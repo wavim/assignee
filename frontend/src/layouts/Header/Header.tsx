@@ -34,11 +34,11 @@ export default () => {
 
 	return (
 		<I18n.I18n>
-			<div class="mb-28"></div>
-			<header class="fixed mt-2 flex h-16 w-[95%] items-center justify-center">
+			<div class="h-28"></div>
+			<header class="fixed top-2 flex h-16 w-[calc(100%-1rem)] items-center justify-center">
 				<div
 					ref={bg}
-					class="bg-overlay/75 shadow-shadow absolute h-full w-full rounded-full shadow-xl/10 backdrop-blur-lg"
+					class="bg-overlay/75 shadow-shadow absolute size-full rounded-full shadow-xl/10 backdrop-blur-lg"
 				></div>
 				<Link
 					ref={nav}

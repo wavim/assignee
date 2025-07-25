@@ -8,7 +8,7 @@ import I18n from "./I18n";
 export default () => (
 	<I18n.I18n>
 		<Header></Header>
-		<main class="flex w-full flex-col gap-16">
+		<main class="flex w-full flex-1 flex-col gap-16">
 			<Hero></Hero>
 			<Tiles></Tiles>
 			<Feature></Feature>
@@ -22,7 +22,7 @@ const Hero = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="font-jakarta bg-main flex flex-col gap-8 px-8">
+		<section class="font-jakarta flex flex-col gap-8 px-8">
 			<h1 class="text-text-major w-4/5 text-4xl font-medium">
 				{t("hero.title")}
 			</h1>
@@ -43,7 +43,7 @@ const Feature = () => {
 	);
 
 	return (
-		<section class="font-jakarta bg-main px-8">
+		<section class="font-jakarta px-8">
 			<h1 class="text-text-major mb-12 text-center text-5xl font-medium">
 				{t("features.title")}
 			</h1>
@@ -70,7 +70,7 @@ const Action = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="font-jakarta bg-main flex flex-col gap-8 px-8">
+		<section class="font-jakarta flex flex-col gap-8 px-8">
 			<h1 class="text-text-major w-4/5 text-4xl font-medium">
 				{t("action.title")}
 			</h1>
