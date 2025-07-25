@@ -23,7 +23,7 @@ export default defineI18n({
 			},
 			return: {
 				title: "Return.",
-				detail: "Grade submissions with feedback and comments. Encourage improvements upon the results.",
+				detail: "Grade submissions with feedback and comments. Push forward improvements upon the response.",
 			},
 		},
 		action: {
