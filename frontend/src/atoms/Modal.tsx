@@ -33,7 +33,7 @@ export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
 			modal,
 			open()
 				? { opacity: 1, scaleX: 1, scaleY: 1 }
-				: { opacity: 0, scaleX: 1.03, scaleY: 1.03 },
+				: { opacity: 0, scaleX: 1.02, scaleY: 1.02 },
 		);
 	});
 
