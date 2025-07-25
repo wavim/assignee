@@ -11,19 +11,19 @@ export default defineI18n({
 			title: "All in one.",
 			groups: {
 				title: "Groups.",
-				detail: "Create, invite, and join as many groups as you need. Promote members for management, and track it all with unparalleled ease.",
+				detail: "Create, invite, and join unlimited groups. Manage and organize everything with unparalleled ease.",
 			},
 			assign: {
 				title: "Assign.",
-				detail: "Assign tasks to members with details and attachments for their reference. And of course, set deadlines to keep things on track.",
+				detail: "Delegate tasks with details and attachments. Choose deadlines to keep things smoothly on track.",
 			},
 			submit: {
 				title: "Submit.",
-				detail: "Remember to submit your assigned tasks on time. Gradually attach and update your work for review as you progress.",
+				detail: "Punctually return assigned tasks everytime. Update attachments gradually as progress is made.",
 			},
 			return: {
 				title: "Return.",
-				detail: "Should it be schoolwork or workplace tasks, you can grade the submissions of assignees and provide feedback with comments.",
+				detail: "Grade submissions with feedback and comments. Encourage improvements upon the results.",
 			},
 		},
 		action: {
@@ -42,19 +42,19 @@ export default defineI18n({
 			title: "尽在掌握",
 			groups: {
 				title: "群組",
-				detail: "創建、邀請或加入群組。提拔兩三個成員幫忙管理，用最少的精力關注一切動態。",
+				detail: "創建、邀請、或加入無限群組。用最少的精力關注一切動態。",
 			},
 			assign: {
 				title: "發佈",
-				detail: "把作業連同明細和附件一同分配給組員。重中之重，當然是不要忘記設置截止日期。",
+				detail: "把作業連同明細和附件一同分配。截止日期會確保一切順利。",
 			},
 			submit: {
 				title: "提交",
-				detail: "作為君子，記得準時提交作業。你可以隨著進度進展逐步上傳或更新你的作業附件。",
+				detail: "再也不忘記準時提交作業。隨著進度進展逐步更新你的附件。",
 			},
 			return: {
 				title: "反饋",
-				detail: "不論是學校家課或是工作任務，你都可以給作業打分、給出評論，以期再接再厲。",
+				detail: "給作業打分並給出評論和反饋。鼓勵成員在此之上再接再厲。",
 			},
 		},
 		action: {
