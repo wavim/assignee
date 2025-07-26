@@ -1,4 +1,5 @@
 import Link from "../../atoms/Link";
+import Part from "../../atoms/Part";
 import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header/Header";
 import I18n from "./I18n";
@@ -19,10 +20,12 @@ const Info = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="font-jakarta flex flex-col gap-8 px-8">
-			<h1 class="text-text-major text-6xl font-medium">404</h1>
-			<p class="text-text-minor text-xl">{t("detail")}</p>
+		<Part
+			title="404"
+			subtitle={t("detail")}
+			class="text-6xl md:text-7xl"
+		>
 			<Link href="/">{t("link")}</Link>
-		</section>
+		</Part>
 	);
 };
