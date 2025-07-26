@@ -31,7 +31,7 @@ export default () => {
 
 	return (
 		<I18n.I18n>
-			<div class="h-28"></div>
+			<div class="h-28 md:h-40"></div>
 			<header class="fixed top-2 flex h-16 w-[calc(100%-1rem)] items-center justify-center">
 				<div
 					ref={bg}
