@@ -1,4 +1,5 @@
 import Link from "../../atoms/Link";
+import Part from "../../atoms/Part";
 import Tiles from "../../atoms/Tiles";
 import Footer from "../../layouts/Footer/Footer";
 import Header from "../../layouts/Header/Header";
@@ -21,15 +22,12 @@ const Hero = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="font-jakarta flex flex-col gap-8 px-8 md:items-center md:gap-12">
-			<h1 class="text-text-major w-4/5 text-4xl font-medium md:text-center md:text-5xl">
-				{t("hero.title")}
-			</h1>
-			<p class="text-text-minor w-11/12 text-xl md:text-center md:text-2xl">
-				{t("hero.subtitle")}
-			</p>
+		<Part
+			title={t("hero.title")}
+			subtitle={t("hero.subtitle")}
+		>
 			<Link href="/login">{t("hero.login")}</Link>
-		</section>
+		</Part>
 	);
 };
 
@@ -75,14 +73,11 @@ const Action = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="font-jakarta flex flex-col gap-8 px-8 md:items-center md:gap-12">
-			<h1 class="text-text-major w-4/5 text-4xl font-medium md:text-center md:text-5xl">
-				{t("action.title")}
-			</h1>
-			<p class="text-text-minor w-11/12 text-xl md:text-center md:text-2xl">
-				{t("action.subtitle")}
-			</p>
+		<Part
+			title={t("action.title")}
+			subtitle={t("action.subtitle")}
+		>
 			<Link href="/login">{t("action.login")}</Link>
-		</section>
+		</Part>
 	);
 };
