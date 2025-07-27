@@ -338,3 +338,19 @@ very cheap and the overhead of adding indexes is staggeringly small.
 
 The same applies for other systems e.g. indexing foreign keys, and details on
 indexes shall only be given in later sections if it is used for other purposes.
+
+\subsubsection{Normal Forms}
+\label{data-layer.design.user.normals}
+
+Practical databases adopt normal forms partially. Certain compromises could
+enhance performance and even flexibility e.g. the arguable JSON usage.
+
+All tables in Assignee abide normal forms as much as they could, with a few
+exceptions. For instance, the classic JSON for preference case. The separation of
+e.g. Password from i.e. User even though they could be in the same table without
+violating normal forms, is to keep separate table metadata i.e. update timestamps
+for security monitoring. It also implies more flexibility to addition of user-related
+data.
+
+Most tables abide the same guidelines: 3NF/4NF, and only minimal exceptions for
+practical purposes. This shall not be mentioned again in later systems for brevity.
