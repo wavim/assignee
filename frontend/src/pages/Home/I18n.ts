@@ -9,6 +9,7 @@ export default defineI18n({
 		},
 		features: {
 			title: "All in one.",
+			alias: "Features",
 			groups: {
 				title: "Groups.",
 				detail: "Create, invite, and join unlimited groups. Manage and organize everything with unparalleled ease.",
@@ -39,7 +40,8 @@ export default defineI18n({
 			login: "開始使用",
 		},
 		features: {
-			title: "尽在掌握",
+			title: "盡在掌握",
+			alias: "功能",
 			groups: {
 				title: "群組",
 				detail: "創建、邀請、或加入無限群組。用最少的精力關注一切動態。",

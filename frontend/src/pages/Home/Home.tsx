@@ -39,7 +39,7 @@ const Feature = () => {
 			<h2 class="text-text-major mb-4 flex-1 text-3xl md:text-4xl">
 				{props.title}
 			</h2>
-			<p class="text-text-major text-xl md:w-3/5 md:text-2xl">{props.children}</p>
+			<p class="text-text-major text-xl md:w-2/3 md:text-2xl">{props.children}</p>
 		</div>
 	);
 
@@ -47,24 +47,34 @@ const Feature = () => {
 
 	return (
 		<section class="font-jakarta px-8">
-			<h1 class="text-text-major mb-12 text-center text-5xl font-medium md:mb-16 md:text-6xl">
+			<h1 class="text-text-major mb-12 text-center text-5xl font-medium md:mb-16 md:text-7xl">
 				{t("features.title")}
 			</h1>
-			<Item title={t("features.groups.title")}>
-				{t("features.groups.detail")}
-			</Item>
-			<Line></Line>
-			<Item title={t("features.assign.title")}>
-				{t("features.assign.detail")}
-			</Item>
-			<Line></Line>
-			<Item title={t("features.submit.title")}>
-				{t("features.submit.detail")}
-			</Item>
-			<Line></Line>
-			<Item title={t("features.return.title")}>
-				{t("features.return.detail")}
-			</Item>
+			<div class="md:flex">
+				<h1 class="font-jakarta sticky top-28 hidden flex-1 self-start text-5xl md:block">
+					{t("features.alias")}
+				</h1>
+				<div class="md:w-2/3">
+					<Item title={t("features.groups.title")}>
+						{t("features.groups.detail")}
+					</Item>
+					<Line></Line>
+					<Item title={t("features.assign.title")}>
+						{t("features.assign.detail")}
+					</Item>
+					<Line></Line>
+					<Item title={t("features.submit.title")}>
+						{t("features.submit.detail")}
+					</Item>
+					<Line></Line>
+					<Item title={t("features.return.title")}>
+						{t("features.return.detail")}
+					</Item>
+				</div>
+			</div>
+			<div class="text-text-major mt-30 hidden text-center text-7xl md:block">
+				ˇ
+			</div>
 		</section>
 	);
 };

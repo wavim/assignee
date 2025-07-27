@@ -23,7 +23,6 @@ const Info = () => {
 		<Part
 			title="404"
 			subtitle={t("detail")}
-			class="text-6xl md:text-7xl"
 		>
 			<Link href="/">{t("link")}</Link>
 		</Part>
