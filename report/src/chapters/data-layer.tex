@@ -329,32 +329,33 @@ settings feature.
 \subsubsection{Indexes}
 \label{data-layer.design.user.indexes}
 
-Some tables in Assignee owe one-to-one relations and would not need additional indexing.
-However, some tables owe many-to-one relations, thus their foreign keys are
-indexed to ease relational item gathering.
+Some tables in Assignee owe one-to-one relations and would not need additional indexing,
+other than indexing unique fields which is done by default. However, some tables
+owe many-to-one relations, thus their foreign keys are indexed to ease relational
+item gathering.
 
-Unlike obsolete binary search based index taught in textbooks, modern DBMS typically
-uses B-Trees for indexing, which is a self-balancing data structure. Unlike BST indexes
-with O(n) time complexities, which also require index reconstruction on insertion
-or deletion; B-Trees allow O(logn) operations, and index reconstruction is not
-necessary. This implies that in modern DBMS indexes are very cheap and the overhead
-of adding indexes is staggeringly small.
+Unlike obsolete binary search based index taught in textbooks, modern DBMS
+typically uses B-Trees for indexing, which is a self-balancing data structure.
+Unlike BST indexes with O(n) time complexities, which also require index
+reconstruction on insertion or deletion; B-Trees allow O(logn) operations, and index
+reconstruction is not necessary. This implies that in modern DBMS indexes are
+very cheap and the overhead of adding indexes is staggeringly small.
 
-The same applies for other systems e.g. indexing foreign keys, and details on indexes
-shall only be given in later sections if it is used for other purposes.
+The same applies for other systems e.g. indexing foreign keys, and details on
+indexes shall only be given in later sections if it is used for other purposes.
 
 \subsubsection{Normal Forms}
 \label{data-layer.design.user.normals}
 
-Practical databases adopt normal forms partially. Certain compromises could enhance
-performance and even flexibility e.g. the arguable JSON usage.
+Practical databases adopt normal forms partially. Certain compromises could
+enhance performance and even flexibility e.g. the arguable JSON usage.
 
-All tables in Assignee abide normal forms as much as they could, with a few exceptions.
-For instance, the classic JSON for preference case. The separation of e.g. Password
-from i.e. User even though they could be in the same table without violating
-normal forms, is to keep separate table metadata i.e. update timestamps for
-security monitoring. It also implies more flexibility to addition of user-related
+All tables in Assignee abide normal forms as much as they could, with a few
+exceptions. For instance, the classic JSON for preference case. The separation of
+e.g. Password from i.e. User even though they could be in the same table without
+violating normal forms, is to keep separate table metadata i.e. update timestamps
+for security monitoring. It also implies more flexibility to addition of user-related
 data.
 
-Most tables abide the same guidelines: 3NF/4NF, and only minimal exceptions for practical
-purposes. This shall not be mentioned again in later systems for brevity.
+Most tables abide the same guidelines: 3NF/4NF, and only minimal exceptions for
+practical purposes. This shall not be mentioned again in later systems for brevity.
