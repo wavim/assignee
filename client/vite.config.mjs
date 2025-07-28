@@ -10,7 +10,7 @@ export default defineConfig({
 		target: "esnext",
 
 		emptyOutDir: true,
-		outDir: "../backend/public",
+		outDir: "../server/public",
 
 		minify: "terser",
 		cssMinify: "lightningcss",
