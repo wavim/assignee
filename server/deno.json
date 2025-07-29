@@ -5,12 +5,17 @@
     "build": "deno run -A npm:cpr src/app.db bin/app.db -o && deno compile -A --include public -o bin/app src/app.ts"
   },
   "imports": {
+    "./": "./",
+    "/": "./src/",
+    "@noble/hashes": "jsr:@noble/hashes@^1.8.0",
     "@prisma/client": "npm:@prisma/client@^6.12.0",
+    "@std/encoding": "jsr:@std/encoding@^1.0.10",
     "@std/path": "jsr:@std/path@^1.1.1",
     "@types/compression": "npm:@types/compression@^1.8.1",
     "@types/express": "npm:@types/express@^5.0.3",
     "compression": "npm:compression@^1.8.1",
     "express": "npm:express@^5.1.0",
-    "prisma": "npm:prisma@^6.12.0"
+    "prisma": "npm:prisma@^6.12.0",
+    "zod": "npm:zod@^4.0.13"
   }
 }
