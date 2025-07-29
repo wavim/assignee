@@ -17,7 +17,7 @@ const routes: RouteDefinition[] = [
 	// MO TODO route / to /app if authorized
 	{ path: "/", component: lazy(() => import("./pages/Home/Home")) },
 
-	{ path: "**", component: lazy(() => import("./pages/404/404")) },
+	{ path: "*", component: lazy(() => import("./pages/404/404")) },
 ];
 
 render(() => <Router>{routes}</Router>, root);
