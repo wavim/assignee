@@ -1,2 +1,4 @@
-**/dev.db
+deno.lock
+**/app.db
 **/public
+src/prisma

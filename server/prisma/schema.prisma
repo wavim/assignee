@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../src/app.db"
+}
+
+model User {
+  uid      Int       @id @default(autoincrement())
+  email    String    @unique
+  name     String
+  created  DateTime  @default(now())
+  updated  DateTime  @updatedAt
+  password Password?
+  Session  Session[]
+}
+
+model Password {
+  uid     Int      @id @default(autoincrement())
+  hash    Bytes
+  salt    Bytes
+  updated DateTime @updatedAt
+  user    User     @relation(fields: [uid], references: [uid], onDelete: Cascade)
+}
+
+model Session {
+  sid     Int      @id @default(autoincrement())
+  uid     Int
+  hash    Bytes
+  salt    Bytes
+  created DateTime @default(now())
+  user    User     @relation(fields: [uid], references: [uid], onDelete: Cascade)
+
+  @@index([uid])
+}
