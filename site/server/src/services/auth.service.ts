@@ -1,9 +1,9 @@
 import { k12 } from "@noble/hashes/sha3-addons";
 import { Input, randomBytes } from "@noble/hashes/utils";
+import { zAuthId, zBearer } from "@schema";
 import { encodeBase64 } from "@std/encoding/base64";
 import { Buffer } from "node:buffer";
 import { prisma } from "/db/client.ts";
-import { zAuthId, zBearer } from "/schema/schema.ts";
 
 export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
   const user = await prisma.user.findUnique({

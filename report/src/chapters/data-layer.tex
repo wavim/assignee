@@ -244,6 +244,7 @@ This part is about the design of the authentication process specific to a
 session. For the reasons of using a hash/salt pair, refer to
 \hyperref[data-layer.design.user.tables.pswd.crypt]{Crypt}.
 
+% MO FIX
 When a user is logged-in, a bearer token consisting of a session identifier and a
 token string. The session identifier is unique globally, and the token string is
 a random hex string of specific length.

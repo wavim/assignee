@@ -1,9 +1,10 @@
-import { join } from "@std/path";
-import { route } from "/routes/route.ts";
 // @ts-types="@types/express"
 import express from "express";
 // @ts-types="@types/compression"
 import compression from "compression";
+
+import { join } from "@std/path";
+import { route } from "/routes/route.ts";
 
 const src = join(import.meta.dirname!, "../public");
 

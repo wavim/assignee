@@ -1,6 +1,7 @@
 // @ts-types="@types/express"
 import { Router } from "express";
-import { AuthId } from "/schema/schema.ts";
+
+import { AuthId } from "@schema";
 import { signin, signup } from "/services/auth.service.ts";
 
 export const auth = Router();

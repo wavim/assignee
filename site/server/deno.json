@@ -5,6 +5,7 @@
     "build": "deno run -A npm:cpr src/app.db bin/app.db -o && deno compile -A --include public -o bin/app src/app.ts"
   },
   "imports": {
+    "@schema": "../schema/src/index.ts",
     "./": "./",
     "/": "./src/",
     "@noble/hashes": "jsr:@noble/hashes@^1.8.0",

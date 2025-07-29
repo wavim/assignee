@@ -1,21 +1,13 @@
 {
-	"name": "client",
-	"type": "module",
-	"license": "MIT",
+	"name": "@app/client",
 	"version": "0.0.0",
 	"scripts": {
 		"watch": "vite --host --open",
 		"serve": "vite build && vite preview --host --open",
-		"build": "vite build",
-		"prepare": "cd .. && husky client/.husky"
-	},
-	"lint-staged": {
-		"*.{ts,tsx}": [
-			"eslint --fix --no-warn-ignored --max-warnings=0",
-			"prettier --write"
-		]
+		"build": "vite build"
 	},
 	"dependencies": {
+		"@app/schema": "link:../schema",
 		"@solid-primitives/i18n": "^2.2.1",
 		"@solidjs/router": "^0.15.3",
 		"axios": "^1.11.0",
@@ -31,8 +23,6 @@
 		"@tailwindcss/vite": "^4.1.11",
 		"eslint": "^9.32.0",
 		"eslint-config-prettier": "^10.1.8",
-		"husky": "^9.1.7",
-		"lint-staged": "^16.1.2",
 		"prettier": "^3.6.2",
 		"prettier-plugin-tailwindcss": "^0.6.14",
 		"tailwindcss": "^4.1.11",
