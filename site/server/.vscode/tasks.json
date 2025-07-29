@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "deno",
+      "command": "task",
+      "args": [
+        "start"
+      ],
+      "problemMatcher": [
+        "$deno"
+      ],
+      "label": "deno start"
+    },
+    {
+      "type": "deno",
+      "command": "task",
+      "args": [
+        "watch"
+      ],
+      "problemMatcher": [
+        "$deno"
+      ],
+      "label": "deno watch"
+    },
+    {
+      "type": "deno",
+      "command": "task",
+      "args": [
+        "build"
+      ],
+      "problemMatcher": [
+        "$deno"
+      ],
+      "label": "deno build"
+    }
+  ]
+}

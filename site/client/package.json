@@ -1,0 +1,36 @@
+{
+	"name": "@app/client",
+	"version": "0.0.0",
+	"scripts": {
+		"watch": "vite --host --open",
+		"serve": "vite build && vite preview --host --open",
+		"build": "vite build"
+	},
+	"dependencies": {
+		"@app/schema": "link:../schema",
+		"@solid-primitives/i18n": "^2.2.1",
+		"@solidjs/router": "^0.15.3",
+		"axios": "^1.11.0",
+		"gsap": "^3.13.0",
+		"lenis": "^1.3.8",
+		"natural-log": "3.3.3",
+		"solid-js": "^1.9.7",
+		"tailwind-merge": "^3.3.1"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.32.0",
+		"@stylistic/eslint-plugin": "^5.2.2",
+		"@tailwindcss/vite": "^4.1.11",
+		"eslint": "^9.32.0",
+		"eslint-config-prettier": "^10.1.8",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.6.14",
+		"tailwindcss": "^4.1.11",
+		"terser": "^5.43.1",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.38.0",
+		"vite": "^7.0.6",
+		"vite-plugin-solid": "^2.11.7"
+	},
+	"packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
+}
