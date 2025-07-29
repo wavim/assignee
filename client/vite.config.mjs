@@ -8,9 +8,8 @@ export default defineConfig({
 
 	build: {
 		target: "esnext",
-
-		emptyOutDir: true,
 		outDir: "../server/public",
+		emptyOutDir: true,
 
 		minify: "terser",
 		cssMinify: "lightningcss",
