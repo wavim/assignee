@@ -1,8 +1,8 @@
-import Link from "../../atoms/Link";
-import Part from "../../atoms/Part";
-import Tiles from "../../atoms/Tiles";
-import Footer from "../../layouts/Footer/Footer";
-import Header from "../../layouts/Header/Header";
+import Footer from "../../gui/Footer/Footer";
+import Header from "../../gui/Header/Header";
+import Link from "../../gui/Link";
+import Part from "../../gui/Part";
+import Tiles from "../../gui/Tiles";
 import I18n from "./I18n";
 
 export default () => (
@@ -26,7 +26,7 @@ const Hero = () => {
 			title={t("hero.title")}
 			subtitle={t("hero.subtitle")}
 		>
-			<Link href="/login">{t("hero.login")}</Link>
+			<Link href="/signin">{t("hero.signin")}</Link>
 		</Part>
 	);
 };
@@ -87,7 +87,7 @@ const Action = () => {
 			title={t("action.title")}
 			subtitle={t("action.subtitle")}
 		>
-			<Link href="/login">{t("action.login")}</Link>
+			<Link href="/signin">{t("hero.signin")}</Link>
 		</Part>
 	);
 };

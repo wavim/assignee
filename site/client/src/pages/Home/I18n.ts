@@ -1,11 +1,11 @@
-import { defineI18n } from "../../locales/I18n";
+import { defineI18n } from "../../i18n/I18n";
 
 export default defineI18n({
 	en: {
 		hero: {
 			title: "Your simplest app for assignments.",
 			subtitle: "Assign, return, and grade with utmost ease – whether for business, school, or hobbies.",
-			login: "Get Started",
+			signin: "Get Started",
 		},
 		features: {
 			title: "All in one.",
@@ -30,14 +30,14 @@ export default defineI18n({
 		action: {
 			title: "Never forget anything anymore.",
 			subtitle: "Bring your productivity to the next dimension with Assignee.",
-			login: "Get Started",
+			signin: "Get Started",
 		},
 	},
 	zh: {
 		hero: {
 			title: "屬於你的極簡作業管理軟件",
 			subtitle: "發布、提交、批改，從未如此簡單 – 不論用於公事、學校抑或興趣愛好",
-			login: "開始使用",
+			signin: "開始使用",
 		},
 		features: {
 			title: "盡在掌握",
@@ -62,7 +62,7 @@ export default defineI18n({
 		action: {
 			title: "再也不忘記任何大小要事",
 			subtitle: "令你的工作效率躍升至另一個次元",
-			login: "開始使用",
+			signin: "開始使用",
 		},
 	},
 });

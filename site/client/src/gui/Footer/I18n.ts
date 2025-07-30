@@ -1,4 +1,4 @@
-import { defineI18n } from "../../locales/I18n";
+import { defineI18n } from "../../i18n/I18n";
 
 export default defineI18n({
 	en: { copyright: "Copyright © 2025 David W" },

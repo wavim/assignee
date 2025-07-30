@@ -1,4 +1,4 @@
-import Logo from "../../atoms/Logo";
+import Logo from "../Logo";
 import I18n from "./I18n";
 
 export default () => {

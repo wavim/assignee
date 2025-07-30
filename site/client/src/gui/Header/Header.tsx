@@ -1,10 +1,10 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
-import Logo from "../../atoms/Logo";
 import { ease } from "../../configs/media";
 import { Props } from "../../types/props";
 import A11y from "../A11y/A11y";
+import Logo from "../Logo";
 import I18n from "./I18n";
 
 export default () => {
