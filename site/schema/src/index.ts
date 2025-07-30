@@ -8,6 +8,6 @@ export type zAuthId = z.infer<typeof AuthId>;
 
 export const Bearer = z.object({
   sid: z.int(),
-  key: z.base64().length(32),
+  key: z.string().length(64).regex(/^[a-f\d]*$/),
 });
 export type zBearer = z.infer<typeof Bearer>;
