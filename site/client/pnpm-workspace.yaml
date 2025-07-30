@@ -1,6 +1,3 @@
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - esbuild
-
-overrides:
-  '@app/schema': link:../schema

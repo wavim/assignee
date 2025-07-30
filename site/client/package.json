@@ -1,5 +1,5 @@
 {
-	"name": "@app/client",
+	"name": "@/client",
 	"version": "0.0.0",
 	"scripts": {
 		"watch": "vite --host --open",
@@ -7,7 +7,7 @@
 		"build": "vite build"
 	},
 	"dependencies": {
-		"@app/schema": "link:../schema",
+		"@/schema": "link:../schema",
 		"@solid-primitives/i18n": "^2.2.1",
 		"@solidjs/router": "^0.15.3",
 		"axios": "^1.11.0",
