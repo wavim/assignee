@@ -1,6 +1,7 @@
 import Footer from "../../gui/Footer/Footer";
 import Header from "../../gui/Header/Header";
 import Link from "../../gui/Link";
+import Main from "../../gui/Main";
 import Part from "../../gui/Part";
 import Tiles from "../../gui/Tiles";
 import I18n from "./I18n";
@@ -8,12 +9,12 @@ import I18n from "./I18n";
 export default () => (
 	<I18n.I18n>
 		<Header></Header>
-		<main class="flex w-full flex-1 flex-col gap-16 md:gap-24">
+		<Main>
 			<Hero></Hero>
 			<Tiles></Tiles>
 			<Feature></Feature>
 			<Action></Action>
-		</main>
+		</Main>
 		<Footer></Footer>
 	</I18n.I18n>
 );
@@ -51,7 +52,7 @@ const Feature = () => {
 				{t("features.title")}
 			</h1>
 			<div class="md:flex">
-				<h1 class="font-jakarta sticky top-28 hidden flex-1 self-start text-5xl md:block">
+				<h1 class="font-jakarta sticky top-28 mb-28 hidden h-3/4 flex-1 self-start text-5xl md:block">
 					{t("features.alias")}
 				</h1>
 				<div class="md:w-2/3">
@@ -71,9 +72,6 @@ const Feature = () => {
 						{t("features.return.detail")}
 					</Item>
 				</div>
-			</div>
-			<div class="text-text-major mt-30 hidden text-center text-7xl md:block">
-				ˇ
 			</div>
 		</section>
 	);
