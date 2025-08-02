@@ -1,39 +1,59 @@
 // @ts-types="@types/express"
 import { Router } from "express";
 
-import { AuthId } from "@schema";
-import { signin, signup } from "/services/auth.service.ts";
+import { AuthId, Bearer } from "@schema";
+import { ErrorCode, HttpError } from "@wvm/http-error";
+import { rateLimit } from "express-rate-limit";
+import { flattenError } from "zod";
+import { authenticate } from "/middlewares/auth.middleware.ts";
+import { rotate, signin, signup } from "/services/auth.service.ts";
+import { bearer } from "/utils/cookie.ts";
 
 export const auth = Router();
 
-auth.post("/signin", async (req, res) => {
-  const authid = AuthId.safeParse(req.body);
+auth.post("/signin", rateLimit(), async (req, res) => {
+  const { success, error, data } = AuthId.safeParse(req.body);
 
-  if (!authid.success) {
-    return res.sendStatus(400);
+  if (!success) {
+    return res.status(400).json(flattenError(error));
   }
 
   try {
-    res.json(await signin(authid.data));
+    res.cookie(...bearer(await signin(data))).end();
   } catch (e) {
-    if (typeof e === "number") {
-      res.sendStatus(e);
+    if (e instanceof HttpError) {
+      res.status(e.status).send(e.message);
     }
+    res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
   }
 });
 
-auth.post("/signup", async (req, res) => {
-  const authid = AuthId.safeParse(req.body);
+auth.post("/signup", rateLimit(), async (req, res) => {
+  const { success, error, data } = AuthId.safeParse(req.body);
 
-  if (!authid.success) {
-    return res.sendStatus(400);
+  if (!success) {
+    return res.status(400).json(flattenError(error));
   }
 
   try {
-    res.json(await signup(authid.data));
+    res.cookie(...bearer(await signup(data))).end();
   } catch (e) {
-    if (typeof e === "number") {
-      res.sendStatus(e);
+    if (e instanceof HttpError) {
+      res.status(e.status).send(e.message);
     }
+    res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
+  }
+});
+
+auth.post("/rotate", authenticate, async (req, res) => {
+  const data = Bearer.parse(req.cookies.bearer);
+
+  try {
+    res.cookie(...bearer(await rotate(data))).end();
+  } catch (e) {
+    if (e instanceof HttpError) {
+      res.status(e.status).send(e.message);
+    }
+    res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
   }
 });

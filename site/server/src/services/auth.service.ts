@@ -1,9 +1,19 @@
-import { k12 } from "@noble/hashes/sha3-addons";
-import { Input, randomBytes } from "@noble/hashes/utils";
+import { bytesToHex, randomBytes } from "@noble/hashes/utils";
 import { zAuthId, zBearer } from "@schema";
-import { encodeBase64 } from "@std/encoding/base64";
-import { Buffer } from "node:buffer";
+import { HttpError } from "@wvm/http-error";
 import { prisma } from "/db/client.ts";
+import { hashMatch, hashPair } from "/utils/crypt.ts";
+
+async function session(uid: number): Promise<zBearer> {
+  const key = bytesToHex(randomBytes(32));
+
+  const { sid } = await prisma.session.create({
+    data: { uid, ...hashPair(key) },
+    select: { sid: true },
+  });
+
+  return { sid, key };
+}
 
 export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
   const user = await prisma.user.findUnique({
@@ -11,53 +21,53 @@ export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
     select: { uid: true, password: true },
   });
 
-  if (!user?.password) {
-    throw 401;
+  if (!user) {
+    throw new HttpError("UNAUTHORIZED", "Incorrect email or password.");
   }
 
-  const { hash } = authpair(pwd, user.password.salt);
+  if (!user.password) {
+    throw new HttpError("INTERNAL_SERVER_ERROR", `Lost ${eml} password entry.`);
+  }
 
-  if (Buffer.compare(hash, user.password.hash)) {
-    throw 401;
+  if (!hashMatch(pwd, user.password)) {
+    throw new HttpError("UNAUTHORIZED", "Incorrect email or password.");
   }
 
   return await session(user.uid);
 }
 
 export async function signup({ eml, pwd }: zAuthId): Promise<zBearer> {
+  let uid;
+
   try {
-    const { uid } = await prisma.user.create({
+    const user = await prisma.user.create({
       data: { email: eml, name: eml.split("@", 1)[0] },
       select: { uid: true },
     });
-
-    await prisma.password.create({ data: { uid, ...authpair(pwd) } });
-
-    return await session(uid);
+    uid = user.uid;
   } catch {
-    throw 409;
+    throw new HttpError("CONFLICT", "Email already in use.");
   }
+
+  try {
+    await prisma.password.create({
+      data: { uid, ...hashPair(pwd) },
+      select: {},
+    });
+  } catch {
+    throw new HttpError(
+      "INTERNAL_SERVER_ERROR",
+      `Cannot create ${eml} password.`,
+    );
+  }
+
+  return await session(uid);
 }
 
-async function session(uid: number): Promise<zBearer> {
-  const key = randomBytes(32);
+export async function rotate({ sid }: zBearer): Promise<zBearer> {
+  const {
+    uid,
+  } = await prisma.session.delete({ where: { sid }, select: { uid: true } });
 
-  const { sid } = await prisma.session.create({
-    data: { uid, ...authpair(key) },
-    select: { sid: true },
-  });
-
-  return { sid, key: encodeBase64(key) };
-}
-
-// MO REF
-function authpair(
-  key: Input,
-  salt = randomBytes(16),
-): { hash: Uint8Array; salt: Uint8Array } {
-  const hash = k12(key, {
-    dkLen: 32,
-    personalization: salt,
-  });
-  return { hash, salt };
+  return await session(uid);
 }
