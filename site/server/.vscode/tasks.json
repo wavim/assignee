@@ -16,17 +16,6 @@
       "type": "deno",
       "command": "task",
       "args": [
-        "watch"
-      ],
-      "problemMatcher": [
-        "$deno"
-      ],
-      "label": "deno watch"
-    },
-    {
-      "type": "deno",
-      "command": "task",
-      "args": [
         "build"
       ],
       "problemMatcher": [

@@ -4,15 +4,21 @@ import express from "express";
 import compression from "compression";
 
 import { join } from "@std/path";
+import { crons } from "/db/crons.ts";
 import { route } from "/routes/route.ts";
 
-const src = join(import.meta.dirname!, "../public");
+crons();
 
+const src = join(
+  import.meta.dirname!,
+  "../public",
+);
 const app = express()
-  .use(compression())
+  // MO TODO https://github.com/denoland/deno/issues/30259
+  // .use(compression())
   .use("/api", route)
   .use(express.static(src))
-  .get("/*NFOUND", (_, res) => res.sendFile(join(src, "index.html")));
+  .get("/*E404", (_, res) => res.sendFile(join(src, "index.html")));
 
 app.listen(5450, () => {
   console.log(
