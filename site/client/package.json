@@ -2,7 +2,8 @@
 	"scripts": {
 		"watch": "vite --host --open",
 		"serve": "vite build && vite preview --host --open",
-		"build": "vite build"
+		"build": "vite build",
+		"buildw": "vite build -w"
 	},
 	"dependencies": {
 		"@app/schema": "link:..\\schema",
