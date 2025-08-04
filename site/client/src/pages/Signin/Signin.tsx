@@ -64,7 +64,7 @@ const Form = () => {
 
 	return (
 		<section class="flex flex-col gap-8 px-8 md:gap-12">
-			<h1 class="font-jakarta md: text-text-major text-3xl font-medium md:self-center">
+			<h1 class="font-jakarta text-text-major text-3xl font-medium md:self-center md:text-4xl">
 				{t("greet")}
 			</h1>
 			<form class="flex w-full max-w-110 flex-col gap-4 self-center">
