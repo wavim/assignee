@@ -52,7 +52,7 @@ const Feature = () => {
 				{t("features.title")}
 			</h1>
 			<div class="md:flex">
-				<h1 class="font-jakarta sticky top-28 mb-28 hidden h-3/4 flex-1 self-start text-5xl md:block">
+				<h1 class="font-jakarta text-text-minor sticky top-28 mb-28 hidden h-3/4 flex-1 self-start text-5xl md:block">
 					{t("features.alias")}
 				</h1>
 				<div class="md:w-2/3">
