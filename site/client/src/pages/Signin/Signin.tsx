@@ -30,17 +30,19 @@ const Form = () => {
 	let eml!: HTMLInputElement;
 	let pwd!: HTMLInputElement;
 
-	const [error, setError] = createSignal<string | null>(null);
+	const [error, setError] = createSignal<
+		undefined | "error.generic" | "error.ratelim" | "error.systems"
+	>();
 
 	const clearError = () => {
-		setError(null);
+		setError();
 	};
 
 	const onSubmit = () => {
 		const { success, data } = AuthId.safeParse({ eml: eml.value, pwd: pwd.value });
 
 		if (!success) {
-			return setError(t("error.generic"));
+			return setError("error.generic");
 		}
 
 		void signin(data).then((status) => {
@@ -50,13 +52,13 @@ const Form = () => {
 					break;
 				}
 				case ErrorCode.UNAUTHORIZED: {
-					return setError(t("error.generic"));
+					return setError("error.generic");
 				}
 				case ErrorCode.TOO_MANY_REQUESTS: {
-					return setError(t("error.ratelim"));
+					return setError("error.ratelim");
 				}
 				case ErrorCode.INTERNAL_SERVER_ERROR: {
-					return setError(t("error.systems"));
+					return setError("error.systems");
 				}
 			}
 		});
@@ -88,7 +90,10 @@ const Form = () => {
 					onclick={onSubmit}
 					class="mt-4"
 				>
-					{error() ?? t("next")}
+					{
+						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+						error() ? t(error()!) : t("next")
+					}
 				</Button>
 			</form>
 		</section>
