@@ -1,5 +1,5 @@
 import { AuthId } from "@app/schema";
-import { useNavigate } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createSignal } from "solid-js";
 import { signin } from "../../api/auth.api";
@@ -65,11 +65,11 @@ const Form = () => {
 	};
 
 	return (
-		<section class="flex flex-col gap-8 px-8 md:gap-12">
-			<h1 class="font-jakarta text-text-major text-3xl font-medium md:self-center md:text-4xl">
+		<section class="flex flex-col items-center gap-8 px-8 md:gap-12">
+			<h1 class="font-jakarta text-text-major text-3xl font-medium md:text-4xl">
 				{t("greet")}
 			</h1>
-			<form class="flex w-full max-w-110 flex-col gap-4 self-center">
+			<form class="flex w-full max-w-110 flex-col gap-4">
 				<Input
 					ref={eml}
 					type="email"
@@ -95,6 +95,12 @@ const Form = () => {
 						error() ? t(error()!) : t("next")
 					}
 				</Button>
+				<A
+					href="/signup"
+					class="text-text-major font-jakarta mt-4 text-center text-lg"
+				>
+					{`${t("signup")} ›`}
+				</A>
 			</form>
 		</section>
 	);

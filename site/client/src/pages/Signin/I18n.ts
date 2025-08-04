@@ -11,6 +11,7 @@ export default defineI18n({
 			ratelim: "Too Many Requests",
 			systems: "Internal System Error",
 		},
+		signup: "Create Account",
 	},
 	zh: {
 		greet: "很高興你能回來，登錄以繼續使用",
@@ -22,5 +23,6 @@ export default defineI18n({
 			ratelim: "嘗試次數過多",
 			systems: "內部系統錯誤",
 		},
+		signup: "建立賬號",
 	},
 });
