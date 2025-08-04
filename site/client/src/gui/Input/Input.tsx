@@ -13,7 +13,7 @@ export default (props: Props<"input">) => {
 				<input
 					{...props}
 					type={shown() ? "text" : props.type}
-					oninput={({ target }) => {
+					on:input={({ target }) => {
 						setBlank(!target.value.trim().length);
 					}}
 					class="text-text-major border-placeholder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2"
