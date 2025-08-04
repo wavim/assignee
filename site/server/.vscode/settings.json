@@ -3,5 +3,8 @@
   "deno.disablePaths": [
     "public",
     "src/prisma"
+  ],
+  "conventionalCommits.scopes": [
+    "B"
   ]
 }
