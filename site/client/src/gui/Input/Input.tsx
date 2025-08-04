@@ -12,14 +12,18 @@ export default (props: Props<"input">) => {
 			<label class="font-jakarta relative flex items-center">
 				<input
 					{...props}
-					bool:data-blank={blank()}
 					type={shown() ? "text" : props.type}
-					oninput={({ target }) =>
-						setBlank(!target.value.trim().length)
-					}
-					class="text-text-major border-placeholder peer outline-outline w-full rounded-xl border-1 px-4 pt-6 pb-2"
+					oninput={({ target }) => {
+						setBlank(!target.value.trim().length);
+					}}
+					class="text-text-major border-placeholder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2"
 				></input>
-				<span class="text-placeholder ease-300 pointer-events-none absolute left-4 text-lg transition-all ease-out not-peer-data-blank:top-2 not-peer-data-blank:text-xs peer-focus:top-2 peer-focus:text-xs">
+				<span
+					class={twMerge(
+						"text-placeholder ease-300 pointer-events-none absolute left-4 text-lg transition-all ease-out peer-focus:top-2 peer-focus:text-xs",
+						!blank() && "top-2 text-xs",
+					)}
+				>
 					{props.name}
 				</span>
 				<Show when={props.type === "password"}>
@@ -27,10 +31,8 @@ export default (props: Props<"input">) => {
 						onclick={() => setShown(!shown())}
 						shown={shown()}
 						class={twMerge(
-							shown()
-								? "fill-text-major"
-								: "fill-placeholder",
-							"absolute right-4 w-6 cursor-pointer peer-data-blank:hidden",
+							"fill-placeholder absolute right-4 w-6 cursor-pointer",
+							blank() && "hidden",
 						)}
 					></Reveal>
 				</Show>

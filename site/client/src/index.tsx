@@ -14,8 +14,12 @@ if (!root) {
 void init();
 
 const routes: RouteDefinition[] = [
-	// MO TODO route / to /app if authorized
 	{ path: "/", component: lazy(() => import("./pages/Home/Home")) },
+
+	{ path: "/signin", component: lazy(() => import("./pages/Signin/Signin")) },
+	{ path: "/signup", component: lazy(() => import("./pages/Signup/Signup")) },
+
+	{ path: "/app", component: lazy(() => import("./pages/App/App")) },
 
 	{ path: "*", component: lazy(() => import("./pages/404/404")) },
 ];
