@@ -4,10 +4,10 @@ import express from "express";
 import compression from "compression";
 
 import { join } from "@std/path";
-import { crons } from "/db/crons.ts";
+import { init } from "/db/crons.ts";
 import { route } from "/routes/route.ts";
 
-crons();
+init();
 
 const src = join(
   import.meta.dirname!,

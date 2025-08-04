@@ -3,7 +3,7 @@ import { prisma } from "./client.ts";
 import { config } from "/config/config.ts";
 import { subtime } from "/utils/time.ts";
 
-export function crons(): void {
+export function init(): void {
   schedule(
     "0 * * * *",
     async () => {
