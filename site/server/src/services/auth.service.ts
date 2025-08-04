@@ -15,6 +15,14 @@ async function session(uid: number): Promise<zBearer> {
   return { sid, key };
 }
 
+export async function rotate({ sid }: zBearer): Promise<zBearer> {
+  const {
+    uid,
+  } = await prisma.session.delete({ where: { sid }, select: { uid: true } });
+
+  return await session(uid);
+}
+
 export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
   const user = await prisma.user.findUnique({
     where: { email: eml },
@@ -60,14 +68,6 @@ export async function signup({ eml, pwd }: zAuthId): Promise<zBearer> {
       `Cannot create ${eml} password.`,
     );
   }
-
-  return await session(uid);
-}
-
-export async function rotate({ sid }: zBearer): Promise<zBearer> {
-  const {
-    uid,
-  } = await prisma.session.delete({ where: { sid }, select: { uid: true } });
 
   return await session(uid);
 }

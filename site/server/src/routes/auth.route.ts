@@ -11,6 +11,24 @@ import { bearer } from "/utils/cookie.ts";
 
 export const auth = Router();
 
+auth.post(
+  "/rotate",
+  rateLimit({ skipSuccessfulRequests: true }),
+  authenticate,
+  async (req, res) => {
+    const data = Bearer.parse(req.cookies.bearer);
+
+    try {
+      res.cookie(...bearer(await rotate(data))).end();
+    } catch (e) {
+      if (e instanceof HttpError) {
+        return res.status(e.status).send(e.message);
+      }
+      res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
+    }
+  },
+);
+
 auth.post("/signin", rateLimit(), async (req, res) => {
   const { success, error, data } = AuthId.safeParse(req.body);
 
@@ -22,7 +40,7 @@ auth.post("/signin", rateLimit(), async (req, res) => {
     res.cookie(...bearer(await signin(data))).end();
   } catch (e) {
     if (e instanceof HttpError) {
-      res.status(e.status).send(e.message);
+      return res.status(e.status).send(e.message);
     }
     res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
   }
@@ -39,20 +57,7 @@ auth.post("/signup", rateLimit(), async (req, res) => {
     res.cookie(...bearer(await signup(data))).end();
   } catch (e) {
     if (e instanceof HttpError) {
-      res.status(e.status).send(e.message);
-    }
-    res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
-  }
-});
-
-auth.post("/rotate", authenticate, async (req, res) => {
-  const data = Bearer.parse(req.cookies.bearer);
-
-  try {
-    res.cookie(...bearer(await rotate(data))).end();
-  } catch (e) {
-    if (e instanceof HttpError) {
-      res.status(e.status).send(e.message);
+      return res.status(e.status).send(e.message);
     }
     res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
   }
