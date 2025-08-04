@@ -11,25 +11,27 @@ import { bearer } from "/utils/cookie.ts";
 
 export const auth = Router();
 
-auth.post(
-  "/rotate",
-  rateLimit({ skipSuccessfulRequests: true }),
-  authenticate,
-  async (req, res) => {
-    const data = Bearer.parse(req.cookies.bearer);
+const limRotate = rateLimit({ skipSuccessfulRequests: true });
+const limSigner = rateLimit();
 
-    try {
-      res.cookie(...bearer(await rotate(data))).end();
-    } catch (e) {
-      if (e instanceof HttpError) {
-        return res.status(e.status).send(e.message);
-      }
-      res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
+auth.post("/rotate", limRotate, authenticate, async (req, res) => {
+  const { success, error, data } = Bearer.safeParse(req.cookies.bearer);
+
+  if (!success) {
+    return res.status(400).json(flattenError(error));
+  }
+
+  try {
+    res.cookie(...bearer(await rotate(data))).end();
+  } catch (e) {
+    if (e instanceof HttpError) {
+      return res.status(e.status).send(e.message);
     }
-  },
-);
+    res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
+  }
+});
 
-auth.post("/signin", rateLimit(), async (req, res) => {
+auth.post("/signin", limSigner, async (req, res) => {
   const { success, error, data } = AuthId.safeParse(req.body);
 
   if (!success) {
@@ -46,7 +48,7 @@ auth.post("/signin", rateLimit(), async (req, res) => {
   }
 });
 
-auth.post("/signup", rateLimit(), async (req, res) => {
+auth.post("/signup", limSigner, async (req, res) => {
   const { success, error, data } = AuthId.safeParse(req.body);
 
   if (!success) {

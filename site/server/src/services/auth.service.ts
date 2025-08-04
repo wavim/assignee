@@ -16,9 +16,10 @@ async function session(uid: number): Promise<zBearer> {
 }
 
 export async function rotate({ sid }: zBearer): Promise<zBearer> {
-  const {
-    uid,
-  } = await prisma.session.delete({ where: { sid }, select: { uid: true } });
+  const { uid } = await prisma.session.delete({
+    where: { sid },
+    select: { uid: true },
+  });
 
   return await session(uid);
 }
