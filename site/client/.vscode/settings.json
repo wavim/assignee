@@ -1,8 +1,7 @@
 {
-	"files.associations": { "*.css": "tailwindcss" },
-	"editor.quickSuggestions": { "strings": "on" },
+	"conventionalCommits.scopes": ["F"],
+
 	"editor.wordWrap": "on",
-	"conventionalCommits.scopes": [
-		"F"
-	]
+	"files.associations": { "*.css": "tailwindcss" },
+	"editor.quickSuggestions": { "strings": "on" }
 }

@@ -1,10 +1,11 @@
 {
+  "conventionalCommits.scopes": [
+    "B"
+  ],
+
   "deno.enable": true,
   "deno.disablePaths": [
     "public",
     "src/prisma"
-  ],
-  "conventionalCommits.scopes": [
-    "B"
   ]
 }
