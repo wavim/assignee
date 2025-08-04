@@ -1,4 +1,5 @@
 import { zAuthId } from "@app/schema";
+import { ErrorCode } from "@wvm/http-error";
 import { api } from "./api";
 
 export async function rotate(): Promise<boolean> {
@@ -8,6 +9,8 @@ export async function rotate(): Promise<boolean> {
 	);
 }
 
-// export async function signin({eml, pwd}:zAuthId): Promise<boolean> {
-	
-// }
+export async function signin(data: zAuthId): Promise<200 | ErrorCode> {
+	return await api
+		.post("/signin", data, { validateStatus: () => true })
+		.then((r) => r.status);
+}

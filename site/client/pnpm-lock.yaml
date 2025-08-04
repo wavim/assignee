@@ -17,6 +17,9 @@ importers:
       '@solidjs/router':
         specifier: ^0.15.3
         version: 0.15.3(solid-js@1.9.7)
+      '@wvm/http-error':
+        specifier: jsr:^3.0.0
+        version: '@jsr/wvm__http-error@3.0.0'
       axios:
         specifier: ^1.11.0
         version: 1.11.0
@@ -399,6 +402,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.29':
     resolution: {integrity: sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==}
+
+  '@jsr/wvm__http-error@3.0.0':
+    resolution: {integrity: sha512-sYkj0B9U5Xgu/dsJc40L2Dxa5Hy1FE75iamExpaMfOYBU9Xo3t5FFEfLzQtiCVr5Skl3DaVOV31P4kh4x/7lyg==, tarball: https://npm.jsr.io/~/11/@jsr/wvm__http-error/3.0.0.tgz}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1866,6 +1872,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
+
+  '@jsr/wvm__http-error@3.0.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

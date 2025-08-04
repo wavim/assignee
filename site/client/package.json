@@ -9,6 +9,7 @@
 		"@app/schema": "link:..\\schema",
 		"@solid-primitives/i18n": "^2.2.1",
 		"@solidjs/router": "^0.15.3",
+		"@wvm/http-error": "jsr:^3.0.0",
 		"axios": "^1.11.0",
 		"gsap": "^3.13.0",
 		"lenis": "^1.3.8",
