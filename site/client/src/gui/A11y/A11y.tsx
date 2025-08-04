@@ -109,9 +109,9 @@ const Config = <T extends string>(props: {
 		<span class="text-text-minor flex-1">{props.name}</span>
 		<select
 			name={props.name}
-			onchange={({ currentTarget }) => {
+			onchange={({ target }) => {
 				const key = Object.keys(props.options).find(
-					(k) => props.options[k as T] === currentTarget.value,
+					(k) => props.options[k as T] === target.value,
 				) as T;
 				props.children(key);
 			}}

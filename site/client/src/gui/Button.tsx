@@ -7,7 +7,7 @@ export default (props: Props<"button">) => (
 		{...props}
 		type="button"
 		class={twMerge(
-			"bg-button font-jakarta text-text-button outline-button rounded-2xl py-3 text-xl outline-2 outline-offset-0 transition-[outline-offset] duration-100 ease-out hover:outline-offset-2",
+			"bg-button font-jakarta text-text-button outline-button cursor-pointer rounded-xl py-3 text-xl outline-2 outline-offset-0 transition-[outline-offset] duration-100 ease-out hover:outline-offset-2",
 			props.class,
 		)}
 	></button>
