@@ -4,7 +4,7 @@ import { RequestHandler } from "express";
 import { Bearer } from "@schema";
 import { ErrorCode, HttpError } from "@wvm/http-error";
 import { flattenError } from "zod";
-import { config } from "/config/config.ts";
+import { configs } from "/configs/configs.ts";
 import { prisma } from "/db/client.ts";
 import { hashMatch } from "/utils/crypt.ts";
 import { expired } from "/utils/time.ts";
@@ -26,7 +26,7 @@ export const authenticate: RequestHandler = async (req, res, next) => {
       throw new HttpError("UNAUTHORIZED", "Session not found.");
     }
 
-    if (expired(session, config.sessionAge)) {
+    if (expired(session, configs.sessionAge)) {
       throw new HttpError("UNAUTHORIZED", "Session expired.");
     }
 

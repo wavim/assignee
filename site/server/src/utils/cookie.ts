@@ -2,12 +2,12 @@
 import { CookieOptions } from "express";
 
 import { zBearer } from "@schema";
-import { config } from "/config/config.ts";
+import { configs } from "/configs/configs.ts";
 import { addtime } from "/utils/time.ts";
 
 export function bearer(token: zBearer): ["bearer", zBearer, CookieOptions] {
   return ["bearer", token, {
     httpOnly: true,
-    expires: addtime(config.sessionAge),
+    expires: addtime(configs.sessionAge),
   }];
 }
