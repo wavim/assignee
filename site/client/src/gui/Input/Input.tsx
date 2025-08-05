@@ -16,7 +16,7 @@ export default (props: Props<"input">) => {
 					on:input={({ target }) => {
 						setBlank(!target.value.trim().length);
 					}}
-					class="text-text-major border-placeholder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2"
+					class="text-text-major border-placeholder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2 text-base"
 				></input>
 				<span
 					class={twMerge(
