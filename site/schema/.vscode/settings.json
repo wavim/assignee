@@ -1,1 +1,6 @@
-{ "deno.enable": true }
+{
+    "deno.enable": true,
+    "conventionalCommits.scopes": [
+        "S"
+    ]
+}
