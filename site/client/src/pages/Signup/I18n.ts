@@ -6,7 +6,7 @@ export default defineI18n({
 		action: "Explore",
 		errors: {
 			emailre: "Email Format Is Incorrect",
-			passlen: "Password Must Be 8+ Characters",
+			passlen: "Password Length Must ≥ 8",
 			emailna: "Email Already in Use",
 			ratelim: "Too Many Requests",
 			systems: "Internal System Error",
