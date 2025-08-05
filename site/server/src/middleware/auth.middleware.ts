@@ -5,7 +5,7 @@ import { Bearer } from "@schema";
 import { ErrorCode, HttpError } from "@wvm/http-error";
 import { flattenError } from "zod";
 import { configs } from "/configs/configs.ts";
-import { prisma } from "/db/client.ts";
+import { prisma } from "/database/client.ts";
 import { hashMatch } from "/utils/crypt.ts";
 import { expired } from "/utils/time.ts";
 

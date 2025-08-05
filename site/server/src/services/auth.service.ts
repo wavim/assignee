@@ -1,7 +1,7 @@
 import { bytesToHex, randomBytes } from "@noble/hashes/utils";
 import { zAuthId, zBearer } from "@schema";
 import { HttpError } from "@wvm/http-error";
-import { prisma } from "/db/client.ts";
+import { prisma } from "/database/client.ts";
 import { hashMatch, hashPair } from "/utils/crypt.ts";
 
 async function session(uid: number): Promise<zBearer> {

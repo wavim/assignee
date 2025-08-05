@@ -5,7 +5,7 @@ import { AuthId, Bearer } from "@schema";
 import { ErrorCode, HttpError } from "@wvm/http-error";
 import { rateLimit } from "express-rate-limit";
 import { flattenError } from "zod";
-import { authenticate } from "/middlewares/auth.middleware.ts";
+import { authenticate } from "/middleware/auth.middleware.ts";
 import { rotate, signin, signup } from "/services/auth.service.ts";
 import { bearer } from "/utils/cookie.ts";
 

@@ -4,7 +4,7 @@ import express from "express";
 import compression from "compression";
 
 import { join } from "@std/path";
-import { init } from "/db/crons.ts";
+import { init } from "/database/crons.ts";
 import { route } from "/routes/route.ts";
 
 init();

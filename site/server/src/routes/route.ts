@@ -4,7 +4,7 @@ import { json, Router } from "express";
 import cookie from "npm:cookie-parser";
 
 import { auth } from "./auth.route.ts";
-import { prisma } from "/db/client.ts";
+import { prisma } from "/database/client.ts";
 
 export const route = Router().use(json()).use(cookie())
   .use(auth);
