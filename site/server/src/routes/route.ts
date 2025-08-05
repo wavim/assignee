@@ -9,8 +9,11 @@ import { prisma } from "/db/client.ts";
 export const route = Router().use(json()).use(cookie())
   .use(auth);
 
-// MO DEV session reset endpoint
+// MO DEV db reset endpoint
 route.post("/reset", async (_, res) => {
+  await prisma.user.deleteMany({});
+  await prisma.password.deleteMany({});
   await prisma.session.deleteMany({});
-  res.send("cleared");
+
+  res.send("DB RESET");
 });
