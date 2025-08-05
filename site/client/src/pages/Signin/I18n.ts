@@ -7,7 +7,7 @@ export default defineI18n({
 		password: "Password",
 		next: "Continue",
 		error: {
-			generic: "Incorrect Email/Password",
+			generic: "Incorrect Email or Password",
 			ratelim: "Too Many Requests",
 			systems: "Internal System Error",
 		},
