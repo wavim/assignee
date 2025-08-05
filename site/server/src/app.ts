@@ -14,8 +14,9 @@ const src = join(
   "../public",
 );
 const app = express()
-  // MO TODO https://github.com/denoland/deno/issues/30259
-  // .use(compression())
+  // MO ISSUE https://github.com/denoland/deno/issues/30259
+  // MO ISSUE downgrading to deno@2.4.2 to fix
+  .use(compression())
   .use("/api", route)
   .use(express.static(src))
   .get("/*E404", (_, res) => res.sendFile(join(src, "index.html")));
