@@ -14,3 +14,9 @@ export async function signin(data: zAuthId): Promise<200 | ErrorCode> {
 		.post("/signin", data, { validateStatus: () => true })
 		.then((r) => r.status);
 }
+
+export async function signup(data: zAuthId): Promise<200 | ErrorCode> {
+	return await api
+		.post("/signup", data, { validateStatus: () => true })
+		.then((r) => r.status);
+}
