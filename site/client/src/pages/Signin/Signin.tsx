@@ -54,7 +54,7 @@ const Form = () => {
 				const id = error();
 				return id && t(id);
 			})}
-			clear={() => {
+			check={() => {
 				setError();
 			}}
 			alturl="/signup"

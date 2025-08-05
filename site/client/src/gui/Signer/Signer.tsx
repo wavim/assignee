@@ -15,7 +15,7 @@ interface FormProps {
 	submit: (authid: zAuthId) => unknown;
 
 	error: Accessor<undefined | string>;
-	clear: () => void;
+	check: (authid: zAuthId) => unknown;
 
 	alturl: "/signin" | "/signup";
 	altnav: string;
@@ -39,6 +39,10 @@ const Form = (props: FormProps) => {
 	let eml!: HTMLInputElement;
 	let pwd!: HTMLInputElement;
 
+	const check = () => {
+		props.check({ eml: eml.value, pwd: pwd.value });
+	};
+
 	return (
 		<section class="flex flex-col items-center gap-8 px-8 md:gap-12">
 			<h1 class="font-jakarta text-text-major text-3xl font-medium md:text-4xl">
@@ -49,7 +53,7 @@ const Form = (props: FormProps) => {
 					ref={eml}
 					type="email"
 					name={t("email")}
-					oninput={props.clear}
+					oninput={check}
 					spellcheck="false"
 					autocomplete="email"
 				></Input>
@@ -57,7 +61,7 @@ const Form = (props: FormProps) => {
 					ref={pwd}
 					type="password"
 					name={t("password")}
-					oninput={props.clear}
+					oninput={check}
 					autocomplete={
 						props.alturl === "/signin"
 							? "new-password"
