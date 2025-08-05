@@ -31,7 +31,7 @@ export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
   });
 
   if (!user) {
-    throw new HttpError("UNAUTHORIZED", "Incorrect email or password.");
+    throw new HttpError("UNAUTHORIZED", "Invalid email or password.");
   }
 
   if (!user.password) {
@@ -39,7 +39,7 @@ export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
   }
 
   if (!hashMatch(pwd, user.password)) {
-    throw new HttpError("UNAUTHORIZED", "Incorrect email or password.");
+    throw new HttpError("UNAUTHORIZED", "Invalid email or password.");
   }
 
   return await session(user.uid);
