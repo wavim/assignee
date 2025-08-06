@@ -1,27 +1,8 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "type": "deno",
-      "command": "task",
-      "args": [
-        "start"
-      ],
-      "problemMatcher": [
-        "$deno"
-      ],
-      "label": "deno start"
-    },
-    {
-      "type": "deno",
-      "command": "task",
-      "args": [
-        "build"
-      ],
-      "problemMatcher": [
-        "$deno"
-      ],
-      "label": "deno build"
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{ "type": "npm", "script": "start", "label": "tsx start" },
+		{ "type": "npm", "script": "watch", "label": "tsx watch" },
+		{ "type": "npm", "script": "build", "label": "pkg build", "group": "build" }
+	]
 }

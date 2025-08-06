@@ -1,6 +1,9 @@
-import { join } from "@std/path";
-import { PrismaClient } from "/prisma/client.ts";
+import { join } from "path";
+import { PrismaClient } from "../prisma/client";
+import { $server } from "../utils/dirname";
 
-export const prisma = new PrismaClient({
-  datasourceUrl: `file:${join(Deno.cwd(), "app.db")}`,
-});
+if (Object.hasOwn(process, "pkg")) {
+	process.env.PRISMA_QUERY_ENGINE_LIBRARY = join($server, "out", "prisma.dll.node");
+}
+
+export const prisma = new PrismaClient({ datasourceUrl: `file:${join(process.cwd(), "app.db")}` });

@@ -1,4 +1,5 @@
 {
+	"name": "@app/client",
 	"scripts": {
 		"watch": "vite --host --open",
 		"serve": "vite build && vite preview --host --open",

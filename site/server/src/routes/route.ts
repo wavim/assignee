@@ -1,19 +1,15 @@
-// @ts-types="@types/express"
+import cookie from "cookie-parser";
 import { json, Router } from "express";
-// @ts-types="@types/cookie-parser"
-import cookie from "npm:cookie-parser";
+import { prisma } from "../database/client";
+import { auth } from "./auth.route";
 
-import { auth } from "./auth.route.ts";
-import { prisma } from "/database/client.ts";
-
-export const route = Router().use(json()).use(cookie())
-  .use(auth);
+export const route = Router().use(json()).use(cookie()).use(auth);
 
 // MO DEV db reset endpoint
 route.post("/reset", async (_, res) => {
-  await prisma.user.deleteMany({});
-  await prisma.password.deleteMany({});
-  await prisma.session.deleteMany({});
+	await prisma.user.deleteMany({});
+	await prisma.password.deleteMany({});
+	await prisma.session.deleteMany({});
 
-  res.send("DB RESET");
+	res.send("DB RESET");
 });

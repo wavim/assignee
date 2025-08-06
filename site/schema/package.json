@@ -1,12 +1,13 @@
 {
   "name": "@app/schema",
   "version": "0.0.0",
-  "exports": {
-    "import": "./out/index.js",
-    "types": "./out/index.d.ts"
-  },
+  "main": "out/index.js",
+  "types": "out/index.d.ts",
   "scripts": {
     "build": "rollup -c"
+  },
+  "dependencies": {
+    "zod": "^4.0.14"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.1",

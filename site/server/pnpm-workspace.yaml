@@ -1,0 +1,9 @@
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - esbuild
+  - prisma
+
+overrides:
+  '@app/schema': link:../schema
+  schema: link:schema
