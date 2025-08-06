@@ -15,11 +15,11 @@ model User {
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  password Password?
-  sessions Session[]
+  password Pass?
+  sessions Sess[]
 }
 
-model Password {
+model Pass {
   uid     Int      @id
   hash    Bytes
   salt    Bytes
@@ -28,7 +28,7 @@ model Password {
   user User @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
 }
 
-model Session {
+model Sess {
   sid     Int      @id
   uid     Int
   hash    Bytes
