@@ -1,4 +1,3 @@
-**/dist
 **/app.db
 **/public
 src/prisma
