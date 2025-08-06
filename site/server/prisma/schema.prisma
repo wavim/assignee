@@ -15,8 +15,8 @@ model User {
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  password Pass?
-  sessions Sess[]
+  Pass Pass?
+  Sess Sess[]
 }
 
 model Pass {
@@ -29,7 +29,7 @@ model Pass {
 }
 
 model Sess {
-  sid     Int      @id
+  sid     Int      @id @default(autoincrement())
   uid     Int
   hash    Bytes
   salt    Bytes
