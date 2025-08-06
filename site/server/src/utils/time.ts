@@ -2,8 +2,8 @@ export function elapsed(from: Date): number {
 	return Date.now() - Number(from);
 }
 
-export function expired({ created }: { created: Date }, min: number): boolean {
-	return elapsed(created) > min * 60e3;
+export function expired(from: Date, min: number): boolean {
+	return elapsed(from) > min * 60e3;
 }
 
 export function addtime(min: number): Date {
