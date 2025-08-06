@@ -10,7 +10,7 @@ datasource db {
 
 model User {
   uid     Int      @id @default(autoincrement())
-  email   String   @unique
+  mail    String   @unique
   name    String
   created DateTime @default(now())
   updated DateTime @updatedAt
