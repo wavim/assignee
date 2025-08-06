@@ -1,3 +1,1 @@
-export const configs = {
-  sessionAge: 24 * 60,
-};
+export const configs = { sessAge: 24 * 60 };

@@ -4,33 +4,35 @@ import { RequestHandler } from "express";
 import { flattenError } from "zod";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
-import { hashMatch } from "../utils/crypt";
+import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
 
-export const authenticate: RequestHandler = async (req, res, next) => {
+export const authen: RequestHandler = async (req, res, next) => {
 	const cookies = req.cookies as { bearer: zBearer };
 	const { success, error, data } = Bearer.safeParse(cookies.bearer);
 
 	if (!success) {
 		return res.status(400).json(flattenError(error));
 	}
+	const { sid, key } = data;
 
 	try {
-		const session = await prisma.session.findUnique({
-			where: { sid: data.sid },
+		const session = await prisma.sess.findUnique({
 			select: { hash: true, salt: true, created: true },
+			where: { sid },
 		});
 
 		if (!session) {
-			throw new HttpError("UNAUTHORIZED", "Session not found.");
+			throw new HttpError("UNAUTHORIZED", "Session Doesnt Exist");
+		}
+		const { hash, salt, created } = session;
+
+		if (expired(created, configs.sessAge)) {
+			throw new HttpError("UNAUTHORIZED", "Session Has Expired");
 		}
 
-		if (expired(session, configs.sessionAge)) {
-			throw new HttpError("UNAUTHORIZED", "Session expired.");
-		}
-
-		if (!hashMatch(data.key, session)) {
-			throw new HttpError("UNAUTHORIZED", "Invalid session key.");
+		if (!match(key, hash, salt)) {
+			throw new HttpError("UNAUTHORIZED", "Invalid Session Key");
 		}
 
 		next();

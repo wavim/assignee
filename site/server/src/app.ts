@@ -3,15 +3,15 @@ import express from "express";
 import { join } from "path";
 import { prisma } from "./database/client";
 import { init } from "./database/crons";
-import { route } from "./routes/route";
-import { $server } from "./utils/dirname";
+import { router } from "./routes/router";
+import { $server } from "./utils/path";
 
 async function main(): Promise<void> {
 	await prisma.$connect();
 	init();
 
 	const app = express().use(compression());
-	app.use("/api", route);
+	app.use("/api", router);
 
 	const src = join($server, "public");
 	const idx = join(src, "index.html");

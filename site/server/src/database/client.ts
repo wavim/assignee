@@ -1,6 +1,6 @@
 import { join } from "path";
 import { PrismaClient } from "../prisma/client";
-import { $server } from "../utils/dirname";
+import { $server } from "../utils/path";
 
 if (Object.hasOwn(process, "pkg")) {
 	process.env.PRISMA_QUERY_ENGINE_LIBRARY = join($server, "out", "prisma.dll.node");

@@ -1,18 +1,23 @@
 import { AuthId, Bearer, zBearer } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
-import { Router } from "express";
+import { CookieOptions, Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import { flattenError } from "zod";
-import { authenticate } from "../middleware/auth.middleware";
+import { configs } from "../configs/configs";
+import { authen } from "../middleware/authen";
 import { rotate, signin, signup } from "../services/auth.service";
-import { bearer } from "../utils/cookie";
+import { addtime } from "../utils/time";
 
 export const auth = Router();
 
 const limRotate = rateLimit({ skipSuccessfulRequests: true });
 const limSigner = rateLimit();
 
-auth.post("/rotate", limRotate, authenticate, async (req, res) => {
+function bearer(token: zBearer): ["bearer", zBearer, CookieOptions] {
+	return ["bearer", token, { httpOnly: true, expires: addtime(configs.sessAge) }];
+}
+
+auth.post("/rotate", limRotate, authen, async (req, res) => {
 	const cookies = req.cookies as { bearer: zBearer };
 	const { success, error, data } = Bearer.safeParse(cookies.bearer);
 
