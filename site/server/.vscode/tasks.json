@@ -3,6 +3,7 @@
 	"tasks": [
 		{ "type": "npm", "script": "start", "label": "tsx start" },
 		{ "type": "npm", "script": "watch", "label": "tsx watch" },
+		{ "type": "npm", "script": "reset", "label": "sql reset" },
 		{ "type": "npm", "script": "build", "label": "pkg build", "group": "build" }
 	]
 }

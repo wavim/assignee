@@ -3,7 +3,8 @@
 	"scripts": {
 		"start": "cd src && npx tsx app",
 		"watch": "cd src && npx tsx watch app",
-		"build": "npx rollup -c && npx cpr src/prisma/query_engine-windows.dll.node out/prisma.dll.node -o && npx pkg . -o bin/app -C Brotli && npx cpr src/app.db bin/app.db -o"
+		"reset": "npx prisma db push --force-reset && npx cpr src/app.db bin/app.db -o",
+		"build": "npx rollup -c && npx cpr src/prisma/query_engine-windows.dll.node out/prisma.dll.node -o && npx pkg . -o bin/app -C Brotli"
 	},
 	"dependencies": {
 		"@app/schema": "link:../schema",
