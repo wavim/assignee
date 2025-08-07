@@ -1,26 +1,25 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
-import { ease } from "../../configs/media";
-import { Props } from "../../types/props";
-import A11y from "../A11y/A11y";
-import Logo from "../Logo";
-import I18n from "./I18n";
+import { ease } from "../configs/media";
+import { Props } from "../types/props";
+import A11y from "./A11y";
+import { defineI18n } from "./I18n";
+import Logo from "./Logo";
+
+const I18n = defineI18n({ en: { home: "Homepage" }, zh: { home: "首頁" } });
 
 export default () => {
 	let bg!: HTMLDivElement;
 	let link!: HTMLAnchorElement;
 
 	onMount(() => {
-		gsap.timeline({
-			defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
-			scrollTrigger: { start: "2.5%", toggleActions: "play none none reverse" },
-		})
-			.fromTo(
-				bg,
-				{ opacity: 0, scaleX: 1.05, scaleY: 1.2 },
-				{ opacity: 1, scaleX: 1, scaleY: 1 },
-			)
+		gsap
+			.timeline({
+				defaults: ease({ duration: 0.6, ease: "power3.inOut" }),
+				scrollTrigger: { start: "2.5%", toggleActions: "play none none reverse" },
+			})
+			.fromTo(bg, { opacity: 0, scaleX: 1.05, scaleY: 1.2 }, { opacity: 1, scaleX: 1, scaleY: 1 })
 			.fromTo(
 				link,
 				{ clipPath: "rect(0 100% 100% 0)", translateX: 0 },
@@ -47,16 +46,12 @@ export default () => {
 	);
 };
 
-const Link = (props: Props<"a">) => {
-	const t = I18n.useI18n();
-
-	return (
-		<A
-			{...props}
-			href="/"
-			title={t("link")}
-		>
-			<Logo class="fill-text-major h-full"></Logo>
-		</A>
-	);
-};
+const Link = (props: Props<"a">) => (
+	<A
+		{...props}
+		href="/"
+		title={I18n.useI18n()("home")}
+	>
+		<Logo class="fill-text-major h-full"></Logo>
+	</A>
+);

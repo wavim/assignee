@@ -1,6 +1,6 @@
-import { defineI18n } from "../../i18n/I18n";
+import { defineI18n } from "../../gui/I18n";
 
 export default defineI18n({
-	en: { detail: "Nothing here. The resource you requested is not found.", link: "Go Back" },
-	zh: { detail: "什麼也找不到。您請求的資源不存在。", link: "返回" },
+	en: { deck: "Nothing here. The resource you requested is not found.", back: "Go Back" },
+	zh: { deck: "什麼也找不到。您請求的資源不存在。", back: "返回" },
 });

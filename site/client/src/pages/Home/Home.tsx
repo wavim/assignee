@@ -1,9 +1,10 @@
-import Footer from "../../gui/Footer/Footer";
-import Header from "../../gui/Header/Header";
-import Link from "../../gui/Link";
+import { A } from "@solidjs/router";
+import Button from "../../gui/Button";
+import Footer from "../../gui/Footer";
+import Header from "../../gui/Header";
 import Main from "../../gui/Main";
 import Section from "../../gui/Section";
-import Tiles from "../../gui/Tiles";
+import Tile from "../../gui/Tile";
 import I18n from "./I18n";
 
 export default () => (
@@ -11,9 +12,9 @@ export default () => (
 		<Header></Header>
 		<Main>
 			<Hero></Hero>
-			<Tiles></Tiles>
-			<Feature></Feature>
-			<Action></Action>
+			<Tile></Tile>
+			<Feat></Feat>
+			<CtoA></CtoA>
 		</Main>
 		<Footer></Footer>
 	</I18n.I18n>
@@ -24,68 +25,61 @@ const Hero = () => {
 
 	return (
 		<Section
-			title={t("hero.title")}
-			subtitle={t("hero.subtitle")}
+			head={t("hero.head")}
+			deck={t("hero.deck")}
 		>
-			<Link href="/signin">{t("hero.signin")}</Link>
+			<A href="/signin">
+				<Button pill>{t("hero.ctoa")}</Button>
+			</A>
 		</Section>
 	);
 };
 
-const Feature = () => {
+const Feat = () => {
 	const t = I18n.useI18n();
 
-	const Item = (props: { title: string; children: string }) => (
+	const Item = (props: { name: string; children: string }) => (
 		<div class="flex flex-col md:flex-row">
-			<h2 class="text-text-major mb-4 flex-1 text-3xl md:text-4xl">
-				{props.title}
-			</h2>
+			<h2 class="text-text-major mb-4 flex-1 text-3xl md:text-4xl">{props.name}</h2>
 			<p class="text-text-major text-xl md:w-2/3 md:text-2xl">{props.children}</p>
 		</div>
 	);
-
 	const Line = () => <div class="border-text-minor my-6 border-1 md:mt-10"></div>;
 
 	return (
 		<section class="font-jakarta px-8">
 			<h1 class="text-text-major mb-12 text-center text-5xl font-medium md:mb-16 md:text-7xl">
-				{t("features.title")}
+				{t("feat.head")}
 			</h1>
 			<div class="md:flex">
 				<h1 class="font-jakarta text-text-minor sticky top-28 mb-28 hidden h-3/4 flex-1 self-start text-5xl md:block">
-					{t("features.alias")}
+					{t("feat.feat")}
 				</h1>
 				<div class="md:w-2/3">
-					<Item title={t("features.groups.title")}>
-						{t("features.groups.detail")}
-					</Item>
+					<Item name={t("feat.groups.name")}>{t("feat.groups.desc")}</Item>
 					<Line></Line>
-					<Item title={t("features.assign.title")}>
-						{t("features.assign.detail")}
-					</Item>
+					<Item name={t("feat.assign.name")}>{t("feat.assign.desc")}</Item>
 					<Line></Line>
-					<Item title={t("features.submit.title")}>
-						{t("features.submit.detail")}
-					</Item>
+					<Item name={t("feat.submit.name")}>{t("feat.submit.desc")}</Item>
 					<Line></Line>
-					<Item title={t("features.return.title")}>
-						{t("features.return.detail")}
-					</Item>
+					<Item name={t("feat.return.name")}>{t("feat.return.desc")}</Item>
 				</div>
 			</div>
 		</section>
 	);
 };
 
-const Action = () => {
+const CtoA = () => {
 	const t = I18n.useI18n();
 
 	return (
 		<Section
-			title={t("action.title")}
-			subtitle={t("action.subtitle")}
+			head={t("ctoa.head")}
+			deck={t("ctoa.deck")}
 		>
-			<Link href="/signin">{t("hero.signin")}</Link>
+			<A href="/signin">
+				<Button pill>{t("ctoa.ctoa")}</Button>
+			</A>
 		</Section>
 	);
 };

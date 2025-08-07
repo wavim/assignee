@@ -3,7 +3,7 @@ import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
 import { signin } from "../../api/auth.api";
-import Signer from "../../gui/Signer/Signer";
+import Signer from "../../gui/Signer";
 import I18n from "./I18n";
 
 export default () => (
@@ -16,9 +16,7 @@ const Form = () => {
 	const t = I18n.useI18n();
 	const navigate = useNavigate();
 
-	const $error = createSignal<
-		undefined | "errors.generic" | "errors.ratelim" | "errors.systems"
-	>();
+	const $error = createSignal<undefined | "errors.generic" | "errors.ratelim" | "errors.systems">();
 	const [error, setError] = $error;
 
 	const submit = async (creds: zCredentials) => {

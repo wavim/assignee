@@ -1,12 +1,12 @@
 @theme inline {
 	--color-a11y: var(--color-a11y);
 	--color-button: var(--color-button);
+	--color-holder: var(--color-holder);
 	--color-main: var(--color-main);
 	--color-outline: var(--color-outline);
 	--color-overlay: var(--color-overlay);
-	--color-placeholder: var(--color-placeholder);
 	--color-shadow: var(--color-shadow);
-	--color-text-button: var(--color-text-button);
+	--color-text-alter: var(--color-text-alter);
 	--color-text-major: var(--color-text-major);
 	--color-text-minor: var(--color-text-minor);
 }
@@ -14,25 +14,25 @@
 :root {
 	--color-a11y: var(--color-blue-700);
 	--color-button: var(--color-neutral-950);
+	--color-holder: var(--color-neutral-600);
 	--color-main: var(--color-neutral-50);
 	--color-outline: var(--color-blue-500);
 	--color-overlay: var(--color-neutral-200);
-	--color-placeholder: var(--color-neutral-600);
 	--color-shadow: var(--color-neutral-950);
-	--color-text-button: var(--color-neutral-50);
+	--color-text-alter: var(--color-neutral-50);
 	--color-text-major: var(--color-neutral-950);
-	--color-text-minor: var(--color-neutral-700);
+	--color-text-minor: var(--color-neutral-800);
 }
 
 :root.darkmode {
 	--color-a11y: var(--color-blue-400);
 	--color-button: var(--color-neutral-50);
+	--color-holder: var(--color-neutral-200);
 	--color-main: var(--color-neutral-950);
 	--color-outline: var(--color-blue-300);
 	--color-overlay: var(--color-neutral-600);
-	--color-placeholder: var(--color-neutral-200);
 	--color-shadow: var(--color-neutral-50);
-	--color-text-button: var(--color-neutral-950);
+	--color-text-alter: var(--color-neutral-950);
 	--color-text-major: var(--color-neutral-50);
 	--color-text-minor: var(--color-neutral-200);
 }

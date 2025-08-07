@@ -1,7 +1,12 @@
+import { clsx } from "clsx/lite";
 import { createSignal, Show } from "solid-js";
-import { twMerge } from "tailwind-merge";
-import { Props } from "../../types/props";
-import I18n from "./I18n";
+import { Props } from "../types/props";
+import { defineI18n } from "./I18n";
+
+const I18n = defineI18n({
+	en: { show: "Show Password", hide: "Hide Password" },
+	zh: { show: "顯示密碼", hide: "隱藏密碼" },
+});
 
 export default (props: Props<"input">) => {
 	const [blank, setBlank] = createSignal(true);
@@ -12,16 +17,16 @@ export default (props: Props<"input">) => {
 			<label class="font-jakarta relative flex items-center">
 				<input
 					{...props}
-					type={shown() ? "text" : props.type}
 					on:input={({ target }) => {
 						setBlank(!target.value.trim().length);
 					}}
-					class="text-text-major border-placeholder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2 text-base"
+					type={shown() ? "text" : props.type}
+					class="text-text-major border-holder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2 text-base"
 				></input>
 				<span
-					class={twMerge(
-						"text-placeholder ease-300 pointer-events-none absolute left-4 text-lg transition-all ease-out peer-focus:top-2 peer-focus:text-xs",
-						!blank() && "top-2 text-xs",
+					class={clsx(
+						blank() ? "text-lg" : "top-2 text-xs",
+						"text-holder ease-300 pointer-events-none absolute left-4 transition-all ease-out peer-focus:top-2 peer-focus:text-xs",
 					)}
 				>
 					{props.name}
@@ -30,10 +35,7 @@ export default (props: Props<"input">) => {
 					<Reveal
 						onclick={() => setShown(!shown())}
 						shown={shown()}
-						class={twMerge(
-							"fill-placeholder absolute right-4 w-6 cursor-pointer",
-							blank() && "hidden",
-						)}
+						class={clsx(blank() && "hidden", "fill-holder absolute right-4 w-6 cursor-pointer")}
 					></Reveal>
 				</Show>
 			</label>

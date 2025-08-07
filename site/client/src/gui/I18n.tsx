@@ -20,10 +20,6 @@ export function defineI18n<D extends BaseDict>(dicts: Record<LocaleVal, D>) {
 	return createI18n(dicts.en, (locale) => dicts[locale]);
 }
 
-export function importI18n<D extends BaseDict>(en: D, name: string) {
-	return createI18n(en, (locale) => import(`./${locale}/${name}.json`) as Promise<D>);
-}
-
 function createI18n<D extends BaseDict>(init: D, callback: (locale: LocaleVal) => D | Promise<D>) {
 	const I18nContext = createContext<Translator<Flatten<D>>>();
 

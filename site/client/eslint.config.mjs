@@ -13,10 +13,7 @@ export default tslint.config(
 
 	{
 		languageOptions: {
-			parserOptions: {
-				projectService: true,
-				tsconfigRootDir: import.meta.dirname,
-			},
+			parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
 		},
 	},
 	tslint.configs.strictTypeChecked,

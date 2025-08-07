@@ -1,6 +1,5 @@
 {
 	"useTabs": true,
-	"tabWidth": 8,
 	"printWidth": 100,
 
 	"semi": true,

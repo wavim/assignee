@@ -1,10 +1,29 @@
 import { For } from "solid-js";
-import { getFontSize, setFontSize } from "../../configs/font-size";
-import { getLocale, setLocale } from "../../configs/locale";
-import { getMedia, setMedia } from "../../configs/media";
-import { Props } from "../../types/props";
-import Modal from "../Modal";
-import I18n from "./I18n";
+import { getFontSize, setFontSize } from "../configs/font-size";
+import { getLocale, setLocale } from "../configs/locale";
+import { getMedia, setMedia } from "../configs/media";
+import { Props } from "../types/props";
+import { defineI18n } from "./I18n";
+import Modal from "./Modal";
+
+const I18n = defineI18n({
+	en: {
+		name: "Accessibility",
+		os: "System",
+		fontsize: { name: "Font Size", sm: "Small", md: "Medium", lg: "Large" },
+		language: { name: "Language" },
+		darkmode: { name: "Color Theme", no: "Light", on: "Dark" },
+		rdmotion: { name: "Motion Effects", no: "On", on: "Off" },
+	},
+	zh: {
+		name: "輔助使用",
+		os: "系統",
+		fontsize: { name: "字號", sm: "較小", md: "中等", lg: "較大" },
+		language: { name: "語言" },
+		darkmode: { name: "主題", no: "亮色", on: "暗色" },
+		rdmotion: { name: "動效", no: "開啟", on: "關閉" },
+	},
+});
 
 export default (props: Props<"button">) => {
 	let toggle!: HTMLButtonElement;
@@ -27,7 +46,7 @@ const Toggle = (props: Props<"button">) => {
 		<button
 			{...props}
 			type="button"
-			title={t("title")}
+			title={t("name")}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -52,11 +71,7 @@ const Menu = (props: { toggle: HTMLButtonElement }) => {
 		>
 			<Config
 				name={t("fontsize.name")}
-				options={{
-					sm: t("fontsize.sm"),
-					md: t("fontsize.md"),
-					lg: t("fontsize.lg"),
-				}}
+				options={{ sm: t("fontsize.sm"), md: t("fontsize.md"), lg: t("fontsize.lg") }}
 				default={getFontSize()}
 			>
 				{setFontSize}
@@ -70,11 +85,7 @@ const Menu = (props: { toggle: HTMLButtonElement }) => {
 			</Config>
 			<Config
 				name={t("darkmode.name")}
-				options={{
-					os: t("os"),
-					no: t("darkmode.no"),
-					on: t("darkmode.on"),
-				}}
+				options={{ os: t("os"), no: t("darkmode.no"), on: t("darkmode.on") }}
 				default={getMedia("darkmode")}
 			>
 				{(option) => {
@@ -83,11 +94,7 @@ const Menu = (props: { toggle: HTMLButtonElement }) => {
 			</Config>
 			<Config
 				name={t("rdmotion.name")}
-				options={{
-					os: t("os"),
-					no: t("rdmotion.no"),
-					on: t("rdmotion.on"),
-				}}
+				options={{ os: t("os"), no: t("rdmotion.no"), on: t("rdmotion.on") }}
 				default={getMedia("rdmotion")}
 			>
 				{(option) => {

@@ -3,7 +3,7 @@ import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
 import { signup } from "../../api/auth.api";
-import Signer from "../../gui/Signer/Signer";
+import Signer from "../../gui/Signer";
 import I18n from "./I18n";
 
 export default () => (
@@ -18,7 +18,7 @@ const Form = () => {
 
 	const $error = createSignal<
 		| undefined
-		| "errors.emailre"
+		| "errors.mailfmt"
 		| "errors.passlen"
 		| "errors.emailna"
 		| "errors.ratelim"
@@ -37,8 +37,8 @@ const Form = () => {
 			return undefined;
 		}
 
-		return (error.issues[0].path[0] as "eml" | "pwd") === "eml"
-			? "errors.emailre"
+		return (error.issues[0].path[0] as keyof zCredentials) === "mail"
+			? "errors.mailfmt"
 			: "errors.passlen";
 	};
 

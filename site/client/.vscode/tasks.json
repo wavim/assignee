@@ -2,8 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{ "type": "npm", "script": "watch", "label": "vite watch" },
-		{ "type": "npm", "script": "serve", "label": "vite serve" },
 		{ "type": "npm", "script": "build", "label": "vite build", "group": "build" },
-		{ "type": "npm", "script": "buildw", "label": "vite buildw", "group": "build" }
+		{ "type": "npm", "script": "serve", "label": "vite serve", "group": "build" }
 	]
 }

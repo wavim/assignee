@@ -1,13 +1,18 @@
 import { zCredentials } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
-import Button from "../Button";
-import Footer from "../Footer/Footer";
-import Guest from "../Guest";
-import Header from "../Header/Header";
-import Input from "../Input/Input";
-import Main from "../Main";
-import I18n from "./I18n";
+import Button from "./Button";
+import Footer from "./Footer";
+import Guard from "./Guard";
+import Header from "./Header";
+import { defineI18n } from "./I18n";
+import Input from "./Input";
+import Main from "./Main";
+
+const I18n = defineI18n({
+	en: { email: "Email", password: "Password" },
+	zh: { email: "電郵", password: "密碼" },
+});
 
 interface FormProps {
 	header: string;
@@ -22,7 +27,7 @@ interface FormProps {
 }
 
 export default (props: FormProps) => (
-	<Guest>
+	<Guard>
 		<I18n.I18n>
 			<Header></Header>
 			<Main>
@@ -30,7 +35,7 @@ export default (props: FormProps) => (
 			</Main>
 			<Footer></Footer>
 		</I18n.I18n>
-	</Guest>
+	</Guard>
 );
 
 const Form = (props: FormProps) => {
@@ -45,9 +50,7 @@ const Form = (props: FormProps) => {
 
 	return (
 		<section class="flex flex-col items-center gap-8 px-8 md:gap-12">
-			<h1 class="font-jakarta text-text-major text-3xl font-medium md:text-4xl">
-				{props.header}
-			</h1>
+			<h1 class="font-jakarta text-text-major text-3xl font-medium md:text-4xl">{props.header}</h1>
 			<form class="flex w-full max-w-110 flex-col gap-4">
 				<Input
 					ref={mail}
@@ -62,21 +65,15 @@ const Form = (props: FormProps) => {
 					type="password"
 					name={t("password")}
 					oninput={check}
-					autocomplete={
-						props.alturl === "/signin"
-							? "new-password"
-							: "current-password"
-					}
+					autocomplete={props.alturl === "/signin" ? "new-password" : "current-password"}
 				></Input>
 				<Button
-					aria-label={props.action}
 					onclick={() => {
-						props.submit({
-							mail: mail.value,
-							pass: pass.value,
-						});
+						props.submit({ mail: mail.value, pass: pass.value });
 					}}
+					aria-label={props.action}
 					class="mt-4"
+					full
 				>
 					{props.error() ?? props.action}
 				</Button>
