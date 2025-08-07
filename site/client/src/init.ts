@@ -25,10 +25,8 @@ export async function init(): Promise<void> {
 		});
 	}
 
-	// MO DEV natlog for dev
-	if (import.meta.env.DEV || true) {
+	if (import.meta.env.DEV) {
 		const { natlog } = await import("natural-log");
-
-		natlog({ prompts: ["log", "error"] });
+		natlog();
 	}
 }

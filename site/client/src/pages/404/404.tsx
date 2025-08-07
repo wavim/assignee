@@ -2,7 +2,7 @@ import Footer from "../../gui/Footer/Footer";
 import Header from "../../gui/Header/Header";
 import Link from "../../gui/Link";
 import Main from "../../gui/Main";
-import Part from "../../gui/Part";
+import Section from "../../gui/Section";
 import I18n from "./I18n";
 
 export default () => {
@@ -21,11 +21,11 @@ const Info = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<Part
+		<Section
 			title="404"
 			subtitle={t("detail")}
 		>
 			<Link href="/">{t("link")}</Link>
-		</Part>
+		</Section>
 	);
 };

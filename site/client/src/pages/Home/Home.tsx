@@ -2,7 +2,7 @@ import Footer from "../../gui/Footer/Footer";
 import Header from "../../gui/Header/Header";
 import Link from "../../gui/Link";
 import Main from "../../gui/Main";
-import Part from "../../gui/Part";
+import Section from "../../gui/Section";
 import Tiles from "../../gui/Tiles";
 import I18n from "./I18n";
 
@@ -23,12 +23,12 @@ const Hero = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<Part
+		<Section
 			title={t("hero.title")}
 			subtitle={t("hero.subtitle")}
 		>
 			<Link href="/signin">{t("hero.signin")}</Link>
-		</Part>
+		</Section>
 	);
 };
 
@@ -81,11 +81,11 @@ const Action = () => {
 	const t = I18n.useI18n();
 
 	return (
-		<Part
+		<Section
 			title={t("action.title")}
 			subtitle={t("action.subtitle")}
 		>
 			<Link href="/signin">{t("hero.signin")}</Link>
-		</Part>
+		</Section>
 	);
 };
