@@ -1,4 +1,4 @@
-import { Bearer, zBearer } from "@app/schema";
+import { BearerToken, zBearerToken } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
 import { flattenError } from "zod";
@@ -8,8 +8,8 @@ import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
 
 export const authen: RequestHandler = async (req, res, next) => {
-	const cookies = req.cookies as { bearer: zBearer };
-	const { success, error, data } = Bearer.safeParse(cookies.bearer);
+	const cookies = req.cookies as { bearer: zBearerToken };
+	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
 
 	if (!success) {
 		return res.status(400).json(flattenError(error));

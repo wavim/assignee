@@ -1,4 +1,4 @@
-import { AuthId, Bearer, zBearer } from "@app/schema";
+import { BearerToken, Credentials, zBearerToken } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { CookieOptions, Router } from "express";
 import { rateLimit } from "express-rate-limit";
@@ -13,13 +13,13 @@ export const auth = Router();
 const limRotate = rateLimit({ skipSuccessfulRequests: true });
 const limSigner = rateLimit();
 
-function bearer(token: zBearer): ["bearer", zBearer, CookieOptions] {
+function bearer(token: zBearerToken): ["bearer", zBearerToken, CookieOptions] {
 	return ["bearer", token, { httpOnly: true, expires: addtime(configs.sessAge) }];
 }
 
 auth.post("/rotate", limRotate, authen, async (req, res) => {
-	const cookies = req.cookies as { bearer: zBearer };
-	const { success, error, data } = Bearer.safeParse(cookies.bearer);
+	const cookies = req.cookies as { bearer: zBearerToken };
+	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
 
 	if (!success) {
 		return res.status(400).json(flattenError(error));
@@ -36,7 +36,7 @@ auth.post("/rotate", limRotate, authen, async (req, res) => {
 });
 
 auth.post("/signin", limSigner, async (req, res) => {
-	const { success, error, data } = AuthId.safeParse(req.body);
+	const { success, error, data } = Credentials.safeParse(req.body);
 
 	if (!success) {
 		return res.status(400).json(flattenError(error));
@@ -53,7 +53,7 @@ auth.post("/signin", limSigner, async (req, res) => {
 });
 
 auth.post("/signup", limSigner, async (req, res) => {
-	const { success, error, data } = AuthId.safeParse(req.body);
+	const { success, error, data } = Credentials.safeParse(req.body);
 
 	if (!success) {
 		return res.status(400).json(flattenError(error));

@@ -1,13 +1,13 @@
 import { z } from "zod/mini";
 
-export const AuthId = z.object({
-  eml: z.email(),
-  pwd: z.string().check(z.minLength(8), z.regex(/^[ -~]*$/)),
+export const Credentials = z.object({
+  mail: z.email(),
+  pass: z.string().check(z.minLength(8), z.regex(/^[\x20-\x7E]*$/)),
 });
-export type zAuthId = z.infer<typeof AuthId>;
+export type zCredentials = z.infer<typeof Credentials>;
 
-export const Bearer = z.object({
+export const BearerToken = z.object({
   sid: z.int(),
-  key: z.string().check(z.length(64), z.regex(/^[a-f\d]*$/)),
+  key: z.string().check(z.length(64), z.regex(/^[0-9a-f]*$/)),
 });
-export type zBearer = z.infer<typeof Bearer>;
+export type zBearerToken = z.infer<typeof BearerToken>;

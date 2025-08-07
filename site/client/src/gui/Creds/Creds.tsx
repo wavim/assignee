@@ -1,21 +1,21 @@
-import { zAuthId } from "@app/schema";
+import { zCredentials } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
-import Button from "../../gui/Button";
-import Footer from "../../gui/Footer/Footer";
-import Guest from "../../gui/Guest";
-import Header from "../../gui/Header/Header";
-import Input from "../../gui/Input/Input";
-import Main from "../../gui/Main";
+import Button from "../Button";
+import Footer from "../Footer/Footer";
+import Guest from "../Guest";
+import Header from "../Header/Header";
+import Input from "../Input/Input";
+import Main from "../Main";
 import I18n from "./I18n";
 
 interface FormProps {
 	header: string;
 	action: string;
-	submit: (authid: zAuthId) => unknown;
+	submit: (creds: zCredentials) => unknown;
 
 	error: Accessor<undefined | string>;
-	check: (authid: zAuthId) => unknown;
+	check: (creds: zCredentials) => unknown;
 
 	alturl: "/signin" | "/signup";
 	altnav: string;
@@ -36,11 +36,11 @@ export default (props: FormProps) => (
 const Form = (props: FormProps) => {
 	const t = I18n.useI18n();
 
-	let eml!: HTMLInputElement;
-	let pwd!: HTMLInputElement;
+	let mail!: HTMLInputElement;
+	let pass!: HTMLInputElement;
 
 	const check = () => {
-		props.check({ eml: eml.value, pwd: pwd.value });
+		props.check({ mail: mail.value, pass: pass.value });
 	};
 
 	return (
@@ -50,7 +50,7 @@ const Form = (props: FormProps) => {
 			</h1>
 			<form class="flex w-full max-w-110 flex-col gap-4">
 				<Input
-					ref={eml}
+					ref={mail}
 					type="email"
 					name={t("email")}
 					oninput={check}
@@ -58,7 +58,7 @@ const Form = (props: FormProps) => {
 					autocomplete="email"
 				></Input>
 				<Input
-					ref={pwd}
+					ref={pass}
 					type="password"
 					name={t("password")}
 					oninput={check}
@@ -71,7 +71,10 @@ const Form = (props: FormProps) => {
 				<Button
 					aria-label={props.action}
 					onclick={() => {
-						props.submit({ eml: eml.value, pwd: pwd.value });
+						props.submit({
+							mail: mail.value,
+							pass: pass.value,
+						});
 					}}
 					class="mt-4"
 				>

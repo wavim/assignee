@@ -1,4 +1,4 @@
-import { zAuthId } from "@app/schema";
+import { zCredentials } from "@app/schema";
 import { ErrorCode } from "@wvm/http-error";
 import { api } from "./api";
 
@@ -9,14 +9,14 @@ export async function rotate(): Promise<boolean> {
 	);
 }
 
-export async function signin(data: zAuthId): Promise<200 | ErrorCode> {
+export async function signin(creds: zCredentials): Promise<200 | ErrorCode> {
 	return await api
-		.post("/signin", data, { validateStatus: () => true })
+		.post("/signin", creds, { validateStatus: () => true })
 		.then((r) => r.status);
 }
 
-export async function signup(data: zAuthId): Promise<200 | ErrorCode> {
+export async function signup(creds: zCredentials): Promise<200 | ErrorCode> {
 	return await api
-		.post("/signup", data, { validateStatus: () => true })
+		.post("/signup", creds, { validateStatus: () => true })
 		.then((r) => r.status);
 }

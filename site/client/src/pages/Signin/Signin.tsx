@@ -1,9 +1,9 @@
-import { AuthId, zAuthId } from "@app/schema";
+import { Credentials, zCredentials } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
 import { signin } from "../../api/auth.api";
-import Signer from "../../gui/Signer/Signer";
+import Creds from "../../gui/Creds/Creds";
 import I18n from "./I18n";
 
 export default () => (
@@ -21,8 +21,8 @@ const Form = () => {
 	>();
 	const [error, setError] = $error;
 
-	const submit = async (authid: zAuthId) => {
-		const { success, data } = AuthId.safeParse(authid);
+	const submit = async (creds: zCredentials) => {
+		const { success, data } = Credentials.safeParse(creds);
 
 		if (!success) {
 			return setError("errors.generic");
@@ -46,7 +46,7 @@ const Form = () => {
 	};
 
 	return (
-		<Signer
+		<Creds
 			header={t("header")}
 			action={t("action")}
 			submit={submit}
@@ -59,6 +59,6 @@ const Form = () => {
 			}}
 			alturl="/signup"
 			altnav={t("signup")}
-		></Signer>
+		></Creds>
 	);
 };
