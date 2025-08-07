@@ -2,12 +2,18 @@ import { Navigate } from "@solidjs/router";
 import { createResource, JSXElement, Suspense } from "solid-js";
 import { rotate } from "../api/auth.api";
 
-export default (props: { children: JSXElement; protect?: boolean }) => {
-	const [auth] = createResource(rotate, { initialValue: props.protect });
+export default (props: { landing?: boolean; children: JSXElement }) => {
+	const [auth] = createResource(rotate, { initialValue: !props.landing });
 
 	return (
 		<Suspense>
-			{auth() ? <Navigate href={props.protect ? "/" : "/app"}></Navigate> : props.children}
+			{auth() && props.landing ? (
+				<Navigate href="/app"></Navigate>
+			) : !auth() && !props.landing ? (
+				<Navigate href="/"></Navigate>
+			) : (
+				props.children
+			)}
 		</Suspense>
 	);
 };

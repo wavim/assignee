@@ -27,7 +27,7 @@ interface FormProps {
 }
 
 export default (props: FormProps) => (
-	<Guard>
+	<Guard landing>
 		<I18n.I18n>
 			<Header></Header>
 			<Main>

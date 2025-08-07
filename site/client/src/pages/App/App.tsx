@@ -7,7 +7,7 @@ export default () => {
 	const navigate = useNavigate();
 
 	return (
-		<Guard protect>
+		<Guard>
 			<div>Hi!</div>
 			<Button
 				onclick={() => {
@@ -16,7 +16,7 @@ export default () => {
 					});
 				}}
 			>
-				Logout
+				DEV -- Logout -- DEV
 			</Button>
 		</Guard>
 	);
