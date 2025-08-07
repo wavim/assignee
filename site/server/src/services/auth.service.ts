@@ -5,13 +5,9 @@ import { prisma } from "../database/client";
 import { chash, match } from "../utils/crypt";
 
 export async function rotate({ sid }: zBearer): Promise<zBearer> {
-	try {
-		const { uid } = await prisma.sess.delete({ select: { uid: true }, where: { sid } });
+	const { uid } = await prisma.sess.delete({ select: { uid: true }, where: { sid } });
 
-		return await session(uid);
-	} catch {
-		throw new HttpError("UNAUTHORIZED", "Session Doesnt Exist");
-	}
+	return await session(uid);
 }
 
 export async function signin({ eml, pwd }: zAuthId): Promise<zBearer> {
@@ -47,14 +43,10 @@ export async function signup({ eml, pwd }: zAuthId): Promise<zBearer> {
 		throw new HttpError("CONFLICT", "Email Already in Use");
 	}
 
-	try {
-		await prisma.pass.create({
-			select: { uid: true /* none */ },
-			data: { uid: user.uid, ...chash(pwd) },
-		});
-	} catch {
-		throw new HttpError("INTERNAL_SERVER_ERROR", "Existing Password Entry");
-	}
+	await prisma.pass.create({
+		select: { uid: true /* none */ },
+		data: { uid: user.uid, ...chash(pwd) },
+	});
 
 	return await session(user.uid);
 }
