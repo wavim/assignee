@@ -5,9 +5,9 @@ export default defineI18n({
 		header: "Delighted to have you. Sign up to probe.",
 		action: "Explore",
 		errors: {
-			emailre: "Email Format Is Incorrect",
-			passlen: "Password Length Must ≥ 8",
-			emailna: "Email Already in Use",
+			emailre: "Invalid Email Format",
+			passlen: "Password Length ≥ 8",
+			emailna: "Email Not Available",
 			ratelim: "Too Many Requests",
 			systems: "Internal System Error",
 		},
