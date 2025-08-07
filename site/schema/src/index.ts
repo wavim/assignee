@@ -1,13 +1,22 @@
-import { z } from "zod/mini";
+// prettier-ignore
+import {
+  email, int, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, infer as zType,
+} from "zod/mini";
 
-export const Credentials = z.object({
-  mail: z.email(),
-  pass: z.string().check(z.minLength(8), z.regex(/^[\x20-\x7E]*$/)),
+export const BearerToken = obj({
+  sid: int().check(pos()),
+  key: str().check(len(64), regex(/^[0-9a-f]*$/)),
 });
-export type zCredentials = z.infer<typeof Credentials>;
+export type zBearerToken = zType<typeof BearerToken>;
 
-export const BearerToken = z.object({
-  sid: z.int(),
-  key: z.string().check(z.length(64), z.regex(/^[0-9a-f]*$/)),
+export const Credentials = obj({
+  mail: str().check(trim(), lower(), email()),
+  pass: str().check(min(8), regex(/^[\x20-\x7E]*$/)),
 });
-export type zBearerToken = z.infer<typeof BearerToken>;
+export type zCredentials = zType<typeof Credentials>;
+
+export const TeamDetails = obj({
+  name: str().check(trim()),
+  desc: str().check(trim()),
+});
+export type zTeamDetails = zType<typeof TeamDetails>;
