@@ -3,7 +3,7 @@ import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
 import { signin } from "../../api/auth.api";
-import Creds from "../../gui/Creds/Creds";
+import Signer from "../../gui/Signer/Signer";
 import I18n from "./I18n";
 
 export default () => (
@@ -46,7 +46,7 @@ const Form = () => {
 	};
 
 	return (
-		<Creds
+		<Signer
 			header={t("header")}
 			action={t("action")}
 			submit={submit}
@@ -59,6 +59,6 @@ const Form = () => {
 			}}
 			alturl="/signup"
 			altnav={t("signup")}
-		></Creds>
+		></Signer>
 	);
 };
