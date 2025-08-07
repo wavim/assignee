@@ -5,18 +5,15 @@ import stylistic from "@stylistic/eslint-plugin";
 import prettier from "eslint-config-prettier";
 
 export default tslint.config(
-	{ files: ["src/**/*.ts", "src/**/*.tsx"] },
-	{ ignores: ["dist/**/*", "public/**/*", "*.config.mjs"] },
+	{ files: ["src/**/*.ts"] },
+	{ ignores: ["out/**/*", "public/**/*", "*.config.mjs"] },
 
 	eslint.configs.recommended,
 	tslint.configs.eslintRecommended,
 
 	{
 		languageOptions: {
-			parserOptions: {
-				projectService: true,
-				tsconfigRootDir: import.meta.dirname,
-			},
+			parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
 		},
 	},
 	tslint.configs.strictTypeChecked,

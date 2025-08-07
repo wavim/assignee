@@ -13,6 +13,6 @@
 		"allowSyntheticDefaultImports": true,
 
 		"noEmit": true,
-		"sourceMap": true,
+		"sourceMap": true
 	}
 }

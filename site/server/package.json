@@ -7,7 +7,7 @@
 		"build": "npx rollup -c && npx cpr src/prisma/query_engine-windows.dll.node out/prisma.dll.node -o && npx pkg . -o bin/app -C Brotli"
 	},
 	"dependencies": {
-		"@app/schema": "link:../schema",
+		"@app/schema": "link:..\\schema",
 		"@noble/hashes": "^1.8.0",
 		"@prisma/client": "^6.13.0",
 		"@wavim/http-error": "^1.0.0",
@@ -16,7 +16,7 @@
 		"express": "^5.1.0",
 		"express-rate-limit": "^8.0.1",
 		"node-cron": "^4.2.1",
-		"zod": "^4.0.14"
+		"zod": "^4.0.15"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.32.0",

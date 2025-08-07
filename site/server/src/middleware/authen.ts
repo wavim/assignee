@@ -18,14 +18,14 @@ export const authen: RequestHandler = async (req, res, next) => {
 
 	try {
 		const session = await prisma.sess.findUnique({
-			select: { hash: true, salt: true, created: true },
+			select: { uid: true, hash: true, salt: true, created: true },
 			where: { sid },
 		});
 
 		if (!session) {
 			throw new HttpError("UNAUTHORIZED", "Session Doesnt Exist");
 		}
-		const { hash, salt, created } = session;
+		const { uid, hash, salt, created } = session;
 
 		if (expired(created, configs.sessAge)) {
 			throw new HttpError("UNAUTHORIZED", "Session Has Expired");
@@ -35,6 +35,7 @@ export const authen: RequestHandler = async (req, res, next) => {
 			throw new HttpError("UNAUTHORIZED", "Invalid Session Key");
 		}
 
+		req.uid = uid;
 		next();
 	} catch (e) {
 		if (e instanceof HttpError) {
