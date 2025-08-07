@@ -1,6 +1,8 @@
 import { zCredentials } from "@app/schema";
 import { ErrorCode } from "@wvm/http-error";
-import { api } from "./api";
+import axios from "axios";
+
+const api = axios.create({ baseURL: "/api/auth" });
 
 export async function signin(creds: zCredentials): Promise<200 | ErrorCode> {
 	return await api.post("/signin", creds, { validateStatus: () => true }).then((r) => r.status);
