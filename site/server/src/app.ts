@@ -16,7 +16,7 @@ async function main(): Promise<void> {
 	const src = join($server, "public");
 	const idx = join(src, "index.html");
 
-	app.use(express.static(src)).get("/*E404", (_, res) => {
+	app.use(express.static(src)).get("/*CLIENT", (_, res) => {
 		res.sendFile(idx);
 	});
 
