@@ -16,7 +16,6 @@ model User {
   updated DateTime @updatedAt
   Pass    Pass?
   Sess    Sess[]
-  Team    Team[]
   Member  Member[]
 }
 
@@ -41,16 +40,12 @@ model Sess {
 
 model Team {
   tid     Int      @id @default(autoincrement())
-  uid     Int
   name    String
   desc    String
   created DateTime @default(now())
   updated DateTime @updatedAt
-  User    User     @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
   Invite  Invite[]
   Member  Member[]
-
-  @@index([uid])
 }
 
 model Invite {
@@ -63,9 +58,12 @@ model Invite {
 model Member {
   uid     Int
   tid     Int
+  auth    Boolean  @default(false)
   created DateTime @default(now())
+  updated DateTime @updatedAt
   User    User     @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
   Team    Team     @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
 
-  @@id([uid, tid])
+  @@id([uid, tid], name: "cpk")
+  @@index([tid])
 }
