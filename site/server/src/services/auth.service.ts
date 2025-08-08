@@ -28,12 +28,18 @@ export async function signup({ mail, pass }: zCredentials): Promise<zBearerToken
 	let user;
 
 	try {
-		user = await prisma.user.create({ select: { uid: true }, data: { mail, name } });
+		user = await prisma.user.create({
+			select: { uid: true },
+			data: {
+				mail,
+				name,
+
+				Pass: { create: chash(pass) },
+			},
+		});
 	} catch {
 		throw new HttpError("CONFLICT", "Email Not Available");
 	}
-
-	await prisma.pass.create({ select: { uid: none }, data: { uid: user.uid, ...chash(pass) } });
 
 	return await session(user.uid);
 }
