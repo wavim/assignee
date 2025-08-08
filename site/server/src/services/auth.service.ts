@@ -2,7 +2,7 @@ import { zBearerToken, zCredentials } from "@app/schema";
 import { bytesToHex, randomBytes } from "@noble/hashes/utils";
 import { HttpError } from "@wavim/http-error";
 import { prisma } from "../database/client";
-import { none } from "../database/none";
+import { NONE } from "../database/none";
 import { chash, match } from "../utils/crypt";
 
 export async function signin({ mail, pass }: zCredentials): Promise<zBearerToken> {
@@ -45,13 +45,13 @@ export async function signup({ mail, pass }: zCredentials): Promise<zBearerToken
 }
 
 export async function rotate({ sid }: zBearerToken, uid: number): Promise<zBearerToken> {
-	await prisma.sess.delete({ select: { sid: none }, where: { sid } });
+	await prisma.sess.delete({ select: { sid: NONE }, where: { sid } });
 
 	return await session(uid);
 }
 
 export async function logout({ sid }: zBearerToken): Promise<void> {
-	await prisma.sess.delete({ select: { sid: none }, where: { sid } });
+	await prisma.sess.delete({ select: { sid: NONE }, where: { sid } });
 }
 
 async function session(uid: number): Promise<zBearerToken> {
