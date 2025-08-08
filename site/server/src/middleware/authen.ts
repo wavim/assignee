@@ -1,7 +1,7 @@
 import { BearerToken, zBearerToken } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
-import { flattenError } from "zod";
+import { prettifyError } from "zod/mini";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 import { match } from "../utils/crypt";
@@ -12,7 +12,7 @@ export const authen: RequestHandler = async (req, res, next) => {
 	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
 
 	if (!success) {
-		return res.status(400).json(flattenError(error));
+		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
 	}
 	const { sid, key } = data;
 

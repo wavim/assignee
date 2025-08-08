@@ -2,7 +2,7 @@ import { BearerToken, Credentials, zBearerToken } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
-import { flattenError } from "zod";
+import { prettifyError } from "zod/mini";
 import { configs } from "../configs/configs";
 import { authen } from "../middleware/authen";
 import { logout, rotate, signin, signup } from "../services/auth.service";
@@ -21,7 +21,7 @@ auth.post("/signin", limSigner, async (req, res) => {
 	const { success, error, data } = Credentials.safeParse(req.body);
 
 	if (!success) {
-		return res.status(400).json(flattenError(error));
+		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
 	}
 
 	try {
@@ -38,7 +38,7 @@ auth.post("/signup", limSigner, async (req, res) => {
 	const { success, error, data } = Credentials.safeParse(req.body);
 
 	if (!success) {
-		return res.status(400).json(flattenError(error));
+		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
 	}
 
 	try {
@@ -56,7 +56,7 @@ auth.post("/rotate", limVerify, authen, async (req, res) => {
 	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
 
 	if (!success) {
-		return res.status(400).json(flattenError(error));
+		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
 	}
 
 	try {
@@ -74,7 +74,7 @@ auth.post("/logout", limVerify, authen, async (req, res) => {
 	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
 
 	if (!success) {
-		return res.status(400).json(flattenError(error));
+		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
 	}
 
 	try {
