@@ -56,7 +56,9 @@ export async function logout({ sid }: zBearerToken): Promise<void> {
 
 async function session(uid: number): Promise<zBearerToken> {
 	const key = bytesToHex(randomBytes(32));
-	const { sid } = await prisma.sess.create({ select: { sid: true }, data: { uid, ...chash(key) } });
 
-	return { sid, key };
+	return {
+		...(await prisma.sess.create({ select: { sid: true }, data: { uid, ...chash(key) } })),
+		key,
+	};
 }
