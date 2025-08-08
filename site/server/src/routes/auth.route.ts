@@ -61,10 +61,7 @@ auth.post("/rotate", limVerify, authen, async (req, res) => {
 
 	try {
 		res.cookie(...bearer(await rotate(data, req.uid))).end();
-	} catch (e) {
-		if (e instanceof HttpError) {
-			return res.status(e.status).send(e.message);
-		}
+	} catch {
 		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 	}
 });
