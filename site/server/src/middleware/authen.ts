@@ -2,7 +2,7 @@ import { BearerToken, zBearerToken } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
 import { prettifyError } from "zod/mini";
-import { configs } from "../configs/configs";
+import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
 import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
@@ -27,7 +27,7 @@ export const authen: RequestHandler = async (req, res, next) => {
 		}
 		const { uid, hash, salt, created } = session;
 
-		if (expired(created, configs.sessAge)) {
+		if (expired(created, CONFIG.SESS_AGE)) {
 			throw new HttpError("UNAUTHORIZED", "Session Has Expired");
 		}
 

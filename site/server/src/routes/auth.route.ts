@@ -3,18 +3,18 @@ import { ErrorCode, HttpError } from "@wavim/http-error";
 import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import { prettifyError } from "zod/mini";
-import { configs } from "../configs/configs";
+import { CONFIG } from "../configs/configs";
 import { authen } from "../middleware/authen";
 import { logout, rotate, signin, signup } from "../services/auth.service";
 import { addtime } from "../utils/time";
 
 export const auth = Router();
 
-const limSigner = rateLimit();
-const limVerify = rateLimit({ skipSuccessfulRequests: true });
+const limSigner = rateLimit(CONFIG.RATE_LIM.AUTH_SIGNER);
+const limVerify = rateLimit(CONFIG.RATE_LIM.AUTH_VERIFY);
 
 const bearer = (token: zBearerToken) => {
-	return ["bearer", token, { httpOnly: true, expires: addtime(configs.sessAge) }] as const;
+	return ["bearer", token, { httpOnly: true, expires: addtime(CONFIG.SESS_AGE) }] as const;
 };
 
 auth.post("/signin", limSigner, async (req, res) => {
