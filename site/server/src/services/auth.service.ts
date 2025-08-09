@@ -6,7 +6,10 @@ import { NONE } from "../database/none";
 import { chash, match } from "../utils/crypt";
 
 export async function signin({ mail, pass }: zCredentials): Promise<zBearerToken> {
-	const user = await prisma.user.findUnique({ select: { uid: true, Pass: true }, where: { mail } });
+	const user = await prisma.user.findUnique({
+		select: { uid: true, Pass: { select: { hash: true, salt: true } } },
+		where: { mail },
+	});
 
 	if (!user) {
 		throw new HttpError("UNAUTHORIZED", "Invalid Email or Password");
