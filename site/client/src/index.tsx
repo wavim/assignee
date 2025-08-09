@@ -15,13 +15,10 @@ void init();
 
 const routes: RouteDefinition[] = [
 	{ path: "/", component: lazy(() => import("./pages/Home/Home")) },
-
 	{ path: "/signin", component: lazy(() => import("./pages/Signin/Signin")) },
 	{ path: "/signup", component: lazy(() => import("./pages/Signup/Signup")) },
-
 	{ path: "/app", component: lazy(() => import("./pages/App/App")) },
-
-	{ path: "*", component: lazy(() => import("./pages/404/404")) },
+	{ path: "*", component: lazy(() => import("./pages/E404/E404")) },
 ];
 
 render(() => <Router>{routes}</Router>, root);
