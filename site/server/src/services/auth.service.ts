@@ -33,12 +33,7 @@ export async function signup({ mail, pass }: zCredentials): Promise<zBearerToken
 	try {
 		user = await prisma.user.create({
 			select: { uid: true },
-			data: {
-				mail,
-				name,
-
-				Pass: { create: chash(pass) },
-			},
+			data: { mail, name, Pass: { create: chash(pass) } },
 		});
 	} catch {
 		throw new HttpError("CONFLICT", "Email Not Available");
