@@ -1,5 +1,6 @@
 @theme inline {
 	--color-a11y: var(--color-a11y);
+	--color-border: var(--color-border);
 	--color-button: var(--color-button);
 	--color-holder: var(--color-holder);
 	--color-main: var(--color-main);
@@ -13,6 +14,7 @@
 
 :root {
 	--color-a11y: var(--color-blue-700);
+	--color-border: var(--color-neutral-700);
 	--color-button: var(--color-neutral-950);
 	--color-holder: var(--color-neutral-600);
 	--color-main: var(--color-neutral-50);
@@ -26,6 +28,7 @@
 
 :root.darkmode {
 	--color-a11y: var(--color-blue-400);
+	--color-border: var(--color-neutral-300);
 	--color-button: var(--color-neutral-50);
 	--color-holder: var(--color-neutral-200);
 	--color-main: var(--color-neutral-950);

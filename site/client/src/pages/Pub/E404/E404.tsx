@@ -1,9 +1,9 @@
 import { A } from "@solidjs/router";
-import Button from "../../gui/Button";
-import Footer from "../../gui/Footer";
-import Header from "../../gui/Header";
-import Main from "../../gui/Main";
-import Section from "../../gui/Section";
+import Button from "../../../gui/Button";
+import Footer from "../../../gui/Footer";
+import Header from "../Header";
+import Main from "../Main";
+import Section from "../Section";
 import I18n from "./I18n";
 
 export default () => (

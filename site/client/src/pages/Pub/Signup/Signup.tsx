@@ -2,8 +2,8 @@ import { Credentials, zCredentials } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
-import { signup } from "../../api/auth.api";
-import Signer from "../../gui/Signer";
+import { signup } from "../../../api/auth.api";
+import Signer from "../Signer";
 import I18n from "./I18n";
 
 export default () => (

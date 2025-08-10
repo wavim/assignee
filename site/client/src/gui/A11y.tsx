@@ -117,16 +117,15 @@ const Config = <T extends string>(props: {
 		<select
 			name={props.name}
 			onchange={({ target }) => {
-				const key = Object.keys(props.options).find(
-					(k) => props.options[k as T] === target.value,
-				) as T;
-				props.children(key);
+				const option = target.selectedOptions[0];
+				props.children(option.dataset.key as T);
 			}}
 			class="text-text-major w-30"
 		>
 			<For each={Object.entries<string>(props.options)}>
 				{([key, value]) => (
 					<option
+						data-key={key}
 						selected={key === props.default}
 						class="bg-main"
 					>

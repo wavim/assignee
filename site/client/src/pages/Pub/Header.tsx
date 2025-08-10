@@ -1,11 +1,11 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
-import { ease } from "../configs/media";
-import { Props } from "../types/props";
-import A11y from "./A11y";
-import { defineI18n } from "./I18n";
-import Logo from "./Logo";
+import { ease } from "../../configs/media";
+import A11y from "../../gui/A11y";
+import { defineI18n } from "../../gui/I18n";
+import Logo from "../../gui/Logo";
+import { Props } from "../../types/props";
 
 const I18n = defineI18n({ en: { home: "Homepage" }, zh: { home: "首頁" } });
 
@@ -30,7 +30,6 @@ export default () => {
 
 	return (
 		<I18n.I18n>
-			<div class="h-28 md:h-36"></div>
 			<header class="fixed top-2 z-50 flex h-16 w-[calc(100%-1rem)] items-center justify-center">
 				<div
 					ref={bg}
@@ -42,6 +41,7 @@ export default () => {
 				></Link>
 				<A11y class="absolute right-5 h-1/2"></A11y>
 			</header>
+			<div class="h-28 md:h-36"></div>
 		</I18n.I18n>
 	);
 };

@@ -1,12 +1,12 @@
 import { zCredentials } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
-import Button from "./Button";
-import Footer from "./Footer";
-import Guard from "./Guard";
+import Button from "../../gui/Button";
+import Guard from "../../gui/Guard";
+import { defineI18n } from "../../gui/I18n";
+import Input from "../../gui/Input";
+import Footer from "../../gui/Footer";
 import Header from "./Header";
-import { defineI18n } from "./I18n";
-import Input from "./Input";
 import Main from "./Main";
 
 const I18n = defineI18n({

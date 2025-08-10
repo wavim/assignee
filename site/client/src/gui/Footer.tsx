@@ -8,6 +8,7 @@ const I18n = defineI18n({
 
 export default () => (
 	<I18n.I18n>
+		<div class="flex-1"></div>
 		<footer class="bg-main mt-12 flex w-full flex-col gap-2 p-8 md:mt-4">
 			<Logo class="fill-text-major h-4"></Logo>
 			<Copyright></Copyright>

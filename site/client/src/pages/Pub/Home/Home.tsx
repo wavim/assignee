@@ -1,10 +1,10 @@
 import { A } from "@solidjs/router";
-import Button from "../../gui/Button";
-import Footer from "../../gui/Footer";
-import Header from "../../gui/Header";
-import Main from "../../gui/Main";
-import Section from "../../gui/Section";
-import Tile from "../../gui/Tile";
+import Button from "../../../gui/Button";
+import Footer from "../../../gui/Footer";
+import Header from "../Header";
+import Main from "../Main";
+import Section from "../Section";
+import Tile from "../Tile";
 import I18n from "./I18n";
 
 export default () => (
@@ -44,7 +44,7 @@ const Feat = () => {
 			<p class="text-text-major text-xl md:w-2/3 md:text-2xl">{props.children}</p>
 		</div>
 	);
-	const Line = () => <div class="border-text-minor my-6 border-1 md:mt-10"></div>;
+	const Line = () => <div class="border-border my-6 border-1 md:mt-10"></div>;
 
 	return (
 		<section class="font-jakarta px-8">
@@ -52,7 +52,7 @@ const Feat = () => {
 				{t("feat.head")}
 			</h1>
 			<div class="md:flex">
-				<h1 class="font-jakarta text-text-minor sticky top-28 mb-28 hidden h-3/4 flex-1 self-start text-5xl md:block">
+				<h1 class="font-jakarta text-text-minor sticky top-28 mb-28 hidden h-3/4 flex-1 self-start text-4xl md:block">
 					{t("feat.feat")}
 				</h1>
 				<div class="md:w-2/3">
