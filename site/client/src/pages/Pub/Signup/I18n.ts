@@ -19,7 +19,7 @@ export default defineI18n({
 		signin: "已有賬號",
 		errors: {
 			mailfmt: "電郵格式錯誤",
-			passlen: "密碼須八位起",
+			passlen: "密碼短于八位",
 			emailna: "電郵已經註冊",
 			ratelim: "嘗試次數過多",
 			systems: "內部系統錯誤",
