@@ -1,11 +1,13 @@
+import { useNavigate } from "@solidjs/router";
 import clsx from "clsx/lite";
 import { Signal, createMemo } from "solid-js";
+import { logout } from "../../api/auth.api";
 import A11y from "../../gui/A11y";
 import { defineI18n } from "../../gui/I18n";
 
 const I18n = defineI18n({
-	en: { teams: "Teams", tasks: "Tasks" },
-	zh: { teams: "群組", tasks: "任務" },
+	en: { teams: "Teams", tasks: "Tasks", logout: "Logout" },
+	zh: { teams: "群組", tasks: "任務", logout: "登出" },
 });
 export type Route = "teams" | "tasks";
 
@@ -41,7 +43,24 @@ export default (props: { router: Signal<Route> }) => {
 					<Item route="teams"></Item>
 					<Item route="tasks"></Item>
 				</span>
+				<Logout></Logout>
 			</header>
 		</I18n.I18n>
+	);
+};
+
+const Logout = () => {
+	const t = I18n.useI18n();
+	const navigate = useNavigate();
+
+	return (
+		<button
+			type="button"
+			onclick={() => {
+				void logout();
+				navigate("/", { replace: true });
+			}}
+			class="text-text-minor font-jakarta mr-6 ml-auto cursor-pointer text-lg"
+		>{`${t("logout")} ›`}</button>
 	);
 };
