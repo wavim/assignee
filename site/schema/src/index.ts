@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-	array as arr, boolean as bit, email, extend as ext, int, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, infer as zType,
+	array as arr, boolean as bit, email, int, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, infer as zType,
 } from "zod/mini";
 
 export const Credentials = obj({
@@ -16,7 +16,7 @@ export const BearerToken = obj({
 export type zBearerToken = zType<typeof BearerToken>;
 
 export const TeamCreated = obj({
-	tid: int().check(pos()),
+	hash: str().check(min(8), regex(/^[0-9a-zA-Z]*$/)),
 });
 export type zTeamCreated = zType<typeof TeamCreated>;
 
@@ -28,9 +28,10 @@ export type zTeamDetails = zType<typeof TeamDetails>;
 
 export const UserMembers = arr(
 	obj({
-		...TeamCreated.shape,
 		auth: bit(),
-		Team: TeamDetails,
+		hash: TeamCreated.shape.hash,
+		name: TeamDetails.shape.name,
+		desc: TeamDetails.shape.desc,
 	}),
 );
 export type zUserMembers = zType<typeof UserMembers>;
