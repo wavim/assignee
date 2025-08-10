@@ -7,7 +7,7 @@ export default defineI18n({
 		signin: "Login Instead",
 		errors: {
 			mailfmt: "Invalid Email Format",
-			passlen: "Password Length ≥ 8",
+			passlen: "Password Shorter Than 8",
 			emailna: "Email Not Available",
 			ratelim: "Too Many Requests",
 			systems: "Internal System Error",
