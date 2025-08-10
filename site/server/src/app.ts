@@ -1,5 +1,7 @@
 import compression from "compression";
+import { lookup } from "dns/promises";
 import express from "express";
+import { hostname } from "os";
 import { join } from "path";
 import { prisma } from "./database/client";
 import { init } from "./database/crons";
@@ -20,8 +22,9 @@ async function main(): Promise<void> {
 		res.sendFile(idx);
 	});
 
-	app.listen(5450, () => {
-		console.log("Assignee started on http://localhost:5450; Ctrl+C to terminate.");
+	const { address } = await lookup(hostname(), 4);
+	app.listen(5450, "0.0.0.0", () => {
+		console.log(`Assignee started on http://${address}:5450; Ctrl+C to terminate.`);
 	});
 }
 
