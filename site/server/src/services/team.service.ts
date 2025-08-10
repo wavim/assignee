@@ -33,7 +33,7 @@ export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInvi
 		throw new HttpError("UNAUTHORIZED", "Lack Team Authorship");
 	}
 
-	let code: Uint8Array | undefined;
+	let code;
 	let attempt = 0;
 
 	while (!code && attempt < 100) {
@@ -73,7 +73,7 @@ export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInvi
 	return { code: bytesToHex(code) };
 }
 
-export async function access({ code }: zInviterCode): Promise<zTeamPayload> {
+export async function access(uid: number, { code }: zInviterCode): Promise<zTeamPayload> {
 	const invite = await prisma.invite.findUnique({
 		select: { tid: true, created: true },
 		where: { code: hexToBytes(code) },
@@ -88,11 +88,15 @@ export async function access({ code }: zInviterCode): Promise<zTeamPayload> {
 		throw new HttpError("UNAUTHORIZED", "Invitation Code Expired");
 	}
 
-	const team = await prisma.team.findUnique({ select: { name: true, desc: true }, where: { tid } });
-
-	if (!team) {
-		throw new HttpError("INTERNAL_SERVER_ERROR", "Missing Team Entry");
+	let member;
+	try {
+		member = await prisma.member.create({
+			select: { Team: { select: { name: true, desc: true } } },
+			data: { uid, tid, auth: false },
+		});
+	} catch {
+		throw new HttpError("CONFLICT", "Already Team Member");
 	}
 
-	return { hash: encode(tid), ...team };
+	return { hash: encode(tid), ...member.Team };
 }
