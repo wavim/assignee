@@ -1,6 +1,12 @@
-import { zTeamCreated, zTeamDetails } from "@app/schema";
+import { zInviterCode, zTeamCreated, zTeamDetails } from "@app/schema";
+import { bytesToHex, randomBytes } from "@noble/hashes/utils";
+import { HttpError } from "@wavim/http-error";
 import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
+import { NONE } from "../database/none";
+import { PrismaClientKnownRequestError } from "../prisma/internal/prismaNamespace";
+import { decode, encode } from "../utils/hashid";
+import { expired } from "../utils/time";
 
 export async function create(uid: number, { name, desc }: zTeamDetails): Promise<zTeamCreated> {
 	const { tid } = await prisma.team.create({
@@ -8,5 +14,48 @@ export async function create(uid: number, { name, desc }: zTeamDetails): Promise
 		data: { name, desc, Member: { create: { uid, auth: true } } },
 	});
 
-	return { hash: CONFIG.HASH_IDS.encode(tid) };
+	return { hash: encode(tid) };
+}
+
+export async function invite({ hash }: zTeamCreated): Promise<zInviterCode> {
+	const tid = decode(hash);
+
+	let code: Uint8Array | undefined;
+	let attempt = 0;
+
+	while (!code && attempt < 100) {
+		code = randomBytes(4);
+		attempt++;
+
+		try {
+			await prisma.invite.create({ select: { tid: NONE }, data: { tid, code } });
+		} catch (e) {
+			code = undefined;
+
+			if (e instanceof PrismaClientKnownRequestError) {
+				const invite = await prisma.invite.findUnique({
+					select: { created: true },
+					where: { tid },
+				});
+
+				if (!invite) {
+					continue;
+				}
+
+				if (expired(invite.created, CONFIG.CODE_AGE)) {
+					await prisma.invite.delete({ select: { tid: NONE }, where: { tid } });
+					continue;
+				}
+
+				throw new HttpError("CONFLICT", "Active Invitation Code Exists");
+			}
+			break;
+		}
+	}
+
+	if (!code) {
+		throw new HttpError("INTERNAL_SERVER_ERROR", "Crazy Dude");
+	}
+
+	return { code: bytesToHex(code) };
 }

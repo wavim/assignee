@@ -1,6 +1,6 @@
 import { zUserMembers } from "@app/schema";
-import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
+import { encode } from "../utils/hashid";
 
 export async function members(uid: number): Promise<zUserMembers> {
 	const data = await prisma.member.findMany({
@@ -9,6 +9,6 @@ export async function members(uid: number): Promise<zUserMembers> {
 	});
 
 	return data.map((m) => {
-		return { auth: m.auth, hash: CONFIG.HASH_IDS.encode(m.tid), ...m.Team };
+		return { auth: m.auth, hash: encode(m.tid), ...m.Team };
 	});
 }
