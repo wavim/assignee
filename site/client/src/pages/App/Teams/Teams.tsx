@@ -26,10 +26,17 @@ const I18n = defineI18n({
 });
 
 export default (props: { status: Status; update: SetStoreFunction<Status> }) => {
+	// MO DEV
+	const members = [
+		{ tid: 1, Team: { name: "Maths", desc: "Discovering the truth." }, auth: true },
+		{ tid: 2, Team: { name: "Philo", desc: "Beauty lies everywhere." }, auth: true },
+		{ tid: 3, Team: { name: "Literature", desc: "I suck at literature." }, auth: false },
+	];
+
 	return (
 		<I18n.I18n>
 			<main class="flex w-full flex-col gap-4 p-4">
-				<List members={props.status.members}></List>
+				<List members={members}></List>
 				<Create></Create>
 			</main>
 		</I18n.I18n>
@@ -142,7 +149,7 @@ const Create = () => {
 		<>
 			<Button
 				ref={toggle}
-				class="fixed right-4 bottom-4"
+				class=""
 			>
 				Create Team
 			</Button>
