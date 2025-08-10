@@ -1,5 +1,5 @@
-import { zInviterCode, zTeamCreated, zTeamDetails } from "@app/schema";
-import { bytesToHex, randomBytes } from "@noble/hashes/utils";
+import { zInviterCode, zTeamCreated, zTeamDetails, zTeamPayload } from "@app/schema";
+import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
 import { HttpError } from "@wavim/http-error";
 import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
@@ -58,4 +58,28 @@ export async function invite({ hash }: zTeamCreated): Promise<zInviterCode> {
 	}
 
 	return { code: bytesToHex(code) };
+}
+
+export async function access({ code }: zInviterCode): Promise<zTeamPayload> {
+	const invite = await prisma.invite.findUnique({
+		select: { tid: true, created: true },
+		where: { code: hexToBytes(code) },
+	});
+
+	if (!invite) {
+		throw new HttpError("UNAUTHORIZED", "Invalid Invitation Code");
+	}
+	const { tid, created } = invite;
+
+	if (expired(created, CONFIG.CODE_AGE)) {
+		throw new HttpError("UNAUTHORIZED", "Invitation Code Expired");
+	}
+
+	const team = await prisma.team.findUnique({ select: { name: true, desc: true }, where: { tid } });
+
+	if (!team) {
+		throw new HttpError("INTERNAL_SERVER_ERROR", "Missing Team Entry");
+	}
+
+	return { hash: encode(tid), ...team };
 }
