@@ -27,6 +27,6 @@ export async function init(): Promise<void> {
 
 	if (import.meta.env.DEV) {
 		const { natlog } = await import("natural-log");
-		natlog({ prompts: ["log", "warn", "error"] });
+		natlog();
 	}
 }
