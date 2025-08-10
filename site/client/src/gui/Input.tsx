@@ -14,7 +14,7 @@ export default (props: Props<"input">) => {
 
 	return (
 		<I18n.I18n>
-			<label class="font-jakarta relative flex items-center">
+			<label class={clsx("font-jakarta relative flex items-center", props.class)}>
 				<input
 					{...props}
 					on:input={({ target }) => {

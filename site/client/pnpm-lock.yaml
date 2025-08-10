@@ -17,6 +17,9 @@ importers:
       '@solidjs/router':
         specifier: ^0.15.3
         version: 0.15.3(solid-js@1.9.8)
+      '@wavim/solid-filter':
+        specifier: ^1.0.1
+        version: 1.0.1(solid-js@1.9.8)
       '@wvm/http-error':
         specifier: jsr:^3.0.0
         version: '@jsr/wvm__http-error@3.0.0'
@@ -38,6 +41,9 @@ importers:
       solid-js:
         specifier: ^1.9.8
         version: 1.9.8
+      string-similarity-js:
+        specifier: ^2.1.4
+        version: 2.1.4
       zod:
         specifier: ^4.0.15
         version: 4.0.15
@@ -700,6 +706,11 @@ packages:
   '@typescript-eslint/visitor-keys@8.39.0':
     resolution: {integrity: sha512-ldgiJ+VAhQCfIjeOgu8Kj5nSxds0ktPOSO9p4+0VDH2R2pLvQraaM5Oen2d7NxzMCm+Sn/vJT+mv2H5u6b/3fA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@wavim/solid-filter@1.0.1':
+    resolution: {integrity: sha512-oPSorFb/o6xMm1s6R11NvuvnUoM81wrnw2B9hOiwvIFq4UjzHGcR2CINIcOua2/597hb1YyI/5jj3Ov6GBdZEA==}
+    peerDependencies:
+      solid-js: ^1.9.8
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -1455,6 +1466,9 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
 
+  string-similarity-js@2.1.4:
+    resolution: {integrity: sha512-uApODZNjCHGYROzDSAdCmAHf60L/pMDHnP/yk6TAbvGg7JSPZlSto/ceCI7hZEqzc53/juU2aOJFkM2yUVTMTA==}
+
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
@@ -2159,6 +2173,10 @@ snapshots:
       '@typescript-eslint/types': 8.39.0
       eslint-visitor-keys: 4.2.1
 
+  '@wavim/solid-filter@1.0.1(solid-js@1.9.8)':
+    dependencies:
+      solid-js: 1.9.8
+
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
       acorn: 8.15.0
@@ -2817,6 +2835,8 @@ snapshots:
       source-map: 0.6.1
 
   source-map@0.6.1: {}
+
+  string-similarity-js@2.1.4: {}
 
   strip-json-comments@3.1.1: {}
 

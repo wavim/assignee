@@ -9,6 +9,7 @@
 		"@app/schema": "link:..\\schema",
 		"@solid-primitives/i18n": "^2.2.1",
 		"@solidjs/router": "^0.15.3",
+		"@wavim/solid-filter": "^1.0.1",
 		"@wvm/http-error": "jsr:^3.0.0",
 		"axios": "^1.11.0",
 		"clsx": "^2.1.1",
@@ -16,6 +17,7 @@
 		"lenis": "^1.3.8",
 		"natural-log": "3.3.3",
 		"solid-js": "^1.9.8",
+		"string-similarity-js": "^2.1.4",
 		"zod": "^4.0.15"
 	},
 	"devDependencies": {
