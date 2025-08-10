@@ -26,12 +26,16 @@ export const TeamDetails = obj({
 });
 export type zTeamDetails = zType<typeof TeamDetails>;
 
+export const TeamPayload = obj({
+	...TeamCreated.shape,
+	...TeamDetails.shape,
+});
+export type zTeamPayload = zType<typeof TeamPayload>;
+
 export const UserMembers = arr(
 	obj({
 		auth: bit(),
-		hash: TeamCreated.shape.hash,
-		name: TeamDetails.shape.name,
-		desc: TeamDetails.shape.desc,
+		...TeamPayload.shape,
 	}),
 );
 export type zUserMembers = zType<typeof UserMembers>;
