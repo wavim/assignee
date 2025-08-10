@@ -19,7 +19,7 @@ team.post("/create", limCreate, authen, async (req, res) => {
 	}
 
 	try {
-		res.json(await create(data, req.uid));
+		res.json(await create(req.uid, data));
 	} catch {
 		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 	}
