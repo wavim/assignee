@@ -17,8 +17,21 @@ export async function create(uid: number, { name, desc }: zTeamDetails): Promise
 	return { hash: encode(tid) };
 }
 
-export async function invite({ hash }: zTeamCreated): Promise<zInviterCode> {
+export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInviterCode> {
 	const tid = decode(hash);
+
+	const member = await prisma.member.findUnique({
+		select: { auth: true },
+		where: { cpk: { uid, tid } },
+	});
+
+	if (!member) {
+		throw new HttpError("UNAUTHORIZED", "Lack Team Membership");
+	}
+
+	if (!member.auth) {
+		throw new HttpError("UNAUTHORIZED", "Lack Team Authorship");
+	}
 
 	let code: Uint8Array | undefined;
 	let attempt = 0;

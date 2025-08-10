@@ -35,7 +35,7 @@ team.post("/invite", limInvite, authen, async (req, res) => {
 	}
 
 	try {
-		res.json(await invite(data));
+		res.json(await invite(req.uid, data));
 	} catch (e) {
 		if (e instanceof HttpError) {
 			return res.status(e.status).send(e.message);
@@ -52,7 +52,7 @@ team.post("/access", limAccess, authen, async (req, res) => {
 	}
 
 	try {
-		res.json(await access(data));
+		res.json(await access(req.uid, data));
 	} catch (e) {
 		if (e instanceof HttpError) {
 			return res.status(e.status).send(e.message);
