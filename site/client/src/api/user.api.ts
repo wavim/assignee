@@ -1,8 +1,8 @@
-import { UserMembers, zUserMembers } from "@app/schema";
+import { Membership, zMembership } from "@app/schema";
 import axios from "axios";
 
 const api = axios.create({ baseURL: "/api/user" });
 
-export async function members(): Promise<zUserMembers> {
-	return await api.get("/members").then(({ data }) => UserMembers.parse(data));
+export async function membership(): Promise<zMembership> {
+	return await api.get("/membership").then(({ data }) => Membership.parse(data));
 }

@@ -1,24 +1,24 @@
 import {
-	InviterCode,
-	TeamCreated,
-	TeamPayload,
-	zInviterCode,
-	zTeamCreated,
-	zTeamDetails,
-	zTeamPayload,
+	InviteCode,
+	TeamBase,
+	TeamID,
+	zInviteCode,
+	zTeamBase,
+	zTeamID,
+	zTeamProfile,
 } from "@app/schema";
 import axios from "axios";
 
 const api = axios.create({ baseURL: "/api/team" });
 
-export async function create(detail: zTeamDetails): Promise<zTeamCreated> {
-	return await api.post("/create", detail).then(({ data }) => TeamCreated.parse(data));
+export async function create(data: zTeamProfile): Promise<zTeamID> {
+	return await api.post("/create", data).then(({ data }) => TeamID.parse(data));
 }
 
-export async function invite(detail: zTeamCreated): Promise<zInviterCode> {
-	return await api.post("/invite", detail).then(({ data }) => InviterCode.parse(data));
+export async function invite(data: zTeamID): Promise<zInviteCode> {
+	return await api.post("/invite", data).then(({ data }) => InviteCode.parse(data));
 }
 
-export async function accept(detail: zInviterCode): Promise<zTeamPayload> {
-	return await api.post("/accept", detail).then(({ data }) => TeamPayload.parse(data));
+export async function accept(data: zInviteCode): Promise<zTeamBase> {
+	return await api.post("/accept", data).then(({ data }) => TeamBase.parse(data));
 }

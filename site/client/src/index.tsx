@@ -18,7 +18,7 @@ const routes: RouteDefinition[] = [
 	{ path: "/signin", component: lazy(() => import("./pages/Pub/Signin/Signin")) },
 	{ path: "/signup", component: lazy(() => import("./pages/Pub/Signup/Signup")) },
 
-	{ path: "/home", component: lazy(() => import("./pages/App/Home/Home")) },
+	{ path: "/dash", component: lazy(() => import("./pages/App/Dash/Dash")) },
 	{ path: "/team/:hash", component: lazy(() => import("./pages/App/Team/Team")) },
 
 	{ path: "*", component: lazy(() => import("./pages/Pub/E404/E404")) },

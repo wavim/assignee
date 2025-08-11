@@ -51,7 +51,7 @@ const Form = () => {
 
 		switch (await signup(data)) {
 			case 200: {
-				navigate("/home", { replace: true });
+				navigate("/dash", { replace: true });
 				break;
 			}
 			case ErrorCode.CONFLICT: {

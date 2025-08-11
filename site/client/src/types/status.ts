@@ -1,5 +1,5 @@
-import { zUserMembers } from "@app/schema";
+import { zMembership } from "@app/schema";
 
 export interface Status {
-	members: zUserMembers;
+	membership: zMembership;
 }

@@ -12,7 +12,7 @@ export default (props: { landing?: boolean; children: JSXElement }) => {
 	return (
 		<Suspense>
 			{auth() && props.landing ? (
-				<Navigate href="/home"></Navigate>
+				<Navigate href="/dash"></Navigate>
 			) : !auth() && !props.landing ? (
 				<Navigate href="/"></Navigate>
 			) : (

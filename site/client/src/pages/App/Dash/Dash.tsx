@@ -1,7 +1,7 @@
 import { createSignal, lazy } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Dynamic } from "solid-js/web";
-import { members } from "../../../api/user.api";
+import { membership } from "../../../api/user.api";
 import Guard from "../../../gui/Guard";
 import { Status } from "../../../types/status";
 import Footer from "../Footer";
@@ -16,10 +16,10 @@ export default () => {
 	const $router = createSignal<Route>("teams");
 	const [route] = $router;
 
-	const [status, update] = createStore<Status>({ members: [] });
+	const [status, update] = createStore<Status>({ membership: [] });
 
-	void members().then((m) => {
-		update("members", m);
+	void membership().then((m) => {
+		update("membership", m);
 	});
 
 	return (

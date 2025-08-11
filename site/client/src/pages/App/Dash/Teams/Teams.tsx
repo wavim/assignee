@@ -1,4 +1,4 @@
-import { zUserMembers } from "@app/schema";
+import { zMembership } from "@app/schema";
 import { A } from "@solidjs/router";
 import Filter from "@wavim/solid-filter";
 import clsx from "clsx/lite";
@@ -15,13 +15,13 @@ import I18n from "./I18n";
 export default (props: { status: Status; update: SetStoreFunction<Status> }) => (
 	<I18n.I18n>
 		<main class="flex w-full flex-col gap-8 p-4">
-			<Show when={props.status.members.length}>
-				<List members={props.status.members}></List>
+			<Show when={props.status.membership.length}>
+				<Dashboard membership={props.status.membership}></Dashboard>
 			</Show>
 			<div
 				class={clsx(
 					"ml-1 flex w-max flex-col items-center justify-center gap-6 md:flex-row",
-					!props.status.members.length && "mt-72 self-center",
+					!props.status.membership.length && "mt-72 self-center",
 				)}
 			>
 				<Create update={props.update}></Create>
@@ -31,7 +31,7 @@ export default (props: { status: Status; update: SetStoreFunction<Status> }) => 
 	</I18n.I18n>
 );
 
-const List = (props: { members: zUserMembers }) => {
+const Dashboard = (props: { membership: zMembership }) => {
 	const t = I18n.useI18n();
 
 	const [search, setSearch] = createSignal("");
@@ -78,7 +78,7 @@ const List = (props: { members: zUserMembers }) => {
 			<Search></Search>
 			<section class="flex w-full flex-col flex-wrap gap-4 md:flex-row">
 				<Filter
-					candidates={props.members.toSorted((a, b) => {
+					candidates={props.membership.toSorted((a, b) => {
 						return a.name.localeCompare(b.name);
 					})}
 					predicates={[
@@ -93,7 +93,7 @@ const List = (props: { members: zUserMembers }) => {
 	);
 };
 
-const Card = (props: { children: zUserMembers[number] }) => {
+const Card = (props: { children: zMembership[number] }) => {
 	const t = I18n.useI18n();
 
 	return (
