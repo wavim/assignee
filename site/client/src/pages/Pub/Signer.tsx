@@ -1,10 +1,10 @@
 import { zCredentials } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
-import Footer from "../../gui/Footer";
 import Form from "../../gui/Form";
 import Guard from "../../gui/Guard";
 import { defineI18n } from "../../gui/I18n";
+import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";
 
@@ -39,7 +39,7 @@ const Sign = (props: SignProps) => {
 	const t = I18n.useI18n();
 
 	return (
-		<section class="flex flex-col items-center px-8">
+		<section class="flex flex-col items-center justify-center px-8 md:min-h-dvh">
 			<h1 class="font-jakarta text-text-major mb-8 text-3xl font-medium md:mb-12 md:text-4xl">
 				{props.header}
 			</h1>

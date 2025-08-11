@@ -41,7 +41,7 @@ export default () => {
 				></Link>
 				<A11y class="absolute right-5 h-1/2"></A11y>
 			</header>
-			<div class="h-28 md:h-36"></div>
+			<div class="h-28 md:hidden"></div>
 		</I18n.I18n>
 	);
 };
