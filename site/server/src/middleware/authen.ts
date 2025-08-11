@@ -8,8 +8,8 @@ import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
 
 export const authen: RequestHandler = async (req, res, next) => {
-	const cookies = req.cookies as { bearer: zBearerToken };
-	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
+	const cookies = req.cookies as { token: zBearerToken };
+	const { success, error, data } = BearerToken.safeParse(cookies.token);
 
 	if (!success) {
 		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
@@ -27,8 +27,11 @@ export const authen: RequestHandler = async (req, res, next) => {
 		}
 		const { uid, hash, salt, created } = session;
 
-		if (expired(created, CONFIG.SESS_AGE)) {
-			throw new HttpError("UNAUTHORIZED", "Session Has Expired");
+		if (expired(created, CONFIG.SESS_ROT)) {
+			if (expired(created, CONFIG.SESS_AGE)) {
+				throw new HttpError("UNAUTHORIZED", "Session Has Expired");
+			}
+			req.rot = true;
 		}
 
 		if (!match(key, hash, salt)) {

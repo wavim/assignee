@@ -13,8 +13,8 @@ export const auth = Router();
 const limSigner = rateLimit(CONFIG.RATE_LIM.AUTH_SIGNER);
 const limVerify = rateLimit(CONFIG.RATE_LIM.AUTH_VERIFY);
 
-const bearer = (token: zBearerToken) => {
-	return ["bearer", token, { httpOnly: true, expires: addtime(CONFIG.SESS_AGE) }] as const;
+const token = (token: zBearerToken) => {
+	return ["token", token, { httpOnly: true, expires: addtime(CONFIG.SESS_AGE) }] as const;
 };
 
 auth.post("/signin", limSigner, async (req, res) => {
@@ -25,7 +25,7 @@ auth.post("/signin", limSigner, async (req, res) => {
 	}
 
 	try {
-		res.cookie(...bearer(await signin(data))).end();
+		res.cookie(...token(await signin(data))).end();
 	} catch (e) {
 		if (e instanceof HttpError) {
 			return res.status(e.status).send(e.message);
@@ -42,7 +42,7 @@ auth.post("/signup", limSigner, async (req, res) => {
 	}
 
 	try {
-		res.cookie(...bearer(await signup(data))).end();
+		res.cookie(...token(await signup(data))).end();
 	} catch (e) {
 		if (e instanceof HttpError) {
 			return res.status(e.status).send(e.message);
@@ -52,23 +52,26 @@ auth.post("/signup", limSigner, async (req, res) => {
 });
 
 auth.post("/rotate", limVerify, authen, async (req, res) => {
-	const cookies = req.cookies as { bearer: zBearerToken };
-	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
+	const cookies = req.cookies as { token: zBearerToken };
+	const { success, error, data } = BearerToken.safeParse(cookies.token);
 
 	if (!success) {
 		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
 	}
 
+	if (!req.rot) {
+		return res.end();
+	}
 	try {
-		res.cookie(...bearer(await rotate(data, req.uid))).end();
+		res.cookie(...token(await rotate(data, req.uid))).end();
 	} catch {
 		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 	}
 });
 
 auth.post("/logout", limVerify, authen, async (req, res) => {
-	const cookies = req.cookies as { bearer: zBearerToken };
-	const { success, error, data } = BearerToken.safeParse(cookies.bearer);
+	const cookies = req.cookies as { token: zBearerToken };
+	const { success, error, data } = BearerToken.safeParse(cookies.token);
 
 	if (!success) {
 		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
@@ -76,7 +79,7 @@ auth.post("/logout", limVerify, authen, async (req, res) => {
 
 	try {
 		await logout(data);
-		res.end();
+		res.clearCookie("token", { httpOnly: true }).end();
 	} catch {
 		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 	}

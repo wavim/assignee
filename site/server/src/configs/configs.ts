@@ -3,6 +3,7 @@ import Hashids from "hashids";
 import { ms, Time } from "../utils/time";
 
 export const CONFIG: {
+	SESS_ROT: Time;
 	SESS_AGE: Time;
 	CODE_AGE: Time;
 	RATE_LIM: Record<
@@ -11,6 +12,7 @@ export const CONFIG: {
 	>;
 	HASH_IDS: Hashids;
 } = {
+	SESS_ROT: { h: 1 },
 	SESS_AGE: { d: 1 },
 	CODE_AGE: { d: 7 },
 	RATE_LIM: {
