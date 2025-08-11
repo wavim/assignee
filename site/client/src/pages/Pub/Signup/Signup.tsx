@@ -70,7 +70,6 @@ const Form = () => {
 		<Signer
 			header={t("header")}
 			action={t("action")}
-			submit={submit}
 			error={createMemo(() => {
 				const id = error();
 				return id && t(id);
@@ -78,6 +77,7 @@ const Form = () => {
 			check={(authid) => {
 				setError(check(authid));
 			}}
+			cback={submit}
 			alturl="/signin"
 			altnav={t("signin")}
 		></Signer>

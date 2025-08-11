@@ -47,7 +47,6 @@ const Form = () => {
 		<Signer
 			header={t("header")}
 			action={t("action")}
-			submit={submit}
 			error={createMemo(() => {
 				const id = error();
 				return id && t(id);
@@ -55,6 +54,7 @@ const Form = () => {
 			check={() => {
 				setError();
 			}}
+			cback={submit}
 			alturl="/signup"
 			altnav={t("signup")}
 		></Signer>

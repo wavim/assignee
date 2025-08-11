@@ -1,11 +1,10 @@
 import { zCredentials } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
-import Button from "../../gui/Button";
+import Footer from "../../gui/Footer";
+import Form from "../../gui/Form";
 import Guard from "../../gui/Guard";
 import { defineI18n } from "../../gui/I18n";
-import Input from "../../gui/Input";
-import Footer from "../../gui/Footer";
 import Header from "./Header";
 import Main from "./Main";
 
@@ -14,76 +13,59 @@ const I18n = defineI18n({
 	zh: { email: "電郵", password: "密碼" },
 });
 
-interface FormProps {
+interface SignProps {
 	header: string;
 	action: string;
-	submit: (creds: zCredentials) => unknown;
 
 	error: Accessor<undefined | string>;
 	check: (creds: zCredentials) => unknown;
+	cback: (creds: zCredentials) => unknown;
 
 	alturl: "/signin" | "/signup";
 	altnav: string;
 }
 
-export default (props: FormProps) => (
+export default (props: SignProps) => (
 	<Guard landing>
 		<I18n.I18n>
 			<Header></Header>
 			<Main>
-				<Form {...props}></Form>
+				<Sign {...props}></Sign>
 			</Main>
 			<Footer></Footer>
 		</I18n.I18n>
 	</Guard>
 );
 
-const Form = (props: FormProps) => {
+const Sign = (props: SignProps) => {
 	const t = I18n.useI18n();
 
-	let mail!: HTMLInputElement;
-	let pass!: HTMLInputElement;
-
-	const check = () => {
-		props.check({ mail: mail.value, pass: pass.value });
-	};
-
 	return (
-		<section class="flex flex-col items-center gap-8 px-8 md:gap-12">
-			<h1 class="font-jakarta text-text-major text-3xl font-medium md:text-4xl">{props.header}</h1>
-			<form class="flex w-full max-w-110 flex-col gap-4">
-				<Input
-					ref={mail}
-					type="email"
-					name={t("email")}
-					oninput={check}
-					spellcheck="false"
-					autocomplete="email"
-				></Input>
-				<Input
-					ref={pass}
-					type="password"
-					name={t("password")}
-					oninput={check}
-					autocomplete={props.alturl === "/signin" ? "new-password" : "current-password"}
-				></Input>
-				<Button
-					onclick={() => {
-						props.submit({ mail: mail.value, pass: pass.value });
-					}}
-					aria-label={props.action}
-					class="mt-4"
-					full
-				>
-					{props.error() ?? props.action}
-				</Button>
-				<A
-					href={props.alturl}
-					class="text-text-major font-jakarta mt-4 text-center text-lg"
-				>
-					{`${props.altnav} ›`}
-				</A>
-			</form>
+		<section class="flex flex-col items-center px-8">
+			<h1 class="font-jakarta text-text-major mb-8 text-3xl font-medium md:mb-12 md:text-4xl">
+				{props.header}
+			</h1>
+			<Form
+				label={props.action}
+				input={[
+					{ name: t("email"), type: "email", spellcheck: false, autocomplete: "email" },
+					{
+						name: t("password"),
+						type: "password",
+						autocomplete: props.alturl === "/signin" ? "new-password" : "current-password",
+					},
+				]}
+				error={props.error}
+				check={(mail, pass) => props.check({ mail, pass })}
+				cback={(mail, pass) => props.cback({ mail, pass })}
+				class="flex w-full max-w-110 flex-col gap-4 [&_button]:mt-4"
+			></Form>
+			<A
+				href={props.alturl}
+				class="text-text-major font-jakarta mt-8 text-center text-lg"
+			>
+				{`${props.altnav} ›`}
+			</A>
 		</section>
 	);
 };

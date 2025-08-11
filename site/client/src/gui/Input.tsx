@@ -17,10 +17,10 @@ export default (props: Props<"input">) => {
 			<label class={clsx("font-jakarta relative flex items-center", props.class)}>
 				<input
 					{...props}
-					on:input={({ target }) => {
+					type={shown() ? "text" : props.type}
+					oninput={({ target }) => {
 						setBlank(!target.value.trim().length);
 					}}
-					type={shown() ? "text" : props.type}
 					class="text-text-major border-holder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2 text-base"
 				></input>
 				<span
@@ -35,7 +35,10 @@ export default (props: Props<"input">) => {
 					<Reveal
 						onclick={() => setShown(!shown())}
 						shown={shown()}
-						class={clsx(blank() && "hidden", "fill-holder absolute right-4 w-6 cursor-pointer")}
+						class={clsx(
+							blank() && "hidden",
+							"fill-holder absolute right-4 bottom-4 w-6 cursor-pointer",
+						)}
 					></Reveal>
 				</Show>
 			</label>

@@ -14,6 +14,9 @@ importers:
       '@solid-primitives/i18n':
         specifier: ^2.2.1
         version: 2.2.1(solid-js@1.9.8)
+      '@solid-primitives/refs':
+        specifier: ^1.1.2
+        version: 1.1.2(solid-js@1.9.8)
       '@solidjs/router':
         specifier: ^0.15.3
         version: 0.15.3(solid-js@1.9.8)
@@ -526,6 +529,16 @@ packages:
 
   '@solid-primitives/i18n@2.2.1':
     resolution: {integrity: sha512-TnTnE2Ku11MGYZ1JzhJ8pYscwg1fr9MteoYxPwsfxWfh9Jp5K7RRJncJn9BhOHvNLwROjqOHZ46PT7sPHqbcXw==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/refs@1.1.2':
+    resolution: {integrity: sha512-K7tf2thy7L+YJjdqXspXOg5xvNEOH8tgEWsp0+1mQk3obHBRD6hEjYZk7p7FlJphSZImS35je3UfmWuD7MhDfg==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/utils@6.3.2':
+    resolution: {integrity: sha512-hZ/M/qr25QOCcwDPOHtGjxTD8w2mNyVAYvcfgwzBHq2RwNqHNdDNsMZYap20+ruRwW4A3Cdkczyoz0TSxLCAPQ==}
     peerDependencies:
       solid-js: ^1.6.12
 
@@ -1967,6 +1980,15 @@ snapshots:
     optional: true
 
   '@solid-primitives/i18n@2.2.1(solid-js@1.9.8)':
+    dependencies:
+      solid-js: 1.9.8
+
+  '@solid-primitives/refs@1.1.2(solid-js@1.9.8)':
+    dependencies:
+      '@solid-primitives/utils': 6.3.2(solid-js@1.9.8)
+      solid-js: 1.9.8
+
+  '@solid-primitives/utils@6.3.2(solid-js@1.9.8)':
     dependencies:
       solid-js: 1.9.8
 
