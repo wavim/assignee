@@ -22,7 +22,7 @@ export default () => {
 				</Show>
 				<div
 					class={clsx(
-						"ml-1 flex flex-col gap-6 md:flex-row",
+						"ml-1 flex gap-6",
 						!members().length && "fixed inset-1/2 size-max -translate-1/2",
 					)}
 				>
