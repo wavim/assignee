@@ -41,6 +41,6 @@ export const UserMembers = arr(
 export type zUserMembers = zType<typeof UserMembers>;
 
 export const InviterCode = obj({
-	code: str().check(len(8), lower(), regex(/^[0-9a-f]*$/)),
+	code: str().check(trim(), len(8), lower(), regex(/^[0-9a-f]*$/)),
 });
 export type zInviterCode = zType<typeof InviterCode>;
