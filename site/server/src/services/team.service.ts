@@ -1,4 +1,4 @@
-import { zInviterCode, zTeamCreated, zTeamDetails, zTeamPayload } from "@app/schema";
+import { zInviteCode, zTeamBase, zTeamID, zTeamProfile } from "@app/schema";
 import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { HttpError } from "@wavim/http-error";
@@ -8,7 +8,7 @@ import { NONE } from "../database/none";
 import { decode, encode } from "../utils/hashid";
 import { expired } from "../utils/time";
 
-export async function create(uid: number, { name, desc }: zTeamDetails): Promise<zTeamCreated> {
+export async function create(uid: number, { name, desc }: zTeamProfile): Promise<zTeamID> {
 	const { tid } = await prisma.team.create({
 		select: { tid: true },
 		data: { name, desc, Member: { create: { uid, auth: true } } },
@@ -17,7 +17,7 @@ export async function create(uid: number, { name, desc }: zTeamDetails): Promise
 	return { hash: encode(tid) };
 }
 
-export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInviterCode> {
+export async function invite(uid: number, { hash }: zTeamID): Promise<zInviteCode> {
 	const tid = decode(hash);
 
 	const member = await prisma.member.findUnique({
@@ -26,11 +26,11 @@ export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInvi
 	});
 
 	if (!member) {
-		throw new HttpError("UNAUTHORIZED", "Lack Team Membership");
+		throw new HttpError("UNAUTHORIZED", "No Team Membership");
 	}
 
 	if (!member.auth) {
-		throw new HttpError("UNAUTHORIZED", "Lack Team Authorship");
+		throw new HttpError("UNAUTHORIZED", "No Team Authorship");
 	}
 
 	let code;
@@ -60,7 +60,7 @@ export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInvi
 					continue;
 				}
 
-				throw new HttpError("CONFLICT", "Active Invitation Code Exists");
+				throw new HttpError("CONFLICT", "Has Active Code");
 			}
 			break;
 		}
@@ -73,7 +73,7 @@ export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInvi
 	return { code: bytesToHex(code) };
 }
 
-export async function accept(uid: number, { code }: zInviterCode): Promise<zTeamPayload> {
+export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamBase> {
 	const invite = await prisma.invite.findUnique({
 		select: { tid: true, created: true },
 		where: { code: hexToBytes(code) },

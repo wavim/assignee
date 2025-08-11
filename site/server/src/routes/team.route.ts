@@ -1,4 +1,4 @@
-import { InviterCode, TeamCreated, TeamDetails } from "@app/schema";
+import { InviteCode, TeamID, TeamProfile } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
@@ -14,7 +14,7 @@ const limInvite = rateLimit(CONFIG.RATE_LIM.TEAM_INVITE);
 const limAccept = rateLimit(CONFIG.RATE_LIM.TEAM_ACCEPT);
 
 team.post("/create", limCreate, authen, async (req, res) => {
-	const { success, error, data } = TeamDetails.safeParse(req.body);
+	const { success, error, data } = TeamProfile.safeParse(req.body);
 
 	if (!success) {
 		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
@@ -27,8 +27,9 @@ team.post("/create", limCreate, authen, async (req, res) => {
 	}
 });
 
+// MO TODO add guard middleware
 team.post("/invite", limInvite, authen, async (req, res) => {
-	const { success, error, data } = TeamCreated.safeParse(req.body);
+	const { success, error, data } = TeamID.safeParse(req.body);
 
 	if (!success) {
 		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
@@ -45,7 +46,7 @@ team.post("/invite", limInvite, authen, async (req, res) => {
 });
 
 team.post("/accept", limAccept, authen, async (req, res) => {
-	const { success, error, data } = InviterCode.safeParse(req.body);
+	const { success, error, data } = InviteCode.safeParse(req.body);
 
 	if (!success) {
 		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));

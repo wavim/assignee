@@ -1,8 +1,8 @@
-import { zUserMembers } from "@app/schema";
+import { zMembership } from "@app/schema";
 import { prisma } from "../database/client";
 import { encode } from "../utils/hashid";
 
-export async function members(uid: number): Promise<zUserMembers> {
+export async function membership(uid: number): Promise<zMembership> {
 	const data = await prisma.member.findMany({
 		select: { tid: true, auth: true, Team: { select: { name: true, desc: true } } },
 		where: { uid },
