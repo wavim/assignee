@@ -70,7 +70,7 @@ export async function invite(uid: number, { hash }: zTeamID): Promise<zInviteCod
 		throw new HttpError("INTERNAL_SERVER_ERROR", "Crazy Dude");
 	}
 
-	return { code: bytesToHex(code) };
+	return { code: bytesToHex(code).toUpperCase() };
 }
 
 export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamBase> {
