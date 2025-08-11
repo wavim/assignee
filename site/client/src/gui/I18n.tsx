@@ -7,7 +7,7 @@ import {
 	onCleanup,
 	useContext,
 } from "solid-js";
-import { LocaleVal, resLocale } from "../configs/locale";
+import { LocaleVal, resLocale } from "../config/locale";
 
 export function defineI18n<D extends BaseDict>(dicts: Record<LocaleVal, D>) {
 	const I18nContext = createContext<Translator<Flatten<D>>>();

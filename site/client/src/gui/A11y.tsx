@@ -1,7 +1,7 @@
 import { For } from "solid-js";
-import { getFontSize, setFontSize } from "../configs/font-size";
-import { getLocale, setLocale } from "../configs/locale";
-import { getMedia, setMedia } from "../configs/media";
+import { getFontSize, setFontSize } from "../config/font-size";
+import { getLocale, setLocale } from "../config/locale";
+import { getMedia, setMedia } from "../config/media";
 import { Props } from "../types/props";
 import { defineI18n } from "./I18n";
 import Modal from "./Modal";

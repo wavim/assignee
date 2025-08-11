@@ -1,7 +1,7 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
-import { ease } from "../configs/media";
+import { ease } from "../config/media";
 import A11y from "../gui/A11y";
 import { defineI18n } from "../gui/I18n";
 import Logo from "../gui/Logo";

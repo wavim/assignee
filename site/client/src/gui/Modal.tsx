@@ -1,7 +1,7 @@
 import { clsx } from "clsx/lite";
 import { gsap } from "gsap";
 import { createEffect, createSignal } from "solid-js";
-import { ease } from "../configs/media";
+import { ease } from "../config/media";
 import { Props } from "../types/props";
 
 export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {

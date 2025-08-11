@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { setFontSize } from "./configs/font-size";
-import { resMedia, setMedia } from "./configs/media";
+import { setFontSize } from "./config/font-size";
+import { resMedia, setMedia } from "./config/media";
 
 export async function init(): Promise<void> {
 	setFontSize();
