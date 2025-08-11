@@ -1,0 +1,42 @@
+import { defineI18n } from "../../../../gui/I18n";
+
+export default defineI18n({
+	en: {
+		search: { name: "Search", normal: "Normal View", badged: "Badged View" },
+		owner: "Owner",
+		member: "Member",
+		errors: { ratelim: "Too Many Requests", systems: "Internal System Error" },
+		create: {
+			ctoa: "Create Team",
+			name: "Team Name",
+			desc: "Description",
+			next: "Commence",
+			errors: { setname: "Set Team Name", setdesc: "Add Description" },
+		},
+		access: {
+			ctoa: "Join Team",
+			code: "Invite Code",
+			next: "Embrace",
+			errors: { notcode: "Invalid Code", already: "Already Member" },
+		},
+	},
+	zh: {
+		search: { name: "搜索", normal: "普通視圖", badged: "群主視圖" },
+		owner: "群主",
+		member: "群員",
+		errors: { ratelim: "嘗試次數過多", systems: "內部系統錯誤" },
+		create: {
+			ctoa: "創建群組",
+			name: "群名",
+			desc: "備注",
+			next: "啟動",
+			errors: { setname: "群組不能無名", setdesc: "請提供群備註" },
+		},
+		access: {
+			ctoa: "加入群組",
+			code: "邀請碼",
+			next: "接受邀請",
+			errors: { notcode: "邀請碼不正確", already: "已為本群成員" },
+		},
+	},
+});
