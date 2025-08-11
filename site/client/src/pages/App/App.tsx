@@ -2,9 +2,9 @@ import { createSignal, lazy } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Dynamic } from "solid-js/web";
 import { members } from "../../api/user.api";
-import Footer from "../../gui/Footer";
 import Guard from "../../gui/Guard";
 import { Status } from "../../types/status";
+import Footer from "./Footer";
 import Header, { Route } from "./Header";
 
 const routes: Record<Route, ReturnType<typeof lazy>> = {
