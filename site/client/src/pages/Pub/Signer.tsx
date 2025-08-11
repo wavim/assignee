@@ -16,11 +16,9 @@ const I18n = defineI18n({
 interface SignProps {
 	header: string;
 	action: string;
-
-	error: Accessor<undefined | string>;
+	error: Accessor<string | undefined>;
 	check: (creds: zCredentials) => unknown;
 	cback: (creds: zCredentials) => unknown;
-
 	alturl: "/signin" | "/signup";
 	altnav: string;
 }
@@ -58,7 +56,7 @@ const Sign = (props: SignProps) => {
 				error={props.error}
 				check={(mail, pass) => props.check({ mail, pass })}
 				cback={(mail, pass) => props.cback({ mail, pass })}
-				class="flex w-full max-w-110 flex-col gap-4 [&_button]:mt-4"
+				class="w-full max-w-110"
 			></Form>
 			<A
 				href={props.alturl}

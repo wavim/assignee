@@ -1,4 +1,5 @@
 import { Refs } from "@solid-primitives/refs";
+import clsx from "clsx/lite";
 import { Accessor, createMemo, createSignal, For, splitProps } from "solid-js";
 import { Props } from "../types/props";
 import Button from "./Button";
@@ -22,6 +23,7 @@ export default (
 		<form
 			{...rest}
 			oninput={() => core.check(...inputs().map((i) => i.value))}
+			class={clsx("flex flex-col gap-4", rest.class)}
 		>
 			<Refs ref={refs}>
 				<For each={core.input}>{(props) => <Input {...props}></Input>}</For>
@@ -29,6 +31,7 @@ export default (
 			<Button
 				onclick={() => core.cback(...inputs().map((i) => i.value))}
 				aria-label={core.label}
+				class="mt-4"
 				full
 			>
 				{core.error() ?? core.label}

@@ -120,7 +120,7 @@ const Config = <T extends string>(props: {
 				const option = target.selectedOptions[0];
 				props.children(option.dataset.key as T);
 			}}
-			class="text-text-major w-30"
+			class="text-text-major w-30 cursor-pointer"
 		>
 			<For each={Object.entries<string>(props.options)}>
 				{([key, value]) => (
