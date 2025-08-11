@@ -37,7 +37,7 @@ const Form = () => {
 			case ErrorCode.TOO_MANY_REQUESTS: {
 				return setError("errors.ratelim");
 			}
-			case ErrorCode.INTERNAL_SERVER_ERROR: {
+			default: {
 				return setError("errors.systems");
 			}
 		}
