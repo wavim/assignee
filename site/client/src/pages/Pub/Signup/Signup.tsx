@@ -26,8 +26,8 @@ const Form = () => {
 	>();
 	const [error, setError] = $error;
 
-	const check = (creds: zCredentials) => {
-		if (!creds.pass.length) {
+	const check = (creds: zCredentials, submit = false) => {
+		if (!submit && !creds.pass.length) {
 			return undefined;
 		}
 
@@ -46,7 +46,7 @@ const Form = () => {
 		const { success, data } = Credentials.safeParse(creds);
 
 		if (!success) {
-			return setError(check(creds));
+			return setError(check(creds, true));
 		}
 
 		switch (await signup(data)) {
@@ -74,8 +74,8 @@ const Form = () => {
 				const id = error();
 				return id && t(id);
 			})}
-			check={(authid) => {
-				setError(check(authid));
+			check={(creds) => {
+				setError(check(creds));
 			}}
 			cback={submit}
 			alturl="/signin"
