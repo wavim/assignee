@@ -15,6 +15,12 @@ export const BearerToken = obj({
 });
 export type zBearerToken = zType<typeof BearerToken>;
 
+export const UserProfile = obj({
+	mail: str().check(trim(), lower(), email()),
+	name: str().check(trim(), min(1)),
+});
+export type zUserProfile = zType<typeof UserProfile>;
+
 export const TeamID = obj({
 	hash: str().check(min(8), regex(/^[0-9a-zA-Z]*$/)),
 });
@@ -34,8 +40,8 @@ export type zTeamBase = zType<typeof TeamBase>;
 
 export const Membership = arr(
 	obj({
-		auth: bit(),
 		...TeamBase.shape,
+		auth: bit(),
 	}),
 );
 export type zMembership = zType<typeof Membership>;
@@ -44,3 +50,17 @@ export const InviteCode = obj({
 	code: str().check(trim(), upper(), regex(/^[0-9A-F]*$/)),
 });
 export type zInviteCode = zType<typeof InviteCode>;
+
+export const TeamMembers = arr(
+	obj({
+		...UserProfile.shape,
+		auth: bit(),
+	}),
+);
+export type zTeamMembers = zType<typeof TeamMembers>;
+
+export const TeamFull = obj({
+	...TeamProfile.shape,
+	memb: TeamMembers,
+});
+export type zTeamFull = zType<typeof TeamFull>;
