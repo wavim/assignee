@@ -1,4 +1,4 @@
-import { Props } from "../../types/props";
+import { Props } from "../types/props";
 
 export default (props: Props<"div"> & { auth: boolean }) => (
 	<div {...props}>

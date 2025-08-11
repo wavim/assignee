@@ -1,9 +1,9 @@
 import { zCredentials } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
-import Form from "../../gui/Form";
-import Guard from "../../gui/Guard";
-import { defineI18n } from "../../gui/I18n";
+import Form from "../gui/Form";
+import Guard from "../gui/Guard";
+import { defineI18n } from "../gui/I18n";
 import Footer from "./Footer";
 import Header from "./Header";
 import Main from "./Main";

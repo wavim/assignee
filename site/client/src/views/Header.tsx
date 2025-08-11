@@ -1,9 +1,9 @@
 import { useNavigate } from "@solidjs/router";
 import clsx from "clsx/lite";
 import { Signal, createMemo } from "solid-js";
-import { logout } from "../../api/auth.api";
-import A11y from "../../gui/A11y";
-import { defineI18n } from "../../gui/I18n";
+import { logout } from "../api/auth.api";
+import A11y from "../gui/A11y";
+import { defineI18n } from "../gui/I18n";
 
 const I18n = defineI18n({
 	en: { teams: "Teams", tasks: "Tasks", logout: "Logout" },

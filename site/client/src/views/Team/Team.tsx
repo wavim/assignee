@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
-import Guard from "../../../gui/Guard";
 import { JSXElement } from "solid-js";
+import Guard from "../../gui/Guard";
 
 export default () => {
 	const params = useParams();

@@ -1,4 +1,4 @@
-import { defineI18n } from "../../../gui/I18n";
+import { defineI18n } from "../../gui/I18n";
 
 export default defineI18n({
 	en: { deck: "Nothing here. The resource you requested is not found.", back: "Go Back" },

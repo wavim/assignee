@@ -1,6 +1,6 @@
 import { createSignal, lazy } from "solid-js";
 import { Dynamic } from "solid-js/web";
-import Guard from "../../../gui/Guard";
+import Guard from "../../gui/Guard";
 import Footer from "../Footer";
 import Header, { Route } from "../Header";
 

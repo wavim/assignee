@@ -14,14 +14,14 @@ if (!root) {
 void init();
 
 const routes: RouteDefinition[] = [
-	{ path: "/", component: lazy(() => import("./pages/Pub/Home/Home")) },
-	{ path: "/signin", component: lazy(() => import("./pages/Pub/Signin/Signin")) },
-	{ path: "/signup", component: lazy(() => import("./pages/Pub/Signup/Signup")) },
+	{ path: "/", component: lazy(() => import("./pages/Home/Home")) },
+	{ path: "/signin", component: lazy(() => import("./pages/Signin/Signin")) },
+	{ path: "/signup", component: lazy(() => import("./pages/Signup/Signup")) },
 
-	{ path: "/dash", component: lazy(() => import("./pages/App/Dash/Dash")) },
-	{ path: "/team/:hash", component: lazy(() => import("./pages/App/Team/Team")) },
+	{ path: "/dash", component: lazy(() => import("./views/Dash/Dash")) },
+	{ path: "/team/:hash", component: lazy(() => import("./views/Team/Team")) },
 
-	{ path: "*", component: lazy(() => import("./pages/Pub/E404/E404")) },
+	{ path: "*", component: lazy(() => import("./pages/E404/E404")) },
 ];
 
 render(() => <Router>{routes}</Router>, root);

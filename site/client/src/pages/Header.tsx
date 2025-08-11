@@ -1,11 +1,11 @@
 import { A } from "@solidjs/router";
 import { gsap } from "gsap";
 import { onMount } from "solid-js";
-import { ease } from "../../configs/media";
-import A11y from "../../gui/A11y";
-import { defineI18n } from "../../gui/I18n";
-import Logo from "../../gui/Logo";
-import { Props } from "../../types/props";
+import { ease } from "../configs/media";
+import A11y from "../gui/A11y";
+import { defineI18n } from "../gui/I18n";
+import Logo from "../gui/Logo";
+import { Props } from "../types/props";
 
 const I18n = defineI18n({ en: { home: "Homepage" }, zh: { home: "首頁" } });
 
