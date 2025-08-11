@@ -1,6 +1,6 @@
 import { A } from "@solidjs/router";
 import Button from "../../../gui/Button";
-import Footer from "../../../gui/Footer";
+import Footer from "../Footer";
 import Header from "../Header";
 import Main from "../Main";
 import Section from "../Section";
