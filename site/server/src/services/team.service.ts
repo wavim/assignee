@@ -1,10 +1,10 @@
 import { zInviterCode, zTeamCreated, zTeamDetails, zTeamPayload } from "@app/schema";
 import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { HttpError } from "@wavim/http-error";
 import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
 import { NONE } from "../database/none";
-import { PrismaClientKnownRequestError } from "../prisma/internal/prismaNamespace";
 import { decode, encode } from "../utils/hashid";
 import { expired } from "../utils/time";
 
