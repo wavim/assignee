@@ -19,6 +19,6 @@ export async function invite(detail: zTeamCreated): Promise<zInviterCode> {
 	return await api.post("/invite", detail).then(({ data }) => InviterCode.parse(data));
 }
 
-export async function access(detail: zInviterCode): Promise<zTeamPayload> {
-	return await api.post("/access", detail).then(({ data }) => TeamPayload.parse(data));
+export async function accept(detail: zInviterCode): Promise<zTeamPayload> {
+	return await api.post("/accept", detail).then(({ data }) => TeamPayload.parse(data));
 }

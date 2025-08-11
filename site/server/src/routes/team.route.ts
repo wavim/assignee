@@ -12,7 +12,6 @@ export const team = Router();
 const limCreate = rateLimit(CONFIG.RATE_LIM.TEAM_CREATE);
 const limInvite = rateLimit(CONFIG.RATE_LIM.TEAM_INVITE);
 const limAccept = rateLimit(CONFIG.RATE_LIM.TEAM_ACCEPT);
-const limAccess = rateLimit(CONFIG.RATE_LIM.TEAM_ACCESS);
 
 team.post("/create", limCreate, authen, async (req, res) => {
 	const { success, error, data } = TeamDetails.safeParse(req.body);

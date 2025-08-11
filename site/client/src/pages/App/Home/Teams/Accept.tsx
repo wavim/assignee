@@ -4,7 +4,7 @@ import { ErrorCode } from "@wvm/http-error";
 import { AxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
 import { SetStoreFunction } from "solid-js/store";
-import { access } from "../../../../api/team.api";
+import { accept } from "../../../../api/team.api";
 import Form from "../../../../gui/Form";
 import Modal from "../../../../gui/Modal";
 import { Status } from "../../../../types/status";
@@ -18,8 +18,8 @@ export default (props: { update: SetStoreFunction<Status> }) => {
 
 	const $error = createSignal<
 		| undefined
-		| "access.errors.notcode"
-		| "access.errors.already"
+		| "accept.errors.notcode"
+		| "accept.errors.already"
 		| "errors.ratelim"
 		| "errors.systems"
 	>();
@@ -29,10 +29,10 @@ export default (props: { update: SetStoreFunction<Status> }) => {
 		const { success, data } = InviterCode.safeParse({ code });
 
 		if (!success) {
-			return setError("access.errors.notcode");
+			return setError("accept.errors.notcode");
 		}
 
-		void access(data)
+		void accept(data)
 			.then((payload) => {
 				props.update("members", (old) => [...old, { auth: false, ...payload }]);
 				navigate("/team/" + payload.hash);
@@ -47,7 +47,7 @@ export default (props: { update: SetStoreFunction<Status> }) => {
 						break;
 					}
 					case ErrorCode.CONFLICT: {
-						return setError("access.errors.already");
+						return setError("accept.errors.already");
 					}
 					case ErrorCode.TOO_MANY_REQUESTS: {
 						return setError("errors.ratelim");
@@ -65,13 +65,13 @@ export default (props: { update: SetStoreFunction<Status> }) => {
 				ref={toggle}
 				class="font-jakarta text-text-major cursor-pointer text-xl"
 			>
-				{`${t("access.ctoa")} ›`}
+				{`${t("accept.ctoa")} ›`}
 			</button>
 			<Modal toggle={toggle}>
 				<Form
-					label={t("access.next")}
+					label={t("accept.next")}
 					input={[
-						{ name: t("access.code"), autocomplete: "off", style: "text-transform:uppercase" },
+						{ name: t("accept.code"), autocomplete: "off", style: "text-transform:uppercase" },
 					]}
 					error={createMemo(() => {
 						const id = error();

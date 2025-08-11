@@ -8,7 +8,7 @@ import { stringSimilarity } from "string-similarity-js";
 import Input from "../../../../gui/Input";
 import { Props } from "../../../../types/props";
 import { Status } from "../../../../types/status";
-import Access from "./Access";
+import Accept from "./Accept";
 import Create from "./Create";
 import I18n from "./I18n";
 
@@ -25,7 +25,7 @@ export default (props: { status: Status; update: SetStoreFunction<Status> }) => 
 				)}
 			>
 				<Create update={props.update}></Create>
-				<Access update={props.update}></Access>
+				<Accept update={props.update}></Accept>
 			</div>
 		</main>
 	</I18n.I18n>

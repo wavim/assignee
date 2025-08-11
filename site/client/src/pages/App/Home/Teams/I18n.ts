@@ -13,7 +13,7 @@ export default defineI18n({
 			next: "Commence",
 			errors: { setname: "Name Required", setdesc: "Description Required" },
 		},
-		access: {
+		accept: {
 			ctoa: "Join Team",
 			code: "Invite Code",
 			next: "Embrace",
@@ -32,7 +32,7 @@ export default defineI18n({
 			next: "建立",
 			errors: { setname: "群組不能無名", setdesc: "請提供群備註" },
 		},
-		access: {
+		accept: {
 			ctoa: "加入群組",
 			code: "邀請碼",
 			next: "受邀",
