@@ -40,6 +40,7 @@ export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
 		<div
 			ref={modal}
 			role="dialog"
+			inert={!open()}
 			title={props.toggle.title}
 			class={clsx(
 				!open() && "pointer-events-none",
