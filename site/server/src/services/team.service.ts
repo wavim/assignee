@@ -73,7 +73,7 @@ export async function invite(uid: number, { hash }: zTeamCreated): Promise<zInvi
 	return { code: bytesToHex(code) };
 }
 
-export async function access(uid: number, { code }: zInviterCode): Promise<zTeamPayload> {
+export async function accept(uid: number, { code }: zInviterCode): Promise<zTeamPayload> {
 	const invite = await prisma.invite.findUnique({
 		select: { tid: true, created: true },
 		where: { code: hexToBytes(code) },

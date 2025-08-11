@@ -5,12 +5,13 @@ import rateLimit from "express-rate-limit";
 import { prettifyError } from "zod/mini";
 import { CONFIG } from "../configs/configs";
 import { authen } from "../middleware/authen";
-import { access, create, invite } from "../services/team.service";
+import { accept, create, invite } from "../services/team.service";
 
 export const team = Router();
 
 const limCreate = rateLimit(CONFIG.RATE_LIM.TEAM_CREATE);
 const limInvite = rateLimit(CONFIG.RATE_LIM.TEAM_INVITE);
+const limAccept = rateLimit(CONFIG.RATE_LIM.TEAM_ACCEPT);
 const limAccess = rateLimit(CONFIG.RATE_LIM.TEAM_ACCESS);
 
 team.post("/create", limCreate, authen, async (req, res) => {
@@ -44,7 +45,7 @@ team.post("/invite", limInvite, authen, async (req, res) => {
 	}
 });
 
-team.post("/access", limAccess, authen, async (req, res) => {
+team.post("/accept", limAccept, authen, async (req, res) => {
 	const { success, error, data } = InviterCode.safeParse(req.body);
 
 	if (!success) {
@@ -52,7 +53,7 @@ team.post("/access", limAccess, authen, async (req, res) => {
 	}
 
 	try {
-		res.json(await access(req.uid, data));
+		res.json(await accept(req.uid, data));
 	} catch (e) {
 		if (e instanceof HttpError) {
 			return res.status(e.status).send(e.message);
