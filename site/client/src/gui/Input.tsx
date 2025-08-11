@@ -17,10 +17,10 @@ export default (props: Props<"input">) => {
 			<label class={clsx("font-jakarta relative flex items-center", props.class)}>
 				<input
 					{...props}
-					type={shown() ? "text" : props.type}
-					oninput={({ target }) => {
+					on:input={({ target }) => {
 						setBlank(!target.value.trim().length);
 					}}
+					type={shown() ? "text" : props.type}
 					class="text-text-major border-holder peer outline-outline data w-full rounded-xl border-1 px-4 pt-6 pb-2 text-base"
 				></input>
 				<span
