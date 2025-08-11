@@ -8,10 +8,10 @@ export default defineI18n({
 		errors: { ratelim: "Too Many Requests", systems: "Internal System Error" },
 		create: {
 			ctoa: "Create Team",
-			name: "Team Name",
+			name: "Name",
 			desc: "Description",
 			next: "Commence",
-			errors: { setname: "Set Team Name", setdesc: "Add Description" },
+			errors: { setname: "Name Required", setdesc: "Description Required" },
 		},
 		access: {
 			ctoa: "Join Team",
@@ -28,14 +28,14 @@ export default defineI18n({
 		create: {
 			ctoa: "創建群組",
 			name: "群名",
-			desc: "備注",
-			next: "啟動",
+			desc: "備註",
+			next: "建立",
 			errors: { setname: "群組不能無名", setdesc: "請提供群備註" },
 		},
 		access: {
 			ctoa: "加入群組",
 			code: "邀請碼",
-			next: "接受邀請",
+			next: "受邀",
 			errors: { notcode: "邀請碼不正確", already: "已為本群成員" },
 		},
 	},
