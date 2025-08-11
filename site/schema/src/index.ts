@@ -21,8 +21,8 @@ export const TeamCreated = obj({
 export type zTeamCreated = zType<typeof TeamCreated>;
 
 export const TeamDetails = obj({
-	name: str().check(trim()),
-	desc: str().check(trim()),
+	name: str().check(trim(), min(1)),
+	desc: str().check(trim(), min(1)),
 });
 export type zTeamDetails = zType<typeof TeamDetails>;
 
