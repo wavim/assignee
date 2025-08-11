@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-	array as arr, boolean as bit, email, int, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, infer as zType,
+	array as arr, boolean as bit, email, int, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, toUpperCase as upper, infer as zType,
 } from "zod/mini";
 
 export const Credentials = obj({
@@ -15,32 +15,32 @@ export const BearerToken = obj({
 });
 export type zBearerToken = zType<typeof BearerToken>;
 
-export const TeamCreated = obj({
+export const TeamID = obj({
 	hash: str().check(min(8), regex(/^[0-9a-zA-Z]*$/)),
 });
-export type zTeamCreated = zType<typeof TeamCreated>;
+export type zTeamID = zType<typeof TeamID>;
 
-export const TeamDetails = obj({
+export const TeamProfile = obj({
 	name: str().check(trim(), min(1)),
 	desc: str().check(trim(), min(1)),
 });
-export type zTeamDetails = zType<typeof TeamDetails>;
+export type zTeamProfile = zType<typeof TeamProfile>;
 
-export const TeamPayload = obj({
-	...TeamCreated.shape,
-	...TeamDetails.shape,
+export const TeamBase = obj({
+	...TeamID.shape,
+	...TeamProfile.shape,
 });
-export type zTeamPayload = zType<typeof TeamPayload>;
+export type zTeamBase = zType<typeof TeamBase>;
 
-export const UserMembers = arr(
+export const Membership = arr(
 	obj({
 		auth: bit(),
-		...TeamPayload.shape,
+		...TeamBase.shape,
 	}),
 );
-export type zUserMembers = zType<typeof UserMembers>;
+export type zMembership = zType<typeof Membership>;
 
-export const InviterCode = obj({
-	code: str().check(trim(), len(8), lower(), regex(/^[0-9a-f]*$/)),
+export const InviteCode = obj({
+	code: str().check(trim(), upper(), regex(/^[0-9A-F]*$/)),
 });
-export type zInviterCode = zType<typeof InviterCode>;
+export type zInviteCode = zType<typeof InviteCode>;
