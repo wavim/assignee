@@ -3,15 +3,13 @@ import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { AxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
-import { SetStoreFunction } from "solid-js/store";
 import { create } from "../../../../api/team.api";
 import Button from "../../../../gui/Button";
 import Form from "../../../../gui/Form";
 import Modal from "../../../../gui/Modal";
-import { Status } from "../../../../types/status";
 import I18n from "./I18n";
 
-export default (props: { update: SetStoreFunction<Status> }) => {
+export default () => {
 	const navigate = useNavigate();
 	const t = I18n.useI18n();
 
@@ -50,7 +48,6 @@ export default (props: { update: SetStoreFunction<Status> }) => {
 
 		void create(data)
 			.then(({ hash }) => {
-				props.update("membership", (old) => [...old, { auth: true, hash, ...data }]);
 				navigate("/team/" + hash);
 			})
 			.catch((e: unknown) => {
