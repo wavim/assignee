@@ -1,9 +1,9 @@
-import { CONFIG } from "../configs/configs";
+import Hashids from "hashids";
 
-export function encode(id: number): string {
-	return CONFIG.HASH_IDS.encode(id);
+export function encode(hashid: Hashids, id: number): string {
+	return hashid.encode(id);
 }
 
-export function decode(id: string): number {
-	return Number(CONFIG.HASH_IDS.decode(id)[0]);
+export function decode(hashid: Hashids, id: string): number {
+	return Number(hashid.decode(id)[0]);
 }

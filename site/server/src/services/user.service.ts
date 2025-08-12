@@ -1,4 +1,5 @@
 import { zMembership } from "@app/schema";
+import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
 import { encode } from "../utils/hashid";
 
@@ -9,6 +10,6 @@ export async function membership(uid: number): Promise<zMembership> {
 	});
 
 	return data.map((m) => {
-		return { auth: m.auth, hash: encode(m.tid), ...m.Team };
+		return { auth: m.auth, hash: encode(CONFIG.HASH_TID, m.tid), ...m.Team };
 	});
 }

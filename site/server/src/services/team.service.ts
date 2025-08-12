@@ -14,11 +14,11 @@ export async function create(uid: number, { name, desc }: zTeamProfile): Promise
 		data: { name, desc, Member: { create: { uid, auth: true } } },
 	});
 
-	return { hash: encode(tid) };
+	return { hash: encode(CONFIG.HASH_TID, tid) };
 }
 
 export async function invite(uid: number, { hash }: zTeamID): Promise<zInviteCode> {
-	const tid = decode(hash);
+	const tid = decode(CONFIG.HASH_TID, hash);
 
 	const member = await prisma.member.findUnique({
 		select: { auth: true },
@@ -98,5 +98,5 @@ export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamB
 		throw new HttpError("CONFLICT", "Already Team Member");
 	}
 
-	return { hash: encode(tid), ...member.Team };
+	return { hash: encode(CONFIG.HASH_TID, tid), ...member.Team };
 }

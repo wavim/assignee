@@ -10,7 +10,7 @@ export const CONFIG: {
 		"AUTH_SIGNER" | "AUTH_VERIFY" | "TEAM_CREATE" | "TEAM_INVITE" | "TEAM_ACCEPT" | "TEAM_ACCESS",
 		Partial<RateLimOpt>
 	>;
-	HASH_IDS: Hashids;
+	HASH_TID: Hashids;
 } = {
 	SESS_ROT: { h: 1 },
 	SESS_AGE: { d: 1 },
@@ -23,5 +23,5 @@ export const CONFIG: {
 		TEAM_ACCEPT: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
 		TEAM_ACCESS: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
 	},
-	HASH_IDS: new Hashids("SALT OF MCDONALDS", 8),
+	HASH_TID: new Hashids("SALT OF MCDONALDS", 8),
 };
