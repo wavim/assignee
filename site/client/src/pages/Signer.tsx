@@ -50,6 +50,7 @@ const Sign = (props: SignProps) => {
 					{
 						name: t("password"),
 						type: "password",
+						spellcheck: false,
 						autocomplete: props.alturl === "/signin" ? "new-password" : "current-password",
 					},
 				]}
