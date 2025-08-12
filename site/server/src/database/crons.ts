@@ -7,4 +7,8 @@ export function init(): void {
 	schedule("0 * * * *", async () => {
 		await prisma.sess.deleteMany({ where: { created: { lt: subtime(CONFIG.SESS_AGE) } } });
 	});
+
+	schedule("0 * * * *", async () => {
+		await prisma.invite.deleteMany({ where: { created: { lt: subtime(CONFIG.CODE_AGE) } } });
+	});
 }
