@@ -11,7 +11,7 @@ import { addtime } from "../utils/time";
 export const auth = Router();
 
 const limSigner = rateLimit(CONFIG.RATE_LIM.AUTH_SIGNER);
-const limVerify = rateLimit(CONFIG.RATE_LIM.AUTH_VERIFY);
+const limAuthen = rateLimit(CONFIG.RATE_LIM.AUTH_AUTHEN);
 
 const token = (token: zBearerToken) => {
 	return ["token", token, { httpOnly: true, expires: addtime(CONFIG.SESS_AGE) }] as const;
@@ -51,7 +51,7 @@ auth.post("/signup", limSigner, async (req, res) => {
 	}
 });
 
-auth.post("/rotate", limVerify, authen, async (req, res) => {
+auth.post("/authen", limAuthen, authen, async (req, res) => {
 	const cookies = req.cookies as { token: zBearerToken };
 	const { success, error, data } = BearerToken.safeParse(cookies.token);
 
@@ -69,7 +69,7 @@ auth.post("/rotate", limVerify, authen, async (req, res) => {
 	}
 });
 
-auth.post("/logout", limVerify, authen, async (req, res) => {
+auth.post("/logout", limAuthen, authen, async (req, res) => {
 	const cookies = req.cookies as { token: zBearerToken };
 	const { success, error, data } = BearerToken.safeParse(cookies.token);
 

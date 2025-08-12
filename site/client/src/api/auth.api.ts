@@ -12,8 +12,8 @@ export async function signup(creds: zCredentials): Promise<200 | ErrorCode> {
 	return await api.post("/signup", creds, { validateStatus: () => true }).then((r) => r.status);
 }
 
-export async function rotate(): Promise<boolean> {
-	return await api.post("/rotate").then(
+export async function authen(): Promise<boolean> {
+	return await api.post("/authen").then(
 		() => true,
 		() => false,
 	);

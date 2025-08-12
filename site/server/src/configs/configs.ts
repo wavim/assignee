@@ -7,7 +7,7 @@ export const CONFIG: {
 	SESS_AGE: Time;
 	CODE_AGE: Time;
 	RATE_LIM: Record<
-		"AUTH_SIGNER" | "AUTH_VERIFY" | "TEAM_CREATE" | "TEAM_INVITE" | "TEAM_ACCEPT" | "TEAM_ACCESS",
+		"AUTH_SIGNER" | "AUTH_AUTHEN" | "TEAM_CREATE" | "TEAM_INVITE" | "TEAM_ACCEPT" | "TEAM_ACCESS",
 		Partial<RateLimOpt>
 	>;
 	HASH_TID: Hashids;
@@ -17,7 +17,7 @@ export const CONFIG: {
 	CODE_AGE: { d: 7 },
 	RATE_LIM: {
 		AUTH_SIGNER: { windowMs: ms({ m: 1 }), limit: 5 },
-		AUTH_VERIFY: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
+		AUTH_AUTHEN: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
 		TEAM_CREATE: { windowMs: ms({ d: 1 }), limit: 10 },
 		TEAM_INVITE: { windowMs: ms({ d: 1 }), limit: 20 },
 		TEAM_ACCEPT: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },

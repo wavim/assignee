@@ -1,13 +1,13 @@
 import { Navigate } from "@solidjs/router";
 import { createResource, JSXElement, Suspense } from "solid-js";
-import { rotate } from "../api/auth.api";
+import { authen } from "../api/auth.api";
 
 export default (props: { landing?: boolean; children: JSXElement }) => {
 	if (import.meta.env.DEV) {
 		return props.children;
 	}
 
-	const [auth] = createResource(rotate, { initialValue: !props.landing });
+	const [auth] = createResource(authen, { initialValue: !props.landing });
 
 	return (
 		<Suspense>
