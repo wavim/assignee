@@ -1,9 +1,11 @@
 import {
 	InviteCode,
 	TeamBase,
+	TeamDetails,
 	TeamID,
 	zInviteCode,
 	zTeamBase,
+	zTeamDetails,
 	zTeamID,
 	zTeamProfile,
 } from "@app/schema";
@@ -21,4 +23,8 @@ export async function invite(data: zTeamID): Promise<zInviteCode> {
 
 export async function accept(data: zInviteCode): Promise<zTeamBase> {
 	return await api.post("/accept", data).then(({ data }) => TeamBase.parse(data));
+}
+
+export async function details(params: zTeamID): Promise<zTeamDetails> {
+	return await api.get("/details", { params }).then(({ data }) => TeamDetails.parse(data));
 }
