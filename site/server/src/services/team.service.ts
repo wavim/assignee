@@ -4,7 +4,6 @@ import { HttpError } from "@wavim/http-error";
 import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
 import { NONE } from "../database/none";
-import { Prisma } from "../prisma/client";
 import { encode } from "../utils/hashid";
 import { expired } from "../utils/time";
 
@@ -18,31 +17,31 @@ export async function create(uid: number, { name, desc }: zTeamProfile): Promise
 }
 
 export async function invite(tid: number): Promise<zInviteCode> {
+	const invite = await prisma.invite.findUnique({
+		select: { code: true, created: true },
+		where: { tid },
+	});
+
+	if (invite) {
+		const { code, created } = invite;
+
+		if (expired(created, CONFIG.CODE_AGE)) {
+			await prisma.invite.delete({ select: { tid: NONE }, where: { tid } });
+		} else {
+			return { code: bytesToHex(code) };
+		}
+	}
+
 	for (let attempt = 0; attempt < 10; attempt++) {
 		const code = randomBytes(4);
 
 		try {
 			await prisma.invite.create({ select: { tid: NONE }, data: { tid, code } });
-
-			return { code: bytesToHex(code) };
-		} catch (e) {
-			if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
-				throw new HttpError("INTERNAL_SERVER_ERROR", "Unknown Error");
-			}
-
-			const invite = await prisma.invite.findUnique({ select: { created: true }, where: { tid } });
-
-			if (!invite) {
-				continue;
-			}
-
-			if (expired(invite.created, CONFIG.CODE_AGE)) {
-				await prisma.invite.delete({ select: { tid: NONE }, where: { tid } });
-				continue;
-			}
-
-			throw new HttpError("CONFLICT", "Existing Active Code");
+		} catch {
+			continue;
 		}
+
+		return { code: bytesToHex(code) };
 	}
 
 	throw new HttpError("INTERNAL_SERVER_ERROR", "Crazy Dude");

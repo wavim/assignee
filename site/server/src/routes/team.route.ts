@@ -11,7 +11,6 @@ import { accept, create, details, invite } from "../services/team.service";
 export const team = Router();
 
 const limCreate = rateLimit(CONFIG.RATE_LIM.TEAM_CREATE);
-const limInvite = rateLimit(CONFIG.RATE_LIM.TEAM_INVITE);
 const limAccept = rateLimit(CONFIG.RATE_LIM.TEAM_ACCEPT);
 
 team.post("/create", authen, limCreate, async (req, res) => {
@@ -28,7 +27,7 @@ team.post("/create", authen, limCreate, async (req, res) => {
 	}
 });
 
-team.post("/invite", authen, member, limInvite, async (req, res) => {
+team.post("/invite", authen, member, async (req, res) => {
 	if (!req.own) {
 		return res.status(ErrorCode.UNAUTHORIZED).send("No Team Authorship");
 	}
