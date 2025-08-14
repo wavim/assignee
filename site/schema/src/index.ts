@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-	array as arr, boolean as bit, email, int, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, toUpperCase as upper, infer as zType,
+	array as arr, boolean as bit, email, int, iso, length as len, toLowerCase as lower, minLength as min, object as obj, positive as pos, regex, string as str, trim, toUpperCase as upper, infer as zType,
 } from "zod/mini";
 
 export const Credentials = obj({
@@ -65,3 +65,10 @@ export const TeamDetails = obj({
 	auth: bit(),
 });
 export type zTeamDetails = zType<typeof TeamDetails>;
+
+export const TaskDetails = obj({
+	name: str().check(trim(), min(1)),
+	desc: str().check(trim(), min(1)),
+	dead: iso.datetime(),
+});
+export type zTaskDetails = zType<typeof TaskDetails>;
