@@ -100,3 +100,27 @@ export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamB
 
 	return { hash: encode(CONFIG.HASH_TID, tid), ...member.Team };
 }
+
+export async function details(tid: number, auth: boolean): Promise<zTeamDetails> {
+	const details = await prisma.team.findUnique({
+		select: {
+			name: true,
+			desc: true,
+			Member: { select: { auth: true, User: { select: { name: true, mail: true } } } },
+		},
+		where: { tid },
+	});
+
+	if (!details) {
+		throw new HttpError("NOT_FOUND", "Team Not Found");
+	}
+
+	return {
+		auth,
+		name: details.name,
+		desc: details.desc,
+		memb: details.Member.map((m) => {
+			return { auth: m.auth, ...m.User };
+		}),
+	};
+}

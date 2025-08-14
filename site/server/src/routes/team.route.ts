@@ -61,3 +61,14 @@ team.post("/accept", limAccept, authen, async (req, res) => {
 		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 	}
 });
+
+team.get("/details", authen, member, async (req, res) => {
+	try {
+		res.json(await details(req.tid, req.own));
+	} catch (e) {
+		if (e instanceof HttpError) {
+			return res.status(e.status).send(e.message);
+		}
+		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
+	}
+});
