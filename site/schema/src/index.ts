@@ -59,8 +59,9 @@ export const TeamMembers = arr(
 );
 export type zTeamMembers = zType<typeof TeamMembers>;
 
-export const TeamFull = obj({
+export const TeamDetails = obj({
 	...TeamProfile.shape,
 	memb: TeamMembers,
+	auth: bit(),
 });
-export type zTeamFull = zType<typeof TeamFull>;
+export type zTeamDetails = zType<typeof TeamDetails>;
