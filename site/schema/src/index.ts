@@ -66,6 +66,11 @@ export const TeamDetails = obj({
 });
 export type zTeamDetails = zType<typeof TeamDetails>;
 
+export const TaskID = obj({
+	hash: str().check(min(8), regex(/^[0-9a-zA-Z]*$/)),
+});
+export type zTaskID = zType<typeof TaskID>;
+
 export const TaskDetails = obj({
 	name: str().check(trim(), min(1)),
 	desc: str().check(trim(), min(1)),
