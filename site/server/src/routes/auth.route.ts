@@ -10,14 +10,13 @@ import { addtime } from "../utils/time";
 
 export const auth = Router();
 
-const limSigner = rateLimit(CONFIG.RATE_LIM.AUTH_SIGNER);
 const limAuthen = rateLimit(CONFIG.RATE_LIM.AUTH_AUTHEN);
 
 const token = (token: zBearerToken) => {
 	return ["token", token, { httpOnly: true, expires: addtime(CONFIG.SESS_AGE) }] as const;
 };
 
-auth.post("/signin", limSigner, async (req, res) => {
+auth.post("/signin", limAuthen, async (req, res) => {
 	const { success, error, data } = Credentials.safeParse(req.body);
 
 	if (!success) {
@@ -34,7 +33,7 @@ auth.post("/signin", limSigner, async (req, res) => {
 	}
 });
 
-auth.post("/signup", limSigner, async (req, res) => {
+auth.post("/signup", limAuthen, async (req, res) => {
 	const { success, error, data } = Credentials.safeParse(req.body);
 
 	if (!success) {
@@ -51,7 +50,7 @@ auth.post("/signup", limSigner, async (req, res) => {
 	}
 });
 
-auth.post("/authen", limAuthen, authen, async (req, res) => {
+auth.post("/authen", authen, async (req, res) => {
 	const cookies = req.cookies as { token: zBearerToken };
 	const { success, error, data } = BearerToken.safeParse(cookies.token);
 
@@ -69,7 +68,7 @@ auth.post("/authen", limAuthen, authen, async (req, res) => {
 	}
 });
 
-auth.post("/logout", limAuthen, authen, async (req, res) => {
+auth.post("/logout", authen, async (req, res) => {
 	const cookies = req.cookies as { token: zBearerToken };
 	const { success, error, data } = BearerToken.safeParse(cookies.token);
 

@@ -1,11 +1,11 @@
-import { zInviteCode, zTeamBase, zTeamID, zTeamProfile } from "@app/schema";
+import { zInviteCode, zTeamBase, zTeamDetails, zTeamID, zTeamProfile } from "@app/schema";
 import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { HttpError } from "@wavim/http-error";
 import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
 import { NONE } from "../database/none";
-import { decode, encode } from "../utils/hashid";
+import { Prisma } from "../prisma/client";
+import { encode } from "../utils/hashid";
 import { expired } from "../utils/time";
 
 export async function create(uid: number, { name, desc }: zTeamProfile): Promise<zTeamID> {
@@ -17,60 +17,35 @@ export async function create(uid: number, { name, desc }: zTeamProfile): Promise
 	return { hash: encode(CONFIG.HASH_TID, tid) };
 }
 
-export async function invite(uid: number, { hash }: zTeamID): Promise<zInviteCode> {
-	const tid = decode(CONFIG.HASH_TID, hash);
-
-	const member = await prisma.member.findUnique({
-		select: { auth: true },
-		where: { cpk: { uid, tid } },
-	});
-
-	if (!member) {
-		throw new HttpError("UNAUTHORIZED", "No Team Membership");
-	}
-
-	if (!member.auth) {
-		throw new HttpError("UNAUTHORIZED", "No Team Authorship");
-	}
-
-	let code;
-	let attempt = 0;
-
-	while (!code && attempt < 100) {
-		code = randomBytes(4);
-		attempt++;
+export async function invite(tid: number): Promise<zInviteCode> {
+	for (let attempt = 0; attempt < 10; attempt++) {
+		const code = randomBytes(4);
 
 		try {
 			await prisma.invite.create({ select: { tid: NONE }, data: { tid, code } });
+
+			return { code: bytesToHex(code) };
 		} catch (e) {
-			code = undefined;
-
-			if (e instanceof PrismaClientKnownRequestError) {
-				const invite = await prisma.invite.findUnique({
-					select: { created: true },
-					where: { tid },
-				});
-
-				if (!invite) {
-					continue;
-				}
-
-				if (expired(invite.created, CONFIG.CODE_AGE)) {
-					await prisma.invite.delete({ select: { tid: NONE }, where: { tid } });
-					continue;
-				}
-
-				throw new HttpError("CONFLICT", "Has Active Code");
+			if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
+				throw new HttpError("INTERNAL_SERVER_ERROR", "Unknown Error");
 			}
-			break;
+
+			const invite = await prisma.invite.findUnique({ select: { created: true }, where: { tid } });
+
+			if (!invite) {
+				continue;
+			}
+
+			if (expired(invite.created, CONFIG.CODE_AGE)) {
+				await prisma.invite.delete({ select: { tid: NONE }, where: { tid } });
+				continue;
+			}
+
+			throw new HttpError("CONFLICT", "Existing Active Code");
 		}
 	}
 
-	if (!code) {
-		throw new HttpError("INTERNAL_SERVER_ERROR", "Crazy Dude");
-	}
-
-	return { code: bytesToHex(code).toUpperCase() };
+	throw new HttpError("INTERNAL_SERVER_ERROR", "Crazy Dude");
 }
 
 export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamBase> {

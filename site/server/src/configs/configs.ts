@@ -1,3 +1,4 @@
+import { Credentials } from "@app/schema";
 import { Options as RateLimOpt } from "express-rate-limit";
 import Hashids from "hashids";
 import { ms, Time } from "../utils/time";
@@ -7,7 +8,7 @@ export const CONFIG: {
 	SESS_AGE: Time;
 	CODE_AGE: Time;
 	RATE_LIM: Record<
-		"AUTH_SIGNER" | "AUTH_AUTHEN" | "TEAM_CREATE" | "TEAM_INVITE" | "TEAM_ACCEPT" | "TEAM_ACCESS",
+		"AUTH_AUTHEN" | "TEAM_CREATE" | "TEAM_INVITE" | "TEAM_ACCEPT",
 		Partial<RateLimOpt>
 	>;
 	HASH_TID: Hashids;
@@ -16,12 +17,30 @@ export const CONFIG: {
 	SESS_AGE: { d: 1 },
 	CODE_AGE: { d: 7 },
 	RATE_LIM: {
-		AUTH_SIGNER: { windowMs: ms({ m: 1 }), limit: 5 },
-		AUTH_AUTHEN: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
-		TEAM_CREATE: { windowMs: ms({ d: 1 }), limit: 10 },
-		TEAM_INVITE: { windowMs: ms({ d: 1 }), limit: 20 },
-		TEAM_ACCEPT: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
-		TEAM_ACCESS: { windowMs: ms({ m: 1 }), limit: 5, skipSuccessfulRequests: true },
+		AUTH_AUTHEN: {
+			keyGenerator: (r) => Credentials.parse(r.body).mail,
+			windowMs: ms({ m: 1 }),
+			limit: 5,
+			skipSuccessfulRequests: true,
+		},
+		TEAM_CREATE: {
+			keyGenerator: (r) => r.uid.toString(),
+			windowMs: ms({ h: 1 }),
+			limit: 10,
+			skipFailedRequests: true,
+		},
+		TEAM_INVITE: {
+			keyGenerator: (r) => r.tid.toString(),
+			windowMs: ms({ h: 6 }),
+			limit: 10,
+			skipFailedRequests: true,
+		},
+		TEAM_ACCEPT: {
+			keyGenerator: (r) => r.uid.toString(),
+			windowMs: ms({ m: 1 }),
+			limit: 10,
+			skipFailedRequests: true,
+		},
 	},
 	HASH_TID: new Hashids("SALT OF MCDONALDS", 8),
 };

@@ -1,7 +1,6 @@
 import { BearerToken, zBearerToken } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
-import { prettifyError } from "zod/mini";
 import { CONFIG } from "../configs/configs";
 import { prisma } from "../database/client";
 import { match } from "../utils/crypt";
@@ -9,14 +8,14 @@ import { expired } from "../utils/time";
 
 export const authen: RequestHandler = async (req, res, next) => {
 	const cookies = req.cookies as { token: zBearerToken };
-	const { success, error, data } = BearerToken.safeParse(cookies.token);
-
-	if (!success) {
-		return res.status(ErrorCode.BAD_REQUEST).send(prettifyError(error));
-	}
-	const { sid, key } = data;
+	const { success, data } = BearerToken.safeParse(cookies.token);
 
 	try {
+		if (!success) {
+			throw new HttpError("UNAUTHORIZED", "No Session Cookie");
+		}
+		const { sid, key } = data;
+
 		const session = await prisma.sess.findUnique({
 			select: { uid: true, hash: true, salt: true, created: true },
 			where: { sid },
