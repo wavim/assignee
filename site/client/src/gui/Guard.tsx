@@ -1,5 +1,5 @@
 import { Navigate } from "@solidjs/router";
-import { createResource, JSXElement, Suspense } from "solid-js";
+import { createResource, JSXElement, Show } from "solid-js";
 import { authen } from "../api/auth.api";
 
 export default (props: { landing?: boolean; children: JSXElement }) => {
@@ -7,10 +7,10 @@ export default (props: { landing?: boolean; children: JSXElement }) => {
 		return props.children;
 	}
 
-	const [auth] = createResource(authen, { initialValue: !props.landing });
+	const [auth] = createResource(authen);
 
 	return (
-		<Suspense>
+		<Show when={!auth.loading}>
 			{auth() && props.landing ? (
 				<Navigate href="/dash"></Navigate>
 			) : !auth() && !props.landing ? (
@@ -18,6 +18,6 @@ export default (props: { landing?: boolean; children: JSXElement }) => {
 			) : (
 				props.children
 			)}
-		</Suspense>
+		</Show>
 	);
 };
