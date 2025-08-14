@@ -81,9 +81,7 @@ const Dash = (props: { members: zMembership }) => {
 			<Search></Search>
 			<section class="flex w-full flex-col flex-wrap gap-4 md:flex-row">
 				<Filter
-					candidates={props.members.toSorted((a, b) => {
-						return a.name.localeCompare(b.name);
-					})}
+					candidates={props.members.sort((a, b) => a.name.localeCompare(b.name))}
 					predicates={[
 						({ auth }) => !badged() || auth,
 						({ name, desc }) => matches(search(), name, desc),
@@ -109,11 +107,11 @@ const Card = (props: { children: zMembership[number] }) => {
 			<div class="mt-8 flex items-center gap-2">
 				<Badge
 					auth={props.children.auth}
-					class="inline h-6"
+					class="h-6"
 				></Badge>
-				<p class="text-text-minor inline text-lg">
+				<span class="text-text-minor text-lg">
 					{props.children.auth ? t("owner") : t("member")}
-				</p>
+				</span>
 			</div>
 		</A>
 	);

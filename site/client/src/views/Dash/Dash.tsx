@@ -1,8 +1,8 @@
-import { createSignal, lazy } from "solid-js";
+import { createSignal, lazy, Suspense } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import Guard from "../../gui/Guard";
 import Footer from "../Footer";
-import Header, { Route } from "../Header";
+import Header, { Route } from "./Header";
 
 const routes: Record<Route, ReturnType<typeof lazy>> = {
 	teams: lazy(() => import("./Teams/Teams")),
@@ -16,9 +16,9 @@ export default () => {
 	return (
 		<Guard>
 			<Header router={$router}></Header>
-			<Dynamic
-				component={routes[route()]}
-			></Dynamic>
+			<Suspense>
+				<Dynamic component={routes[route()]}></Dynamic>
+			</Suspense>
 			<Footer></Footer>
 		</Guard>
 	);

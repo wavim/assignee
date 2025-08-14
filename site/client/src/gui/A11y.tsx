@@ -67,7 +67,7 @@ const Menu = (props: { toggle: HTMLButtonElement }) => {
 	return (
 		<Modal
 			toggle={props.toggle}
-			class="flex w-72 flex-col gap-6"
+			class="flex flex-col gap-6"
 		>
 			<Config
 				name={t("fontsize.name")}

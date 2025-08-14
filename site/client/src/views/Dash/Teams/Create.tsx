@@ -1,7 +1,7 @@
 import { TeamProfile, zTeamProfile } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
 import { create } from "../../../api/team.api";
 import Button from "../../../gui/Button";
@@ -51,7 +51,7 @@ export default () => {
 				navigate("/team/" + hash);
 			})
 			.catch((e: unknown) => {
-				if (!(e instanceof AxiosError && e.response)) {
+				if (!isAxiosError(e) || !e.response) {
 					return setError("errors.systems");
 				}
 				switch (e.response.status as ErrorCode) {
@@ -87,7 +87,6 @@ export default () => {
 						setError(check({ name, desc }));
 					}}
 					cback={submit}
-					class="w-72"
 				></Form>
 			</Modal>
 		</>

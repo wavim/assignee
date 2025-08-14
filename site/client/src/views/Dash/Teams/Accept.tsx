@@ -1,7 +1,7 @@
 import { InviteCode } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
-import { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
 import { accept } from "../../../api/team.api";
 import Form from "../../../gui/Form";
@@ -16,7 +16,7 @@ export default () => {
 
 	const $error = createSignal<
 		| undefined
-		| "accept.errors.notcode"
+		| "accept.errors.invcode"
 		| "accept.errors.already"
 		| "errors.ratelim"
 		| "errors.systems"
@@ -27,7 +27,7 @@ export default () => {
 		const { success, data } = InviteCode.safeParse({ code });
 
 		if (!success) {
-			return setError("accept.errors.notcode");
+			return setError("accept.errors.invcode");
 		}
 
 		void accept(data)
@@ -35,13 +35,12 @@ export default () => {
 				navigate("/team/" + hash);
 			})
 			.catch((e: unknown) => {
-				if (!(e instanceof AxiosError && e.response)) {
+				if (!isAxiosError(e) || !e.response) {
 					return setError("errors.systems");
 				}
 				switch (e.response.status as ErrorCode) {
-					case ErrorCode.UNAUTHORIZED: {
-						navigate("/", { replace: true });
-						break;
+					case ErrorCode.FORBIDDEN: {
+						return setError("accept.errors.invcode");
 					}
 					case ErrorCode.CONFLICT: {
 						return setError("accept.errors.already");
@@ -79,7 +78,7 @@ export default () => {
 						setError();
 					}}
 					cback={submit}
-					class="my-2 w-72"
+					class="my-2"
 				></Form>
 			</Modal>
 		</>

@@ -17,7 +17,7 @@ export default defineI18n({
 			ctoa: "Join Team",
 			code: "Invite Code",
 			next: "Embrace",
-			errors: { notcode: "Invalid Code", already: "Already Member" },
+			errors: { invcode: "Invalid Code", already: "Already Member" },
 		},
 	},
 	zh: {
@@ -36,7 +36,7 @@ export default defineI18n({
 			ctoa: "加入群組",
 			code: "邀請碼",
 			next: "受邀",
-			errors: { notcode: "邀請碼不正確", already: "已為本群成員" },
+			errors: { invcode: "邀請碼不正確", already: "已為本群成員" },
 		},
 	},
 });
