@@ -55,12 +55,12 @@ export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamB
 	});
 
 	if (!invite) {
-		throw new HttpError("UNAUTHORIZED", "Invalid Invitation Code");
+		throw new HttpError("FORBIDDEN", "Invalid Invitation Code");
 	}
 	const { tid, created } = invite;
 
 	if (expired(created, CONFIG.CODE_AGE)) {
-		throw new HttpError("UNAUTHORIZED", "Invitation Code Expired");
+		throw new HttpError("FORBIDDEN", "Invitation Code Expired");
 	}
 
 	let member;
