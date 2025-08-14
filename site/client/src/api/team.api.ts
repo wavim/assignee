@@ -1,9 +1,11 @@
 import {
 	InviteCode,
+	Membership,
 	TeamBase,
 	TeamDetails,
 	TeamID,
 	zInviteCode,
+	zMembership,
 	zTeamBase,
 	zTeamDetails,
 	zTeamID,
@@ -23,6 +25,10 @@ export async function invite(data: zTeamID): Promise<zInviteCode> {
 
 export async function accept(data: zInviteCode): Promise<zTeamBase> {
 	return await api.post("/accept", data).then(({ data }) => TeamBase.parse(data));
+}
+
+export async function members(): Promise<zMembership> {
+	return await api.get("/members").then(({ data }) => Membership.parse(data));
 }
 
 export async function details(params: zTeamID): Promise<zTeamDetails> {

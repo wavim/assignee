@@ -4,7 +4,7 @@ import Filter from "@wavim/solid-filter";
 import clsx from "clsx/lite";
 import { createResource, createSignal, Show } from "solid-js";
 import { stringSimilarity } from "string-similarity-js";
-import { membership } from "../../../api/user.api";
+import { members } from "../../../api/team.api";
 import Input from "../../../gui/Input";
 import Badge from "../../Badge";
 import Accept from "./Accept";
@@ -12,18 +12,18 @@ import Create from "./Create";
 import I18n from "./I18n";
 
 export default () => {
-	const [members] = createResource(membership, { initialValue: [] });
+	const [membs] = createResource(members, { initialValue: [] });
 
 	return (
 		<I18n.I18n>
 			<main class="flex w-full flex-col gap-8 p-4">
-				<Show when={members().length}>
-					<Dash members={members()}></Dash>
+				<Show when={membs().length}>
+					<Dash members={membs()}></Dash>
 				</Show>
 				<div
 					class={clsx(
 						"ml-1 flex gap-6",
-						!members().length && "fixed inset-1/2 size-max -translate-1/2",
+						!membs().length && "fixed inset-1/2 size-max -translate-1/2",
 					)}
 				>
 					<Create></Create>
