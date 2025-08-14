@@ -1,4 +1,11 @@
-import { zInviteCode, zTeamBase, zTeamDetails, zTeamID, zTeamProfile } from "@app/schema";
+import {
+	zInviteCode,
+	zMembership,
+	zTeamBase,
+	zTeamDetails,
+	zTeamID,
+	zTeamProfile,
+} from "@app/schema";
 import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
 import { HttpError } from "@wavim/http-error";
 import { CONFIG } from "../configs/configs";
@@ -73,6 +80,17 @@ export async function accept(uid: number, { code }: zInviteCode): Promise<zTeamB
 	}
 
 	return { hash: encode(CONFIG.HASH_TID, tid), ...member.Team };
+}
+
+export async function members(uid: number): Promise<zMembership> {
+	const membs = await prisma.member.findMany({
+		select: { tid: true, auth: true, Team: { select: { name: true, desc: true } } },
+		where: { uid },
+	});
+
+	return membs.map((m) => {
+		return { auth: m.auth, hash: encode(CONFIG.HASH_TID, m.tid), ...m.Team };
+	});
 }
 
 export async function details(tid: number, auth: boolean): Promise<zTeamDetails> {

@@ -6,7 +6,7 @@ import { prettifyError } from "zod/mini";
 import { CONFIG } from "../configs/configs";
 import { authen } from "../middleware/authen";
 import { member } from "../middleware/member";
-import { accept, create, details, invite } from "../services/team.service";
+import { accept, create, details, invite, members } from "../services/team.service";
 
 export const team = Router();
 
@@ -55,6 +55,14 @@ team.post("/accept", authen, limAccept, async (req, res) => {
 		if (e instanceof HttpError) {
 			return res.status(e.status).send(e.message);
 		}
+		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
+	}
+});
+
+team.get("/members", authen, async (req, res) => {
+	try {
+		res.json(await members(req.uid));
+	} catch {
 		res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 	}
 });
