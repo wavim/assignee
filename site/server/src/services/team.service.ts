@@ -14,10 +14,10 @@ import { NONE } from "../database/none";
 import { encode } from "../utils/hashid";
 import { expired } from "../utils/time";
 
-export async function create(uid: number, { name, desc }: zTeamProfile): Promise<zTeamID> {
+export async function create(uid: number, profile: zTeamProfile): Promise<zTeamID> {
 	const { tid } = await prisma.team.create({
 		select: { tid: true },
-		data: { name, desc, Member: { create: { uid, auth: true } } },
+		data: { ...profile, Member: { create: { uid, auth: true } } },
 	});
 
 	return { hash: encode(CONFIG.HASH_TID, tid) };
