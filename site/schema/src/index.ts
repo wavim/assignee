@@ -2,11 +2,11 @@ import * as z from "zod/mini";
 
 // POST api/users/verify
 
-export const PostUsersVerifyRequest = z.object({
+export const PostUsersVerifyCookies = z.object({
 	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 	key: z.string().check(z.regex(/^[0-9a-f]{64}$/)),
 });
-export type PostUsersVerifyRequest = z.infer<typeof PostUsersVerifyRequest>;
+export type PostUsersVerifyCookies = z.infer<typeof PostUsersVerifyCookies>;
 
 // POST api/users/signin
 
