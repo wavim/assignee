@@ -20,7 +20,7 @@ model User {
   Pass Pass?
   Sess Sess[]
 
-  // Member  Member[]
+  Member Member[]
   // Submit  Submit[]
 }
 
@@ -51,36 +51,46 @@ model Sess {
   @@index([uid])
 }
 
-// model Team {
-//   tid     Int      @id @default(autoincrement())
-//   name    String
-//   desc    String
-//   created DateTime @default(now())
-//   updated DateTime @updatedAt
-//   Invite  Invite[]
-//   Member  Member[]
-//   Assign  Assign[]
-// }
+model Team {
+  tid Int @id @default(autoincrement())
 
-// model Invite {
-//   tid     Int      @id
-//   code    Bytes    @unique
-//   created DateTime @default(now())
-//   Team    Team     @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
-// }
+  name String
+  desc String
 
-// model Member {
-//   uid     Int
-//   tid     Int
-//   auth    Boolean  @default(false)
-//   created DateTime @default(now())
-//   updated DateTime @updatedAt
-//   User    User     @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
-//   Team    Team     @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 
-//   @@id([uid, tid], name: "cpk")
-//   @@index([tid])
-// }
+  Invite Invite?
+  Member Member[]
+  // Assign  Assign[]
+}
+
+model Invite {
+  tid Int @id
+
+  code Bytes @unique
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  Team Team @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
+}
+
+model Member {
+  uid Int
+  tid Int
+
+  auth Boolean
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  User User @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
+  Team Team @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
+
+  @@id([uid, tid], name: "pk")
+  @@index([tid])
+}
 
 // model Assign {
 //   aid     Int      @id @default(autoincrement())
