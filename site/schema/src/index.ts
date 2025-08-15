@@ -45,6 +45,7 @@ export const GetTeamsResults = z.array(
 		tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 		name: z.string().check(z.trim(), z.minLength(1)),
 		desc: z.string().check(z.trim(), z.minLength(1)),
+		auth: z.boolean(),
 	}),
 );
 export type GetTeamsResults = z.infer<typeof GetTeamsResults>;
