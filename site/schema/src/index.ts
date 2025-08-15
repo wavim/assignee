@@ -1,12 +1,13 @@
 import * as z from "zod/mini";
 
 // POST api/users/verify
+// POST api/users/logout
 
-export const PostUsersVerifyCookies = z.object({
+export const UserSessionCookie = z.object({
 	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 	key: z.string().check(z.regex(/^[0-9a-f]{64}$/)),
 });
-export type PostUsersVerifyCookies = z.infer<typeof PostUsersVerifyCookies>;
+export type UserSessionCookie = z.infer<typeof UserSessionCookie>;
 
 // POST api/users/signin
 
@@ -23,13 +24,6 @@ export const PostUsersSignupRequest = z.object({
 	pass: z.string().check(z.regex(/^[\x20-\x7E]{8,}$/)),
 });
 export type PostUsersSignupRequest = z.infer<typeof PostUsersSignupRequest>;
-
-// POST api/users/logout
-
-export const PostUsersLogoutRequest = z.object({
-	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
-});
-export type PostUsersLogoutRequest = z.infer<typeof PostUsersLogoutRequest>;
 
 // POST api/teams
 
