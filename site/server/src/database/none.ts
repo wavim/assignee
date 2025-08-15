@@ -1,7 +1,7 @@
 /**
  * ```ts
- * select: { PK: NONE }
+ * select: { PK: none }
  * ```
  * https://github.com/prisma/prisma/issues/6252
  */
-export const NONE = true;
+export const none = true;

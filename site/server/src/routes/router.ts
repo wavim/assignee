@@ -1,10 +1,13 @@
 import cookie from "cookie-parser";
 import { json, Router } from "express";
-import { auth } from "./auth.route";
+import { task } from "./task.route";
 import { team } from "./team.route";
+import { users } from "./users.route";
 
-export const router = Router();
-router.use(json()).use(cookie());
+export const router = Router()
+	.use(json())
+	.use(cookie())
 
-router.use("/auth", auth);
-router.use("/team", team);
+	.use("/users", users);
+// .use("/team", team)
+// .use("/task", task);

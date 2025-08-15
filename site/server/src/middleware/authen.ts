@@ -1,20 +1,20 @@
-import { BearerToken, zBearerToken } from "@app/schema";
+import { UserSessionCookie } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
-import { CONFIG } from "../configs/configs";
+import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
 
 export const authen: RequestHandler = async (req, res, next) => {
-	const cookies = req.cookies as { token: zBearerToken };
-	const { success, data } = BearerToken.safeParse(cookies.token);
+	const cookies = req.cookies as { tok: UserSessionCookie };
+	const { success, data } = UserSessionCookie.safeParse(cookies.tok);
 
 	try {
 		if (!success) {
-			throw new HttpError("UNAUTHORIZED", "No Session Cookie");
+			throw new HttpError("UNAUTHORIZED", "Missing Session Cookie");
 		}
-		const { sid, key } = data;
+		const sid = configs.hashSID.decode(data.sid);
 
 		const session = await prisma.sess.findUnique({
 			select: { uid: true, hash: true, salt: true, created: true },
@@ -26,18 +26,19 @@ export const authen: RequestHandler = async (req, res, next) => {
 		}
 		const { uid, hash, salt, created } = session;
 
-		if (expired(created, CONFIG.SESS_ROT)) {
-			if (expired(created, CONFIG.SESS_AGE)) {
+		if (expired(created, configs.sessRot)) {
+			if (expired(created, configs.sessAge)) {
 				throw new HttpError("UNAUTHORIZED", "Session Has Expired");
 			}
 			req.rot = true;
 		}
 
-		if (!match(key, hash, salt)) {
+		if (!match(data.key, hash, salt)) {
 			throw new HttpError("UNAUTHORIZED", "Invalid Session Key");
 		}
 
 		req.uid = uid;
+		req.sid = sid;
 		next();
 	} catch (e) {
 		if (e instanceof HttpError) {

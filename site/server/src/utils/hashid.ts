@@ -1,9 +1,16 @@
 import Hashids from "hashids";
 
-export function encode(hashid: Hashids, id: number): string {
-	return hashid.encode(id);
-}
+export class HashID {
+	constructor(
+		salt: string,
+		private hash = new Hashids(salt, 8),
+	) {}
 
-export function decode(hashid: Hashids, id: string): number {
-	return Number(hashid.decode(id)[0]);
+	encode(num: number): string {
+		return this.hash.encode(num);
+	}
+
+	decode(key: string): number {
+		return Number(this.hash.decode(key)[0]);
+	}
 }
