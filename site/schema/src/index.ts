@@ -2,34 +2,34 @@ import * as z from "zod/mini";
 
 // POST api/users/verify
 
-export const UserVerify = z.object({
+export const PostUsersVerifyRequest = z.object({
 	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 	key: z.string().check(z.regex(/^[0-9a-f]{64}$/)),
 });
-export type UserVerify = z.infer<typeof UserVerify>;
+export type PostUsersVerifyRequest = z.infer<typeof PostUsersVerifyRequest>;
 
 // POST api/users/signin
 
-export const UserSignin = z.object({
+export const PostUsersSigninRequest = z.object({
 	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
 	pass: z.string().check(z.regex(/^[\x20-\x7E]{8,}$/)),
 });
-export type UserSignin = z.infer<typeof UserSignin>;
+export type PostUsersSigninRequest = z.infer<typeof PostUsersSigninRequest>;
 
 // POST api/users/signup
 
-export const UserSignup = z.object({
+export const PostUsersSignupRequest = z.object({
 	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
 	pass: z.string().check(z.regex(/^[\x20-\x7E]{8,}$/)),
 });
-export type UserSignup = z.infer<typeof UserSignup>;
+export type PostUsersSignupRequest = z.infer<typeof PostUsersSignupRequest>;
 
 // POST api/users/logout
 
-export const UserLogout = z.object({
+export const PostUsersLogoutRequest = z.object({
 	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 });
-export type UserLogout = z.infer<typeof UserLogout>;
+export type PostUsersLogoutRequest = z.infer<typeof PostUsersLogoutRequest>;
 
 // POST api/teams
 
