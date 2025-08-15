@@ -1,13 +1,13 @@
 import { Navigate } from "@solidjs/router";
 import { createResource, JSXElement, Show } from "solid-js";
-import { authen } from "../api/auth.api";
+import { verify } from "../api/users.api";
 
 export default (props: { landing?: boolean; children: JSXElement }) => {
 	if (import.meta.env.DEV) {
 		return props.children;
 	}
 
-	const [auth] = createResource(authen);
+	const [auth] = createResource(verify);
 
 	return (
 		<Show when={!auth.loading}>

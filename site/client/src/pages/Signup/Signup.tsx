@@ -1,8 +1,8 @@
-import { Credentials, zCredentials } from "@app/schema";
+import { PostUsersSignupRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
-import { signup } from "../../api/auth.api";
+import { signup } from "../../api/users.api";
 import Signer from "../Signer";
 import I18n from "./I18n";
 
@@ -26,29 +26,27 @@ const Form = () => {
 	>();
 	const [error, setError] = $error;
 
-	const check = (creds: zCredentials, submit = false) => {
-		if (!submit && !creds.pass.length) {
+	const check = (req: PostUsersSignupRequest, submit = false) => {
+		if (!submit && !req.pass.length) {
 			return undefined;
 		}
 
-		const { success, error } = Credentials.safeParse(creds);
+		const { success, error } = PostUsersSignupRequest.safeParse(req);
 
 		if (success) {
 			return undefined;
 		}
-
-		return (error.issues[0].path[0] as keyof zCredentials) === "mail"
+		return (error.issues[0].path[0] as keyof PostUsersSignupRequest) === "mail"
 			? "errors.mailfmt"
 			: "errors.passlen";
 	};
 
-	const submit = async (creds: zCredentials) => {
-		const { success, data } = Credentials.safeParse(creds);
+	const submit = async (req: PostUsersSignupRequest) => {
+		const { success, data } = PostUsersSignupRequest.safeParse(req);
 
 		if (!success) {
-			return setError(check(creds, true));
+			return setError(check(req, true));
 		}
-
 		switch (await signup(data)) {
 			case 200: {
 				navigate("/dash", { replace: true });

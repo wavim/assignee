@@ -1,4 +1,4 @@
-import { zCredentials } from "@app/schema";
+import { PostUsersSigninRequest, PostUsersSignupRequest } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
 import Form from "../gui/Form";
@@ -17,8 +17,8 @@ interface SignProps {
 	header: string;
 	action: string;
 	error: Accessor<string | undefined>;
-	check: (creds: zCredentials) => unknown;
-	cback: (creds: zCredentials) => unknown;
+	check: (req: PostUsersSigninRequest & PostUsersSignupRequest) => unknown;
+	cback: (req: PostUsersSigninRequest & PostUsersSignupRequest) => unknown;
 	alturl: "/signin" | "/signup";
 	altnav: string;
 }
