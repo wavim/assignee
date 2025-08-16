@@ -3,15 +3,19 @@ import { defineConfig } from "vite";
 import tailwindCSS from "@tailwindcss/vite";
 import solidPlugin from "vite-plugin-solid";
 
-export default defineConfig({
-	plugins: [tailwindCSS(), solidPlugin()],
+export default defineConfig(({ mode }) => {
+	const DEV = mode === "DEV";
 
-	build: {
-		target: "esnext",
-		emptyOutDir: true,
-		outDir: "../server/public",
+	return {
+		plugins: [tailwindCSS(), solidPlugin()],
 
-		minify: "terser",
-		cssMinify: "lightningcss",
-	},
+		build: {
+			target: "esnext",
+			emptyOutDir: true,
+			outDir: "../server/public",
+
+			minify: DEV ? "esbuild" : "terser",
+			cssMinify: DEV ? "esbuild" : "lightningcss",
+		},
+	};
 });

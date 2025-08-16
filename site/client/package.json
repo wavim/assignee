@@ -1,9 +1,9 @@
 {
 	"name": "@app/client",
 	"scripts": {
-		"watch": "vite --host --open",
+		"watch": "vite --host",
 		"build": "vite build",
-		"serve": "vite build -w"
+		"serve": "vite build -w --mode DEV"
 	},
 	"dependencies": {
 		"@app/schema": "link:..\\schema",
