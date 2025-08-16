@@ -1,14 +1,9 @@
-import {
-	GetTeamsResults,
-	GetTeamsTeamIdResults,
-	PostTeamsRequest,
-	PostTeamsResults,
-} from "@app/schema";
+import { GetTeamResults, GetTeamsResults, PostTeamRequest, PostTeamResults } from "@app/schema";
 import { HttpError } from "@wavim/http-error";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 
-export async function createTeam(uid: number, req: PostTeamsRequest): Promise<PostTeamsResults> {
+export async function createTeam(uid: number, req: PostTeamRequest): Promise<PostTeamResults> {
 	const { tid } = await prisma.team.create({
 		select: { tid: true },
 		data: { ...req, Member: { create: { uid, auth: true } } },
@@ -28,7 +23,7 @@ export async function queryTeams(uid: number): Promise<GetTeamsResults> {
 	});
 }
 
-export async function teamDetail(tid: number, own: boolean): Promise<GetTeamsTeamIdResults> {
+export async function teamDetail(tid: number, own: boolean): Promise<GetTeamResults> {
 	const data = await prisma.team.findUnique({
 		select: {
 			name: true,

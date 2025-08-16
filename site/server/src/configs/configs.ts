@@ -1,4 +1,4 @@
-import { PostUsersSigninRequest, PostUsersSignupRequest } from "@app/schema";
+import { SigninRequest, SignupRequest } from "@app/schema";
 import { ipKeyGenerator, Options as RateLimOptions } from "express-rate-limit";
 import { HashID } from "../utils/hashid";
 import { ms, Time } from "../utils/time";
@@ -12,7 +12,7 @@ export const configs: {
 	hashTID: HashID;
 	hashAID: HashID;
 
-	rateLim: Record<"users/signin" | "users/signup", Partial<RateLimOptions>>;
+	rateLim: Record<"auth/signin" | "auth/signup", Partial<RateLimOptions>>;
 } = {
 	sessRot: { h: 1 },
 	sessAge: { d: 1 },
@@ -23,15 +23,15 @@ export const configs: {
 	hashAID: new HashID("SALT OF KFC FRIES"),
 
 	rateLim: {
-		"users/signin": {
+		"auth/signin": {
 			limit: 5,
 			windowMs: ms({ m: 1 }),
-			keyGenerator: (r) => PostUsersSigninRequest.safeParse(r.body).data?.mail ?? ip(r),
+			keyGenerator: (r) => SigninRequest.safeParse(r.body).data?.mail ?? ip(r),
 		},
-		"users/signup": {
+		"auth/signup": {
 			limit: 5,
 			windowMs: ms({ m: 1 }),
-			keyGenerator: (r) => PostUsersSignupRequest.safeParse(r.body).data?.mail ?? ip(r),
+			keyGenerator: (r) => SignupRequest.safeParse(r.body).data?.mail ?? ip(r),
 		},
 	},
 };

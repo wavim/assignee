@@ -1,25 +1,25 @@
-import { PostUsersSigninRequest, PostUsersSignupRequest, UserSessionCookie } from "@app/schema";
+import { SessionCookie, SigninRequest, SignupRequest } from "@app/schema";
 import { HttpError } from "@wavim/http-error";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 import { none } from "../database/none";
 import { chash, match, randk } from "../utils/crypt";
 
-export async function rotate(sid: number): Promise<UserSessionCookie> {
+export async function rotate(sid: number): Promise<SessionCookie> {
 	const key = randk();
 	await prisma.sess.update({ data: chash(key), where: { sid } });
 
 	return { sid: configs.hashSID.encode(sid), key };
 }
 
-async function createSession(uid: number): Promise<UserSessionCookie> {
+async function createSession(uid: number): Promise<SessionCookie> {
 	const key = randk();
 	const { sid } = await prisma.sess.create({ select: { sid: true }, data: { uid, ...chash(key) } });
 
 	return { sid: configs.hashSID.encode(sid), key };
 }
 
-export async function signin(req: PostUsersSigninRequest): Promise<UserSessionCookie> {
+export async function signin(req: SigninRequest): Promise<SessionCookie> {
 	const user = await prisma.user.findUnique({
 		select: { uid: true, Pass: { select: { hash: true, salt: true } } },
 		where: { mail: req.mail },
@@ -40,7 +40,7 @@ export async function signin(req: PostUsersSigninRequest): Promise<UserSessionCo
 	return await createSession(user.uid);
 }
 
-export async function signup(req: PostUsersSignupRequest): Promise<UserSessionCookie> {
+export async function signup(req: SignupRequest): Promise<SessionCookie> {
 	try {
 		const { uid } = await prisma.user.create({
 			select: { uid: true },

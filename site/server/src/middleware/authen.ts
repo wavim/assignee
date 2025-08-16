@@ -1,4 +1,4 @@
-import { UserSessionCookie } from "@app/schema";
+import { SessionCookie } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
 import { configs } from "../configs/configs";
@@ -7,8 +7,8 @@ import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
 
 export const authen: RequestHandler = async (req, res, next) => {
-	const cookies = req.cookies as { tok: UserSessionCookie };
-	const { success, data } = UserSessionCookie.safeParse(cookies.tok);
+	const cookies = req.cookies as { tok: SessionCookie };
+	const { success, data } = SessionCookie.safeParse(cookies.tok);
 
 	try {
 		if (!success) {

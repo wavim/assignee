@@ -1,11 +1,11 @@
-import { GetTeamsTeamIdRequest } from "@app/schema";
+import { GetTeamRequest } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 
 export const member: RequestHandler = async (req, res, next) => {
-	const { success, data } = GetTeamsTeamIdRequest.safeParse(req.params);
+	const { success, data } = GetTeamRequest.safeParse(req.params);
 
 	try {
 		if (!success) {

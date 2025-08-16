@@ -1,4 +1,4 @@
-import { GetCodesTeamIdResults, PutCodesRequest, PutCodesResults } from "@app/schema";
+import { GetTeamCodeResults, PutMembRequest, PutMembResults } from "@app/schema";
 import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
 import { HttpError } from "@wavim/http-error";
 import { configs } from "../configs/configs";
@@ -6,7 +6,7 @@ import { prisma } from "../database/client";
 import { none } from "../database/none";
 import { expired } from "../utils/time";
 
-export async function getCode(tid: number): Promise<GetCodesTeamIdResults> {
+export async function getCode(tid: number): Promise<GetTeamCodeResults> {
 	const invitation = await prisma.invite.findUnique({
 		select: { code: true, updated: true },
 		where: { tid },
@@ -37,7 +37,7 @@ export async function getCode(tid: number): Promise<GetCodesTeamIdResults> {
 	throw new HttpError("INTERNAL_SERVER_ERROR", "Crazy Dude");
 }
 
-export async function putCode(uid: number, req: PutCodesRequest): Promise<PutCodesResults> {
+export async function putMemb(uid: number, req: PutMembRequest): Promise<PutMembResults> {
 	const invitation = await prisma.invite.findUnique({
 		select: { tid: true, updated: true },
 		where: { code: hexToBytes(req.code) },

@@ -1,13 +1,13 @@
-import { PostTeamsRequest } from "@app/schema";
+import { PostTeamRequest } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { Router } from "express";
 import { authen } from "../middleware/authen";
 import { member } from "../middleware/member";
-import { createTeam, queryTeams, teamDetail } from "../services/teams.service";
+import { createTeam, queryTeams, teamDetail } from "../services/team.service";
 
-export const teams = Router()
-	.post("/", authen, async (req, res) => {
-		const { success, error, data } = PostTeamsRequest.safeParse(req.body);
+export const team = Router()
+	.post("/teams", authen, async (req, res) => {
+		const { success, error, data } = PostTeamRequest.safeParse(req.body);
 
 		if (!success) {
 			return res.status(ErrorCode.BAD_REQUEST).send(error);
@@ -18,14 +18,14 @@ export const teams = Router()
 			res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 	})
-	.get("/", authen, async (req, res) => {
+	.get("/teams", authen, async (req, res) => {
 		try {
 			res.json(await queryTeams(req.uid));
 		} catch {
 			res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 	})
-	.get("/:tid", authen, member, async (req, res) => {
+	.get("/teams/:tid", authen, member, async (req, res) => {
 		try {
 			res.json(await teamDetail(req.tid, req.own));
 		} catch (e) {
