@@ -1,6 +1,6 @@
 import cookie from "cookie-parser";
 import { json, Router } from "express";
-import { task } from "./task.route";
+import { codes } from "./codes.route";
 import { teams } from "./teams.route";
 import { users } from "./users.route";
 
@@ -9,5 +9,5 @@ export const router = Router()
 	.use(cookie())
 
 	.use("/users", users)
-	.use("/teams", teams);
-// .use("/task", task);
+	.use("/teams", teams)
+	.use("/codes", codes);
