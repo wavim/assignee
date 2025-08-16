@@ -72,4 +72,25 @@ export const GetTeamsTeamIdResults = z.object({
 export type GetTeamsTeamIdResults = z.infer<typeof GetTeamsTeamIdResults>;
 
 // GET api/codes/:tid
+
+export const GetCodesTeamIdRequest = z.object({
+	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+});
+export type GetCodesTeamIdRequest = z.infer<typeof GetCodesTeamIdRequest>;
+
+export const GetCodesTeamIdResults = z.object({
+	code: z.string().check(z.regex(/^[0-9a-f]{8}$/), z.toUpperCase()),
+});
+export type GetCodesTeamIdResults = z.infer<typeof GetCodesTeamIdResults>;
+
 // PUT api/codes
+
+export const PutCodesRequest = z.object({
+	code: z.string().check(z.trim(), z.regex(/^[0-9a-fA-F]{8}$/)),
+});
+export type PutCodesRequest = z.infer<typeof PutCodesRequest>;
+
+export const PutCodesResults = z.object({
+	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+});
+export type PutCodesResults = z.infer<typeof PutCodesResults>;
