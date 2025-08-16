@@ -99,7 +99,7 @@ const Card = (props: { children: GetTeamsResults[number] }) => {
 
 	return (
 		<A
-			href={"/team/" + props.children.tid}
+			href={`/team/${props.children.tid}`}
 			class="font-jakarta border-border block w-full rounded-lg border-1 p-4 text-left break-all md:w-[calc(50%-.5rem)]"
 		>
 			<h1 class="text-text-major text-xl font-medium">{props.children.name}</h1>

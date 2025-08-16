@@ -1,9 +1,9 @@
-import { InviteCode } from "@app/schema";
+import { PutCodesRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
-import { accept } from "../../../api/teams.api";
+import { putCode } from "../../../api/codes.api";
 import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
@@ -20,34 +20,30 @@ export default () => {
 	>();
 	const [error, setError] = $error;
 
-	const submit = (code: string) => {
-		// const { success, data } = InviteCode.safeParse({ code });
-		// if (!success) {
-		// 	return setError("accept.errors.invcode");
-		// }
-		// void accept(data)
-		// 	.then(({ hash }) => {
-		// 		navigate("/team/" + hash);
-		// 	})
-		// 	.catch((e: unknown) => {
-		// 		if (!isAxiosError(e) || !e.response) {
-		// 			return setError("errors.systems");
-		// 		}
-		// 		switch (e.response.status as ErrorCode) {
-		// 			case ErrorCode.FORBIDDEN: {
-		// 				return setError("accept.errors.invcode");
-		// 			}
-		// 			case ErrorCode.CONFLICT: {
-		// 				return setError("accept.errors.already");
-		// 			}
-		// 			case ErrorCode.TOO_MANY_REQUESTS: {
-		// 				return setError("errors.ratelim");
-		// 			}
-		// 			default: {
-		// 				return setError("errors.systems");
-		// 			}
-		// 		}
-		// 	});
+	const submit = async (code: string) => {
+		const { success, data } = PutCodesRequest.safeParse({ code });
+
+		if (!success) {
+			return setError("accept.errors.invcode");
+		}
+
+		try {
+			const { tid } = await putCode(data);
+			navigate(`/team/${tid}`);
+		} catch (e) {
+			if (!isAxiosError(e) || !e.response) {
+				return setError("errors.systems");
+			}
+			switch (e.response.status as ErrorCode) {
+				case ErrorCode.FORBIDDEN: {
+					return setError("accept.errors.invcode");
+				}
+				case ErrorCode.CONFLICT: {
+					return setError("accept.errors.already");
+				}
+			}
+			setError("errors.systems");
+		}
 	};
 
 	return (
