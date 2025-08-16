@@ -102,10 +102,26 @@ model Task {
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  Team Team   @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
-  Work Work[]
+  Team      Team        @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
+  TaskFiles TaskFiles[]
+  Work      Work[]
 
   @@index([tid])
+}
+
+model TaskFiles {
+  fid Int @id @default(autoincrement())
+  aid Int
+
+  name String
+  blob Bytes
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  Task Task @relation(fields: [aid], references: [aid], onUpdate: Restrict, onDelete: Cascade)
+
+  @@unique([aid, name])
 }
 
 model Work {
@@ -120,10 +136,26 @@ model Work {
   created DateTime @default(now())
   updated DateTime @updatedAt
 
-  User User @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
-  Task Task @relation(fields: [aid], references: [aid], onUpdate: Restrict, onDelete: Cascade)
+  User      User        @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
+  Task      Task        @relation(fields: [aid], references: [aid], onUpdate: Restrict, onDelete: Cascade)
+  WorkFiles WorkFiles[]
 
   @@unique([uid, aid])
+}
+
+model WorkFiles {
+  fid Int @id @default(autoincrement())
+  sid Int
+
+  name String
+  blob Bytes
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  Work Work @relation(fields: [sid], references: [sid], onUpdate: Restrict, onDelete: Cascade)
+
+  @@unique([sid, name])
 }
 
 enum Grades {
