@@ -21,7 +21,7 @@ model User {
   Sess Sess[]
 
   Member Member[]
-  // Submit  Submit[]
+  Submit Submit[]
 }
 
 model Pass {
@@ -62,7 +62,7 @@ model Team {
 
   Invite Invite?
   Member Member[]
-  // Assign  Assign[]
+  Assign Assign[]
 }
 
 model Invite {
@@ -92,38 +92,44 @@ model Member {
   @@index([tid])
 }
 
-// model Assign {
-//   aid     Int      @id @default(autoincrement())
-//   tid     Int
-//   name    String
-//   desc    String
-//   dead    DateTime
-//   created DateTime @default(now())
-//   updated DateTime @updatedAt
-//   Team    Team     @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
-//   Submit  Submit[]
+model Assign {
+  aid Int @id @default(autoincrement())
+  tid Int
 
-//   @@index([tid])
-// }
+  name String
+  desc String
+  dead DateTime
 
-// model Submit {
-//   sid     Int      @id @default(autoincrement())
-//   uid     Int
-//   aid     Int
-//   done    Boolean  @default(false)
-//   mark    Grades?
-//   comm    String?
-//   created DateTime @default(now())
-//   updated DateTime @updatedAt
-//   User    User     @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
-//   Assign  Assign   @relation(fields: [aid], references: [aid], onUpdate: Restrict, onDelete: Cascade)
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 
-//   @@unique([uid, aid])
-// }
+  Team   Team     @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
+  Submit Submit[]
 
-// enum Grades {
-//   A
-//   B
-//   C
-//   F
-// }
+  @@index([tid])
+}
+
+model Submit {
+  sid Int @id @default(autoincrement())
+  uid Int
+  aid Int
+
+  done Boolean @default(false)
+  mark Grades?
+  comm String?
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+
+  User   User   @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
+  Assign Assign @relation(fields: [aid], references: [aid], onUpdate: Restrict, onDelete: Cascade)
+
+  @@unique([uid, aid])
+}
+
+enum Grades {
+  A
+  B
+  C
+  F
+}
