@@ -1,34 +1,33 @@
-import { TeamID } from "@app/schema";
+import { GetTeamsTeamIdRequest } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
 import { RequestHandler } from "express";
-import { CONFIG } from "../configs/configs";
+import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
-import { decode } from "../utils/hashid";
 
 export const member: RequestHandler = async (req, res, next) => {
-	const { success, data } = TeamID.safeParse(req.method === "GET" ? req.query : req.body);
+	const { success, data } = GetTeamsTeamIdRequest.safeParse(req.params);
 
 	try {
 		if (!success) {
-			throw new HttpError("FORBIDDEN", "Missing Team Hash");
+			throw new HttpError("FORBIDDEN", "Missing Team ID");
 		}
-		const tid = decode(CONFIG.HASH_TID, data.hash);
+		const tid = configs.hashTID.decode(data.tid);
 
 		if (isNaN(tid)) {
-			throw new HttpError("FORBIDDEN", "Invalid Team Hash");
+			throw new HttpError("FORBIDDEN", "Invalid Team ID");
 		}
 
-		const member = await prisma.member.findUnique({
+		const membership = await prisma.member.findUnique({
 			select: { auth: true },
-			where: { cpk: { uid: req.uid, tid } },
+			where: { pk: { uid: req.uid, tid } },
 		});
 
-		if (!member) {
-			throw new HttpError("FORBIDDEN", "No Team Membership");
+		if (!membership) {
+			throw new HttpError("FORBIDDEN", "Not Team Member");
 		}
 
 		req.tid = tid;
-		req.own = member.auth;
+		req.own = membership.auth;
 		next();
 	} catch (e) {
 		if (e instanceof HttpError) {

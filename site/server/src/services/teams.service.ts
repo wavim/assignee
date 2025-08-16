@@ -1,8 +1,10 @@
-// POST api/teams
-// GET  api/teams
-// GET  api/teams/:tid
-
-import { GetTeamsResults, PostTeamsRequest, PostTeamsResults } from "@app/schema";
+import {
+	GetTeamsResults,
+	GetTeamsTeamIdResults,
+	PostTeamsRequest,
+	PostTeamsResults,
+} from "@app/schema";
+import { HttpError } from "@wavim/http-error";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 
@@ -26,26 +28,26 @@ export async function queryTeams(uid: number): Promise<GetTeamsResults> {
 	});
 }
 
-// export async function details(tid: number, auth: boolean): Promise<zTeamDetails> {
-// 	const details = await prisma.team.findUnique({
-// 		select: {
-// 			name: true,
-// 			desc: true,
-// 			Member: { select: { auth: true, User: { select: { name: true, mail: true } } } },
-// 		},
-// 		where: { tid },
-// 	});
+export async function teamDetail(tid: number, own: boolean): Promise<GetTeamsTeamIdResults> {
+	const data = await prisma.team.findUnique({
+		select: {
+			name: true,
+			desc: true,
+			Member: { select: { auth: true, User: { select: { name: true, mail: true } } } },
+		},
+		where: { tid },
+	});
 
-// 	if (!details) {
-// 		throw new HttpError("NOT_FOUND", "Team Not Found");
-// 	}
+	if (!data) {
+		throw new HttpError("NOT_FOUND", "Team Not Found");
+	}
 
-// 	return {
-// 		auth,
-// 		name: details.name,
-// 		desc: details.desc,
-// 		memb: details.Member.map((m) => {
-// 			return { auth: m.auth, ...m.User };
-// 		}),
-// 	};
-// }
+	return {
+		name: data.name,
+		desc: data.desc,
+		auth: own,
+		members: data.Member.map((m) => {
+			return { ...m.User, auth: m.auth };
+		}),
+	};
+}
