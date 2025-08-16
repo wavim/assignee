@@ -1,6 +1,6 @@
 import { Navigate } from "@solidjs/router";
 import { createResource, JSXElement, Show } from "solid-js";
-import { verify } from "../api/users.api";
+import { verify } from "../api/auth.api";
 
 export default (props: { landing?: boolean; children: JSXElement }) => {
 	if (import.meta.env.DEV) {

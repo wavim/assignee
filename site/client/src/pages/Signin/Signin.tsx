@@ -1,8 +1,8 @@
-import { PostUsersSigninRequest } from "@app/schema";
+import { SigninRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { createMemo, createSignal } from "solid-js";
-import { signin } from "../../api/users.api";
+import { signin } from "../../api/auth.api";
 import Signer from "../Signer";
 import I18n from "./I18n";
 
@@ -19,8 +19,8 @@ const Form = () => {
 	const $error = createSignal<undefined | "errors.generic" | "errors.ratelim" | "errors.systems">();
 	const [error, setError] = $error;
 
-	const submit = async (req: PostUsersSigninRequest) => {
-		const { success, data } = PostUsersSigninRequest.safeParse(req);
+	const submit = async (req: SigninRequest) => {
+		const { success, data } = SigninRequest.safeParse(req);
 
 		if (!success) {
 			return setError("errors.generic");

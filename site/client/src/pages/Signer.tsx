@@ -1,4 +1,4 @@
-import { PostUsersSigninRequest, PostUsersSignupRequest } from "@app/schema";
+import { SigninRequest, SignupRequest } from "@app/schema";
 import { A } from "@solidjs/router";
 import { Accessor } from "solid-js";
 import Form from "../gui/Form";
@@ -18,8 +18,8 @@ interface SignProps {
 	header: string;
 	action: string;
 	error: Accessor<string | undefined>;
-	check: (req: PostUsersSigninRequest & PostUsersSignupRequest) => unknown;
-	cback: (req: PostUsersSigninRequest & PostUsersSignupRequest) => unknown;
+	check: (req: SigninRequest & SignupRequest) => unknown;
+	cback: (req: SigninRequest & SignupRequest) => unknown;
 	alturl: "/signin" | "/signup";
 	altnav: string;
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from "@solidjs/router";
 import { JSXElement } from "solid-js";
-import { logout } from "../api/users.api";
+import { logout } from "../api/auth.api";
 import A11y from "../gui/A11y";
 import { defineI18n } from "../gui/I18n";
 
