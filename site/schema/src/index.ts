@@ -74,7 +74,7 @@ export type GetTeamsTeamIdResults = z.infer<typeof GetTeamsTeamIdResults>;
 // GET api/codes/:tid
 
 export const GetCodesTeamIdResults = z.object({
-	code: z.string().check(z.regex(/^[0-9a-f]{8}$/), z.toUpperCase()),
+	code: z.string().check(z.regex(/^[0-9a-f]{8}$/)),
 });
 export type GetCodesTeamIdResults = z.infer<typeof GetCodesTeamIdResults>;
 
