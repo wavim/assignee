@@ -1,42 +1,42 @@
 import * as z from "zod/mini";
 
-// POST /users/verify
-// POST /users/logout
+// POST /auth/verify
+// POST /auth/logout
 
-export const UserSessionCookie = z.object({
+export const SessionCookie = z.object({
 	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 	key: z.string().check(z.regex(/^[0-9a-f]{64}$/)),
 });
-export type UserSessionCookie = z.infer<typeof UserSessionCookie>;
+export type SessionCookie = z.infer<typeof SessionCookie>;
 
-// POST /users/signin
+// POST /auth/signin
 
-export const PostUsersSigninRequest = z.object({
+export const SigninRequest = z.object({
 	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
 	pass: z.string().check(z.regex(/^[\x20-\x7E]{8,}$/)),
 });
-export type PostUsersSigninRequest = z.infer<typeof PostUsersSigninRequest>;
+export type SigninRequest = z.infer<typeof SigninRequest>;
 
-// POST /users/signup
+// POST /auth/signup
 
-export const PostUsersSignupRequest = z.object({
+export const SignupRequest = z.object({
 	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
 	pass: z.string().check(z.regex(/^[\x20-\x7E]{8,}$/)),
 });
-export type PostUsersSignupRequest = z.infer<typeof PostUsersSignupRequest>;
+export type SignupRequest = z.infer<typeof SignupRequest>;
 
 // POST /teams
 
-export const PostTeamsRequest = z.object({
+export const PostTeamRequest = z.object({
 	name: z.string().check(z.trim(), z.minLength(1)),
 	desc: z.string().check(z.trim(), z.minLength(1)),
 });
-export type PostTeamsRequest = z.infer<typeof PostTeamsRequest>;
+export type PostTeamRequest = z.infer<typeof PostTeamRequest>;
 
-export const PostTeamsResults = z.object({
+export const PostTeamResults = z.object({
 	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 });
-export type PostTeamsResults = z.infer<typeof PostTeamsResults>;
+export type PostTeamResults = z.infer<typeof PostTeamResults>;
 
 // GET /teams
 
@@ -52,12 +52,12 @@ export type GetTeamsResults = z.infer<typeof GetTeamsResults>;
 
 // GET /teams/:tid
 
-export const GetTeamsTeamIdRequest = z.object({
+export const GetTeamRequest = z.object({
 	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 });
-export type GetTeamsTeamIdRequest = z.infer<typeof GetTeamsTeamIdRequest>;
+export type GetTeamRequest = z.infer<typeof GetTeamRequest>;
 
-export const GetTeamsTeamIdResults = z.object({
+export const GetTeamResults = z.object({
 	name: z.string().check(z.trim(), z.minLength(1)),
 	desc: z.string().check(z.trim(), z.minLength(1)),
 	auth: z.boolean(),
@@ -69,89 +69,79 @@ export const GetTeamsTeamIdResults = z.object({
 		}),
 	),
 });
-export type GetTeamsTeamIdResults = z.infer<typeof GetTeamsTeamIdResults>;
+export type GetTeamResults = z.infer<typeof GetTeamResults>;
 
-// GET /codes/:tid
+// GET /teams/:tid/code
 
-export const GetCodesTeamIdResults = z.object({
+export const GetTeamCodeResults = z.object({
 	code: z.string().check(z.regex(/^[0-9a-f]{8}$/)),
 });
-export type GetCodesTeamIdResults = z.infer<typeof GetCodesTeamIdResults>;
+export type GetTeamCodeResults = z.infer<typeof GetTeamCodeResults>;
 
-// PUT /codes
+// PUT /membs
 
-export const PutCodesRequest = z.object({
+export const PutMembRequest = z.object({
 	code: z.string().check(z.trim(), z.regex(/^[0-9a-fA-F]{8}$/)),
 });
-export type PutCodesRequest = z.infer<typeof PutCodesRequest>;
+export type PutMembRequest = z.infer<typeof PutMembRequest>;
 
-export const PutCodesResults = z.object({
+export const PutMembResults = z.object({
 	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 });
-export type PutCodesResults = z.infer<typeof PutCodesResults>;
+export type PutMembResults = z.infer<typeof PutMembResults>;
 
-// POST /tasks/:tid
+// GET /tasks
 
-export const PostTasksRequest = z.object({
+export const GetTasksResults = z.array(
+	z.object({
+		aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+		tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+		name: z.string().check(z.trim(), z.minLength(1)),
+		team: z.string().check(z.trim(), z.minLength(1)),
+		dead: z.iso.datetime(),
+		done: z.boolean(),
+	}),
+);
+export type GetTasksResults = z.infer<typeof GetTasksResults>;
+
+// POST /teams/:tid/tasks
+
+export const PostTeamTaskRequest = z.object({
 	name: z.string().check(z.trim(), z.minLength(1)),
 	desc: z.string().check(z.trim(), z.minLength(1)),
 	dead: z.iso.datetime(),
 });
-export type PostTasksRequest = z.infer<typeof PostTasksRequest>;
+export type PostTeamTaskRequest = z.infer<typeof PostTeamTaskRequest>;
 
-export const PostTasksResults = z.object({
+export const PostTeamTaskResults = z.object({
 	aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 });
-export type PostTasksResults = z.infer<typeof PostTasksResults>;
+export type PostTeamTaskResults = z.infer<typeof PostTeamTaskResults>;
 
-// GET /tasks?tid
+// GET /teams/:tid/tasks
 
-export const GetTasksResults = z.discriminatedUnion("type", [
+export const GetTeamTasksResults = z.discriminatedUnion("auth", [
 	z.object({
-		type: z.literal("user"),
+		auth: z.literal(true),
 		data: z.array(
 			z.object({
 				aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
-				tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 				name: z.string().check(z.trim(), z.minLength(1)),
-				team: z.string().check(z.trim(), z.minLength(1)),
 				dead: z.iso.datetime(),
+				done: z.number().check(z.positive()),
 			}),
 		),
 	}),
 	z.object({
-		type: z.literal("team"),
+		auth: z.literal(false),
 		data: z.array(
 			z.object({
 				aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 				name: z.string().check(z.trim(), z.minLength(1)),
 				dead: z.iso.datetime(),
+				done: z.boolean(),
 			}),
 		),
 	}),
 ]);
-export type GetTasksResults = z.infer<typeof GetTasksResults>;
-
-// GET /tasks/:aid
-
-// export const GetTasksTaskIdRequest = z.object({
-// 	aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
-// });
-// export type GetTasksTaskIdRequest = z.infer<typeof GetTasksTaskIdRequest>;
-
-// export const GetTasksTaskIdResults = z.discriminatedUnion("auth", [
-// 	z.object({
-// 		auth: z.literal(true),
-// 		name: z.string().check(z.trim(), z.minLength(1)),
-// 		desc: z.string().check(z.trim(), z.minLength(1)),
-// 		dead: z.iso.datetime(),
-// 		// taskfile: z.instanceof(File),
-// 	}),
-// 	z.object({
-// 		auth: z.literal(false),
-// 		name: z.string().check(z.trim(), z.minLength(1)),
-// 		desc: z.string().check(z.trim(), z.minLength(1)),
-// 		dead: z.iso.datetime(),
-// 	}),
-// ]);
-// export type GetTasksTaskIdResults = z.infer<typeof GetTasksTaskIdResults>;
+export type GetTeamTasksResults = z.infer<typeof GetTeamTasksResults>;
