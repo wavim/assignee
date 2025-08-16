@@ -8,7 +8,7 @@ export function init(): void {
 		await prisma.sess.deleteMany({ where: { created: { lt: subtime(configs.sessAge) } } });
 	});
 
-	// schedule("0 * * * *", async () => {
-	// 	await prisma.invite.deleteMany({ where: { created: { lt: subtime(configs.codeAge) } } });
-	// });
+	schedule("0 * * * *", async () => {
+		await prisma.invite.deleteMany({ where: { created: { lt: subtime(configs.codeAge) } } });
+	});
 }
