@@ -108,7 +108,7 @@ export type PostTasksResults = z.infer<typeof PostTasksResults>;
 
 export const GetTasksResults = z.discriminatedUnion("type", [
 	z.object({
-		type: z.literal("dash"),
+		type: z.literal("user"),
 		data: z.array(
 			z.object({
 				aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
