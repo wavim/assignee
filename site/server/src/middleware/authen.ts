@@ -17,17 +17,17 @@ export const authen: RequestHandler = async (req, res, next) => {
 		const sid = configs.hashSID.decode(data.sid);
 
 		const session = await prisma.sess.findUnique({
-			select: { uid: true, hash: true, salt: true, created: true },
+			select: { uid: true, hash: true, salt: true, updated: true },
 			where: { sid },
 		});
 
 		if (!session) {
 			throw new HttpError("UNAUTHORIZED", "Session Doesnt Exist");
 		}
-		const { uid, hash, salt, created } = session;
+		const { uid, hash, salt, updated } = session;
 
-		if (expired(created, configs.sessRot)) {
-			if (expired(created, configs.sessAge)) {
+		if (expired(updated, configs.sessRot)) {
+			if (expired(updated, configs.sessAge)) {
 				throw new HttpError("UNAUTHORIZED", "Session Has Expired");
 			}
 			req.rot = true;
