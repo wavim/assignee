@@ -5,7 +5,7 @@ export default defineI18n({
 		search: { name: "Search", normal: "Normal View", badged: "Badged View" },
 		owner: "Owner",
 		member: "Member",
-		errors: { ratelim: "Too Many Requests", systems: "Internal System Error" },
+		errors: { systems: "Internal System Error" },
 		create: {
 			ctoa: "Create Team",
 			name: "Name",
@@ -24,7 +24,7 @@ export default defineI18n({
 		search: { name: "搜索", normal: "普通視圖", badged: "群主視圖" },
 		owner: "群主",
 		member: "群員",
-		errors: { ratelim: "嘗試次數過多", systems: "內部系統錯誤" },
+		errors: { systems: "內部系統錯誤" },
 		create: {
 			ctoa: "創建群組",
 			name: "群名",

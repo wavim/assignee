@@ -2,7 +2,7 @@ import { A } from "@solidjs/router";
 import { defineI18n } from "../../gui/I18n";
 import Header from "../Header";
 
-const I18n = defineI18n({ en: { dash: "Dashboard" }, zh: { dash: "主頁" } });
+const I18n = defineI18n({ en: { dash: "Dashboard" }, zh: { dash: "返回主頁" } });
 
 export default () => (
 	<I18n.I18n>

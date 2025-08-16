@@ -3,8 +3,9 @@ import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
-import { accept } from "../../../api/team.api";
+import { accept } from "../../../api/teams.api";
 import Form from "../../../gui/Form";
+import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
 import I18n from "./I18n";
 
@@ -15,44 +16,38 @@ export default () => {
 	let toggle!: HTMLButtonElement;
 
 	const $error = createSignal<
-		| undefined
-		| "accept.errors.invcode"
-		| "accept.errors.already"
-		| "errors.ratelim"
-		| "errors.systems"
+		undefined | "accept.errors.invcode" | "accept.errors.already" | "errors.systems"
 	>();
 	const [error, setError] = $error;
 
 	const submit = (code: string) => {
-		const { success, data } = InviteCode.safeParse({ code });
-
-		if (!success) {
-			return setError("accept.errors.invcode");
-		}
-
-		void accept(data)
-			.then(({ hash }) => {
-				navigate("/team/" + hash);
-			})
-			.catch((e: unknown) => {
-				if (!isAxiosError(e) || !e.response) {
-					return setError("errors.systems");
-				}
-				switch (e.response.status as ErrorCode) {
-					case ErrorCode.FORBIDDEN: {
-						return setError("accept.errors.invcode");
-					}
-					case ErrorCode.CONFLICT: {
-						return setError("accept.errors.already");
-					}
-					case ErrorCode.TOO_MANY_REQUESTS: {
-						return setError("errors.ratelim");
-					}
-					default: {
-						return setError("errors.systems");
-					}
-				}
-			});
+		// const { success, data } = InviteCode.safeParse({ code });
+		// if (!success) {
+		// 	return setError("accept.errors.invcode");
+		// }
+		// void accept(data)
+		// 	.then(({ hash }) => {
+		// 		navigate("/team/" + hash);
+		// 	})
+		// 	.catch((e: unknown) => {
+		// 		if (!isAxiosError(e) || !e.response) {
+		// 			return setError("errors.systems");
+		// 		}
+		// 		switch (e.response.status as ErrorCode) {
+		// 			case ErrorCode.FORBIDDEN: {
+		// 				return setError("accept.errors.invcode");
+		// 			}
+		// 			case ErrorCode.CONFLICT: {
+		// 				return setError("accept.errors.already");
+		// 			}
+		// 			case ErrorCode.TOO_MANY_REQUESTS: {
+		// 				return setError("errors.ratelim");
+		// 			}
+		// 			default: {
+		// 				return setError("errors.systems");
+		// 			}
+		// 		}
+		// 	});
 	};
 
 	return (
@@ -67,9 +62,6 @@ export default () => {
 			<Modal toggle={toggle}>
 				<Form
 					label={t("accept.next")}
-					input={[
-						{ name: t("accept.code"), autocomplete: "off", style: "text-transform:uppercase" },
-					]}
 					error={createMemo(() => {
 						const id = error();
 						return id && t(id);
@@ -79,7 +71,13 @@ export default () => {
 					}}
 					cback={submit}
 					class="my-2"
-				></Form>
+				>
+					<Input
+						name={t("accept.code")}
+						autocomplete="off"
+						style={{ "text-transform": "uppercase" }}
+					></Input>
+				</Form>
 			</Modal>
 		</>
 	);

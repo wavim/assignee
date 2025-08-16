@@ -19,7 +19,7 @@ const routes: RouteDefinition[] = [
 	{ path: "/signup", component: lazy(() => import("./pages/Signup/Signup")) },
 
 	{ path: "/dash", component: lazy(() => import("./views/Dash/Dash")) },
-	{ path: "/team/:hash", component: lazy(() => import("./views/Team/Team")) },
+	{ path: "/team/:tid", component: lazy(() => import("./views/Team/Team")) },
 
 	{ path: "*", component: lazy(() => import("./pages/E404/E404")) },
 ];

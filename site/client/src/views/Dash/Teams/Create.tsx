@@ -1,11 +1,10 @@
-import { TeamProfile, zTeamProfile } from "@app/schema";
+import { PostTeamsRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
-import { ErrorCode } from "@wvm/http-error";
-import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
-import { create } from "../../../api/team.api";
+import { createTeam } from "../../../api/teams.api";
 import Button from "../../../gui/Button";
 import Form from "../../../gui/Form";
+import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
 import I18n from "./I18n";
 
@@ -16,57 +15,38 @@ export default () => {
 	let toggle!: HTMLButtonElement;
 
 	const $error = createSignal<
-		| undefined
-		| "create.errors.setname"
-		| "create.errors.setdesc"
-		| "errors.ratelim"
-		| "errors.systems"
+		undefined | "create.errors.setname" | "create.errors.setdesc" | "errors.systems"
 	>();
 	const [error, setError] = $error;
 
-	const check = (data: zTeamProfile, submit = false) => {
-		if (!submit && !data.desc.length) {
+	const check = (req: PostTeamsRequest, submit = false) => {
+		if (!submit && !req.desc.length) {
 			return undefined;
 		}
 
-		const { success, error } = TeamProfile.safeParse(data);
+		const { success, error } = PostTeamsRequest.safeParse(req);
 
 		if (success) {
 			return undefined;
 		}
-		return (error.issues[0].path[0] as keyof zTeamProfile) === "name"
+		return (error.issues[0].path[0] as keyof PostTeamsRequest) === "name"
 			? "create.errors.setname"
 			: "create.errors.setdesc";
 	};
 
-	const submit = (name: string, desc: string) => {
-		const { success, data } = TeamProfile.safeParse({ name, desc });
+	const submit = async (name: string, desc: string) => {
+		const { success, data } = PostTeamsRequest.safeParse({ name, desc });
 
 		if (!success) {
 			return setError(check({ name, desc }, true));
 		}
 
-		void create(data)
-			.then(({ hash }) => {
-				navigate("/team/" + hash);
-			})
-			.catch((e: unknown) => {
-				if (!isAxiosError(e) || !e.response) {
-					return setError("errors.systems");
-				}
-				switch (e.response.status as ErrorCode) {
-					case ErrorCode.UNAUTHORIZED: {
-						navigate("/", { replace: true });
-						break;
-					}
-					case ErrorCode.TOO_MANY_REQUESTS: {
-						return setError("errors.ratelim");
-					}
-					default: {
-						return setError("errors.systems");
-					}
-				}
-			});
+		try {
+			const { tid } = await createTeam(data);
+			navigate(`/team/${tid}`);
+		} catch {
+			setError("errors.systems");
+		}
 	};
 
 	return (
@@ -75,10 +55,6 @@ export default () => {
 			<Modal toggle={toggle}>
 				<Form
 					label={t("create.next")}
-					input={[
-						{ name: t("create.name"), autocomplete: "organization" },
-						{ name: t("create.desc"), autocomplete: "off" },
-					]}
 					error={createMemo(() => {
 						const id = error();
 						return id && t(id);
@@ -87,7 +63,16 @@ export default () => {
 						setError(check({ name, desc }));
 					}}
 					cback={submit}
-				></Form>
+				>
+					<Input
+						name={t("create.name")}
+						autocomplete="organization"
+					></Input>
+					<Input
+						name={t("create.desc")}
+						autocomplete="off"
+					></Input>
+				</Form>
 			</Modal>
 		</>
 	);

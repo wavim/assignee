@@ -1,10 +1,10 @@
-import { zMembership } from "@app/schema";
+import { GetTeamsResults } from "@app/schema";
 import { A } from "@solidjs/router";
 import Filter from "@wavim/solid-filter";
 import clsx from "clsx/lite";
 import { createResource, createSignal, Show } from "solid-js";
 import { stringSimilarity } from "string-similarity-js";
-import { members } from "../../../api/team.api";
+import { queryTeams } from "../../../api/teams.api";
 import Input from "../../../gui/Input";
 import Badge from "../../Badge";
 import Accept from "./Accept";
@@ -12,18 +12,18 @@ import Create from "./Create";
 import I18n from "./I18n";
 
 export default () => {
-	const [membs] = createResource(members, { initialValue: [] });
+	const [teams] = createResource(queryTeams, { initialValue: [] });
 
 	return (
 		<I18n.I18n>
 			<main class="flex w-full flex-col gap-8 p-4">
-				<Show when={membs().length}>
-					<Dash members={membs()}></Dash>
+				<Show when={teams().length}>
+					<Dash teams={teams()}></Dash>
 				</Show>
 				<div
 					class={clsx(
 						"ml-1 flex gap-6",
-						!membs().length && "fixed inset-1/2 size-max -translate-1/2",
+						!teams().length && "fixed top-[calc(50%-.5rem)] self-center",
 					)}
 				>
 					<Create></Create>
@@ -34,7 +34,7 @@ export default () => {
 	);
 };
 
-const Dash = (props: { members: zMembership }) => {
+const Dash = (props: { teams: GetTeamsResults }) => {
 	const t = I18n.useI18n();
 
 	const [search, setSearch] = createSignal("");
@@ -81,25 +81,25 @@ const Dash = (props: { members: zMembership }) => {
 			<Search></Search>
 			<section class="flex w-full flex-col flex-wrap gap-4 md:flex-row">
 				<Filter
-					candidates={props.members.sort((a, b) => a.name.localeCompare(b.name))}
+					candidates={props.teams.sort((a, b) => a.name.localeCompare(b.name))}
 					predicates={[
 						({ auth }) => !badged() || auth,
 						({ name, desc }) => matches(search(), name, desc),
 					]}
 				>
-					{(member) => <Card>{member}</Card>}
+					{(team) => <Card>{team}</Card>}
 				</Filter>
 			</section>
 		</>
 	);
 };
 
-const Card = (props: { children: zMembership[number] }) => {
+const Card = (props: { children: GetTeamsResults[number] }) => {
 	const t = I18n.useI18n();
 
 	return (
 		<A
-			href={"/team/" + props.children.hash}
+			href={"/team/" + props.children.tid}
 			class="font-jakarta border-border block w-full rounded-lg border-1 p-4 text-left break-all md:w-[calc(50%-.5rem)]"
 		>
 			<h1 class="text-text-major text-xl font-medium">{props.children.name}</h1>

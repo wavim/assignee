@@ -15,7 +15,7 @@ export default (props: { router: Signal<Route> }) => {
 	const Item = (props: { route: Route }) => {
 		const t = I18n.useI18n();
 
-		const on = createMemo(() => route() === props.route);
+		const view = createMemo(() => route() === props.route);
 
 		return (
 			<button
@@ -23,8 +23,8 @@ export default (props: { router: Signal<Route> }) => {
 				onclick={() => navigate(props.route)}
 				class={clsx(
 					"font-jakarta h-full cursor-pointer rounded-full px-5 text-lg transition-colors duration-100 ease-out",
-					on() && "bg-button",
-					on() ? "text-text-alter" : "text-text-major",
+					view() && "bg-button",
+					view() ? "text-text-alter" : "text-text-major",
 				)}
 			>
 				{t(props.route)}
