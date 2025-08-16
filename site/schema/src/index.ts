@@ -89,3 +89,71 @@ export const PutCodesResults = z.object({
 	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 });
 export type PutCodesResults = z.infer<typeof PutCodesResults>;
+
+// POST api/tasks
+
+export const PostTasksRequest = z.object({
+	name: z.string().check(z.trim(), z.minLength(1)),
+	desc: z.string().check(z.trim(), z.minLength(1)),
+	dead: z.iso.datetime(),
+});
+export type PostTasksRequest = z.infer<typeof PostTasksRequest>;
+
+export const PostTasksResults = z.object({
+	aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+});
+export type PostTasksResults = z.infer<typeof PostTasksResults>;
+
+// GET api/tasks?tid
+
+export const GetTasksResults = z.discriminatedUnion("type", [
+	z.object({
+		type: z.literal("dash"),
+		data: z.array(
+			z.object({
+				aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+				tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+				name: z.string().check(z.trim(), z.minLength(1)),
+				team: z.string().check(z.trim(), z.minLength(1)),
+				dead: z.iso.datetime(),
+				auth: z.boolean(),
+			}),
+		),
+	}),
+	z.object({
+		type: z.literal("team"),
+		data: z.array(
+			z.object({
+				aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+				name: z.string().check(z.trim(), z.minLength(1)),
+				dead: z.iso.datetime(),
+				auth: z.boolean(),
+			}),
+		),
+	}),
+]);
+export type GetTasksResults = z.infer<typeof GetTasksResults>;
+
+// GET api/tasks/:aid
+
+// export const GetTasksTaskIdRequest = z.object({
+// 	aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+// });
+// export type GetTasksTaskIdRequest = z.infer<typeof GetTasksTaskIdRequest>;
+
+// export const GetTasksTaskIdResults = z.discriminatedUnion("auth", [
+// 	z.object({
+// 		auth: z.literal(true),
+// 		name: z.string().check(z.trim(), z.minLength(1)),
+// 		desc: z.string().check(z.trim(), z.minLength(1)),
+// 		dead: z.iso.datetime(),
+// 		// taskfile: z.instanceof(File),
+// 	}),
+// 	z.object({
+// 		auth: z.literal(false),
+// 		name: z.string().check(z.trim(), z.minLength(1)),
+// 		desc: z.string().check(z.trim(), z.minLength(1)),
+// 		dead: z.iso.datetime(),
+// 	}),
+// ]);
+// export type GetTasksTaskIdResults = z.infer<typeof GetTasksTaskIdResults>;
