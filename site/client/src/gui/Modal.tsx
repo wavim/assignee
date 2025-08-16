@@ -44,7 +44,7 @@ export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
 			title={props.toggle.title}
 			class={clsx(
 				!open() && "pointer-events-none",
-				"bg-overlay/75 shadow-shadow fixed inset-1/2 h-max w-88 -translate-1/2 rounded-2xl p-8 opacity-0 shadow-2xl/30 backdrop-blur-lg",
+				"bg-overlay/75 shadow-shadow fixed inset-1/2 h-max w-88 -translate-1/2 rounded-2xl p-8 opacity-0 shadow-2xl/30 backdrop-blur-lg md:w-100",
 			)}
 		>
 			<div {...props}></div>
