@@ -1,7 +1,7 @@
 import * as z from "zod/mini";
 
-// POST api/users/verify
-// POST api/users/logout
+// POST /users/verify
+// POST /users/logout
 
 export const UserSessionCookie = z.object({
 	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
@@ -9,7 +9,7 @@ export const UserSessionCookie = z.object({
 });
 export type UserSessionCookie = z.infer<typeof UserSessionCookie>;
 
-// POST api/users/signin
+// POST /users/signin
 
 export const PostUsersSigninRequest = z.object({
 	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
@@ -17,7 +17,7 @@ export const PostUsersSigninRequest = z.object({
 });
 export type PostUsersSigninRequest = z.infer<typeof PostUsersSigninRequest>;
 
-// POST api/users/signup
+// POST /users/signup
 
 export const PostUsersSignupRequest = z.object({
 	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
@@ -25,7 +25,7 @@ export const PostUsersSignupRequest = z.object({
 });
 export type PostUsersSignupRequest = z.infer<typeof PostUsersSignupRequest>;
 
-// POST api/teams
+// POST /teams
 
 export const PostTeamsRequest = z.object({
 	name: z.string().check(z.trim(), z.minLength(1)),
@@ -38,7 +38,7 @@ export const PostTeamsResults = z.object({
 });
 export type PostTeamsResults = z.infer<typeof PostTeamsResults>;
 
-// GET api/teams
+// GET /teams
 
 export const GetTeamsResults = z.array(
 	z.object({
@@ -50,7 +50,7 @@ export const GetTeamsResults = z.array(
 );
 export type GetTeamsResults = z.infer<typeof GetTeamsResults>;
 
-// GET api/teams/:tid
+// GET /teams/:tid
 
 export const GetTeamsTeamIdRequest = z.object({
 	tid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
@@ -71,14 +71,14 @@ export const GetTeamsTeamIdResults = z.object({
 });
 export type GetTeamsTeamIdResults = z.infer<typeof GetTeamsTeamIdResults>;
 
-// GET api/codes/:tid
+// GET /codes/:tid
 
 export const GetCodesTeamIdResults = z.object({
 	code: z.string().check(z.regex(/^[0-9a-f]{8}$/)),
 });
 export type GetCodesTeamIdResults = z.infer<typeof GetCodesTeamIdResults>;
 
-// PUT api/codes
+// PUT /codes
 
 export const PutCodesRequest = z.object({
 	code: z.string().check(z.trim(), z.regex(/^[0-9a-fA-F]{8}$/)),
@@ -90,7 +90,7 @@ export const PutCodesResults = z.object({
 });
 export type PutCodesResults = z.infer<typeof PutCodesResults>;
 
-// POST api/tasks
+// POST /tasks/:tid
 
 export const PostTasksRequest = z.object({
 	name: z.string().check(z.trim(), z.minLength(1)),
@@ -104,7 +104,7 @@ export const PostTasksResults = z.object({
 });
 export type PostTasksResults = z.infer<typeof PostTasksResults>;
 
-// GET api/tasks?tid
+// GET /tasks?tid
 
 export const GetTasksResults = z.discriminatedUnion("type", [
 	z.object({
@@ -132,7 +132,7 @@ export const GetTasksResults = z.discriminatedUnion("type", [
 ]);
 export type GetTasksResults = z.infer<typeof GetTasksResults>;
 
-// GET api/tasks/:aid
+// GET /tasks/:aid
 
 // export const GetTasksTaskIdRequest = z.object({
 // 	aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
