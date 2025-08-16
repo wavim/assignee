@@ -1,9 +1,9 @@
-import { PutCodesRequest } from "@app/schema";
+import { PutMembRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
-import { putCode } from "../../../api/codes.api";
+import { putMemb } from "../../../api/code.api";
 import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
@@ -21,14 +21,14 @@ export default () => {
 	const [error, setError] = $error;
 
 	const submit = async (code: string) => {
-		const { success, data } = PutCodesRequest.safeParse({ code });
+		const { success, data } = PutMembRequest.safeParse({ code });
 
 		if (!success) {
 			return setError("accept.errors.invcode");
 		}
 
 		try {
-			const { tid } = await putCode(data);
+			const { tid } = await putMemb(data);
 			navigate(`/team/${tid}`);
 		} catch (e) {
 			if (!isAxiosError(e) || !e.response) {

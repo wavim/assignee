@@ -2,7 +2,9 @@ import { defineI18n } from "../../../gui/I18n";
 
 export default defineI18n({
 	en: {
-		search: { name: "Search", normal: "Normal View", badged: "Badged View" },
+		prompt: "Add a team to begin.",
+		normal: "Normal View",
+		badged: "Badged View",
 		owner: "Owner",
 		member: "Member",
 		errors: { systems: "Internal System Error" },
@@ -21,7 +23,9 @@ export default defineI18n({
 		},
 	},
 	zh: {
-		search: { name: "搜索", normal: "普通視圖", badged: "群主視圖" },
+		prompt: "新增群組以開始使用",
+		normal: "普通視圖",
+		badged: "群主視圖",
 		owner: "群主",
 		member: "群員",
 		errors: { systems: "內部系統錯誤" },
