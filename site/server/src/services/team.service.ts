@@ -1,5 +1,4 @@
 import { GetTeamResults, GetTeamsResults, PostTeamRequest, PostTeamResults } from "@app/schema";
-import { HttpError } from "@wavim/http-error";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
 
@@ -24,7 +23,7 @@ export async function queryTeams(uid: number): Promise<GetTeamsResults> {
 }
 
 export async function teamDetail(tid: number, own: boolean): Promise<GetTeamResults> {
-	const data = await prisma.team.findUnique({
+	const data = await prisma.team.findUniqueOrThrow({
 		select: {
 			name: true,
 			desc: true,
@@ -32,10 +31,6 @@ export async function teamDetail(tid: number, own: boolean): Promise<GetTeamResu
 		},
 		where: { tid },
 	});
-
-	if (!data) {
-		throw new HttpError("NOT_FOUND", "Team Not Found");
-	}
 
 	return {
 		name: data.name,
