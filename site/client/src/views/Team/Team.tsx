@@ -1,16 +1,15 @@
 import { useNavigate, useParams } from "@solidjs/router";
 import { ErrorCode } from "@wvm/http-error";
 import { isAxiosError } from "axios";
-import { createResource, For, Show, Suspense } from "solid-js";
-import { teamDetail } from "../../api/teams.api";
-import Button from "../../gui/Button";
+import { createResource, Show, Suspense } from "solid-js";
+import { getCode } from "../../api/code.api";
+import { teamDetail } from "../../api/team.api";
 import Guard from "../../gui/Guard";
 import { defineI18n } from "../../gui/I18n";
-import Modal from "../../gui/Modal";
-import Badge from "../Badge";
 import Footer from "../Footer";
 import Header from "./Header";
-import Members from "./Members";
+import Membs from "./Membs/Membs";
+import Tasks from "./Tasks/Tasks";
 
 const I18n = defineI18n({
 	en: { invite: "Invite Member", code: "Invite Code" },
@@ -20,11 +19,11 @@ const I18n = defineI18n({
 export default () => (
 	<Guard>
 		<Header></Header>
-		<Suspense>
-			<I18n.I18n>
+		<I18n.I18n>
+			<Suspense>
 				<Team></Team>
-			</I18n.I18n>
-		</Suspense>
+			</Suspense>
+		</I18n.I18n>
 		<Footer></Footer>
 	</Guard>
 );
@@ -32,7 +31,7 @@ export default () => (
 const Team = () => {
 	const navigate = useNavigate();
 
-	const [data] = createResource(
+	const [detail] = createResource(
 		async () => {
 			try {
 				return await teamDetail(useParams());
@@ -47,53 +46,45 @@ const Team = () => {
 	);
 
 	return (
-		<main class="flex w-full flex-col gap-8 p-8">
+		<main class="flex w-full flex-col gap-8 p-4 md:px-8">
 			<Banner
-				name={data().name}
-				desc={data().desc}
+				name={detail().name}
+				desc={detail().desc}
+				auth={detail().auth}
 			></Banner>
-			<div class="flex">
-				<Members members={data().members}></Members>
-				<section></section>
+			<div class="flex flex-col gap-8 md:flex-row md:gap-4">
+				<Tasks></Tasks>
+				<Membs members={detail().members}></Membs>
 			</div>
-			<Show when={data().auth}>
-				<Invite></Invite>
-			</Show>
 		</main>
 	);
 };
 
-const Banner = (props: { name: string; desc: string }) => (
-	<section class="font-jakarta w-full">
-		<h1 class="text-text-major text-3xl">{props.name}</h1>
-		<h2 class="text-text-minor text-2xl">{props.desc}</h2>
-	</section>
-);
+const Banner = (props: { name: string; desc: string; auth: boolean }) => {
+	const Invite = () => {
+		const t = I18n.useI18n();
 
-const Invite = () => {
-	const t = I18n.useI18n();
+		const [code] = createResource(() => getCode(useParams()));
 
-	let toggle!: HTMLButtonElement;
-
-	// const [code] = createResource(() => invite(useParams()), { initialValue: { code: "" } });
+		return (
+			<span
+				title={t("code")}
+				class="text-text-major uppercase"
+			>
+				{code()?.code}
+			</span>
+		);
+	};
 
 	return (
-		<>
-			<Button
-				ref={toggle}
-				class="ml-1"
-			>
-				{t("invite")}
-			</Button>
-			<Modal
-				toggle={toggle}
-				class="font-jakarta flex flex-col gap-4"
-			>
-				<p class="text-text-major text-xl">{t("code")}</p>
-				<span class="text-text-major border-border cursor-text rounded-xl border-1 p-4 text-center text-4xl">
-					{/* {code().code} */}
-				</span>
-			</Modal>
-		</>
+		<section class="font-jakarta border-border flex w-full flex-col items-baseline gap-4 border-b-1 pb-8">
+			<h1 class="text-text-major text-4xl">{props.name}</h1>
+			<div class="flex gap-4 text-xl">
+				<h2 class="text-text-minor whitespace-pre-wrap">{props.desc}</h2>
+				<Show when={props.auth}>
+					<Invite></Invite>
+				</Show>
+			</div>
+		</section>
 	);
 };

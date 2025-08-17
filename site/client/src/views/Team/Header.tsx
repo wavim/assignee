@@ -11,7 +11,7 @@ export default () => (
 				href="/dash"
 				class="font-jakarta text-text-major text-lg"
 			>
-				{`${I18n.useI18n()("dash")} ›`}
+				{I18n.useI18n()("dash")} ›
 			</A>
 		</Header>
 	</I18n.I18n>
