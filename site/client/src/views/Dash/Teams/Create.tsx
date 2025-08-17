@@ -2,10 +2,11 @@ import { PostTeamRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
 import { createMemo, createSignal } from "solid-js";
 import { createTeam } from "../../../api/team.api";
-import Button from "../../../gui/Button";
+import Button1 from "../../../gui/Button1";
 import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
+import TextArea from "../../../gui/TextArea";
 import I18n from "./I18n";
 
 export default () => {
@@ -51,7 +52,7 @@ export default () => {
 
 	return (
 		<>
-			<Button ref={toggle}>{t("create.ctoa")}</Button>
+			<Button1 ref={toggle}>{t("create.ctoa")}</Button1>
 			<Modal toggle={toggle}>
 				<Form
 					label={t("create.next")}
@@ -66,12 +67,13 @@ export default () => {
 				>
 					<Input
 						name={t("create.name")}
+						spellcheck="true"
 						autocomplete="organization"
 					></Input>
-					<Input
+					<TextArea
 						name={t("create.desc")}
-						autocomplete="off"
-					></Input>
+						spellcheck="true"
+					></TextArea>
 				</Form>
 			</Modal>
 		</>

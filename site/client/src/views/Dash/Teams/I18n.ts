@@ -19,7 +19,7 @@ export default defineI18n({
 			ctoa: "Join Team",
 			code: "Invite Code",
 			next: "Embrace",
-			errors: { invcode: "Invalid Code", already: "Already Member" },
+			errors: { invcode: "Invalid Code" },
 		},
 	},
 	zh: {
@@ -36,11 +36,6 @@ export default defineI18n({
 			next: "建立",
 			errors: { setname: "群組不能無名", setdesc: "請提供群備註" },
 		},
-		accept: {
-			ctoa: "加入群組",
-			code: "邀請碼",
-			next: "受邀",
-			errors: { invcode: "邀請碼不正確", already: "已為本群成員" },
-		},
+		accept: { ctoa: "加入群組", code: "邀請碼", next: "受邀", errors: { invcode: "邀請碼不正確" } },
 	},
 });

@@ -4,6 +4,7 @@ import { ErrorCode } from "@wvm/http-error";
 import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
 import { putMemb } from "../../../api/code.api";
+import Button2 from "../../../gui/Button2";
 import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
@@ -15,9 +16,7 @@ export default () => {
 
 	let toggle!: HTMLButtonElement;
 
-	const $error = createSignal<
-		undefined | "accept.errors.invcode" | "accept.errors.already" | "errors.systems"
-	>();
+	const $error = createSignal<undefined | "accept.errors.invcode" | "errors.systems">();
 	const [error, setError] = $error;
 
 	const submit = async (code: string) => {
@@ -34,13 +33,8 @@ export default () => {
 			if (!isAxiosError(e) || !e.response) {
 				return setError("errors.systems");
 			}
-			switch (e.response.status as ErrorCode) {
-				case ErrorCode.FORBIDDEN: {
-					return setError("accept.errors.invcode");
-				}
-				case ErrorCode.CONFLICT: {
-					return setError("accept.errors.already");
-				}
+			if ((e.response.status as ErrorCode) === ErrorCode.FORBIDDEN) {
+				return setError("accept.errors.invcode");
 			}
 			setError("errors.systems");
 		}
@@ -48,13 +42,12 @@ export default () => {
 
 	return (
 		<>
-			<button
+			<Button2
 				ref={toggle}
-				type="button"
-				class="font-jakarta text-text-major cursor-pointer text-xl"
+				class="text-xl"
 			>
-				{`${t("accept.ctoa")} ›`}
-			</button>
+				{t("accept.ctoa")}
+			</Button2>
 			<Modal toggle={toggle}>
 				<Form
 					label={t("accept.next")}
@@ -70,6 +63,7 @@ export default () => {
 				>
 					<Input
 						name={t("accept.code")}
+						spellcheck="false"
 						autocomplete="off"
 						style={{ "text-transform": "uppercase" }}
 					></Input>

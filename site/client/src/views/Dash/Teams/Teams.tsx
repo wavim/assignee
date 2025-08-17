@@ -16,18 +16,18 @@ export default () => {
 
 	return (
 		<I18n.I18n>
-			<main class="flex w-full flex-col gap-8 p-4">
+			<main class="flex w-full flex-col gap-8 p-4 md:px-8">
 				<Show
 					when={teams().length}
 					fallback={
-						<p class="font-jakarta text-text-major fixed top-1/2 -mt-20 self-center text-2xl">
+						<p class="font-jakarta text-text-major absolute top-1/2 -mt-20 self-center text-2xl">
 							{I18n.useI18n()("prompt")}
 						</p>
 					}
 				>
 					<Dash teams={teams()}></Dash>
 				</Show>
-				<div class={clsx("ml-1 flex gap-6", !teams().length && "fixed top-1/2 self-center")}>
+				<div class={clsx("ml-1 flex gap-6", !teams().length && "absolute top-1/2 self-center")}>
 					<Create></Create>
 					<Accept></Accept>
 				</div>
