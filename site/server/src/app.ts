@@ -5,20 +5,21 @@ import { hostname } from "os";
 import { join } from "path";
 import { prisma } from "./database/client";
 import { init } from "./database/crons";
-import { router } from "./routes/router";
+import { route } from "./routes/route";
 import { $server } from "./utils/path";
 
 async function main(): Promise<void> {
 	await prisma.$connect();
 	init();
 
-	const app = express().use(compression());
-	app.use("/api", router);
+	const app = express().disable("x-powered-by");
+	app.use(compression());
+	app.use("/api", route);
 
 	const src = join($server, "public");
 	const idx = join(src, "index.html");
 
-	app.use(express.static(src)).get("/*CLIENT", (_, res) => {
+	app.use(express.static(src, { immutable: true, maxAge: "1y" })).get("/*CLIENT", (_, res) => {
 		res.sendFile(idx);
 	});
 
