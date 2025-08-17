@@ -2,14 +2,14 @@ import { Refs } from "@solid-primitives/refs";
 import clsx from "clsx/lite";
 import { Accessor, createMemo, createSignal, JSXElement, splitProps } from "solid-js";
 import { Props } from "../types/props";
-import Button from "./Button";
+import Button1 from "./Button1";
 
 export default (
 	props: Props<"form"> & {
 		label: string;
-		error: Accessor<string | undefined>;
-		check: (...val: string[]) => unknown;
 		cback: (...val: string[]) => unknown;
+		check?: (...val: string[]) => unknown;
+		error?: Accessor<string | undefined>;
 
 		children: JSXElement;
 	},
@@ -17,7 +17,7 @@ export default (
 	const [input, refs] = createSignal<HTMLElement[]>([]);
 	const inputs = createMemo(() =>
 		input()
-			.map((e) => e.querySelector("input"))
+			.map((e) => e.querySelector("input, span[role=textbox]"))
 			.filter((i) => i !== null),
 	);
 
@@ -26,18 +26,26 @@ export default (
 	return (
 		<form
 			{...rest}
-			oninput={() => datum.check(...inputs().map((i) => i.value))}
+			oninput={() =>
+				datum.check?.(
+					...inputs().map((i) => (i instanceof HTMLInputElement ? i.value : i.textContent)),
+				)
+			}
 			class={clsx("flex flex-col gap-4", rest.class)}
 		>
 			<Refs ref={refs}>{props.children}</Refs>
-			<Button
-				onclick={() => datum.cback(...inputs().map((i) => i.value))}
+			<Button1
+				onclick={() =>
+					datum.cback(
+						...inputs().map((i) => (i instanceof HTMLInputElement ? i.value : i.textContent)),
+					)
+				}
 				aria-label={datum.label}
 				class="mt-4"
 				full
 			>
-				{datum.error() ?? datum.label}
-			</Button>
+				{datum.error?.() ?? datum.label}
+			</Button1>
 		</form>
 	);
 };

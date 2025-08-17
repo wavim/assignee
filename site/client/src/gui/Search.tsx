@@ -7,7 +7,7 @@ const I18n = defineI18n({ en: { search: "Search" }, zh: { search: "搜索" } });
 export default (props: { search: Setter<string>; children?: JSXElement }) => (
 	<I18n.I18n>
 		<search>
-			<form class="flex flex-wrap gap-2">
+			<form class="flex flex-wrap gap-4">
 				<Input
 					name={I18n.useI18n()("search")}
 					spellcheck="false"

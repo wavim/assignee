@@ -19,14 +19,19 @@ export default (props: Props<"div"> & { toggle: HTMLButtonElement }) => {
 			toggle(false);
 		}
 	};
+	const onevent = () => {
+		toggle(false);
+	};
 
 	createEffect(() => {
 		if (open()) {
-			document.addEventListener("click", onclick);
-			document.addEventListener("keydown", onpress);
+			window.addEventListener("click", onclick);
+			window.addEventListener("keydown", onpress);
+			window.addEventListener("$close-modal", onevent);
 		} else {
-			document.removeEventListener("click", onclick);
-			document.removeEventListener("keydown", onpress);
+			window.removeEventListener("click", onclick);
+			window.removeEventListener("keydown", onpress);
+			window.removeEventListener("$close-modal", onevent);
 		}
 
 		const tl = gsap.timeline({ defaults: ease({ duration: 0.3, ease: "power2.out" }) });
