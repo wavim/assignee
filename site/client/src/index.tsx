@@ -20,6 +20,7 @@ const routes: RouteDefinition[] = [
 
 	{ path: "/dash", component: lazy(() => import("./views/Dash/Dash")) },
 	{ path: "/team/:tid", component: lazy(() => import("./views/Team/Team")) },
+	{ path: "/task/:aid", component: lazy(() => import("./views/Task/Task")) },
 
 	{ path: "*", component: lazy(() => import("./pages/E404/E404")) },
 ];
