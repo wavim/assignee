@@ -128,7 +128,7 @@ export const GetTeamTasksResults = z.discriminatedUnion("auth", [
 				aid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
 				name: z.string().check(z.trim(), z.minLength(1)),
 				dead: z.iso.datetime(),
-				done: z.number().check(z.positive()),
+				done: z.number().check(z.nonnegative()),
 			}),
 		),
 	}),
