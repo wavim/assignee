@@ -5,7 +5,7 @@ import { code } from "./code.route";
 import { task } from "./task.route";
 import { team } from "./team.route";
 
-export const router = Router()
+export const route = Router()
 	.use(json())
 	.use(cookie())
 
