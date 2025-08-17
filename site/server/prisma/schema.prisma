@@ -128,7 +128,6 @@ model Work {
   aid Int
 
   done Boolean @default(false)
-  mark Grades?
   comm String?
 
   created DateTime @default(now())
@@ -138,7 +137,8 @@ model Work {
   Task     Task      @relation(fields: [aid], references: [aid], onUpdate: Restrict, onDelete: Cascade)
   WorkFile WorkFile?
 
-  @@unique([uid, aid])
+  @@unique([uid, aid], name: "uq")
+  @@index([aid])
 }
 
 model WorkFile {
@@ -152,11 +152,4 @@ model WorkFile {
   updated DateTime @updatedAt
 
   Work Work @relation(fields: [sid], references: [sid], onUpdate: Restrict, onDelete: Cascade)
-}
-
-enum Grades {
-  A
-  B
-  C
-  F
 }
