@@ -109,7 +109,7 @@ export type GetTasksResults = z.infer<typeof GetTasksResults>;
 export const PostTeamTaskRequest = z.object({
 	name: z.string().check(z.trim(), z.minLength(1)),
 	desc: z.string().check(z.trim(), z.minLength(1)),
-	dead: z.iso.datetime(),
+	dead: z.iso.datetime().check(z.refine((d) => d > new Date().toISOString())),
 });
 export type PostTeamTaskRequest = z.infer<typeof PostTeamTaskRequest>;
 
