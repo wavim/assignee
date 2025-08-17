@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import Button from "../../gui/Button";
+import Button1 from "../../gui/Button1";
 import Footer from "../Footer";
 import Header from "../Header";
 import Main from "../Main";
@@ -29,7 +29,7 @@ const Hero = () => {
 			deck={t("hero.deck")}
 		>
 			<A href="/signin">
-				<Button pill>{t("hero.ctoa")}</Button>
+				<Button1 pill>{t("hero.ctoa")}</Button1>
 			</A>
 		</Section>
 	);
@@ -78,7 +78,7 @@ const CtoA = () => {
 			deck={t("ctoa.deck")}
 		>
 			<A href="/signin">
-				<Button pill>{t("ctoa.ctoa")}</Button>
+				<Button1 pill>{t("ctoa.ctoa")}</Button1>
 			</A>
 		</Section>
 	);

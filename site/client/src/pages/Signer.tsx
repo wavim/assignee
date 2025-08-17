@@ -68,7 +68,7 @@ const Sign = (props: SignProps) => {
 				href={props.alturl}
 				class="text-text-major font-jakarta mt-8 text-center text-lg"
 			>
-				{`${props.altnav} ›`}
+				{props.altnav} ›
 			</A>
 		</section>
 	);

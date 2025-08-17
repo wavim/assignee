@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import Button from "../../gui/Button";
+import Button1 from "../../gui/Button1";
 import Footer from "../Footer";
 import Header from "../Header";
 import Main from "../Main";
@@ -25,7 +25,7 @@ const Info = () => {
 			deck={t("deck")}
 		>
 			<A href="/">
-				<Button pill>{t("back")}</Button>
+				<Button1 pill>{t("back")}</Button1>
 			</A>
 		</Section>
 	);
