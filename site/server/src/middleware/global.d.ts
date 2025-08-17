@@ -8,6 +8,7 @@ declare global {
 			rot: boolean;
 
 			tid: number;
+			aid: number;
 			own: boolean;
 		}
 	}
