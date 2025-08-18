@@ -926,6 +926,16 @@ MD Variant", gap: .5cm)
 Equivalently in the team hub. Team owners will not see the filter. Instead, they would be able to peek over tasks'
 current submission count.
 
+== Responsive Design
+Assignee is fully responsive to different screen sizes. This is achieved through TailwindCSS `md:` media width
+breakpoint.
+
+Notice that demonstration images provided in the last section may come with a "MD Variant" postfix. This is because
+Assignee's styling is mobile-first, since the majority of Internet users are mobile users.
+
+No extra examples would be attached, refer to the previous section for demos. Apart from apparent UI changes, Assignee
+is also mobile user interface friendly, optimizing UX for hassle-free mobile usage.
+
 == Accessibility
 Assignee provides numerous accessibility options to align with web standards.
 
