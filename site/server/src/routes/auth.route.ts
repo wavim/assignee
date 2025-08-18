@@ -1,6 +1,6 @@
 import { SessionCookie, SigninRequest, SignupRequest } from "@app/schema";
 import { ErrorCode, HttpError } from "@wavim/http-error";
-import { Router } from "express";
+import { CookieOptions, Router } from "express";
 import rateLimit from "express-rate-limit";
 import { configs } from "../configs/configs";
 import { authen } from "../middleware/authen";
@@ -8,12 +8,12 @@ import { ccontrol } from "../middleware/ccache";
 import { logout, rotate, signin, signup } from "../services/auth.service";
 import { addtime } from "../utils/time";
 
-const tok = (tok: SessionCookie) => {
+const nocont = 204;
+const cookie = (cookies: SessionCookie) => {
 	return [
-		"tok",
-		tok,
-		// MO NOTE serving over HTTP for DEMO ONLY
-		{ httpOnly: true, secure: false, expires: addtime(configs.sessAge) },
+		configs.sessKey,
+		cookies,
+		{ secure: false, expires: addtime(configs.sessAge), httpOnly: true } as CookieOptions,
 	] as const;
 };
 
@@ -22,10 +22,12 @@ export const auth = Router()
 
 	.post("/auth/verify", authen, async (req, res) => {
 		if (!req.rot) {
-			return res.send(0);
+			return res.status(nocont).send();
 		}
+
 		try {
-			res.cookie(...tok(await rotate(req.sid))).send(0);
+			res.cookie(...cookie(await rotate(req.sid)));
+			res.status(nocont).send();
 		} catch {
 			res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
@@ -33,7 +35,9 @@ export const auth = Router()
 	.post("/auth/logout", authen, async (req, res) => {
 		try {
 			await logout(req.sid);
-			res.clearCookie("tok", { httpOnly: true, secure: true }).send(0);
+
+			res.clearCookie(configs.sessKey, { secure: false, httpOnly: true });
+			res.status(nocont).send();
 		} catch {
 			res.sendStatus(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
@@ -45,8 +49,10 @@ export const auth = Router()
 		if (!success) {
 			return res.status(ErrorCode.BAD_REQUEST).send(error);
 		}
+
 		try {
-			res.cookie(...tok(await signin(data))).send(0);
+			res.cookie(...cookie(await signin(data)));
+			res.status(nocont).send();
 		} catch (e) {
 			if (e instanceof HttpError) {
 				return res.status(e.status).send(e.message);
@@ -60,8 +66,10 @@ export const auth = Router()
 		if (!success) {
 			return res.status(ErrorCode.BAD_REQUEST).send(error);
 		}
+
 		try {
-			res.cookie(...tok(await signup(data))).send(0);
+			res.cookie(...cookie(await signup(data)));
+			res.status(nocont).send();
 		} catch (e) {
 			if (e instanceof HttpError) {
 				return res.status(e.status).send(e.message);

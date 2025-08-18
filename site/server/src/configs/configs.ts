@@ -4,6 +4,8 @@ import { HashID } from "../utils/hashid";
 import { ms, Time } from "../utils/time";
 
 export const configs: {
+	sessKey: string;
+
 	sessRot: Time;
 	sessAge: Time;
 	codeAge: Time;
@@ -14,6 +16,8 @@ export const configs: {
 
 	rateLim: Record<"auth/signin" | "auth/signup", Partial<RateLimOptions>>;
 } = {
+	sessKey: "bearer",
+
 	sessRot: { h: 1 },
 	sessAge: { d: 1 },
 	codeAge: { d: 7 },

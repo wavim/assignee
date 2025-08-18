@@ -7,8 +7,8 @@ import { match } from "../utils/crypt";
 import { expired } from "../utils/time";
 
 export const authen: RequestHandler = async (req, res, next) => {
-	const cookies = req.cookies as { tok: SessionCookie };
-	const { success, data } = SessionCookie.safeParse(cookies.tok);
+	const cookies = req.cookies as { [configs.sessKey]: SessionCookie };
+	const { success, data } = SessionCookie.safeParse(cookies[configs.sessKey]);
 
 	try {
 		if (!success) {
