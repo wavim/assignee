@@ -12,3 +12,9 @@ Prisma
 TailwindCSS
 Authen
 CCache
+performant
+Zod
+PostTaskRequest
+PostTaskResults
+OKLCH
+ΔSSIGNEE

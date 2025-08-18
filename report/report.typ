@@ -1,7 +1,9 @@
 #import "@preview/ilm:+1.4.1": *
 
-#show: ilm.with(title: "Assignee", author: "David W")
-#show link: underline
+#show: ilm.with(
+  title: "Assignee",
+  author: "David W",
+)
 
 = Overview
 == Introduction
@@ -189,7 +191,7 @@ Tables:
 - `Code` user 2FA codes #sym.dagger
 - `Pref` user preferences #sym.dagger
 
-#figure(image("assets/user-system.svg", width: 100%), caption: "User System ERD", placement: bottom)
+#figure(image("assets/db/user-system.svg", width: 100%), caption: "User System ERD", placement: bottom)
 
 Relations:
 
@@ -333,7 +335,7 @@ Tables:
 - `Invite` team invitation
 - `Member` team membership
 
-#figure(image("assets/team-system.svg", width: 100%), caption: "Team System ERD", placement: bottom)
+#figure(image("assets/db/team-system.svg", width: 100%), caption: "Team System ERD", placement: bottom)
 
 Relations:
 
@@ -413,8 +415,8 @@ Tables:
 - `TaskFile` task attachment file
 - `WorkFile` work attachment file
 
-#figure(image("assets/task-system1.svg", width: 100%), caption: "Task System ERD (1)", placement: bottom)
-#figure(image("assets/task-system2.svg", width: 100%), caption: "Task System ERD (2)", placement: bottom)
+#figure(image("assets/db/task-system1.svg", width: 100%), caption: "Task System ERD (1)", placement: bottom)
+#figure(image("assets/db/task-system2.svg", width: 100%), caption: "Task System ERD (2)", placement: bottom)
 
 Relations:
 
@@ -650,12 +652,12 @@ current IPv4 address, and start Assignee on port 5450 (a number I love personall
 be able to access the web application.
 
 By correctly configuring path resolution, static files are retrieved inside a virtual file system at runtime, and the
-`app.db` file is resolved relative to cwd. This allows database records to be preserved.
+`app.db` file is resolved relative to CWD. This allows database records to be preserved.
 
 = Communication Layer
 This is a short chapter on the validation of requests and response between the server and client.
 
-By using TypeScript on backend, a fullstack application allows global TS schema validators. The library used in
+By using TypeScript for backend, a full-stack application allows global TS schema validators. The library used in
 Assignee's case is Zod, which adds support for sophisticated runtime type validation.
 
 The rules are used to enforce business rules and maintain data consistency, blocking further actions if failing to parse
@@ -665,10 +667,143 @@ payloads. They include:
 - Checking for password security strength
 - Checking for dates earlier than expected
 
-And more. This evens include validating complex data types such as arrays and discriminated object unions.
+And more. These evens include validating complex data types such as arrays and discriminated object unions.
 
 Schemas are structured by API endpoints for ease of management, e.g. PostTaskRequest, PostTaskResults, validating data
 both coming to and from the server, by sharing the Zod schema between the server and client.
 
 Zod schemas fill up the inadequacy of SQLite dynamic data types, and allows even more specific constraints. This ensures
-development goes smoothly and different layers agree on the same interface, catching errors early in development.
+development goes smoothly, and different layers agree on the same interface, catching errors early in development.
+
+= Presentation Layer
+The essence of an application is the interface that presents data to users. This chapter covers the frontend website
+design first, followed by implementation details.
+
+Within this chapter, we:
+
+- Detail the philosophy of theme, palette, and font,
+- Demonstrate the landing pages and the application,
+- Detail the accessibility options of the application,
+- Detail user experience and mobile-friendliness,
+- Conclude with actual implementation details.
+
+== Philosophy
+Essence, Clarity, Calm
+
+Assignee is a deliberate rebellion against digital noise. It champions radical simplicity, cognitive ease, and
+undistracted focus to transform task management into a serene, intentional ritual.
+
+Inspired by the tactile honesty of paper and the precision of modernist typography, every element serves a
+purpose—nothing more, nothing less.
+
+=== Palette
+Assignee uses a neutral palette carefully crafted by expert designers. The theme colors bear OKLCH values with zero
+chroma and hue, only varying the lightness.
+
+#figure(image("assets/theme/palette.png", width: 100%), caption: "Neutral Palette", gap: .5cm)
+
+Employing a neutral palette within a minimalist website design is fundamentally driven by the core principle of
+intentional reduction. Colors like whites, grays, beiges, and blacks inherently possess low chromatic distraction,
+allowing the essential elements to command attention without visual competition.
+
+This absence of strong color saturation minimizes cognitive load for the user, fostering a sense of calm, clarity, and
+sophistication. Furthermore, a neutral foundation enhances readability, promotes timelessness over fleeting trends, and
+creates a sense of spaciousness and order that aligns perfectly with minimalist goals of focusing purely on essential
+content and user experience.
+
+=== Font Face
+Assignee uses Plus Jakarta Sans as the sole typeface, directly reinforces the core values of elegance, timelessness, and
+superior legibility. Its clean, geometric structure embodies elegance through balanced letterforms with subtle,
+sophisticated details, avoiding sterility while maintaining refined simplicity.
+
+#figure(image("assets/theme/jakarta.png", width: 100%), caption: "Plus Jakarta Sans", gap: .5cm)
+
+This elegance complements a neutral palette, ensuring typography becomes a harmonious element of the aesthetic rather
+than a distraction. The font's timelessness stems from its blend of contemporary clarity and humanist proportions,
+ensuring relevance and sophistication for years, much like the neutral backdrop it sits upon.
+
+Most critically, Plus Jakarta Sans excels in legibility: its generous x-height, clear letter differentiation, and
+well-considered spacing optimize readability across devices and sizes, reducing user strain and ensuring content remains
+effortlessly accessible.
+
+=== Icon Design
+Assignee uses a logo directly referencing its name.
+
+#figure(image("assets/theme/logo.png", width: 25%), caption: "Assignee Logo", gap: .5cm)
+
+The *ΔSSIGNEE* logo embodies minimalist principles through potent symbolism and intentional restraint. The delta (Δ)
+serves a dual function: its sharp, geometric form acts as a pen tip, instantly evoking the core action of assignment,
+and injects dynamism into the neutral "paper-like" backdrop, while also representing the letter "A", an elegant,
+efficient integration of brand identity.
+
+It achieves essential harmony: the precision of the delta anchors the word mark, while the neutrality ensures both
+symbol and text remain crisp, uncluttered, and effortlessly comprehensible. Ultimately, the logo exemplifies minimalist
+power: using fundamental forms like geometric symbols and clear letterforms, to communicate core purpose with timeless
+elegance.
+
+== Demonstration
+=== Hero Section
+The landing page starts with the hero section. A compelling hero section serves as the immediate visual and functional
+gateway to the platform's purpose. This section bridges elegance and utility—leveraging minimalist principles to reduce
+cognitive load while using asymmetry to create movement, making the interface feel alive and intentional from the first
+glance.
+
+The strategic use of Bauhaus L Fade tiles as section separator embodies a functional asymmetry that energizes the
+minimalist framework while honoring modernist principles of dynamic composition, creating deliberate visual tension
+against the neutral backdrop. Their asymmetry prevents rigid predictability without overwhelming users.
+
+#figure(image("assets/demo/hero.png", width: 50%), caption: "Hero Section", gap: .5cm)
+#figure(image("assets/demo/hero.md.png", width: 100%), caption: "Hero Section
+MD Variant", gap: .5cm)
+
+Uncompromising geometry of interlocking squares and triangles structure the interface: they anchor content zones, guide
+the eye toward the critical action, and partition whitespace with rhythmic tension. It also acts as a dynamic visual
+threshold, using sharp angles and staggered collisions to signal transition without disruption.
+
+In larger screens, these tiles recede entirely, allowing the hero to expand edge-to-edge, signifying the presence of
+space and forces focus.
+
+=== Header
+#figure(image("assets/demo/scroll.png", width: 50%), caption: "Header Scrolled", gap: .5cm)
+#figure(image("assets/demo/scroll.md.png", width: 100%), caption: "Header Scrolled
+MD Variant", gap: .5cm)
+
+The header’s transformative scroll behavior embodies minimalist utility through adaptive elegance. Initially transparent
+and embedded within the hero's natural flow, it avoids visual imposition. As scrolling commences, it transitions into a
+subtle overlay with soft elevation shadow, signaling a shift from introduction to action.
+
+=== Features Section
+Following the hero, the features section leverages medium-screen asymmetry through a purposeful split: a persistent
+"Features" anchor sticks rigidly to the left viewport edge, while feature details scroll independently on the right.
+
+This creates a content-rich rhythm: the anchored text acts as both a minimalist compass orienting users within the page,
+and a structural counterweight to the dynamic content flow. Meanwhile, the right side's scrollable column allows
+features to unfold with breathing room, ensuring no pixel is wasted.
+
+#figure(image("assets/demo/feat.png", width: 50%), caption: "Features Section", gap: .5cm)
+#figure(image("assets/demo/feat.md.png", width: 100%), caption: "Features Section
+MD Variant", gap: .5cm)
+
+=== Call To Action
+The landing page ends with a Call-to-Action section, deliberately mirrors the hero's text positioning and spatial logic,
+creating rhythmic closure that bookends the user journey with purposeful familiarity.
+
+Its mirrored structure triggering subconscious recognition while amplifying urgency. By echoing the hero's architecture,
+the CTA transforms functional symmetry into psychological momentum: a final, frictionless pivot from exploration to
+commitment.
+
+Symmetry, Asymmetry. Rigid structural symmetry beneath the surface enables bold asymmetric expression in Assignee's
+visual language. Where symmetry whispers order, asymmetry shouts intention, together creating an experience that feels
+simultaneously anchored and alive. Every imbalance is calculated, every fracture purposeful, and every pixel a testament
+to minimalist discipline wielded with avant-garde audacity.
+
+Did this beautiful philosophy not reign the grounds of Assignee?
+
+#figure(image("assets/demo/ctoa.png", width: 50%), caption: "Features Section", gap: .5cm)
+#figure(image("assets/demo/ctoa.md.png", width: 100%), caption: "Features Section
+MD Variant", gap: .5cm)
+
+=== Footer
+The footer embodies a subtle logo paired with a clean copyright linking to my GitHub. No dividers, no social icons, no
+excess: just geometric purity and creator credit on a neutral canvas. What a final whisper of a system where every
+element serves purpose?
