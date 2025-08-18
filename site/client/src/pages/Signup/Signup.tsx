@@ -48,7 +48,7 @@ const Form = () => {
 			return setError(check(req, true));
 		}
 		switch (await signup(data)) {
-			case 200: {
+			case 204: {
 				navigate("/dash", { replace: true });
 				break;
 			}

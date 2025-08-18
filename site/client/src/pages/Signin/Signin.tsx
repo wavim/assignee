@@ -26,7 +26,7 @@ const Form = () => {
 			return setError("errors.generic");
 		}
 		switch (await signin(data)) {
-			case 200: {
+			case 204: {
 				navigate("/dash", { replace: true });
 				break;
 			}
