@@ -12,6 +12,7 @@ Items marked with #sym.dagger denote features unimplemented in initial phases, p
 Accompanying dagger symbols in subsequent paragraphs provide relevant details where applicable.
 
 Within this chapter, we:
+
 - Outline user capabilities of Assignee,
 - Present core design systems guiding later sections,
 - Discuss auxiliary systems extending the core functionality,
@@ -26,6 +27,7 @@ secondary capabilities (e.g., accessibility features) which are covered in later
 - Multi transition: $arrow^*$
 
 Where:
+
 - Role inheritance indicates all parent capabilities are available to child
 - Role transitions occur when a user performs a certain trigger action
 
@@ -33,10 +35,12 @@ Where:
 Roles: (Visitor, User)
 
 *Visitor*
+
 - Sign in #h(1fr) Visitor $arrow$ User
 - Sign up #h(1fr) Visitor $arrow$ User
 
 *User*
+
 - Logout #h(1fr) User $arrow$ Visitor
 - Revoke #h(1fr) User $arrow$ Visitor
 - Modify email
@@ -61,13 +65,16 @@ functionality
 Roles: (User, Member, Owner)
 
 *User*
+
 - Create team #h(1fr) User $arrow$ Member
 - Accept invite #h(1fr) User $arrow$ Member
 
 *Member* #sym.in User
+
 - Leave team #h(1fr) Member $arrow$ User
 
 *Owner* #sym.in Member
+
 - Disband #h(1fr) Member $arrow^*$ User
 - Invite members #h(1fr) User $arrow^*$ Member
 - Appoint owners #h(1fr) Member $arrow^*$ Owner
@@ -91,6 +98,7 @@ The team system backs Assignee's flexible group mechanism. Key design principles
 Roles: (Owner, (Member, ) Assignee)
 
 *Owner*
+
 - Create tasks #h(1fr) Member $arrow^*$ Assignee
 - Revoke tasks #h(1fr) Assignee $arrow^*$ Member
 - Modify instructions
@@ -99,6 +107,7 @@ Roles: (Owner, (Member, ) Assignee)
 - Modify feedback comments
 
 *Assignee* #sym.in Member
+
 - Attach work file
 - Return submission
 - Revoke submission
@@ -134,6 +143,7 @@ The complete project is hosted in a repository, accessible at #link(
 )[Repository] for inspection.
 
 A modular approach ensures clear separation of concerns:
+
 - `report/`: Contains the Typst source for this report
 - `site/`: Houses the web application, organized into:
   - `server/`: Application layer
@@ -146,6 +156,7 @@ To accommodate environments without development dependencies, prebuilt archives 
 )[Releases] for invigilators.
 
 To execute the application:
+
 + Extract the archive to your preferred location
 + Run the prebuilt binary `app.exe` and follow prompts
 
@@ -156,6 +167,7 @@ Backing the application is a relational database storing user data. This chapter
 first, followed by implementation details.
 
 Within this chapter, we:
+
 - Detail the design of tables, fields, and data types,
 - Rationalize relational mappings between tables,
 - Explain the partial adoption of normal forms,
@@ -170,6 +182,7 @@ generics. Specific data constraints are implemented in the communication layer i
 
 == User System
 Tables:
+
 - `User` user information
 - `Pass` user password
 - `Sess` user sessions
@@ -181,18 +194,22 @@ Tables:
 Relations:
 
 `User` = `Pass` #h(1fr) `1–1`
+
 - User must have one password
 - Password belongs to one user
 
 `User` = `Sess` #h(1fr) `1–N`
+
 - User may have many sessions
 - Session belongs to one user
 
 `User` = `Code` #sym.dagger #h(1fr) `1–1`
+
 - User may have one code
 - Code belongs to one user
 
 `User` = `Pref` #sym.dagger #h(1fr) `1–1`
+
 - User must have one preference's set
 - Preference's set belongs to one user
 
@@ -200,6 +217,7 @@ Relations:
 `uid` #h(1fr) `INTEGER PRIMARY KEY`
 
 Primary key chosen over candidate key (mail) for:
+
 - Indexing speed: Magnitudes faster
 - Efficiency: Smaller than text references
 - Consistency: Guaranteed uniform values
@@ -229,6 +247,7 @@ Primary key and foreign key. (1:1 user mapping)
 `hash/salt` #h(1fr) `BLOB`
 
 Secured credentials storage:
+
 - Hashed via K12 (SHA3 Keccak-p variant, 256-bit digest, parallelism optimal)
 - Salted (128-bit CSPRNG)
 
@@ -308,6 +327,7 @@ allows any self-contained entity).
 
 == Team System
 Tables:
+
 - `User` user information
 - `Team` team information
 - `Invite` team invitation
@@ -318,14 +338,17 @@ Tables:
 Relations:
 
 `Team` = `Invite` #h(1fr) `1–1`
+
 - Team may have one invitation
 - Invite code belongs to one team
 
 `User` = `Member` #h(1fr) `1–N`
+
 - User may have many memberships
 - Membership belongs to one user
 
 `Team` = `Member` #h(1fr) `1–N`
+
 - Team may have many memberships
 - Membership belongs to one team
 
@@ -352,6 +375,7 @@ Primary key and foreign key. (1:1 team mapping)
 Globally unique team invitation code stored as raw binary.
 
 Benefits:
+
 - More straightforward i.e. CSPRNG returns buffer
 - Faster than TEXT for query and uniqueness checks
 
@@ -373,6 +397,7 @@ Composite key and foreign key. (N:1 team mapping)
 If checked, the member would be considered an owner of the team.
 
 Rationale:
+
 - Flexible role management framework
 - Eliminates the need for embedding team owner
 
@@ -380,6 +405,7 @@ This flag, and the entry in general, is used in endpoints to ensure authorized a
 
 == Task System
 Tables:
+
 - `User` user information
 - `Team` team information
 - `Task` task information
@@ -393,22 +419,27 @@ Tables:
 Relations:
 
 `Team` = `Task` #h(1fr) `1–N`
+
 - Team may have many tasks
 - Task belongs to one team
 
 `Task` = `Work` #h(1fr) `1–N`
+
 - Task may have many works
 - Work belongs to one task
 
 `User` = `Work` #h(1fr) `1–N`
+
 - User may have many works
 - Work belongs to one user
 
 `Task` = `TaskFile` #h(1fr) `1–1`
+
 - Task may have one attachment
 - Attached file belongs to one task
 
 `Work` = `WorkFile` #h(1fr) `1–1`
+
 - Work may have one attachment
 - Attached file belongs to one work
 
@@ -490,21 +521,133 @@ Attachment file raw binary data.
 
 == Normal Form
 Tables satisfy 3NF/4NF (extended normal forms) in general, with practical compromises:
+
 - JSON values (e.g. Pref #sym.dagger): Space efficiency > strict 1NF, debatable violation
 - Separate tables (e.g. Pass): Security metadata tracking or flexibility concerns
 
 All exceptions could be justified by performance/maintainability.
 
-== Implement
+== Implementation
 The database is implemented in SQLite for:
+
 - Simplicity of setup allowing quick iterations
 - Dynamic data typing system easing configuration
 - Portability backs prebuilt binaries for reviewers' inspection
 
-== Indexing
+=== Indexing
 SQLite automatically indexes primary keys and unique fields. The following is manually indexed:
-- Foreign keys: For efficient 1-N relations retrieval
-- Composite keys' subset fields: [B] for composite key [A, B], A uses prefix-index
+
+- Foreign keys: For efficient 1-N relational queries
+- Composite's subset fields: [B] for composite [A, B], A via prefix-index
 
 Modern DBMS utilizes B-Trees, instead of relying on binary search. B-Trees are self-balancing and the time complexities
 for search, insert, and delete are all $O(log(n))$. No re-indexing is required in most cases.
+
+=== Relation Handling
+All foreign keys in Assignee are set to `ONUPDATE: RESTRICT, ONDELETE: CASCADE`.
+
+Attempting to update referenced fields would be prohibited; And if the parent entry is deleted, all entries referencing
+it would be removed automatically.
+
+= Application Layer
+Backing the application logic is an Express.js server leveraging Prisma ORM for type-safe database interactions. This
+chapter outlines the architectural design principles first, followed by concrete implementation patterns.
+
+Within this chapter, we:
+
+- Detail Express.js services design, route organization, and middleware stacks,
+- Rationalize Prisma’s integration for seamless data access and type safety,
+- Address application performance and security considerations,
+- Conclude with implementation specifics for portability.
+
+== Framework
+The application is implemented in Express.js (Node.js library) instead of PHP servers for:
+
+- Control: Express middleware
+- Async I/O: Non-blocking requests
+- Full-stack: Shared TypeScript interface
+- Ecosystem: Rich tooling (ESLint, Prisma)
+
+Being a superset of JavaScript, TypeScript provides extraordinary static typing. In contrast, PHP is getting obsolete
+and has been lacking ecosystem support for several years. JavaScript backed by Google's V8 engine is simply a more
+performant and developer-friendly choice.
+
+== Static Resource
+Assignee uses a client side router, thus only minimal static asset is served. This includes:
+
+- HTML entry
+- Frontend framework JS files
+- TailwindCSS compiled stylesheet
+- Other assets e.g. fonts
+
+Fonts used by the frontend is self-hosted to reduce reliance on Google Fonts, and potentially improves performance.
+
+Appropriate HTTP Cache-Control header is set to ensure proper static resource caching, flagging assets as immutable.
+
+== DB Integration
+Prisma ORM (Object–relational mapping) is used for interacting with the SQLite database. Prisma accepts a schema and
+generates database CRUD interaction functions for client usage.
+
+Benefits:
+
+- SQL statement like functions
+- Straightforward relational queries
+- Sanitization to prevent SQL injection
+- Strict typing interfaces for validation
+
+For the application to be portable, the native add-ons used by Prisma must be copied to the output destination to be
+linked by packager.
+
+== Services
+Services handle different requests by interacting with the database.
+
+For instance:
+
+- Creating a user with the provided data
+- Rotating a session and returning token
+- Updating a work file with the new payload
+
+The actual authentication logic is also implemented here with cryptography utilities.
+
+== Middleware
+Assignee uses a middleware stack to ensure proper authentication and authorization for endpoints, and enforces correct
+usage of response headers.
+
+=== Authen
+Validates against the cookie from request to see if the user bears a valid session cookie.
+
+=== Member
+Validates against the team ID to see if the authenticated user bears a team membership.
+
+=== Assign
+Validates against the assignment ID to see if the authenticated user is involved within.
+
+=== CCache
+Sets the HTTP Cache-Control header to no-cache for API endpoints, forcing validation.
+
+== Routes
+Routers are the primary way we define API endpoints in Express.js for RPC/REST requests. After authentication,
+authorization, and validating the payload, corresponding services are called to perform the requested action.
+
+Most endpoints are GET or POST requests, but some are defined to be PUT. Both GET and PUT are assumed to be idempotent
+(which means the same request yields the same results) and thus enables better caching. Actions that could not be safely
+cached usually goes with the POST method, e.g. authentication.
+
+It is worth noting that although the CCache middleware is used to set Cache-Control to no-cache, it doesn't really mean
+to force no caching (which is the case for no-store). Instead, data validity must be checked before proceeding with the
+cached asset. This is typically not required for static assets, but inherently important for API endpoints.
+
+Having a global configuration file, there are rate limiters on certain routes such as signin and signup to prevent abuse
+and enumeration attacks. The rate limiters are set to use key generators suitable for the case, i.e. email address for
+signin/signup, and uses client IP otherwise.
+
+== Deployment
+For inspection of invigilators, the Node.js application is bundled and compiled into a prebuilt binary, by packing in
+Node.js internals into the single executable.
+
+The server would try to host on 0.0.0.0, which is the reserved wildcard address. It would then resolve to the client's
+current IPv4 address, and start Assignee on port 5450 (a number I love personally). All computers in the same LAN would
+be able to access the web application.
+
+By correctly configuring path resolution, static files are retrieved inside a virtual file system at runtime, and the
+`app.db` file is resolved relative to cwd. This allows database records to be preserved.

@@ -8,3 +8,7 @@ tid
 desc
 TaskFile
 WorkFile
+Prisma
+TailwindCSS
+Authen
+CCache
