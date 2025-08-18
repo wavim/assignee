@@ -72,8 +72,8 @@ const Banner = (props: { name: string; desc: string; auth: boolean }) => {
 	return (
 		<section class="font-jakarta border-border flex w-full flex-col items-baseline gap-4 border-b-1 pb-8">
 			<h1 class="text-text-major text-4xl">{props.name}</h1>
-			<div class="flex gap-4 text-xl">
-				<h2 class="text-text-minor whitespace-pre-wrap">{props.desc}</h2>
+			<div class="flex w-full items-end gap-4 text-xl">
+				<h2 class="text-text-minor mr-auto whitespace-pre-wrap">{props.desc}</h2>
 				<Show when={props.auth}>
 					<Invite></Invite>
 				</Show>
