@@ -91,7 +91,7 @@ const Dash = (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> })
 		<section class="font-jakarta flex w-full flex-col gap-8">
 			<div class="flex flex-col gap-2 text-lg">
 				<h2 class="text-text-minor">{t("desc")}</h2>
-				<span class="text-text-major">{props.detail.desc}</span>
+				<span class="text-text-major whitespace-pre-wrap">{props.detail.desc}</span>
 			</div>
 			<Show when={props.detail.auth || props.detail.file}>
 				<TaskFile

@@ -7,7 +7,7 @@ export default (props: Props<"div"> & { auth: boolean }) => (
 			viewBox="0 0 24 24"
 			stroke-linecap="round"
 			stroke-linejoin="round"
-			class="stroke-text-minor h-full fill-none stroke-[1.5]"
+			class="stroke-text-minor h-full fill-none stroke-2"
 		>
 			{props.auth ? (
 				<path d="m9 12 2 2 4-4m-3-7 2 1.9 2.5-.7.7 2.6 2.6.7-.7 2.6L21 12l-1.9 2 .7 2.5-2.6.7-.7 2.6-2.6-.7L12 21l-2-1.9-2.5.7-.7-2.6-2.6-.7.7-2.6L3 12l1.9-2-.7-2.5 2.6-.7.7-2.6 2.6.7L12 3z" />

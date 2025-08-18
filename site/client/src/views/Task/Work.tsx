@@ -5,7 +5,7 @@ import { getUserWorkFile, setWorkComm, setWorkDone } from "../../api/task.api";
 import Button1 from "../../gui/Button1";
 import Form from "../../gui/Form";
 import Modal from "../../gui/Modal";
-import TextArea from "../../gui/TextArea";
+import TextBox from "../../gui/TextBox";
 import Email from "../Email";
 import I18n from "./I18n";
 
@@ -28,37 +28,14 @@ export default (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> 
 const AuthView = (props: { detail: GetDetail<true> }) => {
 	const t = I18n.useI18n();
 
-	const done = createMemo(() => props.detail.works.filter((w) => w.done));
-	const ongo = createMemo(() => props.detail.works.filter((w) => !w.done));
-
-	const Done = (props: { work: GetDetail<true>["works"][number] }) => {
-		const t = I18n.useI18n();
-		const { aid } = useParams();
-
-		return (
-			<div class="border-border font-jakarta flex w-full flex-wrap items-center gap-4 rounded-xl border-1 p-3.5 text-lg">
-				<span class="text-text-major mr-auto text-lg">{props.work.name}</span>
-				<Show when={props.work.file}>
-					<a
-						href={getUserWorkFile({ aid }, props.work)}
-						download={props.work.file}
-						class="text-text-major w-max underline underline-offset-2"
-					>
-						{t("grade.work")}
-					</a>
-				</Show>
-				<Feedback mail={props.work.mail}></Feedback>
-			</div>
-		);
-	};
-	const Ongo = (props: { work: GetDetail<true>["works"][number] }) => (
-		<div class="border-border font-jakarta flex w-full flex-wrap items-center gap-4 rounded-xl border-1 p-3.5 text-lg">
-			<span class="text-text-major mr-auto text-lg">{props.work.name}</span>
-			<Email>{props.work.mail}</Email>
-		</div>
+	const done = createMemo(() =>
+		props.detail.works.filter((w) => w.done).sort((a, b) => a.name.localeCompare(b.name)),
+	);
+	const ongo = createMemo(() =>
+		props.detail.works.filter((w) => !w.done).sort((a, b) => a.name.localeCompare(b.name)),
 	);
 
-	const Feedback = (props: { mail: string }) => {
+	const Comm = (props: { mail: string; comm?: string }) => {
 		const t = I18n.useI18n();
 		const { aid } = useParams();
 
@@ -77,7 +54,7 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 						viewBox="0 0 24 24"
 						stroke-linecap="round"
 						stroke-linejoin="round"
-						class="stroke-text-minor h-full fill-none stroke-[1.5]"
+						class="stroke-text-minor h-full fill-none stroke-2"
 					>
 						<path d="m15.5 5.5 2.8 2.8M3 21v-.3l.5-2.3.7-1.4c.3-.5.7-.9 1.6-1.8L17.4 3.6c.8-.8 2.1-.8 2.8 0 .8.8.8 2 0 2.8L8.4 18.3l-1.6 1.4-1.2.7-2.1.5-.5.1z" />
 					</svg>
@@ -93,12 +70,42 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 							window.dispatchEvent(new Event("$close-modal"));
 						}}
 					>
-						<TextArea name={t("grade.comm")}>test</TextArea>
+						<TextBox name={t("grade.comm")}>{props.comm}</TextBox>
 					</Form>
 				</Modal>
 			</>
 		);
 	};
+	const Done = (props: { work: GetDetail<true>["works"][number] }) => {
+		const t = I18n.useI18n();
+		const { aid } = useParams();
+
+		return (
+			<div class="border-border font-jakarta flex w-full flex-wrap items-center gap-4 rounded-xl border-1 p-3.5 text-lg">
+				<span class="text-text-major mr-auto text-lg">{props.work.name}</span>
+				<Show when={props.work.file}>
+					<a
+						href={getUserWorkFile({ aid }, props.work)}
+						download={props.work.file}
+						class="text-text-major w-max underline underline-offset-2"
+					>
+						{t("grade.work")}
+					</a>
+				</Show>
+				<Comm
+					mail={props.work.mail}
+					comm={props.work.comm}
+				></Comm>
+				<Email>{props.work.mail}</Email>
+			</div>
+		);
+	};
+	const Ongo = (props: { work: GetDetail<true>["works"][number] }) => (
+		<div class="border-border font-jakarta flex w-full flex-wrap items-center gap-4 rounded-xl border-1 p-3.5 text-lg">
+			<span class="text-text-major mr-auto text-lg">{props.work.name}</span>
+			<Email>{props.work.mail}</Email>
+		</div>
+	);
 
 	return (
 		<section class="font-jakarta flex w-full flex-col gap-8">
@@ -156,6 +163,7 @@ const MembView = (props: { detail: GetDetail<false>; mutate: Setter<GetTaskResul
 						return { ...old, work: { ...old.work, done } };
 					});
 				}}
+				class="mt-2"
 			>
 				{props.detail.work.done ? t("revoke") : t("submit")}
 			</Button1>
