@@ -15,6 +15,7 @@ export const team = Router()
 		if (!success) {
 			return res.status(ErrorCode.BAD_REQUEST).send(error);
 		}
+
 		try {
 			res.json(await createTeam(req.uid, data));
 		} catch {

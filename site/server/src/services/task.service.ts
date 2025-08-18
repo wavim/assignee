@@ -26,7 +26,6 @@ export async function queryTasks(uid: number): Promise<GetTasksResults> {
 	const data = await prisma.task.findMany({
 		select: {
 			aid: true,
-			tid: true,
 			name: true,
 			dead: true,
 			Team: { select: { name: true } },
@@ -37,7 +36,6 @@ export async function queryTasks(uid: number): Promise<GetTasksResults> {
 
 	return data.map((d) => ({
 		aid: configs.hashAID.encode(d.aid),
-		tid: configs.hashTID.encode(d.tid),
 		name: d.name,
 		team: d.Team.name,
 		dead: d.dead.toISOString(),
@@ -181,6 +179,10 @@ export async function getTaskFile(
 	return file;
 }
 
+export async function setWorkDone(uid: number, aid: number, req: PutWorkRequest): Promise<void> {
+	await prisma.work.update({ select: { sid: none }, data: req, where: { uq: { uid, aid } } });
+}
+
 export async function setWorkFile(
 	uid: number,
 	aid: number,
@@ -225,10 +227,6 @@ export async function getUserWorkFile(
 	}
 
 	return await getWorkFile(user.uid, aid);
-}
-
-export async function setWorkDone(uid: number, aid: number, req: PutWorkRequest): Promise<void> {
-	await prisma.work.update({ select: { sid: none }, data: req, where: { uq: { uid, aid } } });
 }
 
 export async function setWorkComm(aid: number, req: PutUserTaskCommRequest): Promise<void> {

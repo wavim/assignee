@@ -14,6 +14,7 @@ export const code = Router()
 			if (!req.own) {
 				throw new HttpError("FORBIDDEN", "Not Team Owner");
 			}
+
 			res.json(await getCode(req.tid));
 		} catch (e) {
 			if (e instanceof HttpError) {
@@ -28,6 +29,7 @@ export const code = Router()
 		if (!success) {
 			return res.status(ErrorCode.BAD_REQUEST).send(error);
 		}
+		
 		try {
 			res.json(await putMemb(req.uid, data));
 		} catch (e) {
