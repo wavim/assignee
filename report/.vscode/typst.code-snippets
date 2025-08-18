@@ -1,0 +1,7 @@
+{
+  "dagger": {
+    "scope": "typst",
+    "prefix": "d'",
+    "body": "#sym.dagger"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "conventionalCommits.scopes": ["R"],
+
+  "[typst]": {
+    "editor.formatOnSave": true
+  },
+  "tinymist.formatterProseWrap": true
+}
