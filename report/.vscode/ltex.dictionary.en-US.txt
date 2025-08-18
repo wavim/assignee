@@ -19,3 +19,8 @@ PostTaskResults
 OKLCH
 ΔSSIGNEE
 Signin
+Performant
+SolidJS
+Vite
+tree-shaked
+GSAP

@@ -630,6 +630,9 @@ Validates against the assignment ID to see if the authenticated user is involved
 === CCache
 Sets the HTTP Cache-Control header to no-cache for API endpoints, forcing validation.
 
+Also, all responses of Express (no matter static or API) are compressed with Brotli for bandwidth and transition
+performance.
+
 == Routes
 Routers are the primary way we define API endpoints in Express.js for RPC/REST requests. After authentication,
 authorization, and validating the payload, corresponding services are called to perform the requested action.
@@ -830,6 +833,9 @@ flow isn't a hidden feature, it's a strategic reduction of decision fatigue. One
 #figure(image("assets/demo/signer.md.png", width: 100%), caption: "Dynamic Signer
 MD Variant", gap: .5cm)
 
+In fact, all visible ASCII characters (and space `\x20`) are allowed characters in the password. This increases entropy
+and enhances security. This also aligns well with modern password managers.
+
 === Not Found
 A generous 404 page is also implemented just in case users get lost (unlikely!)
 
@@ -909,3 +915,97 @@ MD Variant", gap: .5cm)
 
 Equivalently in the team hub. Team owners will not see the filter. Instead, they would be able to peek over tasks'
 current submission count.
+
+== Accessibility
+Assignee provides numerous accessibility options to align with web standards.
+
+This includes: (#sym.tiny default value)
+
+- Font size
+  - Small
+  - Medium #sym.tiny
+  - Large
+- Language
+  - System #sym.tiny
+  - English
+  - 中文(繁)
+- Color theme
+  - System #sym.tiny
+  - Light
+  - Dark
+- Motion effects
+  - System #sym.tiny
+  - On
+  - Off
+
+All options are available through the distinctive accessibility-man button, which is colored with the classic
+accessibility highlight, is present on all pages.
+
+#figure(image("assets/demo/a11y.md.png", width: 100%), caption: "Accessibility
+MD Variant", gap: .5cm)
+
+The options are stored within local storage, therefore would be persisted over sessions.
+
+Examples:
+
+#figure(image("assets/demo/fontl.md.png", width: 100%), caption: "Accessibility, Font Large
+MD Variant", gap: .5cm)
+
+#figure(image("assets/demo/langzh.md.png", width: 100%), caption: "Accessibility, Lang 中文(繁)
+MD Variant", gap: .5cm)
+
+In fact, even date, time, hidden accessibility ARIA labels, would be translated to the specified locale. Translation is
+implemented everywhere across the application, not just specific parts. Doesn't rely on machine translate, localization
+is done by me manually to ensure conciseness (a lot of work...).
+
+#figure(image("assets/demo/dark.md.png", width: 100%), caption: "Accessibility, Dark Mode
+MD Variant", gap: .5cm)
+
+Dark mode is achieved through a global theme variables declaration in TailwindCSS, all colors in both themes are
+carefully selected by me manually to ensure contrast.
+
+Reduce motion cannot be demonstrated directly, in words: it disables scroll smoothing, scroll-triggered animations, and
+CSS interaction-triggered transitions.
+
+Apart from the aforementioned options, other practices are also implemented to ensure maximum accessibility.
+
+This includes:
+
+- Including ARIA labels for non-text components
+- Keyboard navigation support e.g. Esc to close modal, Tab to inputs
+- Ensuring theme colors bear enough contrast (WCAG AAA compliance)
+- Following form comprehension guidelines e.g. autocomplete, spellcheck, labels
+
+Also, `/signin` and `/signup` are separated to not confuse password managers.
+
+Together, Assignee helps to build a web accessible to everyone.
+
+== Implementation
+The frontend is implemented in TypeScript with the SolidJS framework, bundling with Vite.
+
+Benefits:
+
+- Simple JSX component reuse
+- Reactive component updates
+- Performant element renderer
+
+Client-side page routing is implemented with SolidJS/router.
+
+The styling is done primarily through TailwindCSS, which compiles inline classes into corresponding CSS statements,
+simplifying style reuse and reduces output CSS size. (e.g. `h-4` #sym.arrow ```css { height: 1rem }```).
+
+Note the usage of relative EM units (and dynamic viewport units). They are used instead of absolute units to ensure
+style consistency, and backed the font size accessibility option.
+
+Some subtle animations (header on scroll) are created with GSAP, a sophisticated animation platform featuring a scroll
+trigger.
+
+Smooth scrolling of the webpage is enabled by Lenis, a lightweight scroll-smoother library.
+
+Fetching data from the backend is done via Axios, enabling async IO operations with automatic request header
+configuration.
+
+=== Performance
+SolidJS is one of the most performant frontend libraries currently available. But to deliver maximum application
+performance, the application is bundled, tree-shaked, and minified. Certain assets are externalized to enable better
+static resource caching.
