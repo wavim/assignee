@@ -4,6 +4,7 @@
   title: "Assignee",
   author: "David W",
 )
+#show link: underline
 
 = Overview
 == Introduction
@@ -258,6 +259,8 @@ Secured credentials storage:
 + Verification: Repeat with stored salt
 
 Collision probability $approx 1.5 dot 10^(-31)$ (negligible).
+
+It would not be possible to reconstruct password from hash/salt, thus password reset endpoints must be present.
 
 Recurring authentication pattern; omitted elsewhere.
 
@@ -681,6 +684,10 @@ both coming to and from the server, by sharing the Zod schema between the server
 Zod schemas fill up the inadequacy of SQLite dynamic data types, and allows even more specific constraints. This ensures
 development goes smoothly, and different layers agree on the same interface, catching errors early in development.
 
+== Reference
+Please refer to the repository source code for details on schemas. The code is meant to be self-documenting, and would
+not be hard to interpret after having a rough understanding of the site after reading this report.
+
 = Presentation Layer
 The essence of an application is the interface that presents data to users. This chapter covers the frontend website
 design first, followed by implementation details.
@@ -889,6 +896,9 @@ experience of not only one, but everyone.
 #figure(image("assets/demo/assign.md.png", width: 100%), caption: "Team, Assign
 MD Variant", gap: .5cm)
 
+Both team IDs and task IDs are reversible-hashed with pepper to prevent database data leakage, similar to hashed session
+IDs in bearer tokens.
+
 Easily update task reference file through the task overview.
 
 Easily track member submission status.
@@ -919,27 +929,26 @@ current submission count.
 == Accessibility
 Assignee provides numerous accessibility options to align with web standards.
 
-This includes: (#sym.tiny default value)
+Default #sym.tiny
 
-- Font size
-  - Small
-  - Medium #sym.tiny
-  - Large
-- Language
-  - System #sym.tiny
-  - English
-  - 中文(繁)
-- Color theme
-  - System #sym.tiny
-  - Light
-  - Dark
-- Motion effects
-  - System #sym.tiny
-  - On
-  - Off
+Font size
+- Small
+- Medium #sym.tiny
+- Large
+Language
+- System #sym.tiny
+- English
+- 中文(繁)
+Color theme
+- System #sym.tiny
+- Light
+- Dark
+Motion effects
+- System #sym.tiny
+- On
+- Off
 
-All options are available through the distinctive accessibility-man button, which is colored with the classic
-accessibility highlight, is present on all pages.
+The options are configurable through the iconic accessibility button (blue man), which is present on all pages.
 
 #figure(image("assets/demo/a11y.md.png", width: 100%), caption: "Accessibility
 MD Variant", gap: .5cm)
@@ -961,8 +970,8 @@ is done by me manually to ensure conciseness (a lot of work...).
 #figure(image("assets/demo/dark.md.png", width: 100%), caption: "Accessibility, Dark Mode
 MD Variant", gap: .5cm)
 
-Dark mode is achieved through a global theme variables declaration in TailwindCSS, all colors in both themes are
-carefully selected by me manually to ensure contrast.
+Dark mode is achieved through global theme variable declaration in TailwindCSS, all colors in both themes are carefully
+curated by me manually to ensure contrast.
 
 Reduce motion cannot be demonstrated directly, in words: it disables scroll smoothing, scroll-triggered animations, and
 CSS interaction-triggered transitions.
@@ -1002,10 +1011,94 @@ trigger.
 
 Smooth scrolling of the webpage is enabled by Lenis, a lightweight scroll-smoother library.
 
-Fetching data from the backend is done via Axios, enabling async IO operations with automatic request header
+Fetching data from the backend is done via Axios, enabling async I/O operations with automatic request header
 configuration.
 
 === Performance
 SolidJS is one of the most performant frontend libraries currently available. But to deliver maximum application
 performance, the application is bundled, tree-shaked, and minified. Certain assets are externalized to enable better
 static resource caching.
+
+= Credits
+The success of Assignee relied heavily on the extensive use of ecosystem tools. While only a fraction are listed here,
+it’s important to acknowledge that even a quarter of them couldn’t be fully covered.
+
+Items marked with #sym.tiny are written by myself.
+
+== Core
+- #link("https://git-scm.com")[Git]
+- #link("https://github.com")[GitHub]
+- #link("https://pnpm.io")[PNPM]
+- #link("https://www.typescriptlang.org")[TypeScript]
+- #link("https://eslint.org")[ESLint]
+- #link("https://prettier.io")[Prettier]
+- #link("https://github.com/typicode/husky")[Husky]
+- #link("https://github.com/okonet/lint-staged")[Lint Staged]
+- #link("https://github.com/wavim/vscode-alt-delete")[Alt Delete] #sym.tiny
+- #link("https://github.com/wavim/vscode-istrainless")[IstrainLess] #sym.tiny
+- #link("https://github.com/wavim/vscode-git-branch")[Git Branch] #sym.tiny
+- #link("https://github.com/wavim/vscode-better-memo")[Better Memo] #sym.tiny
+
+== DBMS
+- #link("https://www.sqlite.org")[SQLite]
+- #link("https://sqlitestudio.pl")[SQLite Studio]
+- #link("https://www.dbvis.com")[DB Visualizer]
+
+== Server
+- #link("https://nodejs.org")[Node.js]
+- #link("https://www.prisma.io")[Prisma]
+- #link("https://expressjs.com")[Express.js]
+- #link("https://github.com/expressjs/compression")[Compression]
+- #link("https://github.com/express-rate-limit/express-rate-limit")[Rate Limit]
+- #link("https://github.com/expressjs/multer")[Multer]
+- #link("https://hashids.org")[HashIDs]
+- #link("https://github.com/paulmillr/noble-hashes")[Noble Hashes]
+- #link("https://github.com/wavim/http-error")[HTTP Error] #sym.tiny
+- #link("https://github.com/privatenumber/tsx")[TSX]
+- #link("https://github.com/davglass/cpr")[CPR]
+- #link("https://github.com/yao-pkg/pkg")[PKG]
+
+== Schema
+- #link("https://github.com/colinhacks/zod")[Zod]
+- #link("https://github.com/rollup/rollup")[Rollup]
+
+== Design
+- #link("https://www.svgrepo.com")[SVG Repo]
+- #link("https://www.siteinspire.com")[Site Inspire]
+- #link("https://patternpad.com")[Pattern Pad]
+- #link("https://fonts.google.com")[Google Fonts]
+- #link("https://github.com/tokotype/PlusJakartaSans")[Plus Jakarta Sans]
+- #link("https://webaim.org/resources/contrastchecker")[WebAIM Checker]
+
+== Client
+- #link("https://vitejs.dev")[Vite]
+- #link("https://solidjs.com")[SolidJS]
+- #link("https://github.com/solidjs/solid-router")[Solid Router]
+- #link("https://github.com/solidjs-community/solid-primitives/tree/main/packages/i18n")[Solid I18n]
+- #link("https://github.com/wavim/solid-filter")[Solid Filter] #sym.tiny
+- #link("https://tailwindcss.com")[TailwindCSS]
+- #link("https://github.com/lukeed/clsx")[CLSX]
+- #link("https://github.com/darkroomengineering/lenis")[Lenis]
+- #link("https://greensock.com/gsap")[GSAP]
+- #link("https://github.com/aceakash/string-similarity")[String Similarity]
+- #link("https://github.com/wavim/vscode-wrap-jsx")[Wrap JSX] #sym.tiny
+- #link("https://github.com/wavim/gfont-loader")[GFont Loader] #sym.tiny
+- #link("https://github.com/wavim/omnires")[Omnires] #sym.tiny
+- #link("https://github.com/wavim/natural-log")[Natural Log] #sym.tiny
+
+== Report
+- #link("https://www.latex-project.org")[LaTeX]
+- #link("https://typst.app")[Typst]
+
+While only a selection is mentioned here, I am deeply grateful for the entire ecosystem that made Assignee possible.
+
+= Final Remarks
+This report reflects original research, analysis, and insights. While generative AI tools were selectively used to
+enhance the clarity of this report, all core ideas, findings, and conclusions remain the product of human effort.
+
+In the AI-augmented era, I have taken care to uphold academic and professional integrity throughout this work, by
+acknowledging how to use AI tools responsibly.
+
+As I wrap up this report, I extend my thanks to the many tools, contributors, and collaborators who made Assignee a
+reality. I want to affirm my commitment to respecting intellectual property and licensing rights. In an era of boundless
+digital collaboration, we believe progress thrives when credit is given fairly, and innovation is built responsibly.
