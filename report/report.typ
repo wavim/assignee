@@ -381,6 +381,9 @@ Benefits:
 - More straightforward i.e. CSPRNG returns buffer
 - Faster than TEXT for query and uniqueness checks
 
+The bytes would be converted to hex as code, this is particularly helpful since it is case-insensitive and hard to
+confuse.
+
 Cron jobs are run on the server side to periodically remove expired tokens.
 
 Invitation codes are validated and rotated with a similar mechanism to session tokens.
@@ -807,3 +810,102 @@ MD Variant", gap: .5cm)
 The footer embodies a subtle logo paired with a clean copyright linking to my GitHub. No dividers, no social icons, no
 excess: just geometric purity and creator credit on a neutral canvas. What a final whisper of a system where every
 element serves purpose?
+
+=== Signin/Signup
+#figure(image("assets/demo/signer.png", width: 50%), caption: "Dynamic Signer", gap: .5cm)
+
+Two fields, one button. No extras. Assignee strips authentication to its essence. Task clarity through disciplined
+design. The asymmetry is quiet, the palette calm, the interaction profound in its simplicity: a silent handshake between
+human and machine.
+
+Placeholders shift to titles as one inputs, preserving context without cluttering the input zone. The asymmetry of
+moving labels against static fields creates kinetic hierarchy, providing the user generous interaction feedback.
+
+The sole button transcends static labeling through adaptive text. Morphing dynamically to error messages, Assignee turns
+a button into a self-contained dialogue, eliminating pop-ups that disrupt flow: errors resolve within the element.
+
+Only signin could be reached via the landing page, with signup accessible through it. Burying signup within the signin
+flow isn't a hidden feature, it's a strategic reduction of decision fatigue. One problem, one solution.
+
+#figure(image("assets/demo/signer.md.png", width: 100%), caption: "Dynamic Signer
+MD Variant", gap: .5cm)
+
+=== Not Found
+A generous 404 page is also implemented just in case users get lost (unlikely!)
+
+Maybe, umm, try to navigate back to the landing page by clicking on that button...?
+
+#figure(image("assets/demo/e404.md.png", width: 100%), caption: "Not Found
+MD Variant", gap: .5cm)
+
+=== Dashboard/Teams/Tasks
+
+#figure(image("assets/demo/dash.md.png", width: 100%), caption: "Dashboard, Teams
+MD Variant", gap: .5cm)
+
+The dashboard elegantly weaponizes negative space, transforming emptiness into focused potential. Below the welcome
+prompt, the two action button set up a dynamic duo, pairing primary action and secondary action with asymmetry.
+
+The emptiness is the metaphor: a pristine workspace awaiting action.
+
+#figure(image("assets/demo/create.md.png", width: 100%), caption: "Dashboard, Create Team
+MD Variant", gap: .5cm)
+
+Subtle shadows below the overlay and the backdrop blur gives a sense of elevation, directing users to focus on the
+immediate action.
+
+#figure(image("assets/demo/team.md.png", width: 100%), caption: "Team Hub
+MD Variant", gap: .5cm)
+
+#figure(image("assets/demo/teams.md.png", width: 100%), caption: "Dashboard, Teams
+MD Variant", gap: .5cm)
+
+Cards flow in staggered columns, offset by deliberate white-space intervals. Hairline strokes with subtle radii soften
+combine to form gentle card edges.
+
+By treating every stroke, curve, and alignment as deliberate concessions to human perception, the dashboard transcends
+utility to sanctuary.
+
+#figure(image("assets/demo/accept.png", width: 50%), caption: "Dashboard, Accept Invite
+MD Variant", gap: .5cm)
+
+Embrace invitations via generous modal prompts. Enter code, done. Team invitation at its simplest, takes you to the team
+hub without needing manual actions.
+
+Team owner? Assign tasks through the simplest modal interface. Modals aren’t interruptions, they are graceful extensions
+of the workflow, designed with monastic restraint and geometric intentionality. When invoking task assignment, the modal
+emerges not as a layer, but as a focused thought.
+
+Click, click, done. Sensible defaults are already set for comment use cases. Autocompletion had never been so
+convenient. That being said, Assignee forces the presence of task instructions (also team description), to ease the
+experience of not only one, but everyone.
+
+#figure(image("assets/demo/assign.md.png", width: 100%), caption: "Team, Assign
+MD Variant", gap: .5cm)
+
+Easily update task reference file through the task overview.
+
+Easily track member submission status.
+
+Easily contact members who haven't finished yet via email. (I'm sorry)
+
+#figure(image("assets/demo/task.md.png", width: 100%), caption: "Task Overview
+MD Variant", gap: .5cm)
+
+#figure(image("assets/demo/work.md.png", width: 100%), caption: "Submissions
+MD Variant", gap: .5cm)
+
+Review members' work with unparalleled ease. Download work attachment for review (if any), and optionally provide
+encouraging feedback via comments.
+
+#figure(image("assets/demo/tasks.md.png", width: 100%), caption: "Dashboard, Tasks
+MD Variant", gap: .5cm)
+
+Track assignments simply in the integrated dashboard. Filter by completion status, and search with name, team, or
+description (typos taken into consideration).
+
+#figure(image("assets/demo/ttasks.md.png", width: 100%), caption: "Team Hub, Tasks
+MD Variant", gap: .5cm)
+
+Equivalently in the team hub. Team owners will not see the filter. Instead, they would be able to peek over tasks'
+current submission count.
