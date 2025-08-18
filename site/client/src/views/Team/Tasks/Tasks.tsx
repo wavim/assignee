@@ -4,8 +4,8 @@ import { createResource, createSignal, Match, onCleanup, onMount, Show, Switch }
 import { queryTeamTasks } from "../../../api/task.api";
 import { resLocale } from "../../../config/locale";
 import Tasks from "../../Tasks";
+import I18n from "../I18n";
 import Assign from "./Assign";
-import I18n from "./I18n";
 
 export default () => {
 	const [tasks] = createResource(() => queryTeamTasks(useParams()), {
@@ -15,7 +15,7 @@ export default () => {
 	return (
 		<I18n.I18n>
 			<section class="relative flex min-h-40 w-full flex-1/2 flex-col gap-4">
-				<h1 class="font-jakarta text-text-major mb-4 text-2xl">{I18n.useI18n()("tasks")}</h1>
+				<h1 class="font-jakarta text-text-major mb-4 text-2xl">{I18n.useI18n()("tasks.name")}</h1>
 				<Switch>
 					<Match when={tasks().auth}>
 						<Tasks
@@ -44,8 +44,6 @@ export default () => {
 };
 
 const Task = (props: { children: GetTeamTasksResults["data"][number] }) => {
-	const t = I18n.useI18n();
-
 	const [locale, setLocale] = createSignal(resLocale());
 	const $update = () => setLocale(resLocale());
 
@@ -68,7 +66,7 @@ const Task = (props: { children: GetTeamTasksResults["data"][number] }) => {
 				</span>
 				<Show when={typeof props.children.done === "number"}>
 					<span class="text-text-minor min-w-28 text-right">
-						{String(props.children.done)} {t("submit")}
+						{String(props.children.done)} {I18n.useI18n()("tasks.submit")}
 					</span>
 				</Show>
 			</span>

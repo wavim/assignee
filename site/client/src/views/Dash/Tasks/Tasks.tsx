@@ -4,17 +4,14 @@ import { queryTasks } from "../../../api/task.api";
 import { resLocale } from "../../../config/locale";
 import Tasks from "../../Tasks";
 import Card from "../Card";
-import I18n from "./I18n";
 
 export default () => {
 	const [tasks] = createResource(queryTasks, { initialValue: [] });
 
 	return (
-		<I18n.I18n>
-			<main class="flex w-full flex-col gap-8 p-4 md:px-8">
-				<Tasks tasks={tasks()}>{(task) => <Task>{task}</Task>}</Tasks>
-			</main>
-		</I18n.I18n>
+		<main class="flex w-full flex-col gap-8 p-4 md:px-8">
+			<Tasks tasks={tasks()}>{(task) => <Task>{task}</Task>}</Tasks>
+		</main>
 	);
 };
 

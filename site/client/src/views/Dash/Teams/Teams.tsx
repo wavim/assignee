@@ -7,9 +7,9 @@ import { queryTeams } from "../../../api/team.api";
 import Search from "../../../gui/Search";
 import Badge from "../../Badge";
 import Card from "../Card";
+import I18n from "../I18n";
 import Accept from "./Accept";
 import Create from "./Create";
-import I18n from "./I18n";
 
 export default () => {
 	const [teams] = createResource(queryTeams, { initialValue: [] });
@@ -21,7 +21,7 @@ export default () => {
 					when={teams().length}
 					fallback={
 						<p class="font-jakarta text-text-major absolute top-1/2 -mt-20 self-center text-2xl">
-							{I18n.useI18n()("prompt")}
+							{I18n.useI18n()("teams.prompt")}
 						</p>
 					}
 				>
@@ -54,7 +54,7 @@ const Dash = (props: { teams: GetTeamsResults }) => {
 				<button
 					type="button"
 					onclick={() => setBadged(!badged())}
-					title={badged() ? t("normal") : t("badged")}
+					title={badged() ? t("teams.normal") : t("teams.badged")}
 					class={clsx(
 						"flex aspect-square h-15 cursor-pointer items-center justify-center rounded-2xl transition-colors duration-150 ease-out",
 						badged() && "bg-overlay/75",
@@ -94,7 +94,7 @@ const Team = (props: { children: GetTeamsResults[number] }) => {
 				auth={props.children.auth}
 				class="h-6"
 			></Badge>
-			<span>{props.children.auth ? t("owner") : t("member")}</span>
+			<span>{props.children.auth ? t("teams.owner") : t("teams.member")}</span>
 		</Card>
 	);
 };

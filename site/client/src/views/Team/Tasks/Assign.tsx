@@ -8,7 +8,7 @@ import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
 import TextBox from "../../../gui/TextBox";
 import Time from "../../../gui/Time";
-import I18n from "./I18n";
+import I18n from "../I18n";
 
 export default () => {
 	const navigate = useNavigate();
@@ -19,10 +19,10 @@ export default () => {
 
 	const $error = createSignal<
 		| undefined
-		| "assign.errors.setname"
-		| "assign.errors.setdesc"
-		| "assign.errors.invdead"
-		| "assign.errors.systems"
+		| "tasks.assign.errors.setname"
+		| "tasks.assign.errors.setdesc"
+		| "tasks.assign.errors.invdead"
+		| "tasks.assign.errors.systems"
 	>();
 	const [error, setError] = $error;
 
@@ -42,13 +42,13 @@ export default () => {
 
 		switch (error.issues[0].path[0] as keyof PostTeamTaskRequest) {
 			case "name": {
-				return "assign.errors.setname";
+				return "tasks.assign.errors.setname";
 			}
 			case "desc": {
-				return "assign.errors.setdesc";
+				return "tasks.assign.errors.setdesc";
 			}
 			case "dead": {
-				return "assign.errors.invdead";
+				return "tasks.assign.errors.invdead";
 			}
 		}
 	};
@@ -68,7 +68,7 @@ export default () => {
 			const { aid } = await createTask({ tid }, data);
 			navigate(`/task/${aid}`);
 		} catch {
-			setError("assign.errors.systems");
+			setError("tasks.assign.errors.systems");
 		}
 	};
 
@@ -83,11 +83,11 @@ export default () => {
 				ref={toggle}
 				class="text-lg"
 			>
-				{t("assign.ctoa")}
+				{t("tasks.assign.ctoa")}
 			</Button2>
 			<Modal toggle={toggle}>
 				<Form
-					label={t("assign.next")}
+					label={t("tasks.assign.next")}
 					error={createMemo(() => {
 						const id = error();
 						return id && t(id);
@@ -98,16 +98,16 @@ export default () => {
 					cback={submit}
 				>
 					<Input
-						name={t("assign.name")}
+						name={t("tasks.assign.name")}
 						spellcheck="true"
 						autocomplete="off"
 					></Input>
 					<TextBox
-						name={t("assign.desc")}
+						name={t("tasks.assign.desc")}
 						spellcheck="true"
 					></TextBox>
 					<Time
-						name={t("assign.dead")}
+						name={t("tasks.assign.dead")}
 						minimum={now}
 						default={tmr}
 					></Time>

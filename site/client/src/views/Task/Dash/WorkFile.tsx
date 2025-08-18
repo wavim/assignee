@@ -1,9 +1,9 @@
 import { GetTaskResults } from "@app/schema";
 import { useParams } from "@solidjs/router";
 import { Setter, Show } from "solid-js";
-import { getWorkFile, setWorkFile } from "../../api/task.api";
-import Upload from "../../gui/Upload";
-import I18n from "./I18n";
+import { getWorkFile, setWorkFile } from "../../../api/task.api";
+import Upload from "../../../gui/Upload";
+import I18n from "../I18n";
 
 export default (props: {
 	detail: Extract<GetTaskResults, { auth: false }>;
@@ -14,7 +14,7 @@ export default (props: {
 
 	return (
 		<div class="font-jakarta flex w-full flex-col gap-2 text-lg">
-			<h2 class="text-text-minor">{t("work")}</h2>
+			<h2 class="text-text-minor">{t("dash.mywork")}</h2>
 			<Show
 				when={props.detail.work.file}
 				fallback={
@@ -33,7 +33,7 @@ export default (props: {
 			</Show>
 			<Show when={!props.detail.work.done}>
 				<Upload
-					name={t("upload")}
+					name={t("dash.upload")}
 					pick={(file) => {
 						if (!file) {
 							return;

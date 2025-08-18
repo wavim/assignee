@@ -7,7 +7,7 @@ import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
 import TextBox from "../../../gui/TextBox";
-import I18n from "./I18n";
+import I18n from "../I18n";
 
 export default () => {
 	const navigate = useNavigate();
@@ -16,7 +16,10 @@ export default () => {
 	let toggle!: HTMLButtonElement;
 
 	const $error = createSignal<
-		undefined | "create.errors.setname" | "create.errors.setdesc" | "errors.systems"
+		| undefined
+		| "teams.create.errors.setname"
+		| "teams.create.errors.setdesc"
+		| "teams.errors.systems"
 	>();
 	const [error, setError] = $error;
 
@@ -31,8 +34,8 @@ export default () => {
 			return undefined;
 		}
 		return (error.issues[0].path[0] as keyof PostTeamRequest) === "name"
-			? "create.errors.setname"
-			: "create.errors.setdesc";
+			? "teams.create.errors.setname"
+			: "teams.create.errors.setdesc";
 	};
 
 	const submit = async (name: string, desc: string) => {
@@ -46,16 +49,16 @@ export default () => {
 			const { tid } = await createTeam(data);
 			navigate(`/team/${tid}`);
 		} catch {
-			setError("errors.systems");
+			setError("teams.errors.systems");
 		}
 	};
 
 	return (
 		<>
-			<Button1 ref={toggle}>{t("create.ctoa")}</Button1>
+			<Button1 ref={toggle}>{t("teams.create.ctoa")}</Button1>
 			<Modal toggle={toggle}>
 				<Form
-					label={t("create.next")}
+					label={t("teams.create.next")}
 					error={createMemo(() => {
 						const id = error();
 						return id && t(id);
@@ -66,12 +69,12 @@ export default () => {
 					cback={submit}
 				>
 					<Input
-						name={t("create.name")}
+						name={t("teams.create.name")}
 						spellcheck="true"
 						autocomplete="organization"
 					></Input>
 					<TextBox
-						name={t("create.desc")}
+						name={t("teams.create.desc")}
 						spellcheck="true"
 					></TextBox>
 				</Form>

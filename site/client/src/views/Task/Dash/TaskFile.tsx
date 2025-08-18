@@ -1,9 +1,9 @@
 import { GetTaskResults } from "@app/schema";
 import { useParams } from "@solidjs/router";
 import { Setter, Show } from "solid-js";
-import { getTaskFile, setTaskFile } from "../../api/task.api";
-import Upload from "../../gui/Upload";
-import I18n from "./I18n";
+import { getTaskFile, setTaskFile } from "../../../api/task.api";
+import Upload from "../../../gui/Upload";
+import I18n from "../I18n";
 
 export default (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> }) => {
 	const t = I18n.useI18n();
@@ -11,7 +11,7 @@ export default (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> 
 
 	return (
 		<div class="font-jakarta flex w-full flex-col gap-2 text-lg">
-			<h2 class="text-text-minor">{t("file")}</h2>
+			<h2 class="text-text-minor">{t("dash.file")}</h2>
 			<Show when={props.detail.file}>
 				<a
 					href={getTaskFile({ aid })}
@@ -23,7 +23,7 @@ export default (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> 
 			</Show>
 			<Show when={props.detail.auth}>
 				<Upload
-					name={t("upload")}
+					name={t("dash.upload")}
 					pick={(file) => {
 						if (!file) {
 							return;

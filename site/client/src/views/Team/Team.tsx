@@ -5,26 +5,21 @@ import { createResource, Show, Suspense } from "solid-js";
 import { getCode } from "../../api/code.api";
 import { teamDetail } from "../../api/team.api";
 import Guard from "../../gui/Guard";
-import { defineI18n } from "../../gui/I18n";
 import Footer from "../Footer";
 import Header from "./Header";
+import I18n from "./I18n";
 import Membs from "./Membs/Membs";
 import Tasks from "./Tasks/Tasks";
 
-const I18n = defineI18n({
-	en: { invite: "Invite Member", code: "Invite Code" },
-	zh: { invite: "邀請成員", code: "邀請碼" },
-});
-
 export default () => (
 	<Guard>
-		<Header></Header>
 		<I18n.I18n>
+			<Header></Header>
 			<Suspense>
 				<Team></Team>
 			</Suspense>
+			<Footer></Footer>
 		</I18n.I18n>
-		<Footer></Footer>
 	</Guard>
 );
 
@@ -62,13 +57,11 @@ const Team = () => {
 
 const Banner = (props: { name: string; desc: string; auth: boolean }) => {
 	const Invite = () => {
-		const t = I18n.useI18n();
-
 		const [code] = createResource(() => getCode(useParams()));
 
 		return (
 			<span
-				title={t("code")}
+				title={I18n.useI18n()("code")}
 				class="text-text-major uppercase"
 			>
 				{code()?.code}

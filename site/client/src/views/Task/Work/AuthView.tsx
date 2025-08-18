@@ -1,31 +1,16 @@
 import { GetTaskResults } from "@app/schema";
 import { useParams } from "@solidjs/router";
-import { createMemo, For, Match, Setter, Show, Switch } from "solid-js";
-import { getUserWorkFile, setWorkComm, setWorkDone } from "../../api/task.api";
-import Button1 from "../../gui/Button1";
-import Form from "../../gui/Form";
-import Modal from "../../gui/Modal";
-import TextBox from "../../gui/TextBox";
-import Email from "../Email";
-import I18n from "./I18n";
+import { createMemo, For, Show } from "solid-js";
+import { getUserWorkFile, setWorkComm } from "../../../api/task.api";
+import Form from "../../../gui/Form";
+import Modal from "../../../gui/Modal";
+import TextBox from "../../../gui/TextBox";
+import Email from "../../Email";
+import I18n from "../I18n";
 
-type GetDetail<A extends boolean> = Extract<GetTaskResults, { auth: A }>;
+type Extracted = Extract<GetTaskResults, { auth: true }>;
 
-export default (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> }) => (
-	<Switch>
-		<Match when={props.detail.auth}>
-			<AuthView detail={props.detail as GetDetail<true>}></AuthView>
-		</Match>
-		<Match when={!props.detail.auth}>
-			<MembView
-				detail={props.detail as GetDetail<false>}
-				mutate={props.mutate}
-			></MembView>
-		</Match>
-	</Switch>
-);
-
-const AuthView = (props: { detail: GetDetail<true> }) => {
+export default (props: { detail: Extracted }) => {
 	const t = I18n.useI18n();
 
 	const done = createMemo(() =>
@@ -46,7 +31,7 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 				<button
 					ref={toggle}
 					type="button"
-					title={t("grade.ctoa")}
+					title={t("work.comm.ctoa")}
 					class="h-6 cursor-pointer"
 				>
 					<svg
@@ -61,7 +46,7 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 				</button>
 				<Modal toggle={toggle}>
 					<Form
-						label={t("grade.next")}
+						label={t("work.comm.next")}
 						cback={(comment) => {
 							void setWorkComm(
 								{ aid },
@@ -70,13 +55,13 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 							window.dispatchEvent(new Event("$close-modal"));
 						}}
 					>
-						<TextBox name={t("grade.comm")}>{props.comm}</TextBox>
+						<TextBox name={t("work.comm.comm")}>{props.comm}</TextBox>
 					</Form>
 				</Modal>
 			</>
 		);
 	};
-	const Done = (props: { work: GetDetail<true>["works"][number] }) => {
+	const Done = (props: { work: Extracted["works"][number] }) => {
 		const t = I18n.useI18n();
 		const { aid } = useParams();
 
@@ -89,7 +74,7 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 						download={props.work.file}
 						class="text-text-major w-max underline underline-offset-2"
 					>
-						{t("grade.work")}
+						{t("work.work")}
 					</a>
 				</Show>
 				<Comm
@@ -100,7 +85,8 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 			</div>
 		);
 	};
-	const Ongo = (props: { work: GetDetail<true>["works"][number] }) => (
+
+	const Ongo = (props: { work: Extracted["works"][number] }) => (
 		<div class="border-border font-jakarta flex w-full flex-wrap items-center gap-4 rounded-xl border-1 p-3.5 text-lg">
 			<span class="text-text-major mr-auto text-lg">{props.work.name}</span>
 			<Email>{props.work.mail}</Email>
@@ -110,14 +96,14 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 	return (
 		<section class="font-jakarta flex w-full flex-col gap-8">
 			<div class="flex flex-col gap-2 text-lg">
-				<h2 class="text-text-minor">{t("works")}</h2>
+				<h2 class="text-text-minor">{t("work.title")}</h2>
 				<span class="text-text-major">
-					{done().length} {t("outof")} {props.detail.works.length}
+					{done().length} {t("work.outof")} {props.detail.works.length}
 				</span>
 			</div>
 			<Show when={done().length}>
 				<div class="flex flex-col gap-4">
-					<h2 class="font-jakarta text-text-minor text-lg">{t("status.done")}</h2>
+					<h2 class="font-jakarta text-text-minor text-lg">{t("work.done")}</h2>
 					<div class="flex flex-col gap-4">
 						<For each={done()}>{(work) => <Done work={work}></Done>}</For>
 					</div>
@@ -125,48 +111,12 @@ const AuthView = (props: { detail: GetDetail<true> }) => {
 			</Show>
 			<Show when={ongo().length}>
 				<div class="flex flex-col gap-4">
-					<h2 class="font-jakarta text-text-minor text-lg">{t("status.ongo")}</h2>
+					<h2 class="font-jakarta text-text-minor text-lg">{t("work.ongo")}</h2>
 					<div class="flex flex-col gap-4">
 						<For each={ongo()}>{(work) => <Ongo work={work}></Ongo>}</For>
 					</div>
 				</div>
 			</Show>
-		</section>
-	);
-};
-
-const MembView = (props: { detail: GetDetail<false>; mutate: Setter<GetTaskResults> }) => {
-	const t = I18n.useI18n();
-	const { aid } = useParams();
-
-	return (
-		<section class="font-jakarta flex w-full flex-col gap-8">
-			<Show when={props.detail.work.done}>
-				<div class="flex flex-col gap-2 text-lg">
-					<h2 class="text-text-minor">Comments</h2>
-					<Show
-						when={props.detail.work.comm}
-						fallback={<span class="text-holder">{t("none")}</span>}
-					>
-						<span class="text-text-major whitespace-pre-wrap">{props.detail.work.comm}</span>
-					</Show>
-				</div>
-			</Show>
-			<Button1
-				onclick={() => {
-					const done = !props.detail.work.done;
-					void setWorkDone({ aid }, { done });
-					props.mutate((old) => {
-						if (old.auth) {
-							throw new Error("Not A Assignee");
-						}
-						return { ...old, work: { ...old.work, done } };
-					});
-				}}
-				class="mt-2"
-			>
-				{props.detail.work.done ? t("revoke") : t("submit")}
-			</Button1>
 		</section>
 	);
 };
