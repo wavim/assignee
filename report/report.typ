@@ -651,3 +651,24 @@ be able to access the web application.
 
 By correctly configuring path resolution, static files are retrieved inside a virtual file system at runtime, and the
 `app.db` file is resolved relative to cwd. This allows database records to be preserved.
+
+= Communication Layer
+This is a short chapter on the validation of requests and response between the server and client.
+
+By using TypeScript on backend, a fullstack application allows global TS schema validators. The library used in
+Assignee's case is Zod, which adds support for sophisticated runtime type validation.
+
+The rules are used to enforce business rules and maintain data consistency, blocking further actions if failing to parse
+payloads. They include:
+
+- Checking for valid email address format
+- Checking for password security strength
+- Checking for dates earlier than expected
+
+And more. This evens include validating complex data types such as arrays and discriminated object unions.
+
+Schemas are structured by API endpoints for ease of management, e.g. PostTaskRequest, PostTaskResults, validating data
+both coming to and from the server, by sharing the Zod schema between the server and client.
+
+Zod schemas fill up the inadequacy of SQLite dynamic data types, and allows even more specific constraints. This ensures
+development goes smoothly and different layers agree on the same interface, catching errors early in development.
