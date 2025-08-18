@@ -1,9 +1,6 @@
 #import "@preview/ilm:+1.4.1": *
 
-#show: ilm.with(
-  title: "Assignee",
-  author: "David W",
-)
+#show: ilm.with(title: "Assignee", author: "David W")
 #show link: underline
 
 = Overview
@@ -11,7 +8,7 @@
 This report details Assignee, a full-stack web application developed for the ICT SBA task of implementing an assignment
 management system.
 
-Items marked with #sym.dagger denote features unimplemented in initial versions, primarily due to lower priority.
+Items marked with #sym.dagger denote features unimplemented in initial phases, primarily due to lower priority.
 Accompanying dagger symbols in subsequent paragraphs provide relevant details where applicable.
 
 Within this chapter, we:
@@ -82,7 +79,7 @@ Additional settings are excluded from initial versions because Assignee employs 
 functionality
 
 === Team System
-Roles: (User, Member, Admin #sym.dagger, Owner)
+Roles: (User, Member, Owner)
 
 *User*
 
@@ -94,17 +91,15 @@ Roles: (User, Member, Admin #sym.dagger, Owner)
 
 - Leave team #h(1fr) Member $arrow$ User
 
-*Admin* #sym.dagger #sym.in Member
-
-- Invite members #h(1fr) User $arrow^*$ Member
-
-*Owner* #sym.in Admin
+*Owner* #sym.in Member
 
 - Disband #h(1fr) Member $arrow^*$ User
 
-- Appoint admins #h(1fr) Member $arrow^*$ Admin
+- Invite members #h(1fr) User $arrow^*$ Member
 
-- Dismiss admins #h(1fr) Admin $arrow^*$ Member
+- Appoint owners #h(1fr) Member $arrow^*$ Owner
+
+- Dismiss owners #h(1fr) Owner $arrow^*$ Member
 
 - Modify team title
 
@@ -114,21 +109,21 @@ The team system backs Assignee's flexible group mechanism. Key design principles
 
 + Global invitation:
 
-  - Join teams via global invitation codes
-
   - Eliminates need for complex authorization
 
   - Security imposed by rotating unique codes
+
++ Multiple owners' schema:
+
+  - Eliminates appointment complexity
+
+  - Enables hassle-free role management
 
 + Team usage flexibility:
 
   - Promotes creation of scoped small teams
 
   - Not strictly limited to school assignments
-
-#sym.dagger
-Initial versions exclude explicit admin role implementation for faster iterations, though owner retains full
-administrative privileges via inheritance. The role schema persists for potential expansion.
 
 === Task System
 Roles: (Owner, (Member, ) Assignee)
@@ -170,7 +165,6 @@ The task system backs Assignee's powerful assignment features. Key design princi
   - Suitable for reference and works
 
 == Auxiliary
-
 Apart from the above-mentioned three core systems, the flexibility of design of Assignee allows extending to extra
 systems.
 
@@ -181,8 +175,8 @@ For instance:
 - Instant messaging via WebRTC or Web Sockets
 
 #sym.dagger
-Side systems remain intentionally undeveloped in initial releases, conserving resources while maintaining
-straightforward implementation paths via existing core architecture.
+Side systems remain intentionally undeveloped in initial phases, conserving resources while maintaining straightforward
+implementation paths via existing core architecture.
 
 == Resources
 The following resources are provided for SBA invigilators' reference and validation purposes.
@@ -197,6 +191,7 @@ A modular approach ensures clear separation of concerns:
 - `report/`: Contains the Typst source for this report
 
 - `site/`: Houses the web application, organized into:
+
   - `server/`: Application layer
 
   - `schema/`: Communication layer
@@ -215,3 +210,282 @@ To execute the application:
 + Run the prebuilt binary `app.exe` and follow prompts
 
 Database records persist in the `app.db` file.
+
+= Data Layer
+Backing the application is a relational database storing user data. This chapter covers the database design rationale
+first, followed by implementation details.
+
+== Design
+Within this section, we:
+
+- Detail the design of tables, fields, and data types,
+
+- Rationalize relational mappings between tables,
+
+- Explain the partial adoption of different normal forms.
+
+The schema design follows the core systems blueprint outlined.
+
+Unless specified otherwise, all table fields are ```sql NOT NULL``` to prevent inconsistency, reduce anomalies, and
+simplify backend logic.
+
+Since SQLite is adopted for the actual implementation, which employs dynamic typing, field types are described using
+generics. Specific data constraints are implemented in the communication layer instead. Besides, note that
+```sql INTEGER PRIMARY KEY``` in SQLite implies Auto-Increment.
+
+=== User System
+Tables:
+
+- `User` user information
+
+- `Pass` user password
+
+- `Sess` user sessions
+
+- `Code` user 2FA codes #sym.dagger
+
+- `Pref` user preferences #sym.dagger
+
+#figure(image("assets/user-system.svg", width: 100%), caption: "User System ERD", placement: bottom)
+
+Relations:
+
+`User` = `Pass` #h(1fr) `1–1`
+
+- User must have one password
+
+- Password belongs to one user
+
+`User` = `Sess` #h(1fr) `1–N`
+
+- User may have many sessions
+
+- Session belongs to one user
+
+`User` = `Code` #sym.dagger #h(1fr) `1–1`
+
+- User may have one code
+
+- Code belongs to one user
+
+`User` = `Pref` #sym.dagger #h(1fr) `1–1`
+
+- User has one preference's set
+
+- Preferences belong to one user
+
+==== User
+*uid* #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key chosen over candidate key (mail) for:
+
+- Indexing speed: Magnitudes faster
+
+- Efficiency: Smaller than text references
+
+- Consistency: Guaranteed uniform values
+
+- Flexibility: Immune to authentication changes
+
+Recurring primary key pattern, omitted elsewhere.
+
+*mail* #h(1fr) `TEXT UNIQUE`
+
+Unique authentication identifier.
+
+*name* #h(1fr) `TEXT`
+
+User-defined display name.
+
+*created/updated* #h(1fr) `DATETIME`
+
+Entry creation/modification timestamps.
+
+Recurring table metadata, omitted elsewhere.
+
+==== Pass
+*uid* (=User.uid) #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key and foreign key (1:1 user mapping).
+
+*hash/salt* #h(1fr) `BLOB`
+
+Secured credentials storage:
+
+- Hashed via K12 (SHA3 Keccak-p variant, 256-bit digest, parallelism optimal)
+
+- Salted (128-bit CSPRNG)
+
++ Append CSPRNG salt to key
+
++ Hash with K12, store digest+salt
+
++ Verification: Repeat with stored salt
+
+Collision probability $approx 1.5 dot 10^(-31)$ (negligible).
+
+Recurring authentication pattern; omitted elsewhere.
+
+==== Sess
+*sid* #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key.
+
+*uid* (=User.uid) #h(1fr) `INTEGER`
+
+Foreign key (N:1 user mapping).
+
+*hash/salt* #h(1fr) `BLOB`
+
++ User authenticated through signin or signup
+
++ Token generated: sid reversible-hashed with pepper, CSPRNG 256-bit hex key.
+
++ Bearer token sent to client as cookie with secure configurations.
+
+Authentication flow:
+
+- Search cookie for session bearer token
+
+- Compute sid from hashed ID, loop up session
+
+- If session age passed expiration limit i.e. 1 day:
+
+  - Invalid session, error request
+
+- Else:
+
+  - If session age passed rotation limit i.e. 1 hour:
+
+    - Rotate token and return the new token
+
+  - Else:
+
+    - Return original token and authenticate
+
+Cron jobs are run on the server side to periodically remove expired tokens.
+
+Session validity is checked on all API routes to protect Assignee from unauthenticated access.
+
+==== Code
+#sym.dagger
+Email 2FA omitted to prevent private API key leakage.
+
+*uid* (=User.uid) #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key and foreign key (1:1 user mapping).
+
+*hash/salt* #h(1fr) `BLOB`
+
+Secured user 2FA code storage.
+
+==== Pref
+#sym.dagger
+Not implemented since Assignee is highly opinionated, adds implementation complexity.
+
+*uid* (=User.uid) #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key and foreign key (1:1 user mapping).
+
+*data* #h(1fr) `JSON`
+
+Partial settings storage:
+
+- Merged with global defaults
+
+- Only stores user-modified values
+
+Benefits:
+
++ Defaults flexibility
+
++ Space efficiency
+
+JSON violates 1NF but enables nested organization (scholars have argued that this may not be a violation since 1NF
+allows any self-contained entity).
+
+=== Team System
+Tables:
+
+- `User` user information
+
+- `Team` team information
+
+- `Invite` team invitation
+
+- `Member` team membership
+
+#figure(image("assets/team-system.svg", width: 100%), caption: "Team System ERD", placement: bottom)
+
+Relations:
+
+`Team` = `Invite` #h(1fr) `1–1`
+
+- Team may have one invitation
+
+- Invite code belongs to one team
+
+`User` = `Member` #h(1fr) `1–N`
+
+- User may have many memberships
+
+- Membership belongs to one user
+
+`Team` = `Member` #h(1fr) `1–N`
+
+- Team may have many memberships
+
+- Membership belongs to one team
+
+==== Team
+*tid* #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key.
+
+*name* #h(1fr) `TEXT`
+
+Owner-defined display name.
+
+*desc* #h(1fr) `TEXT`
+
+Owner-defined team description.
+
+==== Invite
+*tid* (=Team.tid) #h(1fr) `INTEGER PRIMARY KEY`
+
+Primary key and foreign key (1:1 team mapping).
+
+*code* #h(1fr) `BLOB`
+
+Globally unique team invitation code stored as raw binary.
+
+Benefits:
+
+- More straightforward i.e. CSPRNG returns buffer
+
+- Faster than TEXT for query and uniqueness checks
+
+Cron jobs are run on the server side to periodically remove expired tokens.
+
+Invitation codes are validated and rotated with a similar mechanism to session tokens.
+
+==== Member
+*uid* (=User.uid) #h(1fr) `INTEGER COMPOSITE KEY`
+
+Composite key and foreign key (N:1 user mapping).
+
+*tid* (=Team.tid) #h(1fr) `INTEGER COMPOSITE KEY`
+
+Composite key and foreign key (N:1 team mapping).
+
+*auth* #h(1fr) `BOOLEAN`
+
+If checked, the member would be considered an owner of the team.
+
+Rationale:
+
+- Flexible role management framework
+
+- Eliminates the need for embedding team owner
+
+This flag, and the entry in general, is checked for all related endpoints to prevent unauthorized access.
