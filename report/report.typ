@@ -739,7 +739,7 @@ Most critically, Plus Jakarta Sans excels in legibility: its generous x-height, 
 well-considered spacing optimize readability across devices and sizes, reducing user strain and ensuring content remains
 effortlessly accessible.
 
-=== Icon Design
+=== Logo Design
 Assignee uses a logo directly referencing its name.
 
 #figure(image("assets/theme/logo.png", width: 25%), caption: "Assignee Logo", gap: .5cm)
