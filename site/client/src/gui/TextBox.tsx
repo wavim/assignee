@@ -5,7 +5,7 @@ import { Props } from "../types/props";
 let $id = 0;
 
 export default (props: Props<"span"> & { name: string }) => {
-	const [blank, setBlank] = createSignal(true);
+	const [blank, setBlank] = createSignal(!props.children);
 	const id = `textarea-${String($id++)}`;
 
 	return (
@@ -21,7 +21,7 @@ export default (props: Props<"span"> & { name: string }) => {
 				on:input={({ target }) => setBlank(!target.textContent.length)}
 				class="text-text-major border-holder peer outline-outline max-h-40 w-full overflow-auto rounded-xl border-1 px-4 pt-6 pb-2 text-base whitespace-pre-wrap"
 			>
-				<br></br>
+				{props.children ?? <br></br>}
 			</span>
 			<span
 				class={clsx(

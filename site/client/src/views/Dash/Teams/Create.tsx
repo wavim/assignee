@@ -6,7 +6,7 @@ import Button1 from "../../../gui/Button1";
 import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
-import TextArea from "../../../gui/TextArea";
+import TextBox from "../../../gui/TextBox";
 import I18n from "./I18n";
 
 export default () => {
@@ -70,10 +70,10 @@ export default () => {
 						spellcheck="true"
 						autocomplete="organization"
 					></Input>
-					<TextArea
+					<TextBox
 						name={t("create.desc")}
 						spellcheck="true"
-					></TextArea>
+					></TextBox>
 				</Form>
 			</Modal>
 		</>

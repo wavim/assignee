@@ -6,7 +6,7 @@ import Button2 from "../../../gui/Button2";
 import Form from "../../../gui/Form";
 import Input from "../../../gui/Input";
 import Modal from "../../../gui/Modal";
-import TextArea from "../../../gui/TextArea";
+import TextBox from "../../../gui/TextBox";
 import Time from "../../../gui/Time";
 import I18n from "./I18n";
 
@@ -102,10 +102,10 @@ export default () => {
 						spellcheck="true"
 						autocomplete="off"
 					></Input>
-					<TextArea
+					<TextBox
 						name={t("assign.desc")}
 						spellcheck="true"
-					></TextArea>
+					></TextBox>
 					<Time
 						name={t("assign.dead")}
 						minimum={now}
