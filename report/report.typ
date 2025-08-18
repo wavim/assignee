@@ -94,7 +94,7 @@ Roles: (User, Member, Admin #sym.dagger, Owner)
 
 - Leave team #h(1fr) Member $arrow$ User
 
-*Admin* #sym.in Member
+*Admin* #sym.dagger #sym.in Member
 
 - Invite members #h(1fr) User $arrow^*$ Member
 
@@ -199,7 +199,7 @@ A modular approach ensures clear separation of concerns:
 - `site/`: Houses the web application, organized into:
   - `server/`: Application layer
 
-  - `schema/`: Interaction layer
+  - `schema/`: Communication layer
 
   - `client/`: Presentation layer
 
