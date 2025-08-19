@@ -931,10 +931,16 @@ Assignee is fully responsive to different screen sizes. This is achieved through
 breakpoint.
 
 Notice that demonstration images provided in the last section may come with an "MD Variant" postfix. This is because
-Assignee's styling is mobile-first, since the majority of Internet users are mobile users.
+Assignee's styling is mobile-first, since the majority of Internet users nowadays are mobile users.
 
-No extra examples would be attached, refer to the previous section for demos. Apart from apparent UI changes, Assignee
-is also mobile user interface friendly, optimizing UX for hassle-free mobile usage.
+Refer to the previous section for examples (compare non-MD and MD variants). Apart from apparent UI changes, Assignee is
+also mobile user interface friendly, optimizing UX for hassle-free mobile usage.
+
+A deliberate decision has been made to forgo the implementation of dedicated print variants. The rationale is grounded
+in several key considerations. The primary use case of a dynamic task assignment site resides inherently within its
+digital, interactive environment. User workflows center on real-time viewing, updating, and managing tasks directly
+within the application interface. The fundamental nature of the content possesses low inherent value in a static,
+printed format, which cannot reflect real-time updates or enable interaction.
 
 == Accessibility
 Assignee provides numerous accessibility options to align with web standards.
@@ -958,14 +964,15 @@ Motion effects
 - On
 - Off
 
-The options are configurable through the iconic accessibility button (blue man), which is present on all pages.
+The options are configurable through the iconic accessibility button (blue man), which is present on all pages. The
+configuration would be stored in local storage, allowing it to be persisted over sessions.
 
 #figure(image("assets/demo/a11y.md.png", width: 100%), caption: "Accessibility
 MD Variant", gap: .5cm)
 
-The options are stored within local storage, therefore would be persisted over sessions.
-
-Examples:
+Although the options are fully interoperable with each other and plays well with responsive design (128 combinations),
+only a selected few could be demonstrated here to compact the report (mobile screenshots' aspect ratio would take up too
+many space).
 
 #figure(image("assets/demo/fontl.md.png", width: 100%), caption: "Accessibility, Font Large
 MD Variant", gap: .5cm)
@@ -993,9 +1000,10 @@ This includes:
 - Including ARIA labels for non-text components
 - Keyboard navigation support e.g. Esc to close modal, Tab to inputs
 - Ensuring theme colors bear enough contrast (WCAG AAA compliance)
-- Following form comprehension guidelines e.g. autocomplete, spellcheck, labels
+- Following form accessibility guidelines e.g. autocomplete, spellcheck, labels
+- Using appropriate semantic elements to define content type e.g. ```html <header>, <footer>, <search>```
 
-Also, `/signin` and `/signup` are separated to not confuse password managers.
+Also note, `/signin` and `/signup` are separated pages to not confuse password managers.
 
 Together, Assignee helps to build a web accessible to everyone.
 
@@ -1023,6 +1031,15 @@ Smooth scrolling of the webpage is enabled by Lenis, a lightweight scroll-smooth
 
 Fetching data from the backend is done via Axios, enabling async I/O operations with automatic request header
 configuration.
+
+=== Media
+The deliberate use of minimal black and white SVGs within Assignee is a design rooted in essentialism and sophisticated
+clarity. The scalability and crisp precision of SVGs ensure icons and graphic elements remain sharp and adaptable at any
+size, perfectly complementing the clean lines and uncluttered spaces inherent in minimalism. It embodies functional
+elegance, enhancing readability, ensuring timelessness, and improves load times, resulting in an experience that feels
+both refined and effortlessly intuitive.
+
+All SVGs used in Assignee are available under public domain from SVG Repo.
 
 === Performance
 SolidJS is one of the most performant frontend libraries currently available. But to deliver maximum application
