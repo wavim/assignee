@@ -901,17 +901,17 @@ Click, click, done. Sensible defaults are already set for comment use cases. Aut
 convenient. That being said, Assignee forces the presence of task instructions (also team description), to ease the
 experience of not only one, but everyone.
 
+The team invitation code would be immediately visible to team owners on the right end of the team banner.
+
 #figure(image("assets/demo/assign.md.png", width: 100%), caption: "Team, Assign
 MD Variant", gap: .5cm)
 
 Both team IDs and task IDs are reversible-hashed with pepper to prevent database data leakage, similar to hashed session
 IDs in bearer tokens.
 
-Easily update task reference file through the task overview.
-
-Easily track member submission status.
-
-Easily contact members who haven't finished yet via email. (I'm sorry)
+- Easily update task reference file through the task overview
+- Easily track member submission status
+- Easily contact members who haven't finished yet via email (I'm sorry)
 
 #figure(image("assets/demo/task.md.png", width: 100%), caption: "Task Overview
 MD Variant", gap: .5cm)
