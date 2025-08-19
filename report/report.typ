@@ -672,7 +672,8 @@ By correctly configuring path resolution, static files are retrieved inside a vi
 `app.db` file is resolved relative to CWD. This allows database records to be preserved.
 
 = Communication Layer
-This is a short chapter on the validation of requests and response between the server and client.
+This is a short chapter on the validation of requests and response between the server and client. The layer is the
+primary way of validating complex data, instead of relying on rigid database constructs.
 
 By using TypeScript for backend, a full-stack application allows global TS schema validators. The library used in
 Assignee's case is Zod, which adds support for sophisticated runtime type validation.
@@ -684,10 +685,12 @@ payloads. They include:
 - Checking for password security strength
 - Checking for dates earlier than expected
 
-And more. These evens include validating complex data types such as arrays and discriminated object unions.
+And more. These even include validating complex data types such as arrays and discriminated object unions, which is
+impossible to validate soley with database constraints.
 
-Schemas are structured by API endpoints for ease of management, e.g. PostTaskRequest, PostTaskResults, validating data
-both coming to and from the server, by sharing the Zod schema between the server and client.
+Validation schemas are structured and named by API endpoints for ease of management, e.g.
+`PostTaskRequest, PostTaskResults`, validating data both coming to and from the server, by sharing the Zod schema
+between the server and client.
 
 Zod schemas fill up the inadequacy of SQLite dynamic data types, and allows even more specific constraints. This ensures
 development goes smoothly, and different layers agree on the same interface, catching errors early in development.
@@ -793,6 +796,9 @@ The header's transformative scroll behavior embodies minimalist utility through 
 and embedded within the hero's natural flow, it avoids visual imposition. As scrolling commences, it transitions into a
 subtle overlay with soft elevation shadow, signaling a shift from introduction to action.
 
+Although the logo navigates to the homepage, a "navigation bar" is not present per se. This is due to Assignee's minimal
+amount of landing pages.
+
 === Features Section
 Following the hero, the features section leverages medium-screen asymmetry through a purposeful split: a persistent
 "Features" anchor sticks rigidly to the left viewport edge, while feature details scroll independently on the right.
@@ -891,7 +897,7 @@ utility to sanctuary.
 MD Variant", gap: .5cm)
 
 Embrace invitations via generous modal prompts. Enter code, done. Team invitation at its simplest, takes you to the team
-hub without needing manual actions.
+hub without demanding manual actions.
 
 Team owner? Assign tasks through the simplest modal interface. Modals aren't interruptions, they are graceful extensions
 of the workflow, designed with monastic restraint and geometric intentionality. When invoking task assignment, the modal
@@ -934,6 +940,22 @@ MD Variant", gap: .5cm)
 Equivalently in the team hub. Team owners will not see the filter. Instead, they would be able to peek over tasks'
 current submission count.
 
+== Verification
+Data validation is done via the communication layer, while data verification is implemented on the website in subtle
+ways.
+
+Aligning with the core design language of the application, data verification constructs are not extract to their own
+components. Instead, they exist within the input, similar to the dynamic form submission buttons. For instance, the
+"Show Password" toggle on password input fields allow trivial data verification, without relying on an extra "Repeat
+Password" field.
+
+Subtleness, Correctness.
+
+== Navigation
+Distinct from the landing pages (where navigation is too simple), the application views demand dedicated navigation. By
+blending simple navigation switches naturally in the header (notice that this header is different from the landing page
+header), Assignee avoids cluttering the view with excessive directives, reducing users' decision fatigue.
+
 == Responsive Design
 Assignee is fully responsive to different screen sizes. This is achieved through TailwindCSS `md:` media width
 breakpoint.
@@ -941,7 +963,7 @@ breakpoint.
 Notice that demonstration images provided in the last section may come with an "MD Variant" postfix. This is because
 Assignee's styling is mobile-first, since the majority of Internet users nowadays are mobile users.
 
-Refer to the previous section for examples (compare non-MD and MD variants). Apart from apparent UI changes, Assignee is
+Refer to the previous section for examples (compare normal and MD variants). Apart from apparent UI changes, Assignee is
 also mobile user interface friendly, optimizing UX for hassle-free mobile usage.
 
 A deliberate decision has been made to forgo the implementation of dedicated print variants. The rationale is grounded
@@ -1057,8 +1079,8 @@ static resource caching.
 Google Issues and Lighthouse are used extensively to enforce web best practices. This includes loading speed, contentful
 paint (FCP/LCP), and accessibility.
 
-By reducing load times and network dependency chain, speeding up initial rendering, Assignee delivers the best level of
-user satisfaction and engagement.
+By reducing loading time and network dependency chains, initial rendering is sped up. This allows Assignee to deliver
+the best level of user satisfaction and engagement.
 
 = Credits
 The success of Assignee relied heavily on the extensive use of ecosystem tools. While only a fraction are listed here,
@@ -1137,8 +1159,9 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://www.latex-project.org")[LaTeX]
 - #link("https://typst.app")[Typst]
 - #link("https://github.com/Myriad-Dreamin/tinymist")[Tiny Mist]
-- #link("https://github.com/ltex-plus/vscode-ltex-plus")[LTeX+]
 - #link("https://github.com/tomoki1207/vscode-pdfviewer")[PDF Viewer]
+- #link("https://chat.deepseek.com")[DeepSeek]
+- #link("https://github.com/ltex-plus/vscode-ltex-plus")[LTeX+]
 
 While only a selection is mentioned here, I am deeply grateful for the entire ecosystem that made Assignee possible.
 
