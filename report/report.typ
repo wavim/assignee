@@ -62,7 +62,7 @@ The user system forms Assignee's foundation for account management. Key design p
 
 #sym.dagger
 Additional settings are excluded from initial versions because Assignee employs opinionated defaults optimized for core
-functionality
+functionality.
 
 === Team System
 Roles: (User, Member, Owner)
@@ -91,7 +91,7 @@ The team system backs Assignee's flexible group mechanism. Key design principles
   - Eliminates need for complex authorization
   - Security imposed by rotating unique codes
 + Multiple owners' schema:
-  - Eliminates appointment complexity
+  - Avoids appointment complexity
   - Enables hassle-free role management
 + Team usage flexibility:
   - Promotes creation of scoped small teams
@@ -276,17 +276,17 @@ Foreign key. (N:1 user mapping)
 `hash/salt` #h(1fr) `BLOB`
 
 + User authenticated through signin or signup
-+ Token generated: sid reversible-hashed with pepper, CSPRNG 256-bit hex key.
-+ Bearer token sent to client as cookie with secure configurations.
++ Token generated: sid reversible-hashed with pepper, CSPRNG 256-bit hex key
++ Bearer token sent to client as cookie with secure configurations
 
 Authentication flow:
 
 - Search cookie for session bearer token
 - Compute sid from hashed ID, loop up session
-- If session age passed expiration limit i.e. 1 day:
+- If session age passed expiration limit (i.e. 1 day):
   - Invalid session, respond with error
 - Else:
-  - If session age passed rotation limit i.e. 1 hour:
+  - If session age passed rotation limit (i.e. 1 hour):
     - Rotate token and return the new token
   - Else:
     - Return original token and authenticate
