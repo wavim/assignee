@@ -652,6 +652,10 @@ Having a global configuration file, there are rate limiters on certain routes su
 and enumeration attacks. The rate limiters are set to use key generators suitable for the case, i.e. email address for
 signin/signup, and uses client IP otherwise.
 
+== Quality Assurance
+Google Issues is used extensively to enforce HTTP response best practices, including response headers and caching
+directives.
+
 == Deployment
 For inspection of invigilators, the Node.js application is bundled and compiled into a prebuilt binary, by packing in
 Node.js internals into the single executable.
@@ -998,12 +1002,11 @@ Apart from the aforementioned options, other practices are also implemented to e
 This includes:
 
 - Including ARIA labels for non-text components
+- Separate signin/up pages to avoid confusing password managers
 - Keyboard navigation support e.g. Esc to close modal, Tab to inputs
 - Ensuring theme colors bear enough contrast (WCAG AAA compliance)
 - Following form accessibility guidelines e.g. autocomplete, spellcheck, labels
 - Using appropriate semantic elements to define content type e.g. ```html <header>, <footer>, <search>```
-
-Also note, `/signin` and `/signup` are separated pages to not confuse password managers.
 
 Together, Assignee helps to build a web accessible to everyone.
 
@@ -1046,6 +1049,13 @@ SolidJS is one of the most performant frontend libraries currently available. Bu
 performance, the application is bundled, tree-shaked, and minified. Certain assets are externalized to enable better
 static resource caching.
 
+=== Quality Assurance
+Google Issues and Lighthouse are used extensively to enforce web best practices. This includes loading speed, contentful
+paint (FCP/LCP), and accessibility.
+
+By reducing load times and network dependency chain, speeding up initial rendering, Assignee delivers the best level of
+user satisfaction and engagement.
+
 = Credits
 The success of Assignee relied heavily on the extensive use of ecosystem tools. While only a fraction are listed here,
 it's important to acknowledge that even a quarter of them couldn't be fully covered.
@@ -1087,6 +1097,7 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://github.com/privatenumber/tsx")[TSX]
 - #link("https://github.com/davglass/cpr")[CPR]
 - #link("https://github.com/yao-pkg/pkg")[PKG]
+- #link("https://developer.chrome.com/docs/devtools/issues")[Google Issues]
 
 == Schema
 - #link("https://github.com/colinhacks/zod")[Zod]
@@ -1115,6 +1126,8 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://github.com/wavim/gfont-loader")[GFont Loader] #sym.tiny
 - #link("https://github.com/wavim/omnires")[Omnires] #sym.tiny
 - #link("https://github.com/wavim/natural-log")[Natural Log] #sym.tiny
+- #link("https://developer.chrome.com/docs/lighthouse")[Lighthouse]
+- #link("https://developer.chrome.com/docs/devtools/issues")[Google Issues]
 
 == Report
 - #link("https://www.latex-project.org")[LaTeX]
