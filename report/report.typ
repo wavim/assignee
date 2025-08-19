@@ -557,6 +557,10 @@ All foreign keys in Assignee are set to `ONUPDATE: RESTRICT, ONDELETE: CASCADE` 
 - Updating referenced parent fields is prohibited
 - Deleting a parent entry would remove all related child entries
 
+=== Views/Triggers
+Advanced features like views and trigger are deliberately not implemented. The data layer of Assignee is meant to be
+simple yet efficient, thus complex logic is transferred to the application layer instead.
+
 = Application Layer
 Backing the application logic is an Express.js server leveraging Prisma ORM for type-safe database interactions. This
 chapter outlines the architectural design principles first, followed by concrete implementation patterns.
