@@ -530,7 +530,7 @@ Attachment file raw binary data.
 == Normal Form
 Tables satisfy 3NF/4NF (extended normal forms) in general, with practical compromises:
 
-- JSON values (e.g. Pref #sym.dagger): Space efficiency > strict 1NF, debatable violation
+- JSON values (e.g. Pref #sym.dagger): Space efficiency #sym.gt strict 1NF, debatable violation
 - Separate tables (e.g. Pass): Security metadata tracking or flexibility concerns
 
 All exceptions could be justified by performance/maintainability.
@@ -564,7 +564,7 @@ chapter outlines the architectural design principles first, followed by concrete
 Within this chapter, we:
 
 - Detail Express.js services design, route organization, and middleware stacks,
-- Rationalize Prisma’s integration for seamless data access and type safety,
+- Rationalize Prisma's integration for seamless data access and type safety,
 - Address application performance and security considerations,
 - Conclude with implementation specifics for portability.
 
@@ -781,7 +781,7 @@ space and forces focus.
 #figure(image("assets/demo/scroll.md.png", width: 100%), caption: "Header Scrolled
 MD Variant", gap: .5cm)
 
-The header’s transformative scroll behavior embodies minimalist utility through adaptive elegance. Initially transparent
+The header's transformative scroll behavior embodies minimalist utility through adaptive elegance. Initially transparent
 and embedded within the hero's natural flow, it avoids visual imposition. As scrolling commences, it transitions into a
 subtle overlay with soft elevation shadow, signaling a shift from introduction to action.
 
@@ -885,7 +885,7 @@ MD Variant", gap: .5cm)
 Embrace invitations via generous modal prompts. Enter code, done. Team invitation at its simplest, takes you to the team
 hub without needing manual actions.
 
-Team owner? Assign tasks through the simplest modal interface. Modals aren’t interruptions, they are graceful extensions
+Team owner? Assign tasks through the simplest modal interface. Modals aren't interruptions, they are graceful extensions
 of the workflow, designed with monastic restraint and geometric intentionality. When invoking task assignment, the modal
 emerges not as a layer, but as a focused thought.
 
@@ -930,7 +930,7 @@ current submission count.
 Assignee is fully responsive to different screen sizes. This is achieved through TailwindCSS `md:` media width
 breakpoint.
 
-Notice that demonstration images provided in the last section may come with a "MD Variant" postfix. This is because
+Notice that demonstration images provided in the last section may come with an "MD Variant" postfix. This is because
 Assignee's styling is mobile-first, since the majority of Internet users are mobile users.
 
 No extra examples would be attached, refer to the previous section for demos. Apart from apparent UI changes, Assignee
@@ -1031,19 +1031,22 @@ static resource caching.
 
 = Credits
 The success of Assignee relied heavily on the extensive use of ecosystem tools. While only a fraction are listed here,
-it’s important to acknowledge that even a quarter of them couldn’t be fully covered.
+it's important to acknowledge that even a quarter of them couldn't be fully covered.
 
 Items marked with #sym.tiny are written by myself.
 
 == Core
 - #link("https://git-scm.com")[Git]
 - #link("https://github.com")[GitHub]
+- #link("https://code.visualstudio.com")[VSCode]
+- #link("https://github.com/vivaxy/vscode-conventional-commits")[Conventional Commits]
 - #link("https://pnpm.io")[PNPM]
 - #link("https://www.typescriptlang.org")[TypeScript]
 - #link("https://eslint.org")[ESLint]
 - #link("https://prettier.io")[Prettier]
 - #link("https://github.com/typicode/husky")[Husky]
 - #link("https://github.com/okonet/lint-staged")[Lint Staged]
+- #link("https://github.com/catppuccin/vscode")[Catppuccin]
 - #link("https://github.com/wavim/vscode-alt-delete")[Alt Delete] #sym.tiny
 - #link("https://github.com/wavim/vscode-istrainless")[IstrainLess] #sym.tiny
 - #link("https://github.com/wavim/vscode-git-branch")[Git Branch] #sym.tiny
@@ -1059,7 +1062,7 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://www.prisma.io")[Prisma]
 - #link("https://expressjs.com")[Express.js]
 - #link("https://github.com/expressjs/compression")[Compression]
-- #link("https://github.com/express-rate-limit/express-rate-limit")[Rate Limit]
+- #link("https://github.com/express-rate-limit/express-rate-limit")[Express Rate Limit]
 - #link("https://github.com/expressjs/multer")[Multer]
 - #link("https://hashids.org")[HashIDs]
 - #link("https://github.com/paulmillr/noble-hashes")[Noble Hashes]
@@ -1078,7 +1081,7 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://patternpad.com")[Pattern Pad]
 - #link("https://fonts.google.com")[Google Fonts]
 - #link("https://github.com/tokotype/PlusJakartaSans")[Plus Jakarta Sans]
-- #link("https://webaim.org/resources/contrastchecker")[WebAIM Checker]
+- #link("https://webaim.org/resources/contrastchecker")[WebAIM Contrast Checker]
 
 == Client
 - #link("https://vitejs.dev")[Vite]
@@ -1099,6 +1102,9 @@ Items marked with #sym.tiny are written by myself.
 == Report
 - #link("https://www.latex-project.org")[LaTeX]
 - #link("https://typst.app")[Typst]
+- #link("https://github.com/Myriad-Dreamin/tinymist")[Tiny Mist]
+- #link("https://github.com/ltex-plus/vscode-ltex-plus")[LTeX+]
+- #link("https://github.com/tomoki1207/vscode-pdfviewer")[PDF Viewer]
 
 While only a selection is mentioned here, I am deeply grateful for the entire ecosystem that made Assignee possible.
 
