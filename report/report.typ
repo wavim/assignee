@@ -592,12 +592,12 @@ Assignee uses a client side router, thus only minimal static asset is served. Th
 - TailwindCSS compiled stylesheet
 - Other assets e.g. fonts
 
-Fonts used by the frontend is self-hosted to reduce reliance on Google Fonts, and potentially improves performance.
+Fonts used by the frontend are self-hosted to reduce reliance on Google Fonts, and potentially improves performance.
 
 Appropriate HTTP Cache-Control header is set to ensure proper static resource caching, flagging assets as immutable.
 
 == DB Integration
-Prisma ORM (Object–relational mapping) is used for interacting with the SQLite database. Prisma accepts a schema and
+Prisma ORM (object–relational mapping) is used for interacting with the SQLite database. Prisma accepts a schema and
 generates database CRUD interaction functions for client usage.
 
 Benefits:
@@ -686,7 +686,7 @@ payloads. They include:
 - Checking for dates earlier than expected
 
 And more. These even include validating complex data types such as arrays and discriminated object unions, which is
-impossible to validate soley with database constraints.
+impossible to validate solely with database constraints.
 
 Validation schemas are structured and named by API endpoints for ease of management, e.g.
 `PostTaskRequest, PostTaskResults`, validating data both coming to and from the server, by sharing the Zod schema
