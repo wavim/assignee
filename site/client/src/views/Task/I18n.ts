@@ -20,6 +20,7 @@ export default defineI18n({
 			work: "Work",
 			comm: { ctoa: "Edit Feedback", comm: "Comments", next: "Encourage" },
 		},
+		team: "Back Team",
 	},
 	zh: {
 		due: "截止",
@@ -35,5 +36,6 @@ export default defineI18n({
 			work: "文件",
 			comm: { ctoa: "編輯反饋", comm: "評語", next: "予以鼓勵" },
 		},
+		team: "返回群組",
 	},
 });
