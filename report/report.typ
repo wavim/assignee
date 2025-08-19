@@ -945,7 +945,7 @@ printed format, which cannot reflect real-time updates or enable interaction.
 == Accessibility
 Assignee provides numerous accessibility options to align with web standards.
 
-Default #sym.tiny
+(Default #sym.tiny)
 
 Font size
 - Small
