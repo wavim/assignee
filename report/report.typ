@@ -130,8 +130,8 @@ systems.
 
 For instance:
 
-- Notification channels via polling or server push
-- Instant messaging via server-sent events (SSE)
+- Notification channels with long-polling
+- Instant messaging via WS or server-sent events (SSE)
 
 #sym.dagger
 Side systems remain intentionally undeveloped in initial phases, conserving resources while maintaining straightforward
