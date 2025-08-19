@@ -551,11 +551,11 @@ SQLite automatically indexes primary keys and unique fields. The following is ma
 Modern DBMS utilizes B-Trees, instead of relying on binary search. B-Trees are self-balancing and the time complexities
 for search, insert, and delete are all $O(log(n))$. No re-indexing is required in most cases.
 
-=== Relation Handling
-All foreign keys in Assignee are set to `ONUPDATE: RESTRICT, ONDELETE: CASCADE`.
+=== Integrity
+All foreign keys in Assignee are set to `ONUPDATE: RESTRICT, ONDELETE: CASCADE` to maintain referential integrity:
 
-Attempting to update referenced fields would be prohibited; And if the parent entry is deleted, all entries referencing
-it would be removed automatically.
+- Updating referenced parent fields is prohibited
+- Deleting a parent entry would remove all related child entries
 
 = Application Layer
 Backing the application logic is an Express.js server leveraging Prisma ORM for type-safe database interactions. This
@@ -576,9 +576,9 @@ The application is implemented in Express.js (Node.js library) instead of PHP se
 - Full-stack: Shared TypeScript interface
 - Ecosystem: Rich tooling (ESLint, Prisma)
 
-Being a superset of JavaScript, TypeScript provides extraordinary static typing. In contrast, PHP is getting obsolete
-and has been lacking ecosystem support for several years. JavaScript backed by Google's V8 engine is simply a more
-performant and developer-friendly choice.
+Being a superset of JavaScript, using end-to-end TypeScript provides extraordinary static typing. In contrast, PHP is
+getting obsolete and has been lacking ecosystem support for several years. JavaScript backed by Google's V8 engine is
+simply a more performant and developer-friendly choice.
 
 == Static Resource
 Assignee uses a client side router, thus only minimal static asset is served. This includes:
