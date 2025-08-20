@@ -4,7 +4,7 @@
   title: "Assignee",
   author: "David W",
 )
-#show link: underline
+#show link: l => underline([#l #h(1fr) (#l.dest)])
 
 = Overview
 == Introduction
@@ -141,9 +141,11 @@ implementation paths via existing core architecture.
 The following resources are provided for SBA invigilators' reference and validation purposes.
 
 === Repository
-The complete project is hosted in a repository, accessible at #link(
-  "https://github.com/wavim/assignee",
-)[Repository] for inspection.
+The complete project is hosted in a repository, accessible at
+
+#link("https://github.com/wavim/assignee")[Repository]
+
+for inspection.
 
 A modular approach ensures clear separation of concerns:
 
@@ -154,9 +156,11 @@ A modular approach ensures clear separation of concerns:
   - `client/`: Presentation layer
 
 === Prebuilt Binary
-To accommodate environments without development dependencies, prebuilt archives are available in #link(
-  "https://github.com/wavim/assignee/releases",
-)[Releases] for invigilators.
+To accommodate environments without development dependencies, prebuilt archives are available in
+
+#link("https://github.com/wavim/assignee/releases")[Releases]
+
+for invigilators.
 
 To execute the application:
 
@@ -893,8 +897,7 @@ combine to form gentle card edges.
 By treating every stroke, curve, and alignment as deliberate concessions to human perception, the dashboard transcends
 utility to sanctuary.
 
-#figure(image("assets/demo/accept.png", width: 50%), caption: "Dashboard, Accept Invite
-MD Variant", gap: .5cm)
+#figure(image("assets/demo/accept.png", width: 50%), caption: "Dashboard, Accept Invite", gap: .5cm)
 
 Embrace invitations via generous modal prompts. Enter code, done. Team invitation at its simplest, takes you to the team
 hub without demanding manual actions.
@@ -944,7 +947,7 @@ current submission count.
 Data validation is done via the communication layer, while data verification is implemented on the website in subtle
 ways.
 
-Aligning with the core design language of the application, data verification constructs are not extract to their own
+Aligning with the core design language of the application, data verification constructs are not extracted to their own
 components. Instead, they exist within the input, similar to the dynamic form submission buttons. For instance, the
 "Show Password" toggle on password input fields allow trivial data verification, without relying on an extra "Repeat
 Password" field.
@@ -1010,9 +1013,9 @@ MD Variant", gap: .5cm)
 #figure(image("assets/demo/langzh.md.png", width: 100%), caption: "Accessibility, Lang 中文(繁)
 MD Variant", gap: .5cm)
 
-In fact, even date, time, hidden accessibility ARIA labels, would be translated to the specified locale. Translation is
-implemented everywhere across the application, not just specific parts. Doesn't rely on machine translate, localization
-is done by me manually to ensure conciseness (a lot of work...).
+In fact, even date, time, and hidden accessibility ARIA labels, would be translated to the specified locale. Translation
+is implemented everywhere across the application, not just specific parts. Doesn't rely on machine translate,
+localization is done by me manually to ensure conciseness (a lot of work...).
 
 #figure(image("assets/demo/dark.md.png", width: 100%), caption: "Accessibility, Dark Mode
 MD Variant", gap: .5cm)
@@ -1053,8 +1056,8 @@ simplifying style reuse and reduces output CSS size. (e.g. `h-4` #sym.arrow ```c
 Note the usage of relative EM units (and dynamic viewport units). They are used instead of absolute units to ensure
 style consistency, and backed the font size accessibility option.
 
-Some subtle animations (header on scroll) are created with GSAP, a sophisticated animation platform featuring a scroll
-trigger.
+Some subtle animations (e.g. modal popup) are created with GSAP, a sophisticated animation platform, which also features
+a scroll trigger (e.g. header scroll).
 
 Smooth scrolling of the webpage is enabled by Lenis, a lightweight scroll-smoother library.
 
