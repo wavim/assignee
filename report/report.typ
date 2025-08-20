@@ -1075,6 +1075,8 @@ SolidJS is one of the most performant frontend libraries currently available. Bu
 performance, the application is bundled, tree-shaked, and minified. Certain assets are externalized to enable better
 static resource caching.
 
+FOUC (flash of unrendered content) is prevented by resolving DNS early with font preloading.
+
 === Quality Assurance
 Google Issues and Lighthouse are used extensively to enforce web best practices. This includes loading speed, contentful
 paint (FCP/LCP), and accessibility.
@@ -1174,4 +1176,4 @@ acknowledging how to use AI tools responsibly.
 
 As I wrap up this report, I extend my thanks to the many tools, contributors, and collaborators who made Assignee a
 reality. I want to affirm my commitment to respecting intellectual property and licensing rights. In an era of boundless
-digital collaboration, we believe progress thrives when credit is given fairly, and innovation is built responsibly.
+digital collaboration, I believe progress thrives when credit is given fairly, and innovation is built responsibly.
