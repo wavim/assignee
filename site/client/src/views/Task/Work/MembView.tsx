@@ -16,7 +16,7 @@ export default (props: {
 		<section class="font-jakarta flex w-full flex-col gap-8">
 			<Show when={props.detail.work.done}>
 				<div class="flex flex-col gap-2 text-lg">
-					<h2 class="text-text-minor">Comments</h2>
+					<h2 class="text-text-minor">{t("work.comm.comm")}</h2>
 					<Show
 						when={props.detail.work.comm}
 						fallback={<span class="text-holder">{t("none")}</span>}
