@@ -196,6 +196,16 @@ Tables:
 - `Code` user 2FA codes #sym.dagger
 - `Pref` user preferences #sym.dagger
 
+`User` (#underline[uid], mail, name, created, updated)
+
+`Pass` (*#underline[uid]*, hash, salt, created, updated)
+
+`Sess` (#underline[sid], *uid*, hash, salt, created, updated)
+
+`Code` #sym.dagger (*#underline[uid]*, hash, salt, created, updated)
+
+`Pref` #sym.dagger (#underline[uid], *uid*, hash, salt, created, updated)
+
 #figure(image("assets/db/user-system.svg", width: 100%), caption: "User System ERD", placement: bottom)
 
 Relations:
@@ -342,6 +352,12 @@ Tables:
 - `Invite` team invitation
 - `Member` team membership
 
+`Team` (#underline[tid], name, desc, created, updated)
+
+`Invite` (*#underline[tid]*, code, created, updated)
+
+`Member` (*#underline[uid, tid]*, auth, created, updated)
+
 #figure(image("assets/db/team-system.svg", width: 100%), caption: "Team System ERD", placement: bottom)
 
 Relations:
@@ -424,6 +440,14 @@ Tables:
 - `Work` work information
 - `TaskFile` task attachment file
 - `WorkFile` work attachment file
+
+`Task` (#underline[aid], *tid*, name, desc, dead, created, updated)
+
+`Work` (#underline[sid], *uid*, *aid*, done, comm, created, updated)
+
+`TaskFile` (*#underline[aid]*, name, mime, blob, created, updated)
+
+`WorkFile` (*#underline[sid]*, name, mime, blob, created, updated)
 
 #figure(image("assets/db/task-system1.svg", width: 100%), caption: "Task System ERD (1)", placement: bottom)
 #figure(image("assets/db/task-system2.svg", width: 100%), caption: "Task System ERD (2)", placement: bottom)
