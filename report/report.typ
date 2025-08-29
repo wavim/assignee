@@ -165,7 +165,7 @@ for invigilators.
 To execute the application:
 
 + Extract the archive to your preferred location
-+ Run the prebuilt binary `app.exe` and follow prompts
++ Run the prebuilt binary `app.exe` (or `app` for Linux) and follow prompts
 
 Database records persist in the `app.db` file.
 
@@ -653,6 +653,8 @@ The actual authentication logic is also implemented here with cryptography utili
 Assignee uses a middleware stack to ensure proper authentication and authorization for endpoints, and enforces correct
 usage of response headers.
 
+All responses of Express (no matter static or API) are compressed with Brotli for bandwidth and transition performance.
+
 === Authen
 Validates against the cookie from request to see if the user bears a valid session cookie.
 
@@ -664,9 +666,6 @@ Validates against the assignment ID to see if the authenticated user is involved
 
 === CCache
 Sets the HTTP Cache-Control header to no-cache for API endpoints, forcing validation.
-
-Also, all responses of Express (no matter static or API) are compressed with Brotli for bandwidth and transition
-performance.
 
 == Routes
 Routers are the primary way we define API endpoints in Express.js for RPC/REST requests. After authentication,
@@ -689,12 +688,12 @@ Google Issues is used extensively to enforce HTTP response best practices, inclu
 directives.
 
 == Deployment
-For inspection of invigilators, the Node.js application is bundled and compiled into a prebuilt binary, by packing in
+For invigilators' reference, the Node.js application is bundled and compiled into a prebuilt binary, by packing in
 Node.js internals into the single executable.
 
 The server would try to host on 0.0.0.0, which is the reserved wildcard address. It would then resolve to the client's
-current IPv4 address, and start Assignee on port 5450 (a number I love personally). All computers in the same LAN would
-be able to access the web application.
+public broadcast IPv4 address (typically 192.168.x.x), and start Assignee on port 5450 (a number I love personally). All
+computers in the same LAN would be able to access the web application.
 
 By correctly configuring path resolution, static files are retrieved inside a virtual file system at runtime, and the
 `app.db` file is resolved relative to CWD. This allows database records to be preserved.
@@ -1141,6 +1140,7 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://github.com/catppuccin/vscode")[Catppuccin]
 - #link("https://github.com/wavim/vscode-alt-delete")[Alt Delete] #sym.tiny
 - #link("https://github.com/wavim/vscode-istrainless")[IstrainLess] #sym.tiny
+- #link("https://github.com/wavim/neogit")[NeoGit] #sym.tiny
 - #link("https://github.com/wavim/vscode-git-branch")[Git Branch] #sym.tiny
 - #link("https://github.com/wavim/vscode-better-memo")[Better Memo] #sym.tiny
 
@@ -1160,6 +1160,7 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://github.com/paulmillr/noble-hashes")[Noble Hashes]
 - #link("https://github.com/wavim/http-error")[HTTP Error] #sym.tiny
 - #link("https://github.com/privatenumber/tsx")[TSX]
+- #link("https://github.com/rollup/rollup")[Rollup]
 - #link("https://github.com/davglass/cpr")[CPR]
 - #link("https://github.com/yao-pkg/pkg")[PKG]
 - #link("https://developer.chrome.com/docs/devtools/issues")[Google Issues]
