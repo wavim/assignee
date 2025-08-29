@@ -1064,7 +1064,8 @@ This includes:
 Together, Assignee helps to build a web accessible to everyone.
 
 == Implementation
-The frontend is implemented in TypeScript with the SolidJS framework, bundling with Vite.
+The frontend is implemented in TypeScript (a superset of JavaScript with static typing, also used in backend and schema)
+with the SolidJS framework, bundling with Vite.
 
 Benefits:
 
@@ -1095,7 +1096,16 @@ size, perfectly complementing the clean lines and uncluttered spaces inherent in
 elegance, enhancing readability, ensuring timelessness, and improves load times, resulting in an experience that feels
 both refined and effortlessly intuitive.
 
-All SVGs used in Assignee are available under public domain from SVG Repo.
+The design intentionally forgoes audio and video to uphold a minimalist, calming philosophy that prioritizes user focus
+and reduces cognitive load. The exclusion of these high-stimulus elements prevents disruptive context-switching,
+ensuring the interface remains a silent, efficient tool for organization. This enhances site performance and reliability
+across all devices and networks, broadens accessibility for users with sensory impairments, and guarantees professional
+universality for use in quiet environments like offices or libraries. Ultimately, the choice creates a more respectful,
+dependable, and focused user experience.
+
+In place of multimedia, subtle animations are used to provide essential user feedback. These purposeful motions offer
+clear, immediate confirmation of actions. This maintains the calm aesthetic while ensuring the interface feels
+responsive and alive.
 
 === Performance
 SolidJS is one of the most performant frontend libraries currently available. But to deliver maximum application
