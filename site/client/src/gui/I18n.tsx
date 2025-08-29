@@ -1,4 +1,4 @@
-import { BaseDict, flatten, Flatten, Translator, translator } from "@solid-primitives/I18n";
+import { BaseDict, flatten, Flatten, Translator, translator } from "@solid-primitives/i18n";
 import {
 	createContext,
 	createMemo,
