@@ -19,6 +19,11 @@ export default (props: Props<"input">) => {
 					{...props}
 					type={shown() ? "text" : props.type}
 					on:input={({ target }) => setBlank(!target.value.trim().length)}
+					on:keydown={(e) => {
+						if (e.key === "Enter") {
+							e.preventDefault();
+						}
+					}}
 					class="text-text-major border-holder peer outline-outline w-full rounded-xl border-1 px-4 pt-6 pb-2 text-base"
 				></input>
 				<span
