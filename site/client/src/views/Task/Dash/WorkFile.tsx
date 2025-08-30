@@ -26,7 +26,7 @@ export default (props: {
 				<a
 					href={getWorkFile({ aid })}
 					download={props.detail.work.file}
-					class="text-text-major w-max underline underline-offset-2"
+					class="text-text-major w-max max-w-88 overflow-hidden text-ellipsis underline underline-offset-2"
 				>
 					{props.detail.work.file}
 				</a>

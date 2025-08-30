@@ -16,7 +16,7 @@ export default (props: { detail: GetTaskResults; mutate: Setter<GetTaskResults> 
 				<a
 					href={getTaskFile({ aid })}
 					download={props.detail.file}
-					class="text-text-major w-max underline underline-offset-2"
+					class="text-text-major w-max max-w-88 overflow-hidden text-ellipsis underline underline-offset-2"
 				>
 					{props.detail.file}
 				</a>
