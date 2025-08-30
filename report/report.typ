@@ -409,7 +409,7 @@ confuse.
 
 Cron jobs are run on the server side to periodically remove expired tokens.
 
-Invitation codes are validated and rotated with a similar mechanism to session tokens.
+Invitation codes are created lazily, while being validated and rotated with a similar mechanism to session tokens.
 
 === Member
 `uid` (=User.uid) #h(1fr) `INTEGER COMPOSITE KEY`
