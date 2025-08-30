@@ -515,7 +515,8 @@ Foreign key. (N:1 task mapping)
 
 `done` #h(1fr) `BOOLEAN`
 
-Flag indicating submission status.
+Flag indicating submission status. Work entries are lazy created upon certain user actions (e.g. viewing task), rather
+than being created all at once on task creation. This is more performant and flexible for larger teams.
 
 `comm` #h(1fr) `TEXT NULLABLE`
 
