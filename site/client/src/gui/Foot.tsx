@@ -15,7 +15,7 @@ export default (props: Props<"footer">) => (
 			<a
 				target="_blank"
 				href="https://github.com/wavim"
-				class="font-jakarta text-text-minor text-lg md:text-sm"
+				class="font-jakarta text-text-minor w-max text-lg md:text-sm"
 			>
 				{I18n.useI18n()("C")}
 			</a>
