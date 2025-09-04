@@ -1,6 +1,6 @@
 import { PutMembRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
-import { ErrorCode } from "@wvm/http-error";
+import { ErrorCode } from "@wavim/http-error";
 import { isAxiosError } from "axios";
 import { createMemo, createSignal } from "solid-js";
 import { putMemb } from "../../../api/code.api";

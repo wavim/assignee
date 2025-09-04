@@ -1,6 +1,6 @@
 import { SigninRequest } from "@app/schema";
 import { useNavigate } from "@solidjs/router";
-import { ErrorCode } from "@wvm/http-error";
+import { ErrorCode } from "@wavim/http-error";
 import { createMemo, createSignal } from "solid-js";
 import { signin } from "../../api/auth.api";
 import Signer from "../Signer";

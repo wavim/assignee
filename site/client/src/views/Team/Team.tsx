@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "@solidjs/router";
-import { ErrorCode } from "@wvm/http-error";
+import { ErrorCode } from "@wavim/http-error";
 import { isAxiosError } from "axios";
 import { createResource, Show, Suspense } from "solid-js";
 import { getCode } from "../../api/code.api";

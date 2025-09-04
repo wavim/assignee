@@ -1,5 +1,5 @@
 import { SigninRequest, SignupRequest } from "@app/schema";
-import { ErrorCode } from "@wvm/http-error";
+import { ErrorCode } from "@wavim/http-error";
 import axios from "axios";
 
 const api = axios.create({ baseURL: "/api" });

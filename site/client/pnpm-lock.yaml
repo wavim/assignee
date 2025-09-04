@@ -20,12 +20,12 @@ importers:
       '@solidjs/router':
         specifier: ^0.15.3
         version: 0.15.3(solid-js@1.9.9)
+      '@wavim/http-error':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@wavim/solid-filter':
         specifier: ^1.1.0
         version: 1.1.0(solid-js@1.9.9)
-      '@wvm/http-error':
-        specifier: jsr:^3.0.0
-        version: '@jsr/wvm__http-error@3.0.0'
       axios:
         specifier: ^1.11.0
         version: 1.11.0
@@ -411,9 +411,6 @@ packages:
   '@jridgewell/trace-mapping@0.3.30':
     resolution: {integrity: sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q==}
 
-  '@jsr/wvm__http-error@3.0.0':
-    resolution: {integrity: sha512-sYkj0B9U5Xgu/dsJc40L2Dxa5Hy1FE75iamExpaMfOYBU9Xo3t5FFEfLzQtiCVr5Skl3DaVOV31P4kh4x/7lyg==, tarball: https://npm.jsr.io/~/11/@jsr/wvm__http-error/3.0.0.tgz}
-
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -723,6 +720,9 @@ packages:
   '@typescript-eslint/visitor-keys@8.42.0':
     resolution: {integrity: sha512-3WbiuzoEowaEn8RSnhJBrxSwX8ULYE9CXaPepS2C2W3NSA5NNIvBaslpBSBElPq0UGr0xVJlXFWOAKIkyylydQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@wavim/http-error@1.0.0':
+    resolution: {integrity: sha512-h2m2ZFyXdFk09wYZYBvjltLmN97mo1bGZTear8OjqJ686Q9jk3d/MZxgW8yraFYSWEfGZ3hbviKT0V2gCVVXWg==}
 
   '@wavim/solid-filter@1.1.0':
     resolution: {integrity: sha512-NIj5SJRAqFGc8iKHjUzzJBCtTHPtLbtJx2Mh9HzGYSeImT8GF0fWLaFsp1SeFhnegy99i0IrFl3ATiDq8wybXg==}
@@ -1913,8 +1913,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@jsr/wvm__http-error@3.0.0': {}
-
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -2205,6 +2203,8 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.42.0
       eslint-visitor-keys: 4.2.1
+
+  '@wavim/http-error@1.0.0': {}
 
   '@wavim/solid-filter@1.1.0(solid-js@1.9.9)':
     dependencies:
