@@ -155,8 +155,9 @@ A modular approach ensures clear separation of concerns:
   - `schema/`: Communication layer
   - `client/`: Presentation layer
 
-=== Prebuilt Binary
-To accommodate environments without development dependencies, prebuilt archives are available in
+=== Prebuilt Binaries
+To accommodate environments without development dependencies, prebuilt archives for all mainstream operating systems
+(primarily for x64-86 architecture) are available in
 
 #link("https://github.com/wavim/assignee/releases")[Releases]
 
@@ -164,8 +165,8 @@ for invigilators.
 
 To execute the application:
 
-+ Extract the archive to your preferred location
-+ Run the prebuilt binary `app.exe` (or `app` for Linux) and follow prompts
++ Extract the archive for your operating system (`bin-{os}-{arch}.7z`) to a preferred location
++ Run the prebuilt binary `app.{os-ext?}` and follow prompts
 
 Database records persist in the `app.db` file.
 
@@ -689,8 +690,8 @@ Google Issues is used extensively to enforce HTTP response best practices, inclu
 directives.
 
 == Deployment
-For invigilators' reference, the Node.js application is bundled and compiled into a prebuilt binary, by packing in
-Node.js internals into the single executable.
+For invigilators' reference, the Node.js application is bundled and compiled into prebuilt binaries for all mainstream
+operating systems, by packing in Node.js internals into a single executable.
 
 The server would try to host on 0.0.0.0, which is the reserved wildcard address. It would then resolve to the client's
 public broadcast IPv4 address (typically 192.168.x.x), and start Assignee on port 5450 (a number I love personally). All
