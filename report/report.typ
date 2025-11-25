@@ -145,7 +145,7 @@ The complete project is hosted in a repository, accessible at
 
 #link("https://github.com/wavim/assignee")[Part 1 Repository]
 
-#link("https://github.com/wavim/assignee-test")[Part 2 Repository]
+#link("https://github.com/wavim/assignee-next")[Part 2 Repository]
 
 for inspection.
 
