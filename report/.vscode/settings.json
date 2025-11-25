@@ -1,6 +1,4 @@
 {
-  "conventionalCommits.scopes": ["R"],
-
   "[typst]": {
     "editor.formatOnSave": true
   },

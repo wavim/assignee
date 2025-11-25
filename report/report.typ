@@ -21,7 +21,7 @@ Within this chapter, we:
 - Discuss auxiliary systems extending the core functionality,
 - Reference materials and validation resources conclude the chapter.
 
-== Capabilities
+== Capability
 This section describes user roles in Assignee and their core workflows. It provides a high-level overview, omitting
 secondary capabilities (e.g., accessibility features) which are covered in later chapters.
 
@@ -143,7 +143,9 @@ The following resources are provided for SBA invigilators' reference and validat
 === Repository
 The complete project is hosted in a repository, accessible at
 
-#link("https://github.com/wavim/assignee")[Repository]
+#link("https://github.com/wavim/assignee")[Part 1 Repository]
+
+#link("https://github.com/wavim/assignee-test")[Part 2 Repository]
 
 for inspection.
 
@@ -159,7 +161,7 @@ A modular approach ensures clear separation of concerns:
 To accommodate environments without development dependencies, prebuilt archives for all mainstream operating systems
 (primarily for x64-86 architecture) are available in
 
-#link("https://github.com/wavim/assignee/releases")[Releases]
+#link("https://github.com/wavim/assignee/releases")[Assignee Releases]
 
 for invigilators.
 
@@ -270,7 +272,7 @@ Secured credentials storage:
 - Salted (128-bit CSPRNG)
 
 + Append CSPRNG salt to key
-+ Hash with K12, store digest+salt
++ Hash with K12, store digest + salt
 + Verification: Repeat with stored salt
 
 Collision probability $approx 1.5 dot 10^(-31)$ (negligible).
@@ -557,13 +559,20 @@ Attachment file Multi-purpose Internet Mail Extensions type.
 
 Attachment file raw binary data.
 
-== Normal Form
+== Normalization
 Tables satisfy 3NF/4NF (extended normal forms) in general, with practical compromises:
 
-- JSON values (e.g. Pref #sym.dagger): Space efficiency #sym.gt strict 1NF, debatable violation
-- Separate tables (e.g. Pass): Security metadata tracking or flexibility concerns
+- JSON values (e.g. Pref): Space efficiency #sym.gt strict 1NF, debatable violation of scalar values
+- Separate tables (e.g. Pass): Security metadata tracking and flexibility concerns
 
 All exceptions could be justified by performance/maintainability.
+
+Otherwise, all tables satisfy:
+
+- Unique rows
+- Scalar values
+- No partial dependencies
+- No transitive dependencies
 
 == Implementation
 The database is implemented in SQLite for:
@@ -572,7 +581,7 @@ The database is implemented in SQLite for:
 - Dynamic data typing system easing configuration
 - Portability backs prebuilt binaries for reviewers' inspection
 
-=== Indexing
+=== Table Index
 SQLite automatically indexes primary keys and unique fields. The following is manually indexed:
 
 - Foreign keys: For efficient 1-N relational queries
@@ -581,19 +590,20 @@ SQLite automatically indexes primary keys and unique fields. The following is ma
 Modern DBMS utilizes B-Trees, instead of relying on binary search. B-Trees are self-balancing and the time complexities
 for search, insert, and delete are all $O(log(n))$. No re-indexing is required in most cases.
 
-=== Integrity
+=== Data Integrity
 All foreign keys in Assignee are set to `ONUPDATE: RESTRICT, ONDELETE: CASCADE` to maintain referential integrity:
 
 - Updating referenced parent fields is prohibited
 - Deleting a parent entry would remove all related child entries
 
-=== Views/Triggers
-Advanced features like views and trigger are deliberately not implemented. The data layer of Assignee is meant to be
+=== Miscellaneous
+Advanced features like views and triggers are deliberately not implemented. The data layer of Assignee is meant to be
 simple yet efficient, thus complex logic is transferred to the application layer instead.
 
 = Application Layer
-Backing the application logic is an Express.js server leveraging Prisma ORM for type-safe database interactions. This
-chapter outlines the architectural design principles first, followed by concrete implementation patterns.
+Backing the application logic is an JavaScript Express.js server leveraging Prisma ORM for type-safe database
+interactions. This chapter outlines the architectural design principles first, followed by concrete implementation
+patterns.
 
 Within this chapter, we:
 
@@ -602,7 +612,7 @@ Within this chapter, we:
 - Address application performance and security considerations,
 - Conclude with implementation specifics for portability.
 
-== Framework
+== Server Framework
 The application is implemented in Express.js (Node.js library) instead of PHP servers for:
 
 - Control: Express middleware
@@ -610,102 +620,169 @@ The application is implemented in Express.js (Node.js library) instead of PHP se
 - Full-stack: Shared TypeScript interface
 - Ecosystem: Rich tooling (ESLint, Prisma)
 
-Being a superset of JavaScript, using end-to-end TypeScript provides extraordinary static typing. In contrast, PHP is
-getting obsolete and has been lacking ecosystem support for several years. JavaScript backed by Google's V8 engine is
-simply a more performant and developer-friendly choice.
+Being a superset of JavaScript, TypeScript provides extraordinary static typing. In contrast, PHP is getting obsolete
+and has been lacking ecosystem support for several years. JavaScript backed by Google's V8 engine is simply a more
+performant and developer-friendly choice.
 
-== Static Resource
+== Resource Serving
 Assignee uses a client side router, thus only minimal static asset is served. This includes:
 
-- HTML entry
-- Frontend framework JS files
-- TailwindCSS compiled stylesheet
+- HTML skeleton
+- Frontend JavaScript
+- External CSS stylesheets
 - Other assets e.g. fonts
 
-Fonts used by the frontend are self-hosted to reduce reliance on Google Fonts, and potentially improves performance.
+Fonts used by the frontend are self-hosted to reduce reliance on Google Fonts for higher robustness, and potentially
+improving performance.
 
-Appropriate HTTP Cache-Control header is set to ensure proper static resource caching, flagging assets as immutable.
+Appropriate HTTP Cache-Control headers are set to ensure proper static resource caching, e.g. flagging assets as
+immutable.
 
 == DB Integration
-Prisma ORM (object–relational mapping) is used for interacting with the SQLite database. Prisma accepts a schema and
-generates database CRUD interaction functions for client usage.
+Prisma ORM (JavaScript object–relational mapping library) is used for interacting with the SQLite database. Prisma
+accepts a schema defined in a custom language and generates database CRUD interaction functions for client usage.
 
 Benefits:
 
-- SQL statement like functions
 - Straightforward relational queries
 - Sanitization to prevent SQL injection
 - Strict typing interfaces for validation
 
-For the application to be portable, the native add-ons used by Prisma must be copied to the output destination to be
-linked by packager.
+An example schema definition for Prisma:
 
-== Services
-Services handle different requests by interacting with the database.
+```
+model Member {
+  uid Int
+  tid Int
 
-For instance:
+  auth Boolean
 
-- Creating a user with the provided data
-- Rotating a session and returning token
-- Updating a work file with the new payload
+  created DateTime @default(now())
+  updated DateTime @updatedAt
 
-The actual authentication logic is also implemented here with cryptography utilities.
+  User User @relation(fields: [uid], references: [uid], onUpdate: Restrict, onDelete: Cascade)
+  Team Team @relation(fields: [tid], references: [tid], onUpdate: Restrict, onDelete: Cascade)
+
+  @@id([uid, tid], name: "pk")
+  @@index([tid])
+}
+```
+
+Notice that Prisma also helps with enforcing relational integrity via `@relation` definitions.
+
+After defining the schema, relational queries could be performed in TypeScript with ease:
+
+```ts
+await prisma.task.findMany({
+  select: {
+    aid: true,
+    name: true,
+    dead: true,
+    Team: { select: { name: true } },
+    Work: { select: { done: true }, where: { uid } },
+  },
+  where: { Team: { Member: { some: { uid, auth: false } } } },
+});
+```
 
 == Middleware
 Assignee uses a middleware stack to ensure proper authentication and authorization for endpoints, and enforces correct
 usage of response headers.
 
-All responses of Express (no matter static or API) are compressed with Brotli for bandwidth and transition performance.
+All responses of Express (no matter static or API) are compressed with Brotli for bandwidth and response speed.
 
-=== Authen
+=== Authentication
 Validates against the cookie from request to see if the user bears a valid session cookie.
 
-=== Member
+=== Membership
 Validates against the team ID to see if the authenticated user bears a team membership.
 
-=== Assign
+=== Assignment
 Validates against the assignment ID to see if the authenticated user is involved within.
 
-=== CCache
+=== Cache Control
 Sets the HTTP Cache-Control header to no-cache for API endpoints, forcing validation.
 
-== Routes
+== Route Services
+Services implement different functions that interact with the database, and are called by API endpoints. For example:
+
+- Creating a user with the provided data
+- Rotating a session and returning token
+- Updating a work file with the new payload
+- Logging out from a session
+
+The actual authentication logic is also implemented here with cryptography utilities, including K12 hashing and CSPRNGs.
+
+An example extract of authentication logic:
+
+```ts
+async function createSession(uid: number): Promise<SessionCookie> {
+	const key = randk();
+	const { sid } = await prisma.sess.create({ select: { sid: true }, data: { uid, ...chash(key) } });
+
+	return { sid: configs.hashSID.encode(sid), key };
+}
+
+export async function signin(req: SigninRequest): Promise<SessionCookie> {
+	const user = await prisma.user.findUnique({
+		select: { uid: true, Pass: { select: { hash: true, salt: true } } },
+		where: { mail: req.mail },
+	});
+
+	if (!user) {
+		throw new HttpError("UNAUTHORIZED", "Invalid Email or Password");
+	}
+
+	if (!user.Pass) {
+		throw new HttpError("INTERNAL_SERVER_ERROR", "No Password Data");
+	}
+
+	if (!match(req.pass, user.Pass.hash, user.Pass.salt)) {
+		throw new HttpError("UNAUTHORIZED", "Invalid Email or Password");
+	}
+
+	return await createSession(user.uid);
+}
+```
+
+== Route Endpoints
 Routers are the primary way we define API endpoints in Express.js for RPC/REST requests. After authentication,
 authorization, and validating the payload, corresponding services are called to perform the requested action.
 
-Most endpoints are GET or POST requests, but some are defined to be PUT. Both GET and PUT are assumed to be idempotent
-(which means the same request yields the same results) and thus enables better caching. Actions that could not be safely
-cached usually goes with the POST method, e.g. authentication.
+Most endpoints are GET or POST requests, but some use PUT. Both GET and PUT are assumed to be idempotent (the same
+request yields the same results) and thus enables better caching. Actions that could not be safely cached usually goes
+with the POST method, e.g. authentication. Additionally, endpoints with payloads that could be too large for the URL
+query string must avoid using GET.
 
 It is worth noting that although the CCache middleware is used to set Cache-Control to no-cache, it doesn't really mean
 to force no caching (which is the case for no-store). Instead, data validity must be checked before proceeding with the
 cached asset. This is typically not required for static assets, but inherently important for API endpoints.
 
 Having a global configuration file, there are rate limiters on certain routes such as signin and signup to prevent abuse
-and enumeration attacks. The rate limiters are set to use key generators suitable for the case, i.e. email address for
-signin/signup, and uses client IP otherwise.
+and enumeration attacks e.g. DoS. The rate limiters are set to use key generators suitable for the case, i.e. email
+address for signin/signup, and uses client IP otherwise.
 
 == Quality Assurance
 Google Issues is used extensively to enforce HTTP response best practices, including response headers and caching
-directives.
+directives. Repeated tests on different scenarios are done to ensure good baseline response time.
 
-== Deployment
+== Server Deployment
 For invigilators' reference, the Node.js application is bundled and compiled into prebuilt binaries for all mainstream
 operating systems, by packing in Node.js internals into a single executable.
 
-The server would try to host on 0.0.0.0, which is the reserved wildcard address. It would then resolve to the client's
-public broadcast IPv4 address (typically 192.168.x.x), and start Assignee on port 5450 (a number I love personally). All
-computers in the same LAN would be able to access the web application.
+The server would try to host on 0.0.0.0, which is the reserved wildcard address in IPv4. It would then resolve to the
+client's public broadcast IPv4 address (typically 192.168.x.x), and start Assignee on port 5450 (a number I love
+personally, avoids port conflicts). All computers in the same LAN would be able to access the web application.
 
-By correctly configuring path resolution, static files are retrieved inside a virtual file system at runtime, and the
-`app.db` file is resolved relative to CWD. This allows database records to be preserved.
+By correctly configuring path resolution, static files are retrieved inside a virtual file system at runtime. The
+`app.db` file is resolved relatively, this allows database records to be preserved.
 
 = Communication Layer
-This is a short chapter on the validation of requests and response between the server and client. The layer is the
-primary way of validating complex data, instead of relying on rigid database constructs.
+This chapter is on the validation of requests and response between the server and clients. The layer is the primary way
+of validating complex data, instead of relying on rigid database constructs.
 
-By using TypeScript for backend, a full-stack application allows global TS schema validators. The library used in
-Assignee's case is Zod, which adds support for sophisticated runtime type validation.
+By using TypeScript end-to-end, a full-stack application allows global TS schema validators. The library is Zod, which
+adds support for sophisticated runtime data validation.
 
 The rules are used to enforce business rules and maintain data consistency, blocking further actions if failing to parse
 payloads. They include:
@@ -714,19 +791,76 @@ payloads. They include:
 - Checking for password security strength
 - Checking for dates earlier than expected
 
-And more. These even include validating complex data types such as arrays and discriminated object unions, which is
-impossible to validate solely with database constraints.
+And more. These even include validating complex data types such as regular expression strings, arrays, objects, and
+discriminated object unions, which is impossible to validate solely with database constraints.
 
-Validation schemas are structured and named by API endpoints for ease of management, e.g.
+Validation schemas are structured and named using API endpoints for ease of management, e.g.
 `PostTaskRequest, PostTaskResults`, validating data both coming to and from the server, by sharing the Zod schema
-between the server and client.
+between the server and client. This prevents bypassing JavaScript while maintaining immediate response otherwise.
 
 Zod schemas fill up the inadequacy of SQLite dynamic data types, and allows even more specific constraints. This ensures
 development goes smoothly, and different layers agree on the same interface, catching errors early in development.
 
-== Reference
-Please refer to the repository source code for details on schemas. The code is meant to be self-documenting, and would
-not be hard to interpret after having a rough understanding of the site after reading this report.
+== Example Validators
+Some example validators defined for authentication:
+
+```ts
+// POST /auth/verify
+// POST /auth/logout
+
+export const SessionCookie = z.object({
+	sid: z.string().check(z.regex(/^[0-9a-zA-Z]{8,}$/)),
+	key: z.string().check(z.regex(/^[0-9a-f]{64}$/)),
+});
+export type SessionCookie = z.infer<typeof SessionCookie>;
+
+// POST /auth/signin
+
+export const SigninRequest = z.object({
+	mail: z.string().check(z.trim(), z.email(), z.toLowerCase()),
+	pass: z.string().check(z.regex(/^[\x20-\x7E]{8,}$/)),
+});
+export type SigninRequest = z.infer<typeof SigninRequest>;
+```
+
+Notice the use of `z.trim()` and `z.toLowerCase()`, Zod allows schemas to preprocess and post-process payloads to meet
+specific requirements without throwing an error. In the case, email addresses that start or end with spaces could be
+refined as needed, but not throwing an error and make users frustrated.
+
+TypeScript types are inferred from Zod schemas via `z.infer`, and exported for use of both the backend and frontend.
+
+Instances using discriminated unions (simplified for clarity):
+
+```ts
+// GET /teams/:tid/tasks
+
+export const GetTeamTasksResults = z.discriminatedUnion("auth", [
+	z.object({
+		auth: z.literal(true),
+		data: z.array(
+			z.object({
+        // ...
+				done: z.number().check(z.nonnegative()),
+			}),
+		),
+	}),
+	z.object({
+		auth: z.literal(false),
+		data: z.array(
+			z.object({
+        // ...
+				done: z.boolean(),
+			}),
+		),
+	}),
+]);
+export type GetTeamTasksResults = z.infer<typeof GetTeamTasksResults>;
+```
+
+Greet the usage of request parameters i.e. `:tid`! By deciding the user's authenticated status in a group, Assignee
+would return different payloads. In this case, team owners would receive completion status as figures, while members
+would only have access to their own completion status as a boolean. This greatly increases the flexibility, security,
+and performance of the application, as only a selection of all data would be needed in different cases.
 
 = Presentation Layer
 The essence of an application is the interface that presents data to users. This chapter covers the frontend website
@@ -740,7 +874,7 @@ Within this chapter, we:
 - Detail user experience and mobile-friendliness,
 - Conclude with actual implementation details.
 
-== Philosophy
+== Design Language
 Essence, Clarity, Calm
 
 Assignee is a deliberate rebellion against digital noise. It champions radical simplicity, cognitive ease, and
@@ -816,7 +950,7 @@ threshold, using sharp angles and staggered collisions to signal transition with
 In larger screens, these tiles recede entirely, allowing the hero to expand edge-to-edge, signifying the presence of
 space and forces focus.
 
-=== Header
+=== Home Header
 #figure(image("assets/demo/scroll.png", width: 50%), caption: "Header Scrolled", gap: .5cm)
 #figure(image("assets/demo/scroll.md.png", width: 100%), caption: "Header Scrolled
 MD Variant", gap: .5cm)
@@ -859,12 +993,12 @@ Did this beautiful philosophy not reign the grounds of Assignee?
 #figure(image("assets/demo/ctoa.md.png", width: 100%), caption: "Features Section
 MD Variant", gap: .5cm)
 
-=== Footer
+=== Home Footer
 The footer embodies a subtle logo paired with a clean copyright linking to my GitHub. No dividers, no social icons, no
 excess: just geometric purity and creator credit on a neutral canvas. What a final whisper of a system where every
 element serves purpose?
 
-=== Signin/Signup
+=== Authenticator
 #figure(image("assets/demo/signer.png", width: 50%), caption: "Dynamic Signer", gap: .5cm)
 
 Two fields, one button. No extras. Assignee strips authentication to its essence. Task clarity through disciplined
@@ -886,7 +1020,7 @@ MD Variant", gap: .5cm)
 In fact, all visible ASCII characters (and space `\x20`) are allowed characters in the password. This increases entropy
 and enhances security. This also aligns well with modern password managers.
 
-=== Not Found
+=== Page Not Found
 A generous 404 page is also implemented just in case users get lost (unlikely!)
 
 Maybe, umm, try to navigate back to the landing page by clicking on that button...?
@@ -894,7 +1028,7 @@ Maybe, umm, try to navigate back to the landing page by clicking on that button.
 #figure(image("assets/demo/e404.md.png", width: 100%), caption: "Not Found
 MD Variant", gap: .5cm)
 
-=== Dashboard/Teams/Tasks
+=== The Application
 
 #figure(image("assets/demo/dash.md.png", width: 100%), caption: "Dashboard, Teams
 MD Variant", gap: .5cm)
@@ -984,9 +1118,9 @@ Distinct from the landing pages (where navigation is too simple), the applicatio
 blending simple navigation switches naturally in the header (notice that this header is different from the landing page
 header), Assignee avoids cluttering the view with excessive directives, reducing users' decision fatigue.
 
-== Responsive Design
-Assignee is fully responsive to different screen sizes. This is achieved through TailwindCSS `md:` media width
-breakpoint.
+== Responsive
+Assignee is fully responsive to different screen sizes. This is achieved through the TailwindCSS `md:` media width
+breakpoint (roughly equivalent to tablet size).
 
 Notice that demonstration images provided in the last section may come with an "MD Variant" postfix. This is because
 Assignee's styling is mobile-first, since the majority of Internet users nowadays are mobile users.
@@ -1003,7 +1137,7 @@ printed format, which cannot reflect real-time updates or enable interaction.
 == Accessibility
 Assignee provides numerous accessibility options to align with web standards.
 
-(Default #sym.tiny)
+(Default = #sym.tiny)
 
 Font size
 - Small
@@ -1021,6 +1155,9 @@ Motion effects
 - System #sym.tiny
 - On
 - Off
+
+By default, Assignee detects system and browser configurations automatically to apply different settings. For instance,
+color theme, language, and motion could be inferred from the browser to provide optimal UX on first encounter.
 
 The options are configurable through the iconic accessibility button (blue man), which is present on all pages. The
 configuration would be stored in local storage, allowing it to be persisted over sessions.
@@ -1065,33 +1202,117 @@ This includes:
 Together, Assignee helps to build a web accessible to everyone.
 
 == Implementation
-The frontend is implemented in TypeScript (a superset of JavaScript with static typing, also used in backend and schema)
-with the SolidJS framework, bundling with Vite.
-
-Benefits:
+The frontend is implemented in TypeScript with the SolidJS framework, with the following benefits:
 
 - Simple JSX component reuse
 - Reactive component updates
 - Performant element renderer
+- Modern client-side page router
+- Efficient JSX caching mechanism
 
-Client-side page routing is implemented with SolidJS/router.
+Only a skeleton HTML entry is needed when using dynamic JSX libraries:
 
-Styling is done primarily through TailwindCSS, which compiles inline classes into corresponding CSS statements (e.g.
-`h-4` #sym.arrow ```css { height: 1rem }```). This simplifies style reuse, and promotes styling consistency. This also
-reduces the output external stylesheet size.
+```html
+<!doctype html>
+<html lang="en">
 
-Note the usage of relative EM units (and dynamic viewport units). They are used instead of absolute units to ensure
-style consistency, and backed the font size accessibility option.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Assignee</title>
+
+  <link rel="preload" as="font" crossorigin="anonymous"
+    type="font/woff2"
+    href="assets/fonts/plus-jakarta-sans-v11-latin-regular.woff2"
+  />
+  <link rel="preload" as="font" crossorigin="anonymous"
+    type="font/woff2"
+    href="assets/fonts/plus-jakarta-sans-v11-latin-500.woff2"
+  />
+  <link rel="icon"
+    type="image/png"
+    href="assets/favicon.png"
+  />
+
+</head>
+
+<body class="bg-main">
+  <div id="root" class="flex min-h-dvh flex-col items-center"></div>
+
+  <noscript>JavaScript Must Be Enabled to Run This App</noscript>
+  <script src="src/index.tsx" type="module"></script>
+</body>
+
+</html>
+```
+
+Notice the inclusion of default page language, appropriate metadata tags, preload links, and message on disablement of
+JavaScript.
+
+An example of reusable GUI components is a button variant:
+
+```tsx
+export default (props: Props<"button"> & { pill?: boolean; full?: boolean }) => (
+	<button
+		{...props}
+		type="button"
+		class={clsx(
+			props.class,
+			"bg-button font-jakarta text-text-alter outline-button cursor-pointer px-6 py-3 text-xl outline-2 transition-[outline-offset] duration-100 ease-out hover:outline-offset-2 focus:outline-offset-2",
+			props.full ? "w-full" : "w-max",
+			props.pill ? "rounded-full" : "rounded-xl",
+		)}
+	></button>
+);
+```
+
+Look at how many styles and animations could be applied to a simple yet elegant button! TailwindCSS greatly boosts
+productivity and allows faster iterations and testing. JSX combined with TailwindCSS delivers maximum flexibility in
+component reuse, all you need to include the button is a single line of TSX (TypeScript React for HTML embedding):
+`<Button pill>Hello World!</Button>`.
+
+=== Translation
+I18n is implemented via a complex system of event listeners and dynamically retrieved dictionaries. Internals listen for
+language changes, and signals SolidJS contexts to replace their content at runtime by retrieving dictionaries we define.
+For instance:
+
+```ts
+export default defineI18n({
+	en: {
+		header: "Nice to have you back. Sign in to resume.",
+		errors: {
+			generic: "Invalid Email or Password",
+			ratelim: "Too Many Requests",
+		},
+	},
+	zh: {
+		header: "...",
+    errors: { /* ... */ },
+	},
+});
+```
+
+Additional languages could be defined in no time with this flexible framework.
+
+=== Page Styling
+Page styling is done primarily via TailwindCSS, which compiles inline classes into corresponding CSS statements (e.g.
+`h-4` #sym.arrow ```css { height: 1rem }```). This simplifies style reuse and promotes style consistency. It also
+reduces the total output external stylesheet size by algorithmically optimizing class usage.
+
+Relative EM units i.e. `em` and dynamic viewport units e.g. `vh` are used instead of absolute units e.g. `px` (with some
+exceptions) in CSS to ensure style consistency. It also backs the font size accessibility option, allowing containers to
+grow together with text.
+
+FOUC (flash of unrendered content) is prevented by resolving DNS early with font preloading.
+
+=== Animations
 Some subtle animations (e.g. modal popup) are created with GSAP, a sophisticated animation platform, which also features
 a scroll trigger (e.g. header scroll).
 
 Smooth scrolling of the webpage is enabled by Lenis, a lightweight scroll-smoother library.
 
-Fetching data from the backend is done via Axios, enabling async I/O operations with automatic request header
-configuration.
-
-=== Media
+=== Media Usage
 The deliberate use of minimal black and white SVGs within Assignee is a design rooted in essentialism and sophisticated
 clarity. The scalability and crisp precision of SVGs ensure icons and graphic elements remain sharp and adaptable at any
 size, perfectly complementing the clean lines and uncluttered spaces inherent in minimalism. It embodies functional
@@ -1109,12 +1330,17 @@ In place of multimedia, subtle animations are used to provide essential user fee
 clear, immediate confirmation of actions. This maintains the calm aesthetic while ensuring the interface feels
 responsive and alive.
 
+=== Backend Requests
+Exchanging data with the backend is done via Axios, enabling async I/O operations with automatic request header
+configuration.
+
 === Performance
 SolidJS is one of the most performant frontend libraries currently available. But to deliver maximum application
 performance, the application is bundled, tree-shaked, and minified. Certain assets are externalized to enable better
 static resource caching.
 
-FOUC (flash of unrendered content) is prevented by resolving DNS early with font preloading.
+Simulated throttling are used while inspecting to ensure Assignee is performant even for devices with poor computational
+power or connection.
 
 === Quality Assurance
 Google Issues and Lighthouse are used extensively to enforce web best practices. This includes loading speed, contentful
@@ -1123,13 +1349,16 @@ paint (FCP/LCP), and accessibility.
 By reducing loading time and network dependency chains, initial rendering is sped up. This allows Assignee to deliver
 the best level of user satisfaction and engagement.
 
+Assignee is tested on both laptop, tablet, and phone on real devices. It is also tested comprehensively for other
+dimensions with responsive design tools.
+
 = Credits
 The success of Assignee relied heavily on the extensive use of ecosystem tools. While only a fraction are listed here,
 it's important to acknowledge that even a quarter of them couldn't be fully covered.
 
-Items marked with #sym.tiny are written by myself.
+Items marked with #sym.tiny are written by myself during development.
 
-== Core
+== Common
 - #link("https://git-scm.com")[Git]
 - #link("https://github.com")[GitHub]
 - #link("https://code.visualstudio.com")[VSCode]
@@ -1147,12 +1376,12 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://github.com/wavim/vscode-git-branch")[Git Branch] #sym.tiny
 - #link("https://github.com/wavim/vscode-better-memo")[Better Memo] #sym.tiny
 
-== DBMS
+== Database
 - #link("https://www.sqlite.org")[SQLite]
 - #link("https://sqlitestudio.pl")[SQLite Studio]
 - #link("https://www.dbvis.com")[DB Visualizer]
 
-== Server
+== Backend
 - #link("https://nodejs.org")[Node.js]
 - #link("https://www.prisma.io")[Prisma]
 - #link("https://expressjs.com")[Express.js]
@@ -1180,7 +1409,7 @@ Items marked with #sym.tiny are written by myself.
 - #link("https://github.com/tokotype/PlusJakartaSans")[Plus Jakarta Sans]
 - #link("https://webaim.org/resources/contrastchecker")[WebAIM Contrast Checker]
 
-== Client
+== Frontend
 - #link("https://vitejs.dev")[Vite]
 - #link("https://solidjs.com")[SolidJS]
 - #link("https://github.com/solidjs/solid-router")[Solid Router]
