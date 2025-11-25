@@ -2,7 +2,7 @@
 
 #show: ilm.with(
   title: "Assignee",
-  author: "David W",
+  author: "David Y. Wu",
 )
 #show link: l => underline([#l #h(1fr) (#l.dest)])
 
@@ -1012,7 +1012,7 @@ Font size
 Language
 - System #sym.tiny
 - English
-- 中文(繁)
+- Chinese
 Color theme
 - System #sym.tiny
 - Light
@@ -1035,12 +1035,12 @@ many space).
 #figure(image("assets/demo/fontl.md.png", width: 100%), caption: "Accessibility, Font Large
 MD Variant", gap: .5cm)
 
-#figure(image("assets/demo/langzh.md.png", width: 100%), caption: "Accessibility, Lang 中文(繁)
+#figure(image("assets/demo/langzh.md.png", width: 100%), caption: "Accessibility, Lang Chinese
 MD Variant", gap: .5cm)
 
 In fact, even date, time, and hidden accessibility ARIA labels, would be translated to the specified locale. Translation
 is implemented everywhere across the application, not just specific parts. Doesn't rely on machine translate,
-localization is done by me manually to ensure conciseness (a lot of work...).
+localization is done by me manually to ensure conciseness.
 
 #figure(image("assets/demo/dark.md.png", width: 100%), caption: "Accessibility, Dark Mode
 MD Variant", gap: .5cm)
@@ -1076,8 +1076,9 @@ Benefits:
 
 Client-side page routing is implemented with SolidJS/router.
 
-The styling is done primarily through TailwindCSS, which compiles inline classes into corresponding CSS statements,
-simplifying style reuse and reduces output CSS size. (e.g. `h-4` #sym.arrow ```css { height: 1rem }```).
+Styling is done primarily through TailwindCSS, which compiles inline classes into corresponding CSS statements (e.g.
+`h-4` #sym.arrow ```css { height: 1rem }```). This simplifies style reuse, and promotes styling consistency. This also
+reduces the output external stylesheet size.
 
 Note the usage of relative EM units (and dynamic viewport units). They are used instead of absolute units to ensure
 style consistency, and backed the font size accessibility option.
@@ -1200,6 +1201,7 @@ Items marked with #sym.tiny are written by myself.
 == Report
 - #link("https://www.latex-project.org")[LaTeX]
 - #link("https://typst.app")[Typst]
+- #link("https://typst.app/universe/package/ilm")[ILM]
 - #link("https://github.com/Myriad-Dreamin/tinymist")[Tiny Mist]
 - #link("https://github.com/tomoki1207/vscode-pdfviewer")[PDF Viewer]
 - #link("https://chat.deepseek.com")[DeepSeek]
