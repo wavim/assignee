@@ -3,8 +3,8 @@ import { defineI18n } from "./I18n";
 import Logo from "./Logo";
 
 const I18n = defineI18n({
-	en: { C: "Copyright © 2025 David W" },
-	zh: { C: "版權所有 © 2025 David W" },
+	en: { C: "Copyright © 2025 David Wu" },
+	zh: { C: "版權所有 © 2025 David Wu" },
 });
 
 export default (props: Props<"footer">) => (
