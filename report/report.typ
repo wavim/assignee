@@ -2,7 +2,7 @@
 
 #show: ilm.with(
   title: "Assignee",
-  author: "David Y. Wu",
+  author: "David Wu",
 )
 #show link: l => underline([#l #h(1fr) (#l.dest)])
 
@@ -1295,8 +1295,29 @@ Additional languages could be defined in no time with this flexible framework.
 
 === Page Styling
 Page styling is done primarily via TailwindCSS, which compiles inline classes into corresponding CSS statements (e.g.
-`h-4` #sym.arrow ```css { height: 1rem }```). This simplifies style reuse and promotes style consistency. It also
-reduces the total output external stylesheet size by algorithmically optimizing class usage.
+`h-4` #sym.arrow ```css { height: 1rem }```). This reduces the total output external stylesheet size by algorithmically
+optimizing class usage. It also simplifies style reuse and promotes style consistency by facilitating global theme
+variables:
+
+```css
+:root {
+	--color-a11y: var(--color-blue-700);
+	--color-border: var(--color-neutral-700);
+	--color-button: var(--color-neutral-950);
+	--color-holder: var(--color-neutral-600);
+	--color-main: var(--color-neutral-50);
+	--color-outline: var(--color-blue-500);
+	--color-overlay: var(--color-neutral-200);
+	--color-shadow: var(--color-neutral-950);
+	--color-text-alter: var(--color-neutral-50);
+	--color-text-major: var(--color-neutral-950);
+	--color-text-minor: var(--color-neutral-800);
+}
+
+:root.darkmode {
+  /* theme variable overrides ... */
+}
+```
 
 Relative EM units i.e. `em` and dynamic viewport units e.g. `vh` are used instead of absolute units e.g. `px` (with some
 exceptions) in CSS to ensure style consistency. It also backs the font size accessibility option, allowing containers to
