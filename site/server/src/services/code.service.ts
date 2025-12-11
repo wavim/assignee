@@ -1,5 +1,5 @@
 import { GetTeamCodeResults, PutMembRequest, PutMembResults } from "@app/schema";
-import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils";
+import { bytesToHex, hexToBytes, randomBytes } from "@noble/hashes/utils.js";
 import { HttpError } from "@wavim/http-error";
 import { configs } from "../configs/configs";
 import { prisma } from "../database/client";
@@ -23,7 +23,7 @@ export async function getCode(tid: number): Promise<GetTeamCodeResults> {
 	}
 
 	for (let attempt = 0; attempt < 10; attempt++) {
-		const code = randomBytes(4);
+		const code = randomBytes(4) as Uint8Array<ArrayBuffer>;
 
 		try {
 			await prisma.invite.create({ select: { tid: none }, data: { tid, code } });
@@ -40,7 +40,7 @@ export async function getCode(tid: number): Promise<GetTeamCodeResults> {
 export async function putMemb(uid: number, req: PutMembRequest): Promise<PutMembResults> {
 	const invitation = await prisma.invite.findUnique({
 		select: { tid: true, updated: true },
-		where: { code: hexToBytes(req.code) },
+		where: { code: hexToBytes(req.code) as Uint8Array<ArrayBuffer> },
 	});
 
 	if (!invitation) {

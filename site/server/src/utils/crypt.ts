@@ -1,5 +1,5 @@
-import { kt128 } from "@noble/hashes/sha3-addons";
-import { bytesToHex, randomBytes, utf8ToBytes } from "@noble/hashes/utils";
+import { kt128 } from "@noble/hashes/sha3-addons.js";
+import { bytesToHex, randomBytes, utf8ToBytes } from "@noble/hashes/utils.js";
 import { equal } from "./buffer";
 
 export function randk(): string {
