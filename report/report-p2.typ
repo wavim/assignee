@@ -675,7 +675,7 @@ for (let i = 0; i < 10_000; i++) {
 ```
 
 All critical queries could execute within acceptable thresholds to provide a seamless and smooth experience to users.
-The database schema is sound and no integrity violations are found.
+The database schema is sound, and no integrity violations are found.
 
 However, it is found that massive simultaneous updates could make the database struggle. SQLite is known for its lack of
 concurrency features, and most queues are implemented on the application side instead (e.g. Prisma), which leads to
@@ -694,7 +694,7 @@ Frontend metrics were gathered via Google Lighthouse.
 
 Largest Contentful Paint dominates one's first-impressions, and decides if visitors would like to stay for content.
 
-Backend load testing was simulated using Axios, and benchmarked with BenchJS' asynchronous testing suite. The procedure
+Backend load testing was simulated using Axios, and benchmarked with BenchJS asynchronous testing suite. The procedure
 is detailed in the last section. The tests help maintain the scalability of the application.
 
 == Compatibility
@@ -707,36 +707,36 @@ settings:
   columns: 6,
   [Device], [Type], [System], [Browser], [Resolution], [Network],
 
-  [iPhone XR], [Mobile], [iOS \ 18+], [Safari \ 16.4+ (2023-04-11)], [414 #sym.times 896], [WiFi/4G],
+  [iPhone XR], [Mobile], [iOS \ 18+], [Safari \ 16.4+ (2023-04-11)], [414 #sym.times 896], [Wi-Fi/4G],
 
-  [iPad Air 4], [Tablet], [iPadOS \ 18/26+], [Safari \ 16.4+ (2023-04-11)], [1180 #sym.times 820], [WiFi/4G],
+  [iPad Air 4], [Tablet], [iPadOS \ 18/26+], [Safari \ 16.4+ (2023-04-11)], [1180 #sym.times 820], [Wi-Fi/4G],
 
   [IdeaPad \ 5i Pro 2021 \ (x86-64)],
   [Desktop],
   [Windows \ 10/11+ Pro],
   [Chromium \ 111+ (2023-05-09)],
   [Responsive (simulated)],
-  [WiFi/4G \ (simulated throttling)],
+  [Wi-Fi/4G \ (simulated throttling)],
 
   [IdeaPad \ 5i Pro 2021 \ (x86-64)],
   [Desktop],
   [Linux Mint \ 21+ LTS \ (Debian APT)],
   [Firefox \ 114+ (2023-06-06)],
   [Responsive (simulated)],
-  [WiFi/4G \ (simulated throttling)],
+  [Wi-Fi/4G \ (simulated throttling)],
 
   [IdeaPad \ 5i Pro 2021 \ (x86-64)],
   [Desktop],
   [Linux Fedora \ Adams 42+ \ (RedHat DNF)],
   [Firefox \ 114+ (2023-06-06)],
   [Responsive (simulated)],
-  [WiFi/4G \ (simulated throttling)],
+  [Wi-Fi/4G \ (simulated throttling)],
 )
 
 - Browsers on iOS are all Safari Webview based;
 - Both Chrome and Edge are all Chromium based;
 
-The bowser versions supported all provide 'Baseline: Widely Available' features, as defined by the WebDX Community
+The browser versions supported all provide 'Baseline: Widely Available' features, as defined by the WebDX Community
 Group.
 
 Layouts adjusted correctly. Touch targets were adequately sized. Assignee displays and functions correctly across all
@@ -750,6 +750,9 @@ and XHR etc.
 
 A possible improvement is to adopt HTTPS (SSL encrypted) connection instead of HTTP. However, HTTPS requires signing and
 is not practical for a school project.
+
+Dependencies are bumped to their latest versions to fix security vulnerabilities, this is done automatically by
+Dependabot from GitHub. This maintains a curated list of trusted tools.
 
 = Credits
 This is a continued list of credits in additional to ones mentioned in Report Part I. Important tools are listed again.
@@ -774,6 +777,8 @@ This is a continued list of credits in additional to ones mentioned in Report Pa
 - #link("https://jestjs.io")[Jest]
 - #link("https://nodejs.org")[Node.js]
 - #link("https://github.com/colinhacks/zod")[Zod]
+- #link("https://developer.chrome.com/docs/lighthouse")[Lighthouse]
+- #link("https://github.com/dependabot")[Dependabot]
 
 == Reference
 - #link("https://www.browserstack.com")[Browser Stack]
